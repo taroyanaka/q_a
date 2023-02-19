@@ -7,7 +7,7 @@
   "orientation": "any",
   "scope": "/",
   "short_name": "q_a",
-  "start_url": "/",
+  "start_url": "https://taroyanaka.github.io/q_a",
   "theme_color": "#ffffff",
   "categories": [
     "business",

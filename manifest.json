@@ -7,8 +7,6 @@
   "orientation": "any",
   "scope": "/",
   "short_name": "q_a",
-//   "start_url": "https://taroyanaka.github.io/q_a",
-//   "start_url": "/",
   "start_url": "./index.html",
   "theme_color": "#ffffff",
   "categories": [
@@ -441,7 +439,8 @@
     },
     {
       "src": "android/android-launchericon-512-512.png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any"
     },
     {
       "src": "android/android-launchericon-192-192.png",

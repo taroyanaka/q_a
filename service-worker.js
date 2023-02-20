@@ -1,9 +1,6 @@
-import { precacheAndRoute } from 'workbox-precaching';
-import { registerRoute } from 'workbox-routing';
-import { CacheFirst } from 'workbox-strategies';
-
 // ファイルのキャッシュ
-precacheAndRoute([
+workbox.precaching.precacheAndRoute([
+// precacheAndRoute([
 { url: '/index.html', revision: '1' },
 { url: '/reset.css', revision: '1' },
 { url: '/localforage@1.10.0.js', revision: '1' },
@@ -12,13 +9,13 @@ precacheAndRoute([
 ]);
 
 // JSファイルのキャッシュ
-registerRoute(
+workbox.routing.registerRoute(
   /.*\.js/,
   new CacheFirst()
 );
 
 // CSSファイルのキャッシュ
-registerRoute(
+workbox.routing.registerRoute(
   /.*\.css/,
   new CacheFirst()
 );

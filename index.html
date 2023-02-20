@@ -9,16 +9,16 @@
 <!-- <link rel="manifest" href="manifest.json"> -->
 
 <!-- WorkboxのライブラリをCDNから読み込む -->
-<script src="https://storage.googleapis.com/workbox-cdn/releases/6.3.0/workbox-sw.js"></script>
+<!-- <script src="https://storage.googleapis.com/workbox-cdn/releases/6.3.0/workbox-sw.js"></script> -->
 
 <!-- Service Workerを登録する -->
 <script>
   // Service Workerの登録
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js');
-    });
-  }
+//   if ('serviceWorker' in navigator) {
+//     window.addEventListener('load', () => {
+//       navigator.serviceWorker.register('/service-worker.js');
+//     });
+//   }
 </script>
 
 <link rel="stylesheet" href="/reset.css">

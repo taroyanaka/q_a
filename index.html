@@ -9,22 +9,22 @@
 <!-- <link rel="manifest" href="manifest.json"> -->
 
 <!-- WorkboxのライブラリをCDNから読み込む -->
-<!-- <script src="https://storage.googleapis.com/workbox-cdn/releases/6.3.0/workbox-sw.js"></script> -->
+<script src="https://storage.googleapis.com/workbox-cdn/releases/6.3.0/workbox-sw.js"></script>
 
 <!-- Service Workerを登録する -->
 <script>
-  // Service Workerの登録
-//   if ('serviceWorker' in navigator) {
-//     window.addEventListener('load', () => {
-//       navigator.serviceWorker.register('/service-worker.js');
-//     });
-//   }
+Service Workerの登録
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./service-worker.js');
+    });
+  }
 </script>
 
-<link rel="stylesheet" href="/reset.css">
-<script src="/localforage@1.10.0.js"></script>
-<script src="/vue@3.2.36.global.prod.js"></script>
-<script src="/ramda.@0.28.0.js"></script>
+<link rel="stylesheet" href="./reset.css">
+<script src="./localforage@1.10.0.js"></script>
+<script src="./vue@3.2.36.global.prod.js"></script>
+<script src="./ramda.@0.28.0.js"></script>
 
 <!-- <link rel="stylesheet" href="./lib/reset.css"> -->
 <!-- <script src="./lib/localforage@1.10.0.js"></script> -->

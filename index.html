@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>q_a_1_b</title>
+<title>q_a_1_c</title>
 
 <!-- <link rel="manifest" href="manifest.json"> -->
 
@@ -868,8 +868,7 @@ narrowDownAnswer(){
 
 
 
-<script>
-// Service Workerの登録
+<!-- <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('./service-worker.js')
@@ -880,8 +879,6 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
-
-// キャッシュしたいファイル名
 const cacheName = 'my-cache1';
 const filesToCache = [
 '/index.html',
@@ -890,8 +887,6 @@ const filesToCache = [
 '/vue@3.2.36.global.prod.js',
 '/ramda.@0.28.0.js',
 ];
-
-// インストールイベントでキャッシュを作成
 self.addEventListener('install', function(e) {
   console.log('Service Worker installed');
   e.waitUntil(
@@ -901,8 +896,6 @@ self.addEventListener('install', function(e) {
     })
   );
 });
-
-// アクティベートイベントで古いキャッシュを削除
 self.addEventListener('activate', function(e) {
   console.log('Service Worker activated');
   e.waitUntil(
@@ -918,8 +911,6 @@ self.addEventListener('activate', function(e) {
     })
   );
 });
-
-// フェッチイベントでキャッシュされたファイルを返す
 self.addEventListener('fetch', function(e) {
   console.log('Fetching: ' + e.request.url);
   e.respondWith(
@@ -934,6 +925,5 @@ self.addEventListener('fetch', function(e) {
     })
   );
 });
-
-</script>
+</script> -->
 </html>

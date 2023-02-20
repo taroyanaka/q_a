@@ -8,14 +8,6 @@
 
 <!-- <link rel="manifest" href="manifest.json"> -->
 
-<!-- Service Workerを登録する -->
-<!-- <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./service-worker.js');
-    });
-  }
-</script> -->
 
 <link rel="stylesheet" href="./reset.css">
 <script src="./localforage@1.10.0.js"></script>
@@ -30,17 +22,6 @@
 <!-- <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script> -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.prod.js"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
-
-<!-- <script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register(
-    '/pwabuilder-sw.js'
-    );
-};
-</script> -->
-
-<!-- make icon each size -->
-<!-- Release -->
 
 
 <style>
@@ -879,5 +860,80 @@ narrowDownAnswer(){
 },
 },
 }).mount('.app');
+</script>
+
+
+
+
+
+
+
+<script>
+// Service Workerの登録
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(function(registration) {
+        console.log('Service Worker registered with scope: ', registration.scope);
+      }, function(err) {
+        console.log('Service Worker registration failed: ', err);
+      });
+  });
+}
+
+// キャッシュしたいファイル名
+const cacheName = 'my-cache1';
+const filesToCache = [
+'/index.html',
+'/reset.css',
+'/localforage@1.10.0.js',
+'/vue@3.2.36.global.prod.js',
+'/ramda.@0.28.0.js',
+];
+
+// インストールイベントでキャッシュを作成
+self.addEventListener('install', function(e) {
+  console.log('Service Worker installed');
+  e.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      console.log('Caching files');
+      return cache.addAll(filesToCache);
+    })
+  );
+});
+
+// アクティベートイベントで古いキャッシュを削除
+self.addEventListener('activate', function(e) {
+  console.log('Service Worker activated');
+  e.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(thisCacheName) {
+          if (thisCacheName !== cacheName) {
+            console.log('Removing cache: ' + thisCacheName);
+            return caches.delete(thisCacheName);
+          }
+        })
+      );
+    })
+  );
+});
+
+// フェッチイベントでキャッシュされたファイルを返す
+self.addEventListener('fetch', function(e) {
+  console.log('Fetching: ' + e.request.url);
+  e.respondWith(
+    caches.match(e.request).then(function(response) {
+      if (response) {
+        console.log('File found in cache');
+        return response;
+      } else {
+        console.log('File not found in cache, fetching from network');
+        return fetch(e.request);
+      }
+    })
+  );
+});
+
 </script>
 </html>

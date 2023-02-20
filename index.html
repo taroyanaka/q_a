@@ -22,34 +22,6 @@
 //     '/pwabuilder-sw.js'
 //     );
 // }
-
-
-
-// オフラインの時だけsw.jsのキャッシュを'my-pwa-cache-v1'を指定してクリアする関数
-function clearCache() {
-    caches.delete('my-pwa-cache-v1')
-        .then(function() {
-            console.log('Cache cleared!');
-        });
-};
-// オンラインかどうか判定する関数
-function isOnline() {
-    return navigator.onLine;
-};
-// sw.jsでキャッシュ登録する関数
-function cache() {
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('sw.js').then(function(registration) {
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }, function(err) {
-      console.log('ServiceWorker registration failed: ', err);
-    });
-  });
-}
-}
-cache();
-
 </script>
 
 <!-- make icon each size -->

@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>q_a_1</title>
 
-<link rel="manifest" href="manifest.json">
+<!-- <link rel="manifest" href="manifest.json"> -->
 
 <link rel="stylesheet" href="./lib/reset.css">
 <script src="./lib/localforage@1.10.0.js"></script>
@@ -17,11 +17,20 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
 
 <script>
+// if ('serviceWorker' in navigator) {
+//     navigator.serviceWorker.register(
+//     '/pwabuilder-sw.js'
+//     );
+// }
+
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register(
-    // '/sw.js'
-    '/pwabuilder-sw.js'
-    );
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js').then(function(registration) {
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
 }
 </script>
 

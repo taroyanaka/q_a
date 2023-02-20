@@ -48,13 +48,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 }
-// キャッシュをクリアしてからキャッシュ登録する関数
-function cacheClear() {
-    // オンラインの時だけキャッシュをクリアする
-    // isOnline() === true ? clearCache() : null;
-    cache();
-};
-cacheClear();
+cache();
 
 </script>
 

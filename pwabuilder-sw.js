@@ -11,8 +11,8 @@ self.addEventListener("message", (event) => {
 });
 
 workbox.routing.registerRoute(
-//   new RegExp('/*'),
-  new RegExp(/\/\*|\/lib\/\*/),
+  new RegExp('/*'),
+//   new RegExp(/\/\*|\/lib\/\*/),
 //   new RegExp('/lib/*'),
   new workbox.strategies.StaleWhileRevalidate({
     cacheName: CACHE

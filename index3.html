@@ -201,8 +201,7 @@ created(){
 beforeMount(){
 },
 mounted() {
-this.data2_data3_string_to_array();
-this.make_image_to_name_Q_A_array();
+this.init();
 this.for_debug();
 this.test_mode === true ? this.test_exe() : null;
 },
@@ -307,6 +306,23 @@ https://pbs.twimg.com/media/FjuxRy-agAAgAFJ?format=jpg`;
 
 },
 }).mount('.app');
+
+
+// 正規表現だけでURLかどうかを判定する関数
+function isURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    if(!pattern.test(str)) {
+    // alert("URLではありません");
+    return false;
+    } else {
+    return true;
+    }
+};
 
 </script>
 </html>

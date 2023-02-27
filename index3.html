@@ -24,7 +24,7 @@
 :root {
 --css-var-root-font-size: 12px;
 font-size: var(--css-var-root-font-size);
---css-var-test-inline: none;
+/* --css-var-test-inline: none; */
 }
 .app{
 width: 100vw;
@@ -34,9 +34,14 @@ width: 100vw;
 display: grid;
 grid-template-columns: 1fr 1fr;
 }
+.column-1{
+/* two column with grid layout */
+display: grid;
+grid-template-columns: 1fr 1fr;
+}
 textarea{
     /* width: 30rem; */
-    height: 5rem;
+    height: 30rem;
 }
 .png_image{
     width: 3rem;

@@ -222,16 +222,11 @@ this.ary_data2 = this.data2.split("\n")
 this.ary_data3 = this.data3.split("\n")
 },
 make_image_to_name_Q_A_array(){
-this.data4 = this.to_ary(this.ary_data3).map(V=>{
-    return [V, this.take2(shuffle(this.remove(V, this.ary_data3)))]
-})
-this.data4 = this.to_ary(this.data4).map(V=>{
-    return [V[0], shuffle(R.flatten(V))]
-});
-this.data5 = R.zip(
-                    this.ary_data2,
-                    this.data4
-                );
+this.data4 = this.to_ary(this.ary_data3).map(V=> [V, this.take2(shuffle(this.remove(V, this.ary_data3)))]
+)
+this.data4 = this.to_ary(this.data4).map(V=> [V[0], shuffle(R.flatten(V))]
+);
+this.data5 = R.zip(this.ary_data2, this.data4);
 // data5のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
 this.data5 = R.map(R.insert(2, false), this.data5);
 },
@@ -240,9 +235,7 @@ this.data1_is_made_from_data2_and_data3_zip_by_ramda();
 this.make_image_to_name_Q_A_array();
 },
 check_image_to_name(correct_URL, URL, IDX){
-    this.data5[IDX][2] = correct_URL === URL ? true : false;
-    // console.log(correct_URL, URL, IDX, this.to_ary(this.data5));
-    // this.for_debug();
+this.data5[IDX][2] = correct_URL === URL ? true : false;
 },
 
 to_ary(it){

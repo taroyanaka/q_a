@@ -53,7 +53,7 @@ textarea{
 
 <div class="column-2">
 <ul>
-<li v-for="item in data4" :key="item">
+<li v-for="item in data1" :key="item">
 <span>{{ item[0] }}</span>
 <img :src="item[1]" :alt="item[0]" class="png_image">
 </li>
@@ -136,16 +136,20 @@ const app = Vue.createApp({
 data() {
 return {
 data1:[
-    ['cat','https://taroyanaka.github.io/q_a/cat.png'],
-    ['dog','https://taroyanaka.github.io/q_a/dog.png'],
-    ['halr','https://taroyanaka.github.io/q_a/halr.png'],
+    // ['cat','https://taroyanaka.github.io/q_a/cat.png'],
+    // ['dog','https://taroyanaka.github.io/q_a/dog.png'],
+    // ['halr','https://taroyanaka.github.io/q_a/halr.png'],
 ],
 data2:`cat
 dog
-halr`,
+halr
+eleph`,
+ary_data2: [],
 data3:`https://taroyanaka.github.io/q_a/cat.png
 https://taroyanaka.github.io/q_a/dog.png
-https://taroyanaka.github.io/q_a/halr.png`,
+https://taroyanaka.github.io/q_a/halr.png
+https://taroyanaka.github.io/q_a/eleph.png`,
+ary_data3: [],
 data4:[],
 data5:[],
 data6:[],
@@ -170,7 +174,7 @@ created(){
 beforeMount(){
 },
 mounted() {
-this.data4_is_made_from_data2_and_data3_zip_by_ramda();
+this.data1_is_made_from_data2_and_data3_zip_by_ramda();
 this.for_debug();
 this.test_mode === true ? this.test_exe() : null;
 },
@@ -183,9 +187,26 @@ fn1(){
 },
 test_exe(){
 },
-data4_is_made_from_data2_and_data3_zip_by_ramda(){
-    this.data4 = R.zip(this.data2.split("\n"), this.data3.split("\n"));
+data1_is_made_from_data2_and_data3_zip_by_ramda(){
+this.ary_data2 = this.data2.split("\n")
+this.ary_data3 = this.data3.split("\n")
+this.data1 = R.zip(
+                    this.ary_data2,
+                    this.ary_data3
+                );
 },
+shuffle_ary_data3(){
+// 指定した要素を配列から削除する関数
+function arrayRemove(arr, value) {
+    return arr.filter(function(ele){
+        return ele != value;
+    });
+};
+// 
+
+this.ary_data3 = shuffle(this.ary_data3);
+},
+
 
 to_ary(it){
 return JSON.parse(JSON.stringify(it));

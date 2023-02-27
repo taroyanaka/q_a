@@ -41,6 +41,9 @@ textarea{
     width: 3rem;
     height: 3rem;
 }
+.png_image_back{
+    background-color: blue;
+}
 </style>
 </head>
 <body class="app">
@@ -53,9 +56,12 @@ textarea{
 
 <div class="column-2">
 <ul>
-<li v-for="item in data1" :key="item">
-<span>{{ item[0] }}</span>
-<img :src="item[1]" :alt="item[0]" class="png_image">
+<li v-for="(item, IDX) in data5" :key="item" class="result_color">
+    <span>{{ item[0] }}</span>
+    <!-- <img :src="item[1][0]" :alt="item[0]" class="png_image"> -->
+    <span v-for="item2 in item[1][1]">
+    <img :src="item2" :alt="item[0]" class="png_image png_image_back" @click="check_image_to_name(item[1][0], item2, IDX)">
+    </span>
 </li>
 </ul>
 </div>
@@ -134,7 +140,7 @@ let data10 = null;
 // 指定した要素を配列から削除するramda.jsを使った1行の関数
 const remove = R.curry((item, ary) => R.filter(R.complement(R.equals(item)), ary));
 // 指定した要素から先頭から3つの要素を取り出すramda.jsを使った1行の関数
-const take3 = R.compose(R.take(3), R.drop(1));
+const take2 = R.compose(R.take(2), R.drop(1));
 
 
 const app = Vue.createApp({
@@ -182,6 +188,7 @@ beforeMount(){
 },
 mounted() {
 this.data1_is_made_from_data2_and_data3_zip_by_ramda();
+this.make_image_to_name_Q_A_array();
 this.for_debug();
 this.test_mode === true ? this.test_exe() : null;
 },
@@ -202,12 +209,26 @@ this.data1 = R.zip(
                     this.ary_data3
                 );
 },
-shuffle_ary_data3(){
-// remove
-// take3
-this.ary_data3 = shuffle(this.ary_data3);
+make_image_to_name_Q_A_array(){
+this.data4 = this.to_ary(this.ary_data3).map(V=>{
+    return [V, take2(shuffle(remove(V, this.ary_data3)))]
+})
+this.data4 = this.to_ary(this.data4).map(V=>{
+    return [V[0], shuffle(R.flatten(V))]
+});
+this.data5 = R.zip(
+                    this.ary_data2,
+                    this.data4
+                );
+// data5のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
+this.data5 = R.map(R.insert(2, false), this.data5);
 },
-
+check_image_to_name(correct_URL, URL, IDX){
+    this.data5[IDX][2] = correct_URL === URL ? true : false;
+    // return correct_URL === URL ? true : false;
+    console.log(correct_URL, URL, IDX, this.to_ary(this.data5));
+    this.for_debug();
+},
 
 to_ary(it){
 return JSON.parse(JSON.stringify(it));

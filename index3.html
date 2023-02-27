@@ -35,6 +35,11 @@ display: grid;
 grid-template-columns: 1fr 1fr;
 }
 .column-1{
+/* column-1 is grid layout of 2 row */
+display: grid;
+grid-template-rows: 0.1fr 1fr;
+}
+.textarea_parent{
 /* two column with grid layout */
 display: grid;
 grid-template-columns: 1fr 1fr;
@@ -56,8 +61,14 @@ textarea{
 <div class="content_parent">
 
 <div class="column-1">
-<textarea v-model="data2"></textarea>
-<textarea v-model="data3"></textarea>
+    <div class="button_list">
+        <button @click="sample1">sample1</button>
+        <button @click="sample2">sample2</button>
+    </div>
+    <div class="textarea_parent">
+        <textarea v-model="data2"></textarea>
+        <textarea v-model="data3"></textarea>
+    </div>
 </div>
 
 <div class="column-2">
@@ -156,17 +167,9 @@ data1:[
     // ['dog','https://taroyanaka.github.io/q_a/dog.png'],
     // ['halr','https://taroyanaka.github.io/q_a/halr.png'],
 ],
-data2:`cat
-dog
-halr
-grf
-eleph`,
+data2:'',
 ary_data2: [],
-data3:`https://taroyanaka.github.io/q_a/cat.png
-https://taroyanaka.github.io/q_a/dog.png
-https://taroyanaka.github.io/q_a/halr.png
-https://taroyanaka.github.io/q_a/grf.png
-https://taroyanaka.github.io/q_a/eleph.png`,
+data3:'',
 ary_data3: [],
 data4:[],
 data5:[],
@@ -241,6 +244,28 @@ this.make_image_to_name_Q_A_array();
 },
 check_image_to_name(correct_URL, URL, IDX){
 this.data5[IDX][2] = correct_URL === URL ? true : false;
+},
+sample1(){
+this.data2 = `cat
+dog
+halr
+grf
+eleph`;
+this.data3 = `https://taroyanaka.github.io/q_a/cat.png
+https://taroyanaka.github.io/q_a/dog.png
+https://taroyanaka.github.io/q_a/halr.png
+https://taroyanaka.github.io/q_a/grf.png
+https://taroyanaka.github.io/q_a/eleph.png`;
+},
+sample2(){
+this.data2 = `sushi
+cake
+pink_pixel
+paint`;
+this.data3 = `https://pbs.twimg.com/media/FpfSgHdaEAE-Ts6?format=jpg
+https://pbs.twimg.com/media/FpfRSXQacAARY-a?format=jpg
+https://pbs.twimg.com/media/FoaB5b9aUAAXgAU?format=jpg
+https://pbs.twimg.com/media/FjuxRy-agAAgAFJ?format=jpg`;
 },
 
 to_ary(it){

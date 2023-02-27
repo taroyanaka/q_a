@@ -201,7 +201,7 @@ created(){
 beforeMount(){
 },
 mounted() {
-this.data1_is_made_from_data2_and_data3_zip_by_ramda();
+this.data2_data3_string_to_array();
 this.make_image_to_name_Q_A_array();
 this.for_debug();
 this.test_mode === true ? this.test_exe() : null;
@@ -225,7 +225,7 @@ take2(ary){
     const take2 = R.compose(R.take(2), R.drop(1));
     return take2(ary);
 },
-data1_is_made_from_data2_and_data3_zip_by_ramda(){
+data2_data3_string_to_array(){
 this.ary_data2 = this.data2.split("\n")
 this.ary_data3 = this.data3.split("\n")
 },
@@ -239,7 +239,7 @@ this.data5 = R.zip(this.ary_data2, this.data4);
 this.data5 = R.map(R.insert(2, false), this.data5);
 },
 init(){
-this.data1_is_made_from_data2_and_data3_zip_by_ramda();
+this.data2_data3_string_to_array();
 this.make_image_to_name_Q_A_array();
 },
 check_image_to_name(correct_URL, URL, IDX){

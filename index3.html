@@ -131,6 +131,11 @@ let data8 = null;
 let data9 = null;
 let data10 = null;
 
+// 指定した要素を配列から削除するramda.jsを使った1行の関数
+const remove = R.curry((item, ary) => R.filter(R.complement(R.equals(item)), ary));
+// 指定した要素から先頭から3つの要素を取り出すramda.jsを使った1行の関数
+const take3 = R.compose(R.take(3), R.drop(1));
+
 
 const app = Vue.createApp({
 data() {
@@ -143,11 +148,13 @@ data1:[
 data2:`cat
 dog
 halr
+grf
 eleph`,
 ary_data2: [],
 data3:`https://taroyanaka.github.io/q_a/cat.png
 https://taroyanaka.github.io/q_a/dog.png
 https://taroyanaka.github.io/q_a/halr.png
+https://taroyanaka.github.io/q_a/grf.png
 https://taroyanaka.github.io/q_a/eleph.png`,
 ary_data3: [],
 data4:[],
@@ -162,7 +169,7 @@ test_mode: false,
 watch: {
 data1: {
     handler() {
-    this.fn0();
+    // this.fn0();
     },
     deep: true
 },
@@ -196,14 +203,8 @@ this.data1 = R.zip(
                 );
 },
 shuffle_ary_data3(){
-// 指定した要素を配列から削除する関数
-function arrayRemove(arr, value) {
-    return arr.filter(function(ele){
-        return ele != value;
-    });
-};
-// 
-
+// remove
+// take3
 this.ary_data3 = shuffle(this.ary_data3);
 },
 

@@ -25,10 +25,17 @@
 font-size: var(--css-var-root-font-size);
 --css-var-test-inline: none;
 }
-button{
-}
 .app{
 width: 100vw;
+}
+/* content_parent is grid layout of 2 column */
+.content_parent{
+display: grid;
+grid-template-columns: 1fr 1fr;
+}
+textarea{
+    /* width: 30rem; */
+    height: 5rem;
 }
 .png_image{
     width: 3rem;
@@ -37,15 +44,23 @@ width: 100vw;
 </style>
 </head>
 <body class="app">
+<div class="content_parent">
 
-<!-- ul li v-for with data1 -->
+<div class="column-1">
+<textarea v-model="data2"></textarea>
+<textarea v-model="data3"></textarea>
+</div>
+
+<div class="column-2">
 <ul>
-<li v-for="item in data1" :key="item">
+<li v-for="item in data4" :key="item">
 <span>{{ item[0] }}</span>
 <img :src="item[1]" :alt="item[0]" class="png_image">
 </li>
 </ul>
+</div>
 
+</div>
 </body>
 <script>
 // https://stackoverflow.com/a/68523152
@@ -125,8 +140,19 @@ data1:[
     ['dog','https://taroyanaka.github.io/q_a/dog.png'],
     ['halr','https://taroyanaka.github.io/q_a/halr.png'],
 ],
-
-
+data2:`cat
+dog
+halr`,
+data3:`https://taroyanaka.github.io/q_a/cat.png
+https://taroyanaka.github.io/q_a/dog.png
+https://taroyanaka.github.io/q_a/halr.png`,
+data4:[],
+data5:[],
+data6:[],
+data7:[],
+data8:[],
+data9:[],
+data10:[],
 test_mode: false,
 }},
 watch: {
@@ -144,6 +170,8 @@ created(){
 beforeMount(){
 },
 mounted() {
+this.data4_is_made_from_data2_and_data3_zip_by_ramda();
+this.for_debug();
 this.test_mode === true ? this.test_exe() : null;
 },
 beforeUpdate() {
@@ -155,7 +183,9 @@ fn1(){
 },
 test_exe(){
 },
-
+data4_is_made_from_data2_and_data3_zip_by_ramda(){
+    this.data4 = R.zip(this.data2.split("\n"), this.data3.split("\n"));
+},
 
 to_ary(it){
 return JSON.parse(JSON.stringify(it));

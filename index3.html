@@ -245,28 +245,6 @@ this.make_image_to_name_Q_A_array();
 check_image_to_name(correct_URL, URL, IDX){
 this.data5[IDX][2] = correct_URL === URL ? true : false;
 },
-sample1(){
-this.data2 = `cat
-dog
-halr
-grf
-eleph`;
-this.data3 = `https://taroyanaka.github.io/q_a/cat.png
-https://taroyanaka.github.io/q_a/dog.png
-https://taroyanaka.github.io/q_a/halr.png
-https://taroyanaka.github.io/q_a/grf.png
-https://taroyanaka.github.io/q_a/eleph.png`;
-},
-sample2(){
-this.data2 = `sushi
-cake
-pink_pixel
-paint`;
-this.data3 = `https://pbs.twimg.com/media/FpfSgHdaEAE-Ts6?format=jpg
-https://pbs.twimg.com/media/FpfRSXQacAARY-a?format=jpg
-https://pbs.twimg.com/media/FoaB5b9aUAAXgAU?format=jpg
-https://pbs.twimg.com/media/FjuxRy-agAAgAFJ?format=jpg`;
-},
 
 to_ary(it){
 return JSON.parse(JSON.stringify(it));
@@ -304,6 +282,28 @@ data10 = this.to_ary(this.data10);
 // };
 // },
 
+sample1(){
+this.data2 = `cat
+dog
+halr
+grf
+eleph`;
+this.data3 = `https://taroyanaka.github.io/q_a/cat.png
+https://taroyanaka.github.io/q_a/dog.png
+https://taroyanaka.github.io/q_a/halr.png
+https://taroyanaka.github.io/q_a/grf.png
+https://taroyanaka.github.io/q_a/eleph.png`;
+},
+sample2(){
+this.data2 = `sushi
+cake
+pink_pixel
+paint`;
+this.data3 = `https://pbs.twimg.com/media/FpfSgHdaEAE-Ts6?format=jpg
+https://pbs.twimg.com/media/FpfRSXQacAARY-a?format=jpg
+https://pbs.twimg.com/media/FoaB5b9aUAAXgAU?format=jpg
+https://pbs.twimg.com/media/FjuxRy-agAAgAFJ?format=jpg`;
+},
 
 },
 }).mount('.app');

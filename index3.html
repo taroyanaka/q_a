@@ -130,6 +130,8 @@ const {
 let data1 = null;
 let data2 = null;
 let data3 = null;
+let ary_data2 = null;
+let ary_data3 = null;
 let data4 = null;
 let data5 = null;
 let data6 = null;
@@ -138,10 +140,6 @@ let data8 = null;
 let data9 = null;
 let data10 = null;
 
-// 指定した要素を配列から削除するramda.jsを使った1行の関数
-const remove = R.curry((item, ary) => R.filter(R.complement(R.equals(item)), ary));
-// 指定した要素から先頭から3つの要素を取り出すramda.jsを使った1行の関数
-const take2 = R.compose(R.take(2), R.drop(1));
 
 
 const app = Vue.createApp({
@@ -208,6 +206,16 @@ fn1(){
 },
 test_exe(){
 },
+remove(item, ary){
+    // 指定した要素を配列から削除するramda.jsを使った1行の関数
+    const remove = R.curry((item, ary) => R.filter(R.complement(R.equals(item)), ary));
+    return remove(item, ary);
+},
+take2(ary){
+    // 指定した要素から先頭から2つの要素を取り出すramda.jsを使った1行の関数
+    const take2 = R.compose(R.take(2), R.drop(1));
+    return take2(ary);
+},
 data1_is_made_from_data2_and_data3_zip_by_ramda(){
 this.ary_data2 = this.data2.split("\n")
 this.ary_data3 = this.data3.split("\n")
@@ -218,7 +226,7 @@ this.data1 = R.zip(
 },
 make_image_to_name_Q_A_array(){
 this.data4 = this.to_ary(this.ary_data3).map(V=>{
-    return [V, take2(shuffle(remove(V, this.ary_data3)))]
+    return [V, this.take2(shuffle(this.remove(V, this.ary_data3)))]
 })
 this.data4 = this.to_ary(this.data4).map(V=>{
     return [V[0], shuffle(R.flatten(V))]
@@ -248,6 +256,8 @@ data1 = this.to_ary(this.data1);
 data2 = this.to_ary(this.data2);
 data3 = this.to_ary(this.data3);
 data4 = this.to_ary(this.data4);
+ary_data2 = this.to_ary(this.ary_data2);
+ary_data3 = this.to_ary(this.ary_data3);
 data5 = this.to_ary(this.data5);
 data6 = this.to_ary(this.data6);
 data7 = this.to_ary(this.data7);

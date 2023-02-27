@@ -220,10 +220,6 @@ take2(ary){
 data1_is_made_from_data2_and_data3_zip_by_ramda(){
 this.ary_data2 = this.data2.split("\n")
 this.ary_data3 = this.data3.split("\n")
-this.data1 = R.zip(
-                    this.ary_data2,
-                    this.ary_data3
-                );
 },
 make_image_to_name_Q_A_array(){
 this.data4 = this.to_ary(this.ary_data3).map(V=>{

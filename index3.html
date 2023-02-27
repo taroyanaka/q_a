@@ -174,9 +174,15 @@ data10:[],
 test_mode: false,
 }},
 watch: {
-data1: {
+data2: {
     handler() {
-    // this.fn0();
+        this.init();
+    },
+    deep: true
+},
+data3: {
+    handler() {
+        this.init();
     },
     deep: true
 },
@@ -224,11 +230,14 @@ this.data5 = R.zip(
 // data5のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
 this.data5 = R.map(R.insert(2, false), this.data5);
 },
+init(){
+this.data1_is_made_from_data2_and_data3_zip_by_ramda();
+this.make_image_to_name_Q_A_array();
+},
 check_image_to_name(correct_URL, URL, IDX){
     this.data5[IDX][2] = correct_URL === URL ? true : false;
-    // return correct_URL === URL ? true : false;
-    console.log(correct_URL, URL, IDX, this.to_ary(this.data5));
-    this.for_debug();
+    // console.log(correct_URL, URL, IDX, this.to_ary(this.data5));
+    // this.for_debug();
 },
 
 to_ary(it){

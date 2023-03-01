@@ -1,0 +1,128 @@
+<!-- 以下の要素があるグリッドレイアウトのCSSとHTMLを出力して。ただしサンプルの文章は10文字以内で。
+ヘッダー
+ナビゲーション
+    ・グローバルナビゲーション
+    ・ローカルナビゲーション
+メインビジュアル
+サイドバー
+コンテンツ
+フッター  -->
+
+<!-- Output CSS and HTML for a grid layout with the following elements. However, the sample text should be no more than 10 characters.
+Header
+Navigation
+    Global navigation
+    Local navigation
+Main visual
+Sidebar
+Contents
+Footer  -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grid Layout</title>
+	<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+
+<style>
+body {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: auto;
+	grid-gap: 20px;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	grid-column: 1 / -1;
+}
+
+nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	grid-column: 1 / -1;
+}
+
+.global-nav {
+	background-color: #ddd;
+	grid-column: 1 / 9;
+}
+
+.local-nav {
+	background-color: #eee;
+	grid-column: 9 / -1;
+}
+
+main {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: auto;
+	grid-gap: 20px;
+	grid-column: 1 / -1;
+}
+
+.main-visual {
+	grid-column: 1 / 9;
+}
+
+.sidebar {
+	grid-column: 9 / -1;
+}
+
+.content {
+	grid-column: 1 / 9;
+}
+
+footer {
+	grid-column: 1 / -1;
+}
+
+</style>
+
+</head>
+<body>
+	<header>
+		<h1>Header</h1>
+	</header>
+
+	<nav class="global-nav">
+		<ul>
+			<li><a href="#">Menu 1</a></li>
+			<li><a href="#">Menu 2</a></li>
+			<li><a href="#">Menu 3</a></li>
+		</ul>
+	</nav>
+
+	<nav class="local-nav">
+		<ul>
+			<li><a href="#">Submenu 1</a></li>
+			<li><a href="#">Submenu 2</a></li>
+			<li><a href="#">Submenu 3</a></li>
+		</ul>
+	</nav>
+
+	<main>
+		<section class="main-visual">
+			<h2>Main Visual</h2>
+			<p>Lorem ipsum</p>
+		</section>
+
+		<aside class="sidebar">
+			<h3>Sidebar</h3>
+			<p>Lorem ipsum</p>
+		</aside>
+
+		<section class="content">
+			<h3>Content</h3>
+			<p>Lorem ipsum</p>
+		</section>
+	</main>
+
+	<footer>
+		<p>Footer</p>
+	</footer>
+
+</body>
+</html>

@@ -24,54 +24,244 @@
 :root {
 --css-var-root-font-size: 12px;
 font-size: var(--css-var-root-font-size);
-/* --css-var-test-inline: none; */
+--css-var-test-inline: none;
+--css-var-column-1-none: 1fr;
+--css-var-column-2-none: 1fr;
+--css-var-column-3-none: 1fr;
+--css-var-color-1: ;
+--css-var-color-2: ;
+--css-var-color-3: ;
+--test: 'blue';
+
+
+
+
+--FITB-button-ul-height: 20vh;
+--FITB-li-visibility: visible;
+--FITB-collapse-display: block;
+}
+button{
+border: none;
+background-color: aliceblue;
+border-radius: 1rem;
+margin: 0.1rem;
 }
 .app{
 width: 100vw;
 }
-/* content_parent is grid layout of 2 column */
-.content_parent{
+.header{
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+grid-template-rows: 4rem;
+}
+.contents{
+width: 100vw;
+display: grid;
+grid-template-columns: var(--css-var-column-1-none) var(--css-var-column-2-none) var(--css-var-column-3-none);
+}
+.column-1-none{
+visibility: hidden;
+}
+.column-2-none{
+visibility: hidden;
+}
+.column-3-none{
+visibility: hidden;
+}
+.textarea-column-1{
 display: grid;
 grid-template-columns: 1fr 1fr;
 }
-.column-1{
-/* column-1 is grid layout of 2 row */
+.textarea-column-2{
 display: grid;
-grid-template-rows: 0.1fr 1fr;
-}
-.textarea_parent{
-/* two column with grid layout */
-display: grid;
+grid-template-rows: 4rem 1fr;
 grid-template-columns: 1fr 1fr;
+grid-template-areas:
+"button-zone button-zone"
+"question answer";
 }
-textarea{
-    /* width: 30rem; */
-    height: 30rem;
+.column-1{background-color: var(--css-var-color-1)}
+.column-2{background-color: var(--css-var-color-2)}
+.column-3{background-color: var(--css-var-color-3)}
+.a{
+grid-area: button-zone;
+display: grid;
+grid-template-rows: 4rem;
+grid-template-columns: 1fr 1fr 1fr;
 }
+.a-1{}
+.a-2{}
+.a-3{}
+.b{
+grid-area: question;
+width: 100%;
+}
+.c{
+grid-area: answer;
+width: 100%;
+}
+.test-fn-none-inline {
+height: 4rem;
+display: var(--css-var-test-inline);
+}
+.textarea_none {
+display: none;
+}
+.q_and_a{
+display: grid;
+grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr;
+justify-content: center;
+align-content: center;
+grid-auto-flow: column;
+}
+.q_and_a button{
+display: inline-block;
+width: auto;
+min-height: 4rem;
+word-break: break-all;
+}
+.check_button{
+width: 100%;
+height: 4rem;
+justify-self: center;
+align-self: center;
+font-size: 3rem;
+}
+.link_button, .result_opener, .save_opener{
+width: 100%;
+height: 4rem;
+font-size: 1.5rem;
+position: relative;
+}
+.link_button{
+display: block;
+}
+.link_text{
+display: block;
+word-break: break-all;
+width: auto;
+inline-size: 33vw;
+overflow: hidden;
+}
+.link_button_top{
+position: absolute;
+right: 50%;
+z-index: 1;
+}
+.link_button_under{
+position: absolute;
+width: 100%;
+z-index: 0;
+}
+.text_center{
+display: inline-block;
+width: auto;
+min-height: 4rem;
+font-size: 1.5rem;
+align-self: center;
+justify-self:center;
+word-break: break-all;
+}
+.text_left{
+text-align: start;
+font-size: 1.5rem;
+}
+.text_right{
+justify-self: center;
+align-self: center;
+font-size: 1.5rem;
+}
+.optional_function{
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+}
+.optional_function button{
+height: 4rem;
+font-size: 1.5rem;
+}
+.processing{
+width: 100%;
+height: 4rem;
+font-size: 3rem;
+}
+.save_data_set_list > *{
+overflow: hidden;
+white-space: nowrap;
+}
+.save_data_set_list{
+display: grid;
+grid-template-columns: 1fr 2.5rem 2.5rem;
+word-break: break-all;
+}
+.save_data_set_list > span{
+font-size: 1.3rem;
+}
+.save_data_set{}
+.save_data_delete{}
+.column_none{
+font-size: 2rem;
+}
+.font_sizing{
+font-size: 2.5rem;
+}
+
+
 .png_image{
-    width: 3rem;
-    height: 3rem;
-}
-.png_image_back{
-    background-color: blue;
+    width: 2rem;
+    height: 2rem;
 }
 </style>
 </head>
 <body class="app">
 <div class="content_parent">
+<header class="header">
+<button @click="column_1_none_fn" class="column_none">💾</button>
+<button @click="column_2_none_fn" class="column_none">⌨️</button>
+<button @click="column_3_none_fn" class="column_none">🖥️</button>
+</header>
+<div class="contents">
 
-<div class="column-1">
+<div class="column-1" :class="{'column-1-none': column_1_none}">
+<div class="optional_function">
+    <button @click="reverse_q_a">🔃</button>
+    <button @click="shuffle_q_a">🌪️</button>
+    <button @click="swap_q_a">🔁</button>
+    <button @click="save_data_to_all_save">🗂️</button>
+</div>
+<button @click="fn19" class="save_opener">📂</button>
+<ul class="save_data_set_list_parent" style='display: block;'>
+<!-- <li v-for="(DATAVAL, DATAIDX) in all_save" class="save_data_set_list"> -->
+<li class="save_data_set_list">
+    <!-- <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span> -->
+    <span @click="save_data_set(DATAIDX)">{{  }}</span>
+    <button @click="save_data_set(DATAIDX)" class="save_data_set">📂</button>
+    <button @click="save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button>
+</li>
+</ul>
+
+<div class="link_button" @click="fn14">
+<button class="link_button_top">🌐</button>
+<!-- <progress max="4000" :value="progress_val" class="link_button_under"></progress> -->
+<progress max="4000" class="link_button_under"></progress>
+</div>
+
+<!-- <a :href="data11[0]" class="link_text">{{data11[0]}}</a> -->
+
+<div class="textarea-column-1">
+        <textarea v-model="data2"></textarea>
+        <textarea v-model="data3"></textarea>
+</div>
+<button @click="fn21(1)" class="font_sizing">◉</button>
+<button @click="fn21(-1)" class="font_sizing">⦿</button>
+<button @click="fn21" class="font_sizing">◎</button>
     <div class="button_list">
         <button @click="sample1">sample1</button>
         <button @click="sample2">sample2</button>
     </div>
-    <div class="textarea_parent">
-        <textarea v-model="data2"></textarea>
-        <textarea v-model="data3"></textarea>
-    </div>
 </div>
 
-<div class="column-2">
+
+<div class="column-2" :class="{'column-2-none': column_2_none}">
 <ul>
 <li v-for="(item, IDX) in data5" :key="item" class="result_color">
     <span>{{ item[0] }}</span>
@@ -83,6 +273,47 @@ textarea{
 </li>
 </ul>
 </div>
+
+
+<div class="column-3" :class="{'column-3-none': column_3_none}">
+<div>
+<button @click="fn18" class="result_opener">📖</button>
+
+</div>
+<!-- <template v-for="(DATAVAL, DATAIDX) in data10"> -->
+<template>
+    <div class="textarea-column-2">
+    <div class="a">
+        <button @click="fn9(DATAIDX)" class="a-1">↩️</button>
+        <button @click="fn16(DATAIDX)" class="a-2">🗑️</button>
+        <button @click="fn17(DATAIDX)" class="a-3">📚</button>
+    </div>
+<!-- <textarea name="" cols="30" rows="10" class="b" :class="'textarea-'+DATAIDX" style='display: block;'>{{ DATAVAL[0] }}</textarea> -->
+<textarea name="" cols="30" rows="10" class="b" style='display: block;'>{{  }}</textarea>
+<!-- <textarea name="" cols="30" rows="10" class="c" :class="'textarea-'+DATAIDX" style='display: block;'>{{ DATAVAL[1] }}</textarea> -->
+<textarea name="" cols="30" rows="10" class="c"  style='display: block;'>{{  }}</textarea>
+    </div>
+</template>
+</div>
+
+</div>
+
+
+
+
+
+
+<!-- <div class="column-1">
+    <div class="button_list">
+        <button @click="sample1">sample1</button>
+        <button @click="sample2">sample2</button>
+    </div>
+    <div class="textarea_parent">
+        <textarea v-model="data2"></textarea>
+        <textarea v-model="data3"></textarea>
+    </div>
+</div> -->
+
 
 </div>
 </body>

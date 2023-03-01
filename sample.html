@@ -1,0 +1,286 @@
+<!-- 以下の要素があるCSSとHTMLを出力して。ただしサンプルの文章は10文字以内で。
+ヘッダー
+ナビゲーション
+    ・グローバルナビゲーション
+    ・ローカルナビゲーション
+メインビジュアル
+サイドバー
+コンテンツ
+フッター -->
+
+<!-- 4096文字制限でCSS部分しか利用できないので上記のクエリと併用する -->
+<!--
+以下の要素があるCSSとHTMLをreset.cssのリンクを含むレスポンシブデザインで出力して。ただしサンプルの文章は10文字以内で。
+ヘッダー
+ナビゲーション
+    ・グローバルナビゲーション
+    ・ローカルナビゲーション
+メインビジュアル
+サイドバー
+コンテンツ
+フッター -->
+
+<!-- Output CSS and HTML with the following elements. However, the sample text should be no more than 10 characters.
+Header
+Navigation
+    Global navigation
+    Local navigation
+Main visual
+Sidebar
+Contents
+Footer -->
+
+<!-- Use with the above query since only the CSS part is available due to the 4096 character limit -->
+<!--
+Output CSS and HTML with the following elements in a responsive design including the reset.css link. However, the sample text should be 10 characters or less.
+Header
+Navigation
+    Global navigation
+    Local navigation
+Main visual
+Sidebar
+Contents
+Footer -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Website</title>
+	<!-- <style>
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: Arial, sans-serif;
+		}
+
+		header {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			text-align: center;
+		}
+
+		nav {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background-color: #555;
+			color: #fff;
+			padding: 10px;
+		}
+
+		nav ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			display: flex;
+		}
+
+		nav li {
+			margin-right: 20px;
+		}
+
+		nav a {
+			color: #fff;
+			text-decoration: none;
+			font-weight: bold;
+		}
+
+		nav a:hover {
+			color: #ccc;
+		}
+
+		#global-nav {
+			flex: 1;
+			text-align: left;
+		}
+
+		#local-nav {
+			flex: 1;
+			text-align: right;
+		}
+
+		.main-visual {
+			background-image: url('main.jpg');
+			background-size: cover;
+			height: 400px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: #fff;
+			font-size: 2em;
+		}
+
+		.sidebar {
+			background-color: #ddd;
+			padding: 10px;
+			width: 200px;
+			float: left;
+		}
+
+		.content {
+			padding: 10px;
+			margin-left: 220px;
+			min-height: 400px;
+		}
+
+		.footer {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			text-align: center;
+		}
+	</style> -->
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: Arial, sans-serif;
+			background-color: #f1f1f1;
+		}
+
+		header {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			text-align: center;
+		}
+
+		nav {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			align-items: center;
+			background-color: #555;
+			color: #fff;
+			padding: 10px;
+		}
+
+		nav ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			display: flex;
+		}
+
+		nav li {
+			margin-right: 20px;
+		}
+
+		nav a {
+			color: #fff;
+			text-decoration: none;
+			font-weight: bold;
+		}
+
+		nav a:hover {
+			color: #ccc;
+		}
+
+		#global-nav {
+			flex: 1;
+			text-align: left;
+			margin-bottom: 10px;
+		}
+
+		#local-nav {
+			flex: 1;
+			text-align: right;
+		}
+
+		.main-visual {
+			background-image: url('main.jpg');
+			background-size: cover;
+			height: 400px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: #fff;
+			font-size: 2em;
+		}
+
+		.sidebar {
+			background-color: #ddd;
+			padding: 10px;
+			width: 100%;
+			max-width: 300px;
+			float: left;
+			box-sizing: border-box;
+		}
+
+		.content {
+			padding: 10px;
+			box-sizing: border-box;
+			margin-left: 0;
+			margin-right: 0;
+			min-height: 400px;
+		}
+
+		@media only screen and (min-width: 768px) {
+			nav {
+				flex-wrap: nowrap;
+			}
+
+			#global-nav {
+				margin-bottom: 0;
+			}
+
+			.sidebar {
+				margin-right: 20px;
+				width: 300px;
+				float: right;
+			}
+
+			.content {
+				margin-left: 320px;
+				margin-right: 20px;
+			}
+		}
+
+		.footer {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>My Website</h1>
+	</header>
+	<nav>
+		<div id="global-nav">
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">About</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+		</div>
+		<div id="local-nav">
+			<ul>
+				<li><a href="#">Login</a></li>
+				<li><a href="#">Sign Up</a></li>
+			</ul>
+		</div>
+	</nav>
+	<div class="main-visual">
+		<h2>Welcome</h2>
+	</div>
+	<div class="sidebar">
+		<h3>Categories</h3>
+		<ul>
+			<li><a href="#">Category 1</a></li>
+			<li><a href="#">Category 2</a></li>
+			<li><a href="#">Category 3</a></li>
+		</ul>
+	</div>
+	<div class="content">
+		<h2>About</h2>
+		<p>Sample Text</p>
+	</div>
+	<div class="footer">
+		<p>&copy; 2023 My Website</p>
+	</div>
+</body>
+</html>

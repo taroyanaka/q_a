@@ -250,8 +250,8 @@ font-size: 2.5rem;
 <!-- <a :href="data11[0]" class="link_text">{{data11[0]}}</a> -->
 
 <div class="textarea-column-1">
-        <textarea v-model="data2"></textarea>
-        <textarea v-model="data3"></textarea>
+    <textarea v-model="data2"></textarea>
+    <textarea v-model="data3"></textarea>
 </div>
 <button @click="fn21(1)" class="font_sizing">◉</button>
 <button @click="fn21(-1)" class="font_sizing">⦿</button>
@@ -556,6 +556,22 @@ function isURL(str) {
     return true;
     }
 };
+
+// 特定のuserとそのq_aを結合してクエリのエンドポイントをJSでawaitでfetchするサンプル
+async function fetchUsers_q_a(ID) {
+    const response = await fetch('http://localhost:3001/users_q_a/' + ID.toString());
+    const json = await response.json();
+    console.log(json);
+}
+
+// 特定のuserとそのf_i_bを結合してクエリのエンドポイントをJSでawaitでfetchするサンプル
+async function fetchUsers_f_i_b() {
+    const response = await fetch('http://localhost:3001/users_f_i_b' + ID.toString());
+    const json = await response.json();
+    console.log(json);
+}
+
+
 
 </script>
 </html>

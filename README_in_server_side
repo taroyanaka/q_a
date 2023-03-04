@@ -1,0 +1,7 @@
+コマンドラインで以下を実行
+
+
+& npm install express better-sqlite3 validator cors
+& touch ./q_a.sqlite3
+& sqlite3 ./q_a.sqlite3 < ./sql_init_for_index.sql
+& node ./CRUD_endpoint_sql_for_index.js

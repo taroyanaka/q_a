@@ -265,7 +265,7 @@ font-size: 2.5rem;
 
 <div class="column-2" :class="{'column-2-none': column_2_none}">
 <ul>
-<li v-for="(item, IDX) in data5" :key="item" class="result_color data5_result">
+<li v-for="(item, IDX) in data5" :key="item" class="result_color" :style="{display: data5_result ? 'block' : 'none'}">
     <span>{{ item[0] }}</span>
     <!-- <img :src="item[1][0]" :alt="item[0]" class="png_image"> -->
     <span v-for="item2 in item[1][1]">
@@ -273,9 +273,8 @@ font-size: 2.5rem;
     </span>
     <span class="OK_or_NG">{{ item[2] }}</span>
 </li>
-<li v-for="(item, IDX) in data9" :key="item" class="result_color data9_result">
+<li v-for="(item, IDX) in data9" :key="item" class="result_color" :style="{display: data9_result ? 'block' : 'none'}">
     <img :src="item[0]">
-    <!-- :alt="item[0]" class="png_image png_image_back" @click="check_image_to_name(item[1][0], item[0], IDX)" -->
     <div v-for="item2 in item[1][1]">
         <button @click="check_name_to_image(item[1][0], item2, IDX)">{{ item2 }}</button>
     </div>
@@ -420,6 +419,9 @@ data8:[],
 data9:[],
 data10:[],
 test_mode: false,
+
+data5_result: true,
+data9_result: false,
 }},
 watch: {
 data2: {
@@ -550,9 +552,15 @@ this.ary_data7 = this.data3.split("\n")
 swap_data6_data7(){
 [this.ary_data6, this.ary_data7] = [this.ary_data7, this.ary_data6];
 },
+// data5_resultとdata9_resultのtrue/falseの切り替え
+change_result(){
+this.data5_result = !this.data5_result;
+this.data9_result = !this.data9_result;
+},
 swap_q_a(){
 this.data6_data7_string_to_array();
 this.swap_data6_data7();
+this.change_result();
 this.data8 = this.to_ary(this.ary_data7).map(V=> [V, this.take2(shuffle(this.remove(V, this.ary_data7)))]
 )
 this.data8 = this.to_ary(this.data8).map(V=> [V[0], shuffle(R.flatten(V))]

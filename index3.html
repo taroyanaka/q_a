@@ -281,6 +281,7 @@ font-size: 2.5rem;
     <span class="OK_or_NG">{{ item[2] }}</span>
 </li>
 </ul>
+<button @click="filter_image_and_name">🎮</button>
 </div>
 
 
@@ -289,18 +290,17 @@ font-size: 2.5rem;
 <button @click="fn18" class="result_opener">📖</button>
 
 </div>
-<!-- <template v-for="(DATAVAL, DATAIDX) in data10"> -->
-<template>
+<template v-for="(DATAVAL, DATAIDX) in data10">
     <div class="textarea-column-2">
     <div class="a">
         <button @click="fn9(DATAIDX)" class="a-1">↩️</button>
         <button @click="fn16(DATAIDX)" class="a-2">🗑️</button>
         <button @click="fn17(DATAIDX)" class="a-3">📚</button>
     </div>
-<!-- <textarea name="" cols="30" rows="10" class="b" :class="'textarea-'+DATAIDX" style='display: block;'>{{ DATAVAL[0] }}</textarea> -->
-<textarea name="" cols="30" rows="10" class="b" style='display: block;'>{{  }}</textarea>
-<!-- <textarea name="" cols="30" rows="10" class="c" :class="'textarea-'+DATAIDX" style='display: block;'>{{ DATAVAL[1] }}</textarea> -->
-<textarea name="" cols="30" rows="10" class="c"  style='display: block;'>{{  }}</textarea>
+<textarea name="" cols="30" rows="10" class="b" :class="'textarea-'+DATAIDX" style='display: block;'>{{ DATAVAL[0] }}</textarea>
+<!-- <textarea name="" cols="30" rows="10" class="b" style='display: block;'>{{  }}</textarea> -->
+<textarea name="" cols="30" rows="10" class="c" :class="'textarea-'+DATAIDX" style='display: block;'>{{ DATAVAL[1] }}</textarea>
+<!-- <textarea name="" cols="30" rows="10" class="c"  style='display: block;'>{{  }}</textarea> -->
     </div>
 </template>
 </div>
@@ -447,6 +447,7 @@ created(){
 beforeMount(){
 },
 mounted() {
+this.save_data_load();
 this.init();
 this.sample1();
 this.for_debug();
@@ -483,6 +484,7 @@ this.data4 = this.to_ary(this.data4).map(V=> [V[0], shuffle(R.flatten(V))]
 this.data5 = R.zip(this.ary_data2, this.data4);
 // data5のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
 this.data5 = R.map(R.insert(2, false), this.data5);
+this.for_debug();
 },
 init(){
 this.data2_data3_string_to_array();
@@ -490,6 +492,7 @@ this.make_image_to_name_Q_A_array();
 },
 check_image_to_name(correct_URL, URL, IDX){
 this.data5[IDX][2] = correct_URL === URL ? true : false;
+this.for_debug();
 },
 check_name_to_image(correct_URL, URL, IDX){
 this.data9[IDX][2] = correct_URL === URL ? true : false;
@@ -574,10 +577,6 @@ this.data9 = R.map(R.insert(2, false), this.data9);
 this.for_debug();
 },
 
-
-
-
-
 async save_data_to_all_save(){
 this.all_save.push(this.to_ary([this.data2, this.data3]));
 await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
@@ -595,6 +594,39 @@ if (window.confirm("Do you really want to delete??🦖\n本当に削除する？
     await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
 };
 },
+
+
+
+filter_image_and_name(){
+if(data5.map(V=>V[2]).every(V=>V === true)){
+    this.data5 = [];
+    alert("すべての問題が正解しました。🦖\nすべての問題が正解しました。🦕");
+    return;
+}
+const res1 = this.data5.filter(V=>V[2] === false);
+const res2 = R.transpose(
+    res1.map(V=> [V[0], V[1][0]])
+);
+this.data10.push([res2[0].join("\n"), res2[1].join("\n")]);
+this.for_debug();
+},
+
+fn9(IDX){
+this.data2 = this.data10[IDX][0];
+this.data3 = this.data10[IDX][1];
+},
+fn16(INDEX){
+this.data10.splice(INDEX, 1);
+},
+fn17(INDEX){
+document.querySelectorAll('.textarea-'+INDEX).forEach(ELM=>{
+    if(ELM.style.display === "block" || ELM.style.display === ''){
+    ELM.style.display = "none"}else{
+    ELM.style.display = "block"
+    }
+});
+},
+
 
 
 },

@@ -232,9 +232,9 @@ font-size: 2.5rem;
 </div>
 <button @click="fn19" class="save_opener">📂</button>
 <ul class="save_data_set_list_parent" style='display: block;'>
-<!-- <li v-for="(DATAVAL, DATAIDX) in all_save" class="save_data_set_list"> -->
-<li class="save_data_set_list">
-    <!-- <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span> -->
+<li v-for="(DATAVAL, DATAIDX) in all_save" class="save_data_set_list">
+<!-- <li class="save_data_set_list"> -->
+    <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span>
     <span @click="save_data_set(DATAIDX)">{{  }}</span>
     <button @click="save_data_set(DATAIDX)" class="save_data_set">📂</button>
     <button @click="save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button>
@@ -418,6 +418,9 @@ data7:[],
 data8:[],
 data9:[],
 data10:[],
+
+all_save: [],
+
 test_mode: false,
 
 data5_result: true,
@@ -575,23 +578,23 @@ this.for_debug();
 
 
 
-// async save_data_to_all_save(){
-// this.all_save.push(this.to_ary([this.data6, this.data3]));
-// await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
-// },
-// async save_data_load() {
-// this.all_save = JSON.parse(await localforage.getItem('i_t_n')) || [];
-// },
-// save_data_set(INDEX){
-// this.data6 = this.all_save[INDEX][0];
-// this.data3 = this.all_save[INDEX][1];
-// },
-// async save_data_delete(INDEX){
-// if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
-//     this.all_save.splice(INDEX, 1);
-//     await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
-// };
-// },
+async save_data_to_all_save(){
+this.all_save.push(this.to_ary([this.data2, this.data3]));
+await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
+},
+async save_data_load() {
+this.all_save = JSON.parse(await localforage.getItem('i_t_n')) || [];
+},
+save_data_set(INDEX){
+this.data2 = this.all_save[INDEX][0];
+this.data3 = this.all_save[INDEX][1];
+},
+async save_data_delete(INDEX){
+if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
+    this.all_save.splice(INDEX, 1);
+    await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
+};
+},
 
 
 },

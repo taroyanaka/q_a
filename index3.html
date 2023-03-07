@@ -227,7 +227,7 @@ font-size: 2.5rem;
 <div class="optional_function">
     <button @click="reverse_q_a">🔃</button>
     <button @click="shuffle_q_a">🌪️</button>
-    <!-- <button @click="swap_q_a">🔁</button> -->
+    <button @click="swap_q_a">🔁</button>
     <button @click="save_data_to_all_save">🗂️</button>
 </div>
 <button @click="fn19" class="save_opener">📂</button>
@@ -265,12 +265,20 @@ font-size: 2.5rem;
 
 <div class="column-2" :class="{'column-2-none': column_2_none}">
 <ul>
-<li v-for="(item, IDX) in data5" :key="item" class="result_color">
+<li v-for="(item, IDX) in data5" :key="item" class="result_color data5_result">
     <span>{{ item[0] }}</span>
     <!-- <img :src="item[1][0]" :alt="item[0]" class="png_image"> -->
     <span v-for="item2 in item[1][1]">
     <img :src="item2" :alt="item[0]" class="png_image png_image_back" @click="check_image_to_name(item[1][0], item2, IDX)">
     </span>
+    <span class="OK_or_NG">{{ item[2] }}</span>
+</li>
+<li v-for="(item, IDX) in data9" :key="item" class="result_color data9_result">
+    <img :src="item[0]">
+    <!-- :alt="item[0]" class="png_image png_image_back" @click="check_image_to_name(item[1][0], item[0], IDX)" -->
+    <div v-for="item2 in item[1][1]">
+        <button @click="check_name_to_image(item[1][0], item2, IDX)">{{ item2 }}</button>
+    </div>
     <span class="OK_or_NG">{{ item[2] }}</span>
 </li>
 </ul>
@@ -435,6 +443,7 @@ beforeMount(){
 },
 mounted() {
 this.init();
+this.sample1();
 this.for_debug();
 this.test_mode === true ? this.test_exe() : null;
 },
@@ -477,6 +486,9 @@ this.make_image_to_name_Q_A_array();
 check_image_to_name(correct_URL, URL, IDX){
 this.data5[IDX][2] = correct_URL === URL ? true : false;
 },
+check_name_to_image(correct_URL, URL, IDX){
+this.data9[IDX][2] = correct_URL === URL ? true : false;
+},
 
 to_ary(it){
 return JSON.parse(JSON.stringify(it));
@@ -496,23 +508,6 @@ data9 = this.to_ary(this.data9);
 data10 = this.to_ary(this.data10);
 },
 
-// async save_data_to_all_save(){
-// this.all_save.push(this.to_ary([this.data6, this.data3]));
-// await localforage.setItem('q_a_1', JSON.stringify(this.all_save));
-// },
-// async save_data_load() {
-// this.all_save = JSON.parse(await localforage.getItem('q_a_1')) || [];
-// },
-// save_data_set(INDEX){
-// this.data6 = this.all_save[INDEX][0];
-// this.data3 = this.all_save[INDEX][1];
-// },
-// async save_data_delete(INDEX){
-// if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
-//     this.all_save.splice(INDEX, 1);
-//     await localforage.setItem('q_a_1', JSON.stringify(this.all_save));
-// };
-// },
 
 sample1(){
 this.data2 = `cat
@@ -536,6 +531,60 @@ https://pbs.twimg.com/media/FpfRSXQacAARY-a?format=jpg
 https://pbs.twimg.com/media/FoaB5b9aUAAXgAU?format=jpg
 https://pbs.twimg.com/media/FjuxRy-agAAgAFJ?format=jpg`;
 },
+// data2とdata3を逆ソートする関数
+reverse_q_a(){
+this.data2 = this.data2.split("\n").reverse().join("\n");
+this.data3 = this.data3.split("\n").reverse().join("\n");
+},
+shuffle_q_a(){
+const ary1 = R.zip(this.data2.split("\n"), this.data3.split("\n"));
+const ary2 = shuffle(ary1);
+[this.data2, this.data3] = R.pipe(R.transpose, R.map(R.join("\n")))(ary2);
+},
+
+data6_data7_string_to_array(){
+this.ary_data6 = this.data2.split("\n")
+this.ary_data7 = this.data3.split("\n")
+},
+// swap_:ary_data6とary_data7を入れ替える関数
+swap_data6_data7(){
+[this.ary_data6, this.ary_data7] = [this.ary_data7, this.ary_data6];
+},
+swap_q_a(){
+this.data6_data7_string_to_array();
+this.swap_data6_data7();
+this.data8 = this.to_ary(this.ary_data7).map(V=> [V, this.take2(shuffle(this.remove(V, this.ary_data7)))]
+)
+this.data8 = this.to_ary(this.data8).map(V=> [V[0], shuffle(R.flatten(V))]
+);
+this.data9 = R.zip(this.ary_data6, this.data8);
+// data9のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
+this.data9 = R.map(R.insert(2, false), this.data9);
+this.for_debug();
+},
+
+
+
+
+
+// async save_data_to_all_save(){
+// this.all_save.push(this.to_ary([this.data6, this.data3]));
+// await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
+// },
+// async save_data_load() {
+// this.all_save = JSON.parse(await localforage.getItem('i_t_n')) || [];
+// },
+// save_data_set(INDEX){
+// this.data6 = this.all_save[INDEX][0];
+// this.data3 = this.all_save[INDEX][1];
+// },
+// async save_data_delete(INDEX){
+// if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
+//     this.all_save.splice(INDEX, 1);
+//     await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
+// };
+// },
+
 
 },
 }).mount('.app');
@@ -556,22 +605,5 @@ function isURL(str) {
     return true;
     }
 };
-
-// 特定のuserとそのq_aを結合してクエリのエンドポイントをJSでawaitでfetchするサンプル
-async function fetchUsers_q_a(ID) {
-    const response = await fetch('http://localhost:3001/users_q_a/' + ID.toString());
-    const json = await response.json();
-    console.log(json);
-}
-
-// 特定のuserとそのf_i_bを結合してクエリのエンドポイントをJSでawaitでfetchするサンプル
-async function fetchUsers_f_i_b() {
-    const response = await fetch('http://localhost:3001/users_f_i_b' + ID.toString());
-    const json = await response.json();
-    console.log(json);
-}
-
-
-
 </script>
 </html>

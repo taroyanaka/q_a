@@ -1,3 +1,25 @@
+// https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave
+
+// in vscode's workspace settings.json
+// {
+// "emeraldwalk.runonsave": {
+//     "commands": [
+//         {
+//             "match": "/Users/yanakataro/Desktop/js2/q_a/CRUD_endpoint_sql_for_index.js",
+//             "cmd": "cp /Users/yanakataro/Desktop/js2/q_a/CRUD_endpoint_sql_for_index.js /Users/yanakataro/Desktop/npm_package/CRUD_endpoint_sql_for_index.js"
+//         }
+//     ]
+// }
+// }
+
+// on CLI
+// nodemon /Users/yanakataro/Desktop/npm_package/CRUD_endpoint_sql_for_index.js
+
+
+
+
+
+
 // CRUD_endpoint_sql_for_index.js
 // node.js, express.js and better-sqlite3.js validator.js cors.js
 
@@ -32,6 +54,16 @@
 //   FOREIGN KEY (user_id) REFERENCES users(id)
 // );
 
+// CREATE TABLE i_t_n (
+//   id INTEGER PRIMARY KEY AUTOINCREMENT,
+//   user_id INTEGER NOT NULL,
+//   content TEXT NOT NULL,
+//   created_at DATETIME NOT NULL,
+//   updated_at DATETIME NOT NULL,
+//   FOREIGN KEY (user_id) REFERENCES users(id)
+// );
+
+
 
 
 const express = require('express');
@@ -47,14 +79,12 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 
-const port = 3001;
 
-// expressを127.0.0.1で起動する
-// app.listen(port, '127.0.0.1', () => {
-//   console.log(`App listening at http://127.0.0.1:${port}`);
-// });
+const port = 8000;
 // expressをlocalhostで起動する
-app.listen(port, 'localhost', () => {
+// app.listen(port, 'localhost', () => {
+app.listen(port, "0.0.0.0", () => {
+// app.listen(port, '127.0.0.1', () => {
     console.log(`App listening at http://localhost:${port}`);
 });
 
@@ -77,3 +107,42 @@ app.get('/users_f_i_b/:id', (req, res) => {
     res.send(rows);
     }
 );
+
+// 特定のuserのnameを指定してそのi_t_nを結合してクエリのエンドポイント。content created_at name updated_atを表示する
+app.get('/users_i_t_n/:id', (req, res) => {
+    const rows = db.prepare('SELECT i_t_n.content, i_t_n.created_at, users.name, i_t_n.updated_at FROM users INNER JOIN i_t_n ON users.id = i_t_n.user_id WHERE users.id = ?').all(req.params.id);
+    res.send(rows);
+    }
+);
+
+
+// 'better-sqlite3'のnowのサンプル
+// const sqlite = require('better-sqlite3');
+// const db = new sqlite('q_a.sqlite3');
+// const rows = db.prepare('INSERT INTO users (name, password, created_at, updated_at) VALUES (?, ?, datetime("now"), datetime("now"))').run('name', 'password');
+
+// users_i_t_nのcontentを挿入するapp.getエンドポイント。nameはidを指定して取得する。created_atとupdated_atは自動で挿入される。insertに成功したら、successというデータを返し、insertに失敗したら、errorというデータを返す。
+app.get('/users_i_t_n', (req, res) => {
+    const now = new Date().toISOString();
+    const rows = db.prepare('INSERT INTO i_t_n (user_id, content, created_at, updated_at) VALUES (?, ?, ?, ?)').run(req.query.user_id, req.query.content, now, now);
+    if (rows.changes === 1) {
+        res.send({status: 'success'});
+    } else {
+        res.send({status: 'error'});
+    }
+});
+
+
+
+// SELECT name, sql FROM sqlite_master WHERE type='table';でテーブルの中身を確認する。dumpというendpoint。
+app.get('/dump', (req, res) => {
+    const rows = db.prepare('SELECT name, sql FROM sqlite_master WHERE type="table"').all();
+    res.send(rows);
+    }
+);
+
+
+
+
+// app.post('/users_i_t_n')のクエリの例をURL形式で。
+// http://localhost:8000/users_i_t_n?user_id=1&content=content

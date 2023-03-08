@@ -425,6 +425,9 @@ test_mode: false,
 
 data5_result: true,
 data9_result: false,
+
+HOST: 'http://localhost',
+PORT: '8000',
 }},
 watch: {
 data2: {
@@ -627,6 +630,53 @@ document.querySelectorAll('.textarea-'+INDEX).forEach(ELM=>{
 });
 },
 
+// http://localhost:8000/users_q_a/:id で idは1を想定してfetchするawait関数。this.HOSTとthis.PORTを使う
+async fetch_users_q_a(id) {
+    const res = await fetch(this.HOST + ':' + this.PORT + '/users_q_a/' + id);
+    const json = await res.json();
+    return json;
+},
+// http://localhost:8000/users_f_i_b/:id で idは1を想定してfetchするawait関数。this.HOSTとthis.PORTを使う
+async fetch_users_f_i_b(id) {
+    const res = await fetch(this.HOST + ':' + this.PORT + '/users_f_i_b/' + id);
+    const json = await res.json();
+    return json;
+},
+// http://localhost:8000/users_i_t_n/:id で idは1を想定してfetchするawait関数。this.HOSTとthis.PORTを使う
+async fetch_users_i_t_n(id) {
+    const res = await fetch(this.HOST + ':' + this.PORT + '/users_i_t_n/' + id);
+    const json = await res.json();
+    return json;
+},
+
+// http://localhost:8000/users_i_t_n?user_id=1&content=contentを想定してgetでinsertのfetchをするawait関数。this.HOSTとthis.PORTを使う。
+async fetch_users_i_t_n_insert(user_id) {
+
+if(this.data2 === "" || this.data3 === ""){
+    alert("contentがありません。🦖\ncontentがありません。🦕");
+    return;
+}
+// contentは[this.data2, this.data3]をJSON.stringifyしたものを想定。
+    const content = JSON.stringify([this.to_ary(this.data2), this.to_ary(this.data3)]);
+    // const content = 'AAAA';
+    const res = await fetch(this.HOST + ':' + this.PORT + '/users_i_t_n?user_id=' + user_id + '&content=' + content);
+    const json = await res.json();
+    return json;
+},
+
+// fetch_users_i_t_nを使ってデータを取得してcontentの中身の1つ目の要素をdata2に代入、2つ目の要素をdata3に代入する、await関数
+async fetch_users_i_t_n_set_data2_data3(id) {
+    const res = JSON.parse((await app.fetch_users_i_t_n(id))[0].content);
+    console.log(res);
+    // this.data2 = res[0].join('\n');
+    // this.data3 = res[1].join('\n');
+},
+// http://localhost:8000/dumpを想定してgetでdumpのfetchをするawait関数。this.HOSTとthis.PORTを使う。
+async fetch_dump() {
+    const res = await fetch(this.HOST + ':' + this.PORT + '/dump');
+    const json = await res.json();
+    return json;
+},
 
 
 },

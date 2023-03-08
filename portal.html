@@ -25,6 +25,15 @@
 </li>
 </ul>
 
+<ul class="save_data_set_list_parent" style='display: block;'>
+<li v-for="(DATAVAL, DATAIDX) in q_a_data_of_servers_fetched" class="save_data_set_list">
+<span @click="">{{ DATAVAL.content }}</span>
+<span @click="">{{ DATAVAL.created_at }}</span>
+<span @click="">{{ DATAVAL.name }}</span>
+<span @click="">{{ DATAVAL.updated_at }}</span>
+</li>
+</ul>
+
 <textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
 
 <ul class="save_data_set_list_parent" style='display: block;'>
@@ -37,7 +46,6 @@
 
 <ul class="save_data_set_list_parent" style='display: block;'>
 <li v-for="(DATAVAL, DATAIDX) in i_t_n_data_of_servers_fetched" class="save_data_set_list">
-<!-- <span @click="">{{ DATAVAL }}</span> -->
 <span @click="">{{ DATAVAL.content }}</span>
 <span @click="">{{ DATAVAL.created_at }}</span>
 <span @click="">{{ DATAVAL.name }}</span>
@@ -77,6 +85,7 @@ mounted() {
     this.q_a_save_data_load();
     this.i_t_n_save_data_load();
 
+    this.fetch_users_q_a(1);
     this.fetch_users_i_t_n(1);
 },
 beforeUpdate() {
@@ -149,10 +158,6 @@ async fetch_users_q_a(id) {
     const json = this.q_a_data_of_servers_fetched = await res.json();
     return json;
 },
-
-
-
-
 // http://localhost:8000/users_i_t_n/:id で idは1を想定してfetchするawait関数。this.HOSTとthis.PORTを使う
 async fetch_users_i_t_n(id) {
     const res = await fetch(this.HOST + ':' + this.PORT + '/users_i_t_n/' + id);

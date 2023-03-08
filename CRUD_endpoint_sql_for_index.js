@@ -121,8 +121,8 @@ app.get('/users_i_t_n/:id', (req, res) => {
 // const db = new sqlite('q_a.sqlite3');
 // const rows = db.prepare('INSERT INTO users (name, password, created_at, updated_at) VALUES (?, ?, datetime("now"), datetime("now"))').run('name', 'password');
 
-// users_i_t_nのcontentを挿入するapp.getエンドポイント。nameはidを指定して取得する。created_atとupdated_atは自動で挿入される。insertに成功したら、successというデータを返し、insertに失敗したら、errorというデータを返す。
-app.get('/users_i_t_n', (req, res) => {
+// insert_i_t_nのcontentを挿入するapp.getエンドポイント。nameはidを指定して取得する。created_atとupdated_atは自動で挿入される。insertに成功したら、successというデータを返し、insertに失敗したら、errorというデータを返す。
+app.get('/insert_i_t_n', (req, res) => {
     const now = new Date().toISOString();
     const rows = db.prepare('INSERT INTO i_t_n (user_id, content, created_at, updated_at) VALUES (?, ?, ?, ?)').run(req.query.user_id, req.query.content, now, now);
     if (rows.changes === 1) {
@@ -131,6 +131,7 @@ app.get('/users_i_t_n', (req, res) => {
         res.send({status: 'error'});
     }
 });
+
 
 
 

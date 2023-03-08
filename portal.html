@@ -165,9 +165,7 @@ async fetch_users_i_t_n(id) {
     return json;
 },
 async set_fetch_users_i_t_n(id){
-const server_data = await this.fetch_users_i_t_n(id);
-this.data2 = JSON.parse(server_data[2].content)[0];
-this.data3 = JSON.parse(server_data[2].content)[1];
+    JSON.parse(portal.i_t_n_data_of_servers_fetched[3].content)[0]
 },
 
 

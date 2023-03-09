@@ -41,7 +41,7 @@
 <li v-for="(DATAVAL, DATAIDX) in i_t_n_all_save" class="save_data_set_list">
     <span @click="">{{ [DATAVAL[0], DATAVAL[1]] }}</span>
     <button @click="i_t_n_save_data_delete(DATAIDX)" class="i_t_n_save_data_delete">🗑️</button>
-    <button @click="fetch_users_i_t_n_insert(1, DATAVAL)" class="fetch_users_i_t_n_insert">📤</button>
+    <button @click="fetch_users_i_t_n_insert(DATAVAL)" class="fetch_users_i_t_n_insert">📤</button>
 
     <button @click="i_t_n_set_data_to_textarea(DATAVAL[0], DATAVAL[1])" class="i_t_n_set_data_to_textarea">🥍</button>
 </li>
@@ -147,17 +147,6 @@ if (window.confirm("Do you really want to delete??🦖\n本当に削除する？
 // },
 
 
-// http://localhost:8000/users_i_t_n?user_id=1&content=contentを想定してgetでinsertのfetchをするawait関数。this.HOSTとthis.PORTを使う。
-async fetch_users_i_t_n_insert(user_id, content_data) {
-    // const content = JSON.stringify([this.to_ary(this.data2), this.to_ary(this.data3)]);
-    const content = JSON.stringify(content_data);
-    const res = await fetch(this.HOST + ':' + this.PORT + '/insert_i_t_n?user_id=' + user_id + '&content=' + content);
-    const json = await res.json();
-    return json;
-},
-
-
-
 
 
 
@@ -199,6 +188,28 @@ async i_t_n_set_data_to_textarea(i_t_n_data_1, i_t_n_data_2){
     this.i_t_n_data_1 = i_t_n_data_1;
     this.i_t_n_data_2 = i_t_n_data_2;
 },
+
+// 引数のcontentをJSON.stringifyして、http://localhost:8000/insert_i_t_n?user_id=1&content=contentを想定してgetでinsertのfetchをするawait関数。this.HOSTとthis.PORTを使う。
+async fetch_users_i_t_n_insert(content, user_id=1) {
+    user_id = 1;
+    const res = await fetch(this.HOST + ':' + this.PORT + '/insert_i_t_n?user_id=' + user_id + '&content=' + JSON.stringify(content));
+    const json = await res.json();
+
+    this.fetch_users_i_t_n(1);
+
+    return json;
+},
+// http://localhost:8000/delete_i_t_n?id=1 で idは1を想定してfetchするawait関数。this.HOSTとthis.PORTを使う
+async fetch_delete_i_t_n(id) {
+    const res = await fetch(this.HOST + ':' + this.PORT + '/delete_i_t_n?id=' + id);
+    const json = await res.json();
+
+    this.fetch_users_i_t_n(1);
+
+    return json;
+},
+
+
 
 },
 }).mount('.portal');

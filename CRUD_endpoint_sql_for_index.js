@@ -108,13 +108,12 @@ app.get('/users_f_i_b/:id', (req, res) => {
     }
 );
 
-// 特定のuserのnameを指定してそのi_t_nを結合してクエリのエンドポイント。content created_at name updated_atを表示する
+// 特定のuserのnameを指定してそのi_t_nを結合してクエリのエンドポイント。i_t_nのid content created_at name updated_atを表示する
 app.get('/users_i_t_n/:id', (req, res) => {
-    const rows = db.prepare('SELECT i_t_n.content, i_t_n.created_at, users.name, i_t_n.updated_at FROM users INNER JOIN i_t_n ON users.id = i_t_n.user_id WHERE users.id = ?').all(req.params.id);
+    const rows = db.prepare('SELECT i_t_n.id, i_t_n.content, i_t_n.created_at, users.name, i_t_n.updated_at FROM users INNER JOIN i_t_n ON users.id = i_t_n.user_id WHERE users.id = ?').all(req.params.id);
     res.send(rows);
     }
 );
-
 
 // 'better-sqlite3'のnowのサンプル
 // const sqlite = require('better-sqlite3');
@@ -131,7 +130,18 @@ app.get('/insert_i_t_n', (req, res) => {
         res.send({status: 'error'});
     }
 });
+// delete_i_t_nという、レコードのidを指定して削除するapp.getエンドポイント。deleteに成功したら、successというデータを返し、deleteに失敗したら、errorというデータを返す。
+app.get('/delete_i_t_n', (req, res) => {
+    const rows = db.prepare('DELETE FROM i_t_n WHERE id = ?').run(req.query.id);
+    if (rows.changes === 1) {
+        res.send({status: 'success'});
+    } else {
+        res.send({status: 'error'});
+    }
+});
 
+// delete_i_t_nのクエリの例をURL形式で。
+// http://localhost:8000/delete_i_t_n?id=1
 
 
 

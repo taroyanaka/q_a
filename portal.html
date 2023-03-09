@@ -46,10 +46,14 @@
 
 <ul class="save_data_set_list_parent" style='display: block;'>
 <li v-for="(DATAVAL, DATAIDX) in i_t_n_data_of_servers_fetched" class="save_data_set_list">
+<span @click="">{{ DATAVAL.id }}</span>
 <span @click="">{{ DATAVAL.content }}</span>
 <span @click="">{{ DATAVAL.created_at }}</span>
 <span @click="">{{ DATAVAL.name }}</span>
 <span @click="">{{ DATAVAL.updated_at }}</span>
+
+<button @click="fetch_delete_i_t_n(DATAVAL.id)">DELETE this record</button>
+
 </li>
 </ul>
 
@@ -158,6 +162,8 @@ async fetch_users_q_a(id) {
     const json = this.q_a_data_of_servers_fetched = await res.json();
     return json;
 },
+
+
 // http://localhost:8000/users_i_t_n/:id で idは1を想定してfetchするawait関数。this.HOSTとthis.PORTを使う
 async fetch_users_i_t_n(id) {
     const res = await fetch(this.HOST + ':' + this.PORT + '/users_i_t_n/' + id);
@@ -166,6 +172,15 @@ async fetch_users_i_t_n(id) {
 },
 async set_fetch_users_i_t_n(id){
     JSON.parse(portal.i_t_n_data_of_servers_fetched[3].content)[0]
+},
+// http://localhost:8000/delete_i_t_n?id=1 で idは1を想定してfetchするawait関数。this.HOSTとthis.PORTを使う
+async fetch_delete_i_t_n(id) {
+    const res = await fetch(this.HOST + ':' + this.PORT + '/delete_i_t_n?id=' + id);
+    const json = await res.json();
+
+    this.fetch_users_i_t_n(1);
+
+    return json;
 },
 
 

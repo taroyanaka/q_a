@@ -34,13 +34,16 @@
 </li>
 </ul>
 
-<textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
+<textarea name="" id="" cols="10" rows="10" v-model="i_t_n_data_1"></textarea>
+<textarea name="" id="" cols="10" rows="10" v-model="i_t_n_data_2"></textarea>
 
 <ul class="save_data_set_list_parent" style='display: block;'>
 <li v-for="(DATAVAL, DATAIDX) in i_t_n_all_save" class="save_data_set_list">
     <span @click="">{{ [DATAVAL[0], DATAVAL[1]] }}</span>
     <button @click="i_t_n_save_data_delete(DATAIDX)" class="i_t_n_save_data_delete">🗑️</button>
     <button @click="fetch_users_i_t_n_insert(1, DATAVAL)" class="fetch_users_i_t_n_insert">📤</button>
+
+    <button @click="i_t_n_set_data_to_textarea(DATAVAL[0], DATAVAL[1])" class="i_t_n_set_data_to_textarea">🥍</button>
 </li>
 </ul>
 
@@ -65,7 +68,9 @@
 const portal = Vue.createApp({
 data() {
     return {
-data_0: 'ANY',
+i_t_n_data_1: '',
+i_t_n_data_2: '',
+
 q_a_all_save: [],
 i_t_n_all_save: [],
 
@@ -188,6 +193,11 @@ async i_t_n_save_data_to_localforage(content){
     const parsed_content = JSON.parse(content);
     this.i_t_n_all_save.push(parsed_content);
     await localforage.setItem('i_t_n', JSON.stringify(this.i_t_n_all_save));
+},
+// 第一引数をi_t_n_data_1に、第二引数をi_t_n_data_2に入れる関数
+async i_t_n_set_data_to_textarea(i_t_n_data_1, i_t_n_data_2){
+    this.i_t_n_data_1 = i_t_n_data_1;
+    this.i_t_n_data_2 = i_t_n_data_2;
 },
 
 },

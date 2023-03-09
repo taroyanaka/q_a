@@ -8,38 +8,33 @@
 <body>
 <div class="react_app"></div>
 <script type="text/babel">
-const root = ReactDOM.createRoot(document.querySelector(".react_app"));
+const NEKO_ROOT = ReactDOM.createRoot(document.querySelector(".react_app"));
 
 function Neko1() {
-  const [count, setCount] = React.useState(1);
-  const [count2, setCount2] = React.useState(10);
+const [count1, setCount1] = React.useState(0);
+const [count2, setCount2] = React.useState(0);
 
-  function handleClick() {
-    setCount(count + 1);
-  }
-  function handleClick2() {
-    // setCount2(count2 + 2);
-    setCount2(count2 + 2 + count);
-  }
-  return (
-    <div>
-        <h2>HI</h2>
-      <p>You clicked the button {count} times.</p>
-      <button onClick={handleClick}>
-        neko1 Click me
-      </button>
-
-      <p>You clicked the button {count2} times.</p>
-      <button onClick={handleClick2}>
-        neko2 Click me
-      </button>
-    </div>
-
-  );
+function click1() {
+    setCount1(count1 + 1);
+};
+function click2() {
+    setCount2(count2 + 100 + count1);
 };
 
+return (
+<div>
+    <h2>HI</h2>
 
-root.render(
+    <p>count: {count1}</p>
+    <button onClick={click1}>count1 + 1 neko1 Click me</button>
+
+    <p>count2: {count2}</p>
+    <button onClick={click2}>count2 + 100 + count neko1 Click me</button>
+</div>
+);
+};
+
+NEKO_ROOT.render(
   <Neko1 />,
   document.querySelector(".react_app")
 );

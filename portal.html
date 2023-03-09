@@ -52,7 +52,8 @@
 <span @click="">{{ DATAVAL.name }}</span>
 <span @click="">{{ DATAVAL.updated_at }}</span>
 
-<button @click="fetch_delete_i_t_n(DATAVAL.id)">DELETE this record</button>
+<button @click="fetch_delete_i_t_n(DATAVAL.id)">DELETE it</button>
+<button @click="i_t_n_save_data_to_localforage(DATAVAL.content)">SAVE it to Your data</button>
 
 </li>
 </ul>
@@ -182,8 +183,12 @@ async fetch_delete_i_t_n(id) {
 
     return json;
 },
-
-
+// i_t_nの引数をcontentをlocalforageに追加保存する関数
+async i_t_n_save_data_to_localforage(content){
+    const parsed_content = JSON.parse(content);
+    this.i_t_n_all_save.push(parsed_content);
+    await localforage.setItem('i_t_n', JSON.stringify(this.i_t_n_all_save));
+},
 
 },
 }).mount('.portal');

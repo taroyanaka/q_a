@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+<div class="react_app"></div>
+<script type="text/babel">
+const root = ReactDOM.createRoot(document.querySelector(".react_app"));
+
+function Neko1() {
+  const [count, setCount] = React.useState(1);
+  const [count2, setCount2] = React.useState(10);
+
+  function handleClick() {
+    setCount(count + 1);
+  }
+  function handleClick2() {
+    // setCount2(count2 + 2);
+    setCount2(count2 + 2 + count);
+  }
+  return (
+    <div>
+        <h2>HI</h2>
+      <p>You clicked the button {count} times.</p>
+      <button onClick={handleClick}>
+        neko1 Click me
+      </button>
+
+      <p>You clicked the button {count2} times.</p>
+      <button onClick={handleClick2}>
+        neko2 Click me
+      </button>
+    </div>
+
+  );
+};
+
+
+root.render(
+  <Neko1 />,
+  document.querySelector(".react_app")
+);
+</script>
+</body>
+</html>

@@ -36,6 +36,7 @@
 
 <textarea name="" id="" cols="10" rows="10" v-model="i_t_n_data_1"></textarea>
 <textarea name="" id="" cols="10" rows="10" v-model="i_t_n_data_2"></textarea>
+<button @click="i_t_n_save_data_to_i_t_n_all_save">i_t_n_save_data_to_i_t_n_all_save</button>
 
 <ul class="save_data_set_list_parent" style='display: block;'>
 <li v-for="(DATAVAL, DATAIDX) in i_t_n_all_save" class="save_data_set_list">
@@ -107,6 +108,10 @@ fn_1(){
     // console.log(JSON.parse(JSON.stringify(this.data_0)));
 },
 
+to_ary(it){
+return JSON.parse(JSON.stringify(it));
+},
+
 
 async q_a_save_data_to_q_a_all_save(){
 this.q_a_all_save.push(this.to_ary([this.data6, this.data3]));
@@ -123,7 +128,7 @@ if (window.confirm("Do you really want to delete??🦖\n本当に削除する？
 },
 
 async i_t_n_save_data_to_i_t_n_all_save(){
-this.i_t_n_all_save.push(this.to_ary([this.data2, this.data3]));
+this.i_t_n_all_save.push(this.to_ary([this.i_t_n_data_1, this.i_t_n_data_2]));
 await localforage.setItem('i_t_n', JSON.stringify(this.i_t_n_all_save));
 },
 async i_t_n_save_data_load() {

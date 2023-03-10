@@ -73,6 +73,9 @@ console.log(e);
 f = b.split(new RegExp(a));
 g = R.intersperse([], f);
 console.log(g);
+const fn = (str) => str + "!!!";
+// 配列に対して、map()を使って、配列の各要素に対して、関数を適用する。関数を適用するのは、配列の各要素の文字列だけで、配列の各要素の配列は適用しない。ramda.jsで1行の関数を書く。
+h = R.map(R.when(R.is(String), fn), g);
 
 
 </script>

@@ -4,6 +4,7 @@
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="lib/ramda.@0.28.0.js"></script>
 </head>
 <body>
 <div class="react_app"></div>
@@ -63,6 +64,12 @@ a = "foo";
 b = `foo bar baz or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3 日本語は自然言語のうちの一つで主に日本国内で使われています`;
 c = b.split(new RegExp(a));
 console.log(c);
+// ramda.jsで配列の区切りのカンマに任意の文字列を挿入するサンプルコード
+// https://ramdajs.com/docs/#intersperse
+d = [1,2,3,4,5];
+e = R.intersperse("foo", d);
+console.log(e);
+
 
 
 </script>

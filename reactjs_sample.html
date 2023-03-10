@@ -14,27 +14,70 @@ function Neko1() {
     const [count2, setCount2] = React.useState(0);
 
     const [val1, setVal1] = React.useState([1,10,100]);
-    const [val2_1, setVal2_1] = React.useState(`foo bar baz
-or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3
-日本語は自然言語のうちの一つで主に日本国内で使われています`);
-    const [val2_2, setVal2_2] = React.useState(val2_1.split("\n"));
-    const [val3_1, setVal3_1] = React.useState(`foo
+    const [val2_1, setVal2_1] = React.useState(`foo
 qux
 日本
 blabla`);
+    const [val2_2, setVal2_2] = React.useState(val2_1.split("\n"));
+    const [val3_1, setVal3_1] = React.useState(`foo bar baz
+or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3
+日本語は自然言語のうちの一つで主に日本国内で使われています`);
     const [val3_2, setVal3_2] = React.useState(val3_1.split("\n"));
+
+// 第一引数が文字列の場合にのみ関数を適用する関数
+function applyIfString(arg1, arg2, func) {
+  if (typeof arg1 === 'string') {
+    return func(arg1, arg2);
+  } else {
+    return arg1;
+  }
+}
+
+const fn2_1 = (target_str, replacer_str) => {
+    const tmp1 = target_str.split(new RegExp(replacer_str));
+    const tmp2 = R.intersperse([replacer_str], tmp1);
+    return tmp2;
+};
+const fn3 = (X, Y) =>{
+    let tmp_res = [];
+    const fn2 = (target_str, replacer_str_ary) => {
+        if (replacer_str_ary.length === 0) {
+            return target_str;
+        } else {
+            const result = applyIfString(target_str, replacer_str_ary[0], fn2_1);
+            replacer_str_ary = replacer_str_ary.slice(1);
+            let res = result.map(V=>fn2(V, replacer_str_ary));
+            if(res.includes(undefined) === false){
+                tmp_res.push(res);
+            }
+        }
+    };
+    // fn2(b, y_ary);
+    fn2(X, Y);
+    return tmp_res;
+}
+
+// fn2(b, y_ary);
+// 配列の中の配列にundefinedが含まれている場合に、undefinedを含んだ配列を削除する関数
+const removeUndefined = (ary) => {
+    return ary.filter(V=> !V.includes(undefined) );
+};
+const fn4 = () => R.flatten(removeUndefined(fn3(val3_1, val2_2))).map(V=>y_ary.includes(V) ? [1,2,3] : V);
+const tmp1 = fn4();
+
 
     const click1 = () => setCount1(count1 + 1);
     const click2 = () => setCount2(count2 + 100 + count1);
 
+    const fn5 = (VAL) => VAL.map(V=> <li>{V}</li> );
 
 
     return (
 <div>
     <h2>Hi</h2>
 
-    <textarea name="" id="" cols="30" rows="10">{val2_1}</textarea>
-    <textarea name="" id="" cols="30" rows="10">{val3_1}</textarea>
+    <textarea name="" id="" cols="10" rows="10">{val2_1}</textarea>
+    <textarea name="" id="" cols="10" rows="10">{val3_1}</textarea>
 
     <p>count1: {count1}</p>
     <button onClick={click1}>count1 + 1</button>
@@ -42,10 +85,9 @@ blabla`);
     <p>count2: {count2}</p>
     <button onClick={click2}>count2 + 100 + count</button>
 
-    { [1,2,3,4,5].map((value) => <li>{value}</li>)}
-    { val1.map((value) => <li>{value}</li>)}
-    { val2_2.map((value) => <li>{value}</li>)}
-    { val3_2.map((value) => <li>{value}</li>)}
+
+
+    { tmp1.map(value => (typeof value) === 'string' ? <li>{value}</li> : <ul>{fn5(value)}</ul>) }
 
 </div>
     );
@@ -63,43 +105,6 @@ qux
 日本
 blabla`;
 y_ary = y.split("\n");
-// 第一引数が文字列の場合にのみ関数を適用する関数
-function applyIfString(arg1, arg2, func) {
-  if (typeof arg1 === 'string') {
-    return func(arg1, arg2);
-  } else {
-    return arg1;
-  }
-}
-
-tmp_res = [];
-const fn2_1 = (target_str, replacer_str) => {
-    const tmp1 = target_str.split(new RegExp(replacer_str));
-    const tmp2 = R.intersperse([replacer_str], tmp1);
-    if(tmp2.includes(undefined)){
-        console.log("barrrr");
-    }
-    return tmp2;
-};
-const fn2 = (target_str, replacer_str_ary) => {
-    if (replacer_str_ary.length === 0) {
-        return target_str;
-    } else {
-        const result = applyIfString(target_str, replacer_str_ary[0], fn2_1);
-        replacer_str_ary = replacer_str_ary.slice(1);
-        res = result.map(V=>fn2(V, replacer_str_ary));
-        if(res.includes(undefined) === false){
-            tmp_res.push(res);
-            console.log("foooo");
-        }
-    }
-};
-fn2(b, y_ary);
-// 配列の中の配列にundefinedが含まれている場合に、undefinedを含んだ配列を削除する関数
-const removeUndefined = (ary) => {
-    return ary.filter(V=> !V.includes(undefined) );
-};
-const tmp1 = R.flatten(removeUndefined(tmp_res)).map(V=>y_ary.includes(V) ? [1,2,3] : V);
 
 // 配列の要素に正規表現に利用する記号が含まれている場合returnする関数
 const checkRegExp = (ary) => {

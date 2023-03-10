@@ -32,42 +32,36 @@ or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3
 日本語は自然言語のうちの一つで主に日本国内で使われています`);
     const [val3_2, setVal3_2] = React.useState(val3_1.split("\n"));
 
-// 第一引数が文字列の場合にのみ関数を適用する関数
-function applyIfString(arg1, arg2, func) {
-  if (typeof arg1 === 'string') {
-    return func(arg1, arg2);
-  } else {
-    return arg1;
-  }
-}
 
 const fn2_1 = (target_str, replacer_str) => {
-    const tmp1 = target_str.split(new RegExp(replacer_str));
-    const tmp2 = R.intersperse([replacer_str], tmp1);
-    return tmp2;
+    const fn2_1_tmp1 = target_str.split(new RegExp(replacer_str));
+    const fn2_1_tmp2 = R.intersperse([replacer_str], fn2_1_tmp1);
+    return fn2_1_tmp2;
 };
-const fn3 = (X, Y) =>{
-    let tmp_res = [];
+
+const removeIndex0 = (ary) => R.remove(0, 1, ary);
+
+// fn3は、replacer_str_ary.lengthが0になるまでtarget_strを[replacer_str]で分割し、全ての要素を文字列から配列に変形したRESULT_ARRAY配列を完成させるまで、再帰的に関数を適用する
+const fn3 = (target_str, replacer_str_ary) =>{
+    let RESULT_ARRAY = [];
     const fn2 = (target_str, replacer_str_ary) => {
-        if (replacer_str_ary.length === 0) {
+        if (replacer_str_ary.length <= 0) {
             return target_str;
         } else {
-            const result = applyIfString(target_str, replacer_str_ary[0], fn2_1);
-            replacer_str_ary = replacer_str_ary.slice(1);
+            // 文字列の場合にのみ関数を適用し、文字列でなければそのまま返す
+            const result = (typeof target_str === 'string') ? fn2_1(target_str, replacer_str_ary[0]) : target_str;
+            replacer_str_ary = removeIndex0(replacer_str_ary);
+            // 再帰
             let res = result.map(V=>fn2(V, replacer_str_ary));
-            if(res.includes(undefined) === false){
-                tmp_res.push(res);
-            }
+            res.includes(undefined) === false ? RESULT_ARRAY.push(res) : null;
         }
     };
-    fn2(X, Y);
-    return tmp_res;
-}
-
-const remove_undefined_or_empty_string = (ary) => {
-    return ary.filter(V=> !V.includes(undefined) && V !== "");
+    fn2(target_str, replacer_str_ary);
+    return RESULT_ARRAY;
 };
-const fn4 = (ARG) => R.flatten(ARG).map(V=>val2_2.includes(V) ? [1,2,3] : V);
+
+const remove_empty_string = (ary) => ary.filter(V=> V !== "");
+const fn4 = (ARY) => R.flatten(ARY).map(V=>val2_2.includes(V) ? [1,2,3] : V);
 
 const for_debug = () => {
 data1 = tmp1;
@@ -83,16 +77,17 @@ data3 = tmp3;
 
 const tmp1 = fn3(val3_1, val2_2);
 const tmp2 = fn4(tmp1);
-const tmp3 = remove_undefined_or_empty_string(tmp2);
+const tmp3 = remove_empty_string(tmp2);
 
 
     const click1 = () => setCount1(count1 + 1);
     const click2 = () => setCount2(count2 + 100 + count1);
     // const fn7 = (VAL) => console.log(VAL + " is change!!");
 
-    const fn5 = (VAL) => VAL.map(V=> <option>{V}</option> );
-    const fn6 = (X) => (()=>console.log("change!! the "+ X +"ABC"));
-    const fn7 = () => tmp3.map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={fn6(VAL)}>{fn5(VAL)}</select> );
+const render_fn1 = (VAL) => VAL.map(V=> <option>{V}</option> );
+const render_fn2 = (X) => (()=>console.log("change!! the "+ X +"ABC"));
+const render_fn3 = () => tmp3.map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={render_fn2(VAL)}>{render_fn1(VAL)}</select> );
+
 
 
     // const fn6 = (VAL) => VAL.map(V=> <select onChange={fn7}>{fn5(VAL)}</select> );
@@ -121,7 +116,7 @@ for_debug();
 
 
 
-{ fn7() }
+{ render_fn3() }
 
 </div>
     );

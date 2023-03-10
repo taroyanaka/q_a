@@ -8,21 +8,21 @@
 </head>
 <body>
 <div class="react_app"></div>
-<!-- <script type="text/babel">
+<script type="text/babel">
 function Neko1() {
     const [count1, setCount1] = React.useState(0);
     const [count2, setCount2] = React.useState(0);
 
     const [val1, setVal1] = React.useState([1,10,100]);
-    const [val2, setVal2] = React.useState(`foo bar baz
+    const [val2_1, setVal2_1] = React.useState(`foo bar baz
 or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3
 日本語は自然言語のうちの一つで主に日本国内で使われています`);
-const str = `foo
+    const [val2_2, setVal2_2] = React.useState(val2_1.split("\n"));
+    const [val3_1, setVal3_1] = React.useState(`foo
 qux
 日本
-blabla`;
-    const [val3, setVal3] = React.useState(str);
-    const [val4, setVal4] = React.useState(str.split("\n"));
+blabla`);
+    const [val3_2, setVal3_2] = React.useState(val3_1.split("\n"));
 
     const click1 = () => setCount1(count1 + 1);
     const click2 = () => setCount2(count2 + 100 + count1);
@@ -33,6 +33,9 @@ blabla`;
 <div>
     <h2>Hi</h2>
 
+    <textarea name="" id="" cols="30" rows="10">{val2_1}</textarea>
+    <textarea name="" id="" cols="30" rows="10">{val3_1}</textarea>
+
     <p>count1: {count1}</p>
     <button onClick={click1}>count1 + 1</button>
 
@@ -41,9 +44,8 @@ blabla`;
 
     { [1,2,3,4,5].map((value) => <li>{value}</li>)}
     { val1.map((value) => <li>{value}</li>)}
-    { val2 }
-    { val3.split("\n").map((value) => <li>{value}</li>)}
-    { val4.map((value) => <li>{value}</li>)}
+    { val2_2.map((value) => <li>{value}</li>)}
+    { val3_2.map((value) => <li>{value}</li>)}
 
 </div>
     );
@@ -51,7 +53,7 @@ blabla`;
 ReactDOM.createRoot(document.querySelector(".react_app")).render(
     <Neko1 />
 );
-</script> -->
+</script>
 
 <script>
 b = `foo bar baz or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3 日本語は自然言語のうちの一つで主に日本国内で使われています`;
@@ -99,6 +101,11 @@ const removeUndefined = (ary) => {
 };
 const tmp1 = R.flatten(removeUndefined(tmp_res)).map(V=>y_ary.includes(V) ? [1,2,3] : V);
 
+// 配列の要素に正規表現に利用する記号が含まれている場合returnする関数
+const checkRegExp = (ary) => {
+    const reg = /[\^$\\.*+?()[\]{}|]/g;
+    return ary.filter(V=> !reg.test(V));
+};
 
 </script>
 

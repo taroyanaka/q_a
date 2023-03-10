@@ -127,20 +127,11 @@ ReactDOM.createRoot(document.querySelector(".react_app")).render(
 </script>
 
 <script>
-b = `foo bar baz or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3 日本語は自然言語のうちの一つで主に日本国内で使われています`;
-
-y = `foo
-qux
-日本
-blabla`;
-y_ary = y.split("\n");
-
 // 配列の要素に正規表現に利用する記号が含まれている場合returnする関数
 const checkRegExp = (ary) => {
     const reg = /[\^$\\.*+?()[\]{}|]/g;
     return ary.filter(V=> !reg.test(V));
 };
-
 </script>
 
 </body>

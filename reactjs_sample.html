@@ -69,7 +69,10 @@ console.log(c);
 d = [1,2,3,4,5];
 e = R.intersperse("foo", d);
 console.log(e);
-
+// .split()のセパレーターに正規表現を使ったサンプルコード。セパレーターの正規表現は変数aの文字列fooを使っている。結果の配列に対して、ramda.jsで配列の区切りのカンマに任意の配列を挿入する
+f = b.split(new RegExp(a));
+g = R.intersperse([], f);
+console.log(g);
 
 
 </script>

@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script> -->
+<script src="lib/react.production.min.js"></script>
+<!-- <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script> -->
+<script src="lib/react-dom.production.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.21.2/babel.js" integrity="sha512-H4d7o4neCJ2oxn87hZ28u2Xe+cMjt09Tb9TL9d4IckR0cda69w7sJpdkh6+oJveViuueEBlBxevEtpw3++Cz7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+<script src="lib/babel.min.js"></script>
+
 <script src="lib/ramda.@0.28.0.js"></script>
 </head>
 <body>
 <div class="react_app"></div>
 <script type="text/babel">
+
+let data1 = null;
+let data2 = null;
+let data3 = null;
+let data4 = null;
+let data5 = null;
+
 function Neko1() {
     const [count1, setCount1] = React.useState(0);
     const [count2, setCount2] = React.useState(0);
@@ -52,18 +63,18 @@ const fn3 = (X, Y) =>{
             }
         }
     };
-    // fn2(b, y_ary);
     fn2(X, Y);
     return tmp_res;
 }
 
-// fn2(b, y_ary);
-// 配列の中の配列にundefinedが含まれている場合に、undefinedを含んだ配列を削除する関数
-const removeUndefined = (ary) => {
-    return ary.filter(V=> !V.includes(undefined) );
+const remove_undefined_or_empty_string = (ary) => {
+    return ary.filter(V=> !V.includes(undefined) && V !== "");
 };
-const fn4 = () => R.flatten(removeUndefined(fn3(val3_1, val2_2))).map(V=>y_ary.includes(V) ? [1,2,3] : V);
-const tmp1 = fn4();
+const fn4 = (ARG) => R.flatten(ARG).map(V=>val2_2.includes(V) ? [1,2,3] : V);
+
+const tmp1 = fn3(val3_1, val2_2);
+const tmp2 = fn4(tmp1);
+const tmp3 = data1 = remove_undefined_or_empty_string(tmp2);
 
 
     const click1 = () => setCount1(count1 + 1);
@@ -87,7 +98,7 @@ const tmp1 = fn4();
 
 
 
-    { tmp1.map(value => (typeof value) === 'string' ? <li>{value}</li> : <ul>{fn5(value)}</ul>) }
+    { tmp3.map(value => (typeof value) === 'string' ? <li>{value}</li> : <ul>{fn5(value)}</ul>) }
 
 </div>
     );

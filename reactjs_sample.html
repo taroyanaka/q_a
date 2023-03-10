@@ -61,7 +61,6 @@ qux
 日本
 blabla`;
 y_ary = y.split("\n");
-
 // 第一引数が文字列の場合にのみ関数を適用する関数
 function applyIfString(arg1, arg2, func) {
   if (typeof arg1 === 'string') {
@@ -72,24 +71,25 @@ function applyIfString(arg1, arg2, func) {
 }
 
 tmp_res = [];
-// 変数bに対して、変数y_aryの要素を順にfn()に渡す関数。結果を一時変数に格納し、一時変数に格納した結果に対してfn()を再帰的に適用する関数
+const fn2_1 = (target_str, replacer_str) => {
+    const tmp1 = target_str.split(new RegExp(replacer_str));
+    const tmp2 = R.intersperse([replacer_str], tmp1);
+    if(tmp2.includes(undefined)){
+        console.log("barrrr");
+    }
+    return tmp2;
+};
 const fn2 = (target_str, replacer_str_ary) => {
-    if (replacer_str_ary.length == 0) {
+    if (replacer_str_ary.length === 0) {
         return target_str;
     } else {
-        const fn2_1 = (target_str, replacer_str) => {
-            const tmp1 = target_str.split(new RegExp(replacer_str));
-            const tmp2 = R.intersperse([replacer_str], tmp1);
-// console.log(tmp1, tmp2);
-            return tmp2;
-        };
-        // result = applyToStringOnly(fn2_1)(target_str, replacer_str_ary[0]);
-        result = applyIfString(target_str, replacer_str_ary[0], fn2_1);
+        const result = applyIfString(target_str, replacer_str_ary[0], fn2_1);
         replacer_str_ary = replacer_str_ary.slice(1);
         res = result.map(V=>fn2(V, replacer_str_ary));
-tmp_res.push(res);
-        console.log(result, replacer_str_ary);
-        // fn2(result, replacer_str_ary);
+        if(res.includes(undefined) === false){
+            tmp_res.push(res);
+            console.log("foooo");
+        }
     }
 };
 fn2(b, y_ary);

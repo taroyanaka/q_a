@@ -14,11 +14,8 @@
 <div class="react_app"></div>
 <script type="text/babel">
 
-let data1 = null;
-let data2 = null;
-let data3 = null;
-let data4 = null;
-let data5 = null;
+let data1 , data2, data3, data4, data5, data6, data7, data8, data9;
+data1 = data2 = data3 = data4 = data5 = data6 = data7 = data8 = data9 = null;
 
 function Neko1() {
     const [count1, setCount1] = React.useState(0);
@@ -72,6 +69,18 @@ const remove_undefined_or_empty_string = (ary) => {
 };
 const fn4 = (ARG) => R.flatten(ARG).map(V=>val2_2.includes(V) ? [1,2,3] : V);
 
+const for_debug = () => {
+data1 = tmp1;
+data2 = tmp2;
+data3 = tmp3;
+// data4 = tmp4;
+// data5 = tmp5;
+// data6 = tmp6;
+// data7 = tmp7;
+// data8 = tmp8;
+// console.log(data1 , data2, data3, data4, data5, data6, data7, data8, data9);
+};
+
 const tmp1 = fn3(val3_1, val2_2);
 const tmp2 = fn4(tmp1);
 const tmp3 = data1 = remove_undefined_or_empty_string(tmp2);
@@ -82,6 +91,7 @@ const tmp3 = data1 = remove_undefined_or_empty_string(tmp2);
 
     const fn5 = (VAL) => VAL.map(V=> <li>{V}</li> );
 
+for_debug();
 
     return (
 <div>

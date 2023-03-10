@@ -88,8 +88,15 @@ const tmp3 = data1 = remove_undefined_or_empty_string(tmp2);
 
     const click1 = () => setCount1(count1 + 1);
     const click2 = () => setCount2(count2 + 100 + count1);
+    // const fn7 = (VAL) => console.log(VAL + " is change!!");
+    const fn7 = () => console.log("change!!");
 
-    const fn5 = (VAL) => VAL.map(V=> <li>{V}</li> );
+    const fn5 = (VAL) => VAL.map(V=> <option>{V}</option> );
+    // const fn6 = (VAL) => VAL.map(V=> <select onChange={fn7}>{fn5(VAL)}</select> );
+    const fn6 = (VAL) => <select onChange={fn7(VAL)}>{fn5(VAL)}</select>;
+    // const fn6 = (VAL) => <select onInput={fn7(VAL)}>{fn5(VAL)}</select>;
+    // const fn6 = (VAL) => <select onChange={console.log("change!!")}>{fn5(VAL)}</select>;
+    // const fn6 = (VAL) => <select></select>;
 
 for_debug();
 
@@ -108,7 +115,8 @@ for_debug();
 
 
 
-    { tmp3.map(value => (typeof value) === 'string' ? <li>{value}</li> : <ul>{fn5(value)}</ul>) }
+
+{ tmp3.map(value => (typeof value) === 'string' ? <li>{value}</li> : <select onChange={fn7}>{fn5(value)}</select> ) }
 
 </div>
     );

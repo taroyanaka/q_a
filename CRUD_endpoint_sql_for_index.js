@@ -107,7 +107,14 @@ app.post('/insert_q_a', (req, res) => {
     const user = db.prepare('SELECT * FROM users WHERE name = ? AND password = ?').get(name, password);
     if (user) {
         const insert_q_a = db.prepare('INSERT INTO q_a (user_id, content, created_at, updated_at) VALUES (?, ?, ?, ?)').run(user.id, JSON.stringify(content), now, now);
-        res.send(insert_q_a);
+        // res.send(insert_q_a);
+// deleteが成功したら、q_aの全てのidとcontentとcreated_atとupdated_atとuserのnameを返す
+        if (insert_q_a.changes === 1) {
+            const read_q_a = db.prepare('SELECT q_a.id, q_a.content, q_a.created_at, q_a.updated_at, users.name FROM q_a INNER JOIN users ON q_a.user_id = users.id').all();
+            res.send(read_q_a);
+        } else {
+            res.send('q_aの追加に失敗しました');
+        };
     } else {
         res.send('ユーザーが存在しません');
     }
@@ -120,7 +127,13 @@ app.post('/delete_q_a', (req, res) => {
     const user = db.prepare('SELECT * FROM users WHERE name = ? AND password = ?').get(name, password);
     if (user) {
         const delete_q_a = db.prepare('DELETE FROM q_a WHERE id = ?').run(id);
-        res.send(delete_q_a);
+// deleteが成功したら、q_aの全てのidとcontentとcreated_atとupdated_atとuserのnameを返す
+        if (delete_q_a.changes) {
+            const read_q_a = db.prepare('SELECT q_a.id, q_a.content, q_a.created_at, q_a.updated_at, users.name FROM q_a INNER JOIN users ON q_a.user_id = users.id').all();
+            res.send(read_q_a);
+        } else {
+            res.send('q_aの削除に失敗しました');
+        };
     } else {
         res.send('ユーザーが存在しません');
     }

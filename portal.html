@@ -39,7 +39,7 @@
 <span @click="">{{ DATAVAL.created_at }}</span>
 <span @click="">{{ DATAVAL.name }}</span>
 <span @click="">{{ DATAVAL.updated_at }}</span>
-<button @click="fetch_delete_q_a(DATAVAL.id)">DELETE it</button>
+<button @click="fetch_delete_q_a_by_POST(DATAVAL.id)">DELETE it</button>
 <button @click="q_a_save_data_to_localforage(DATAVAL.content)">SAVE it to Your data</button>
 </li>
 </ul>
@@ -156,10 +156,26 @@ async fetch_insert_q_a_by_POST(CONTENT){
         }),
     });
     const data = await res.json();
+    this.q_a_data_of_servers_fetched = data;
     console.log(data);
 },
 
-
+async fetch_delete_q_a_by_POST(ID){
+    const res = await fetch(this.HOST + ':' + this.PORT + '/delete_q_a', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: this.name,
+            password: this.password,
+            id: ID,
+        }),
+    });
+    const data = await res.json();
+    this.q_a_data_of_servers_fetched = data;
+    console.log(data);
+},
 
 },
 }).mount('.portal');

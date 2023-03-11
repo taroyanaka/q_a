@@ -76,9 +76,7 @@ const execute = () => {
     const tmp1 = fn3(val3_1, val2_2);
     const tmp2 = fn4(tmp1);
     const tmp3 = remove_empty_string(tmp2);
-
-    for_debug([tmp1, tmp2, tmp3]);
-
+    // for_debug([tmp1, tmp2, tmp3]);
     return tmp3;
 };
 
@@ -90,7 +88,7 @@ const rendering3 = () => execute().map(VAL => (typeof VAL) === 'string' ? <li>{V
 
 
 return (
-<div>
+<>
 
 <div>
 <textarea name="" id="" cols="10" rows="10" onChange={two_way_bind_val2_1}>{val2_1}</textarea>
@@ -101,7 +99,7 @@ return (
 { rendering3() }
 </div>
 
-</div>
+</>
 );
 };
 ReactDOM.createRoot(document.querySelector(".react_app")).render(

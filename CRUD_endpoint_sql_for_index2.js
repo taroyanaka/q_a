@@ -78,8 +78,6 @@ const sqlite = require('better-sqlite3');
 const db = new sqlite('q_a.sqlite3');
 
 const app = express();
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
 
 // corsで全てのアクセスを許可する
 const cors = require('cors');
@@ -91,10 +89,10 @@ const port = 8000;
 // app.listen(port, 'localhost', () => {
 app.listen(port, "0.0.0.0", () => {
 // app.listen(port, '127.0.0.1', () => {
-    console.log(`App listening!! at http://localhost:${port}`);
+    console.log(`App listening at http://localhost:${port}`);
 });
 
-// '/read_q_a'というGETのリクエストを受け取るエンドポイントで、q_aの全てのidとcontentとcreated_atとupdated_atとuserのnameを返す。contentはJSON.parseする
+// '/read_q_a'というGETのリクエストを受け取るエンドポイントで、q_aの全てのidとcontentとcreated_atとupdated_atとuserのnameを返す
 app.get('/read_q_a', (req, res) => {
     const read_q_a = db.prepare('SELECT q_a.id, q_a.content, q_a.created_at, q_a.updated_at, users.name FROM q_a INNER JOIN users ON q_a.user_id = users.id').all();
     res.send(read_q_a);
@@ -106,25 +104,26 @@ app.post('/insert_q_a', (req, res) => {
     const [name, password, content] = [req.body.name, req.body.password, req.body.content];
     const user = db.prepare('SELECT * FROM users WHERE name = ? AND password = ?').get(name, password);
     if (user) {
-        const insert_q_a = db.prepare('INSERT INTO q_a (user_id, content, created_at, updated_at) VALUES (?, ?, ?, ?)').run(user.id, JSON.stringify(content), now, now);
+        const insert_q_a = db.prepare('INSERT INTO q_a (user_id, content, created_at, updated_at) VALUES (?, ?, ?, ?)').run(user.id, content, now, now);
         res.send(insert_q_a);
     } else {
         res.send('ユーザーが存在しません');
     }
 });
 
-// '/delete_q_a'というPOSTのリクエストを受け取るエンドポイントで、nameとpasswordを受け取り、nameとpasswordが一致する場合は、q_aのidが一致するものを削除する
+// '/delete_q_a'というPOSTのリクエストを受け取るエンドポイントで、nameとpasswordを受け取り、nameとpasswordが一致する場合は、idを受け取り、そのidのq_aを削除する
 app.post('/delete_q_a', (req, res) => {
     const now = new Date().toISOString();
-    const [name, password, id] = [req.body.name, req.body.password, req.body.id];
+    const [name, password, content] = [req.body.name, req.body.password, req.body.content];
     const user = db.prepare('SELECT * FROM users WHERE name = ? AND password = ?').get(name, password);
     if (user) {
-        const delete_q_a = db.prepare('DELETE FROM q_a WHERE id = ?').run(id);
+        const delete_q_a = db.prepare('DELETE FROM q_a WHERE id = ?').run(content);
         res.send(delete_q_a);
     } else {
         res.send('ユーザーが存在しません');
     }
 });
+
 
 // '/read_i_t_n'
 // '/insert_i_t_n'

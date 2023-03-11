@@ -18,12 +18,20 @@
 <div>{{ DATA_VAL }}</div>
 </template> -->
 
+<textarea name="" id="" cols="10" rows="10" v-model="q_a_data_1"></textarea>
+<textarea name="" id="" cols="10" rows="10" v-model="q_a_data_2"></textarea>
+<button @click="q_a_save_data_to_q_a_all_save">q_a_save_data_to_q_a_all_save</button>
+
 <ul class="save_data_set_list_parent" style='display: block;'>
 <li v-for="(DATAVAL, DATAIDX) in q_a_all_save" class="save_data_set_list">
     <span @click="">{{ [DATAVAL[0], DATAVAL[1]] }}</span>
     <button @click="q_a_save_data_delete(DATAIDX)" class="q_a_save_data_delete">🗑️</button>
+    <button @click="fetch_users_q_a_insert(DATAVAL)" class="fetch_users_q_a_insert">📤</button>
+
+    <button @click="q_a_set_data_to_textarea(DATAVAL[0], DATAVAL[1])" class="q_a_set_data_to_textarea">🥍</button>
 </li>
 </ul>
+
 
 <ul class="save_data_set_list_parent" style='display: block;'>
 <li v-for="(DATAVAL, DATAIDX) in q_a_data_of_servers_fetched" class="save_data_set_list">
@@ -31,6 +39,8 @@
 <span @click="">{{ DATAVAL.created_at }}</span>
 <span @click="">{{ DATAVAL.name }}</span>
 <span @click="">{{ DATAVAL.updated_at }}</span>
+<button @click="fetch_delete_q_a(DATAVAL.id)">DELETE it</button>
+<button @click="q_a_save_data_to_localforage(DATAVAL.content)">SAVE it to Your data</button>
 </li>
 </ul>
 
@@ -69,6 +79,9 @@
 const portal = Vue.createApp({
 data() {
     return {
+q_a_data_1: '',
+q_a_data_2: '',
+
 i_t_n_data_1: '',
 i_t_n_data_2: '',
 
@@ -113,65 +126,35 @@ return JSON.parse(JSON.stringify(it));
 },
 
 
-async q_a_save_data_to_q_a_all_save(){
-this.q_a_all_save.push(this.to_ary([this.data6, this.data3]));
-await localforage.setItem('q_a_1', JSON.stringify(this.q_a_all_save));
-},
-async q_a_save_data_load() {
-this.q_a_all_save = JSON.parse(await localforage.getItem('q_a_1')) || [];
-},
-async q_a_save_data_delete(INDEX){
-if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.q_a_all_save[INDEX][0].split("\n"), this.q_a_all_save[INDEX][1].split("\n")).join("\n") )) {
-    this.q_a_all_save.splice(INDEX, 1);
-    await localforage.setItem('q_a_1', JSON.stringify(this.q_a_all_save));
-};
-},
 
 async i_t_n_save_data_to_i_t_n_all_save(){
-this.i_t_n_all_save.push(this.to_ary([this.i_t_n_data_1, this.i_t_n_data_2]));
-await localforage.setItem('i_t_n', JSON.stringify(this.i_t_n_all_save));
+    this.i_t_n_all_save.push(this.to_ary([this.i_t_n_data_1, this.i_t_n_data_2]));
+    await localforage.setItem('i_t_n', JSON.stringify(this.i_t_n_all_save));
 },
 async i_t_n_save_data_load() {
-this.i_t_n_all_save = JSON.parse(await localforage.getItem('i_t_n')) || [];
+    this.i_t_n_all_save = JSON.parse(await localforage.getItem('i_t_n')) || [];
 },
 async i_t_n_save_data_delete(INDEX){
-if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.i_t_n_all_save[INDEX][0].split("\n"), this.i_t_n_all_save[INDEX][1].split("\n")).join("\n") )) {
-    this.i_t_n_all_save.splice(INDEX, 1);
-    await localforage.setItem('i_t_n', JSON.stringify(this.i_t_n_all_save));
-};
+    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.i_t_n_all_save[INDEX][0].split("\n"), this.i_t_n_all_save[INDEX][1].split("\n")).join("\n") )) {
+        this.i_t_n_all_save.splice(INDEX, 1);
+        await localforage.setItem('i_t_n', JSON.stringify(this.i_t_n_all_save));
+    };
 },
-
-
-// q_a_save_data_set(INDEX){
-// this.data6 = this.q_a_all_save[INDEX][0];
-// this.data3 = this.q_a_all_save[INDEX][1];
-// },
-// i_t_n_save_data_set(INDEX){
-// this.data2 = this.i_t_n_all_save[INDEX][0];
-// this.data3 = this.i_t_n_all_save[INDEX][1];
-// },
-
-
-
-
-
-
-// http://localhost:8000/users_q_a/:id で idは1を想定してfetchするawait関数。this.HOSTとthis.PORTを使う
-async fetch_users_q_a(id) {
-    const res = await fetch(this.HOST + ':' + this.PORT + '/users_q_a/' + id);
-    const json = this.q_a_data_of_servers_fetched = await res.json();
-    return json;
-},
-
-
 // http://localhost:8000/users_i_t_n/:id で idは1を想定してfetchするawait関数。this.HOSTとthis.PORTを使う
 async fetch_users_i_t_n(id) {
     const res = await fetch(this.HOST + ':' + this.PORT + '/users_i_t_n/' + id);
     const json = this.i_t_n_data_of_servers_fetched = await res.json();
     return json;
 },
-async set_fetch_users_i_t_n(id){
-    JSON.parse(portal.i_t_n_data_of_servers_fetched[3].content)[0]
+// 引数のcontentをJSON.stringifyして、http://localhost:8000/insert_i_t_n?user_id=1&content=contentを想定してgetでinsertのfetchをするawait関数。this.HOSTとthis.PORTを使う。
+async fetch_users_i_t_n_insert(content, user_id=1) {
+    user_id = 1;
+    const res = await fetch(this.HOST + ':' + this.PORT + '/insert_i_t_n?user_id=' + user_id + '&content=' + JSON.stringify(content));
+    const json = await res.json();
+
+    this.fetch_users_i_t_n(1);
+
+    return json;
 },
 // http://localhost:8000/delete_i_t_n?id=1 で idは1を想定してfetchするawait関数。this.HOSTとthis.PORTを使う
 async fetch_delete_i_t_n(id) {
@@ -194,26 +177,55 @@ async i_t_n_set_data_to_textarea(i_t_n_data_1, i_t_n_data_2){
     this.i_t_n_data_2 = i_t_n_data_2;
 },
 
-// 引数のcontentをJSON.stringifyして、http://localhost:8000/insert_i_t_n?user_id=1&content=contentを想定してgetでinsertのfetchをするawait関数。this.HOSTとthis.PORTを使う。
-async fetch_users_i_t_n_insert(content, user_id=1) {
+
+
+async q_a_save_data_to_q_a_all_save(){
+    this.q_a_all_save.push(this.to_ary([this.q_a_data_1, this.q_a_data_2]));
+    await localforage.setItem('q_a_1', JSON.stringify(this.q_a_all_save));
+},
+async q_a_save_data_load() {
+    this.q_a_all_save = JSON.parse(await localforage.getItem('q_a_1')) || [];
+},
+async q_a_save_data_delete(INDEX){
+    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.q_a_all_save[INDEX][0].split("\n"), this.q_a_all_save[INDEX][1].split("\n")).join("\n") )) {
+        this.q_a_all_save.splice(INDEX, 1);
+        await localforage.setItem('q_a_1', JSON.stringify(this.q_a_all_save));
+    };
+},
+// http://localhost:8000/users_i_t_n/:id で idは1を想定してfetchするawait関数。this.HOSTとthis.PORTを使う
+async fetch_users_q_a(id) {
+    const res = await fetch(this.HOST + ':' + this.PORT + '/users_q_a/' + id);
+    const json = this.q_a_data_of_servers_fetched = await res.json();
+    return json;
+},
+async fetch_users_q_a_insert(content, user_id=1) {
     user_id = 1;
-    const res = await fetch(this.HOST + ':' + this.PORT + '/insert_i_t_n?user_id=' + user_id + '&content=' + JSON.stringify(content));
+    const res = await fetch(this.HOST + ':' + this.PORT + '/insert_q_a?user_id=' + user_id + '&content=' + JSON.stringify(content));
     const json = await res.json();
 
-    this.fetch_users_i_t_n(1);
+    this.fetch_users_q_a(1);
 
     return json;
 },
 // http://localhost:8000/delete_i_t_n?id=1 で idは1を想定してfetchするawait関数。this.HOSTとthis.PORTを使う
-async fetch_delete_i_t_n(id) {
-    const res = await fetch(this.HOST + ':' + this.PORT + '/delete_i_t_n?id=' + id);
+async fetch_delete_q_a(id) {
+    const res = await fetch(this.HOST + ':' + this.PORT + '/delete_q_a?id=' + id);
     const json = await res.json();
 
-    this.fetch_users_i_t_n(1);
+    this.fetch_users_q_a(1);
 
     return json;
 },
-
+// q_aの引数をcontentをlocalforageに追加保存する関数
+async q_a_save_data_to_localforage(content){
+    const parsed_content = JSON.parse(content);
+    this.q_a_all_save.push(parsed_content);
+    await localforage.setItem('q_a', JSON.stringify(this.q_a_all_save));
+},
+async q_a_set_data_to_textarea(q_a_data_1, q_a_data_2){
+    this.q_a_data_1 = q_a_data_1;
+    this.q_a_data_2 = q_a_data_2;
+},
 
 
 },

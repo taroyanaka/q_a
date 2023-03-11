@@ -94,19 +94,46 @@ app.listen(port, "0.0.0.0", () => {
 //   res.send('Hello World!');
 // });
 
-// 特定のuserのnameを指定してそのq_aを結合してクエリのエンドポイント。content created_at name updated_atを表示する
+
+
+
+
+
+
+
+
+// 特定のuserのnameを指定してそのq_aを結合してクエリのエンドポイント。q_aのid content created_at name updated_atを表示する
 app.get('/users_q_a/:id', (req, res) => {
-    const rows = db.prepare('SELECT q_a.content, q_a.created_at, users.name, q_a.updated_at FROM users INNER JOIN q_a ON users.id = q_a.user_id WHERE users.id = ?').all(req.params.id);
+    const rows = db.prepare('SELECT q_a.id, q_a.content, q_a.created_at, users.name, q_a.updated_at FROM users INNER JOIN q_a ON users.id = q_a.user_id WHERE users.id = ?').all(req.params.id);
     res.send(rows);
     }
 );
 
-// 特定のuserのnameを指定してそのf_i_bを結合してクエリのエンドポイント。content created_at name updated_atを表示する
-app.get('/users_f_i_b/:id', (req, res) => {
-    const rows = db.prepare('SELECT f_i_b.content, f_i_b.created_at, users.name, f_i_b.updated_at FROM users INNER JOIN f_i_b ON users.id = f_i_b.user_id WHERE users.id = ?').all(req.params.id);
-    res.send(rows);
+// 'better-sqlite3'のnowのサンプル
+// const sqlite = require('better-sqlite3');
+// const db = new sqlite('q_a.sqlite3');
+// const rows = db.prepare('INSERT INTO users (name, password, created_at, updated_at) VALUES (?, ?, datetime("now"), datetime("now"))').run('name', 'password');
+
+// insert_q_aのcontentを挿入するapp.getエンドポイント。nameはidを指定して取得する。created_atとupdated_atは自動で挿入される。insertに成功したら、successというデータを返し、insertに失敗したら、errorというデータを返す。
+app.get('/insert_q_a', (req, res) => {
+    const now = new Date().toISOString();
+    const rows = db.prepare('INSERT INTO q_a (user_id, content, created_at, updated_at) VALUES (?, ?, ?, ?)').run(req.query.user_id, req.query.content, now, now);
+    if (rows.changes === 1) {
+        res.send({status: 'success'});
+    } else {
+        res.send({status: 'error'});
     }
-);
+});
+// delete_q_aという、レコードのidを指定して削除するapp.getエンドポイント。deleteに成功したら、successというデータを返し、deleteに失敗したら、errorというデータを返す。
+app.get('/delete_q_a', (req, res) => {
+    const rows = db.prepare('DELETE FROM q_a WHERE id = ?').run(req.query.id);
+    if (rows.changes === 1) {
+        res.send({status: 'success'});
+    } else {
+        res.send({status: 'error'});
+    }
+});
+
 
 // 特定のuserのnameを指定してそのi_t_nを結合してクエリのエンドポイント。i_t_nのid content created_at name updated_atを表示する
 app.get('/users_i_t_n/:id', (req, res) => {

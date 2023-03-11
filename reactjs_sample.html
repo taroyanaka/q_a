@@ -86,6 +86,18 @@ const rendering1 = (VAL) => VAL.map(V=> <option>{V}</option> );
 const rendering2 = (X) => (()=>console.log("change!! the "+ X +"ABC"));
 const rendering3 = () => execute().map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={rendering2(VAL)}>{rendering1(VAL)}</select> );
 
+// useEffectの第二引数に空配列を渡すことで、初回レンダリング時のみ実行される
+React.useEffect(() => {
+    // console.log("初回レンダリング時のみ実行される");
+}, []);
+// useEffectの第二引数に値を渡すことで、値が変更された時のみ実行される
+React.useEffect(() => {
+    // console.log("値が変更された時のみ実行される");
+}, [val2_1, val3_1]);
+// useEffectの第二引数に何も渡さないことで、レンダリング時に毎回実行される
+React.useEffect(() => {
+    // console.log("レンダリング時に毎回実行される");
+});
 
 return (
 <>

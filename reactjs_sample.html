@@ -39,9 +39,7 @@ const fn2_1 = (target_str, replacer_str) => {
     const fn2_1_tmp2 = R.intersperse([replacer_str], fn2_1_tmp1);
     return fn2_1_tmp2;
 };
-
 const removeIndex0 = (ary) => R.remove(0, 1, ary);
-
 // fn3は、replacer_str_ary.lengthが0になるまでtarget_strを[replacer_str]で分割し、全ての要素を文字列から配列に変形したRESULT_ARRAY配列を完成させるまで、再帰的に関数を適用する
 const fn3 = (target_str, replacer_str_ary) =>{
     let RESULT_ARRAY = [];
@@ -60,11 +58,8 @@ const fn3 = (target_str, replacer_str_ary) =>{
     fn2(target_str, replacer_str_ary);
     return RESULT_ARRAY;
 };
-
 const fn4 = (ARY) => R.flatten(ARY).map(V=>val2_2.includes(V) ? [1,2,3] : V);
 const remove_empty_string = (ary) => ary.filter(V=> V !== "");
-
-
 
 const tmp1 = fn3(val3_1, val2_2);
 const tmp2 = fn4(tmp1);
@@ -90,10 +85,6 @@ data3 = tmp3;
 const rendering1 = (VAL) => VAL.map(V=> <option>{V}</option> );
 // rendering2はコールバック関数を利用してonChange時に実行される
 const rendering2 = (X) => (()=>console.log("change!! the "+ X +"ABC"));
-// const rendering3 = () => {
-// console.log("foo");
-// return tmp3.map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={rendering2(VAL)}>{rendering1(VAL)}</select> )
-// };
 const rendering3 = () => tmp3.map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={rendering2(VAL)}>{rendering1(VAL)}</select> );
 
 

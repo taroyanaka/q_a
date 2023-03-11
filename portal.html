@@ -137,6 +137,17 @@ async q_a_save_data_delete(INDEX){
         await localforage.setItem('q_a_1', JSON.stringify(this.q_a_all_save));
     };
 },
+async q_a_set_data_to_textarea(q_a_data_1, q_a_data_2){
+    this.q_a_data_1 = q_a_data_1;
+    this.q_a_data_2 = q_a_data_2;
+},
+// q_aの引数をcontentをlocalforageに追加保存する関数
+async q_a_save_data_to_localforage(content){
+    const parsed_content = JSON.parse(content);
+    this.q_a_all_save.push(parsed_content);
+    await localforage.setItem('q_a', JSON.stringify(this.q_a_all_save));
+},
+
 async fetch_read_q_a_by_GET(){
     const res = await fetch(this.HOST + ':' + this.PORT + '/read_q_a');
     const data = await res.json();

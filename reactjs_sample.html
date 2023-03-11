@@ -26,11 +26,12 @@ function Neko1() {
 qux
 日本
 blabla`);
-    const [val2_2, setVal2_2] = React.useState(val2_1.split("\n"));
+    const two_way_bind_val2_1 = (event) => setVal2_1(event.target.value);
+    const val2_2 = val2_1.split("\n");
     const [val3_1, setVal3_1] = React.useState(`foo bar baz
 or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3
 日本語は自然言語のうちの一つで主に日本国内で使われています`);
-    const [val3_2, setVal3_2] = React.useState(val3_1.split("\n"));
+    const two_way_bind_val3_1 = (event) => setVal3_1(event.target.value);
 
 
 const fn2_1 = (target_str, replacer_str) => {
@@ -60,8 +61,15 @@ const fn3 = (target_str, replacer_str_ary) =>{
     return RESULT_ARRAY;
 };
 
-const remove_empty_string = (ary) => ary.filter(V=> V !== "");
 const fn4 = (ARY) => R.flatten(ARY).map(V=>val2_2.includes(V) ? [1,2,3] : V);
+const remove_empty_string = (ary) => ary.filter(V=> V !== "");
+
+
+
+const tmp1 = fn3(val3_1, val2_2);
+const tmp2 = fn4(tmp1);
+const tmp3 = remove_empty_string(tmp2);
+
 
 const for_debug = () => {
 data1 = tmp1;
@@ -75,51 +83,42 @@ data3 = tmp3;
 // console.log(data1 , data2, data3, data4, data5, data6, data7, data8, data9);
 };
 
-const tmp1 = fn3(val3_1, val2_2);
-const tmp2 = fn4(tmp1);
-const tmp3 = remove_empty_string(tmp2);
-
-
     const click1 = () => setCount1(count1 + 1);
     const click2 = () => setCount2(count2 + 100 + count1);
     // const fn7 = (VAL) => console.log(VAL + " is change!!");
 
-const render_fn1 = (VAL) => VAL.map(V=> <option>{V}</option> );
-const render_fn2 = (X) => (()=>console.log("change!! the "+ X +"ABC"));
-const render_fn3 = () => tmp3.map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={render_fn2(VAL)}>{render_fn1(VAL)}</select> );
-
-
-
-    // const fn6 = (VAL) => VAL.map(V=> <select onChange={fn7}>{fn5(VAL)}</select> );
-    // const fn6 = (VAL) => <select onChange={fn7(VAL)}>{fn5(VAL)}</select>;
-    // const fn6 = (VAL) => <select onChange={fn6(VAL)}>{fn5(VAL)}</select>;
-    // const fn6 = (VAL) => <select onInput={fn7(VAL)}>{fn5(VAL)}</select>;
-    // const fn6 = (VAL) => <select onChange={console.log("change!!")}>{fn5(VAL)}</select>;
-    // const fn6 = (VAL) => <select></select>;
+const rendering1 = (VAL) => VAL.map(V=> <option>{V}</option> );
+// rendering2はコールバック関数を利用してonChange時に実行される
+const rendering2 = (X) => (()=>console.log("change!! the "+ X +"ABC"));
+// const rendering3 = () => {
+// console.log("foo");
+// return tmp3.map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={rendering2(VAL)}>{rendering1(VAL)}</select> )
+// };
+const rendering3 = () => tmp3.map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={rendering2(VAL)}>{rendering1(VAL)}</select> );
 
 
 for_debug();
 
-    return (
+return (
 <div>
+
     <h2>Hi</h2>
-
-    <textarea name="" id="" cols="10" rows="10">{val2_1}</textarea>
-    <textarea name="" id="" cols="10" rows="10">{val3_1}</textarea>
-
     <p>count1: {count1}</p>
     <button onClick={click1}>count1 + 1</button>
-
     <p>count2: {count2}</p>
     <button onClick={click2}>count2 + 100 + count</button>
 
+<div>
+<textarea name="" id="" cols="10" rows="10" onChange={two_way_bind_val2_1}>{val2_1}</textarea>
+<textarea name="" id="" cols="10" rows="10" onChange={two_way_bind_val3_1}>{val3_1}</textarea>
+</div>
 
-
-
-{ render_fn3() }
+<div>
+{ rendering3() }
+</div>
 
 </div>
-    );
+);
 };
 ReactDOM.createRoot(document.querySelector(".react_app")).render(
     <Neko1 />

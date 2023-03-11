@@ -18,10 +18,21 @@ let data1 , data2, data3, data4, data5, data6, data7, data8, data9;
 data1 = data2 = data3 = data4 = data5 = data6 = data7 = data8 = data9 = null;
 
 function Neko1() {
-    const [count1, setCount1] = React.useState(0);
-    const [count2, setCount2] = React.useState(0);
+    const for_debug = (data_ary) => {
+    // data1 = tmp1;
+    // data2 = tmp2;
+    // data3 = tmp3;
+    // data4 = tmp4;
+    // data5 = tmp5;
+    // data6 = tmp6;
+    // data7 = tmp7;
+    // data8 = tmp8;
+    // console.log(data1 , data2, data3, data4, data5, data6, data7, data8, data9);
+    console.log(data_ary);
+    };
 
-    const [val1, setVal1] = React.useState([1,10,100]);
+
+
     const [val2_1, setVal2_1] = React.useState(`foo
 qux
 日本
@@ -61,43 +72,25 @@ const fn3 = (target_str, replacer_str_ary) =>{
 const fn4 = (ARY) => R.flatten(ARY).map(V=>val2_2.includes(V) ? [1,2,3] : V);
 const remove_empty_string = (ary) => ary.filter(V=> V !== "");
 
-const tmp1 = fn3(val3_1, val2_2);
-const tmp2 = fn4(tmp1);
-const tmp3 = remove_empty_string(tmp2);
+const execute = () => {
+    const tmp1 = fn3(val3_1, val2_2);
+    const tmp2 = fn4(tmp1);
+    const tmp3 = remove_empty_string(tmp2);
 
+    for_debug([tmp1, tmp2, tmp3]);
 
-const for_debug = () => {
-data1 = tmp1;
-data2 = tmp2;
-data3 = tmp3;
-// data4 = tmp4;
-// data5 = tmp5;
-// data6 = tmp6;
-// data7 = tmp7;
-// data8 = tmp8;
-// console.log(data1 , data2, data3, data4, data5, data6, data7, data8, data9);
+    return tmp3;
 };
 
-    const click1 = () => setCount1(count1 + 1);
-    const click2 = () => setCount2(count2 + 100 + count1);
-    // const fn7 = (VAL) => console.log(VAL + " is change!!");
 
 const rendering1 = (VAL) => VAL.map(V=> <option>{V}</option> );
 // rendering2はコールバック関数を利用してonChange時に実行される
 const rendering2 = (X) => (()=>console.log("change!! the "+ X +"ABC"));
-const rendering3 = () => tmp3.map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={rendering2(VAL)}>{rendering1(VAL)}</select> );
+const rendering3 = () => execute().map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={rendering2(VAL)}>{rendering1(VAL)}</select> );
 
-
-for_debug();
 
 return (
 <div>
-
-    <h2>Hi</h2>
-    <p>count1: {count1}</p>
-    <button onClick={click1}>count1 + 1</button>
-    <p>count2: {count2}</p>
-    <button onClick={click2}>count2 + 100 + count</button>
 
 <div>
 <textarea name="" id="" cols="10" rows="10" onChange={two_way_bind_val2_1}>{val2_1}</textarea>

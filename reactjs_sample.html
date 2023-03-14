@@ -17,22 +17,22 @@
 <div class="react_app"></div>
 <script type="text/babel">
 
-let data1 , data2, data3, data4, data5, data6, data7, data8, data9;
-data1 = data2 = data3 = data4 = data5 = data6 = data7 = data8 = data9 = null;
+let data0, data1 , data2, data3, data4, data5, data6, data7, data8, data9;
+data0, data1 = data2 = data3 = data4 = data5 = data6 = data7 = data8 = data9 = null;
 
 function Neko1() {
     const for_debug = (data_ary) => {
-    // data0 = data_ary[0];
-    // data1 = data_ary[1];
-    // data2 = data_ary[2];
-    // data3 = data_ary[3];
+    data0 = data_ary[0];
+    data1 = data_ary[1];
+    data2 = data_ary[2];
+    data3 = data_ary[3];
     // data4 = data_ary[4];
     // data5 = data_ary[5];
     // data6 = data_ary[6];
     // data7 = data_ary[7];
     // data8 = data_ary[8];
     // console.log(data1 , data2, data3, data4, data5, data6, data7, data8, data9);
-    console.log(data_ary);
+    // console.log(data_ary);
     };
 
 
@@ -40,7 +40,9 @@ function Neko1() {
     const [val2_1, setVal2_1] = React.useState(`foo
 qux
 日本
-blabla`);
+blabla
+brabra
+bowbow`);
     const two_way_bind_val2_1 = (event) => setVal2_1(event.target.value);
     const val2_2 = val2_1.split("\n");
     const [val3_1, setVal3_1] = React.useState(`foo bar baz
@@ -73,14 +75,38 @@ const fn3 = (target_str, replacer_str_ary) =>{
     fn2(target_str, replacer_str_ary);
     return RESULT_ARRAY;
 };
-const fn4 = (ARY) => R.flatten(ARY).map(V=>val2_2.includes(V) ? [1,2,3] : V);
+
+
+const remove_any_elelemnt_from_ary_one_liner = (ary, val) => ary.filter(V=> V !== "");
+const f_i_b_composer = (ARG_ARY, ARG_VAL) => {
+    // FROM_ARY = val2_2;
+    // FROM_ARY = ARG_ARY;
+    // CURRENT_VAL = ARG_VAL;
+    // return FROM_ARY.reduce((ACC) => {
+    //     const DATA_X = R.insert(0, '', shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(FROM_ARY, CURRENT_VAL)).slice(0, 2).concat(CURRENT_VAL)));
+    //     const DATA_Y = [CURRENT_VAL, DATA_X, FROM_ARY[1]];
+    //     ACC.push(DATA_Y);
+    //     return ACC;
+    //     },
+    //     []
+    // );
+        const DATA_X = R.insert(0, '', shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(ARG_ARY, ARG_VAL)).slice(0, 2).concat(ARG_VAL)));
+        const DATA_Y = [ARG_VAL, DATA_X, false];
+    return DATA_Y;
+
+    // return [FROM_ARY]
+};
+
+const fn4 = (ARY) => R.flatten(ARY).map(V=>val2_2.includes(V) ? f_i_b_composer(val2_2, V) : V);
 const remove_empty_string = (ary) => ary.filter(V=> V !== "");
+
+
 
 const execute = () => {
     const tmp1 = fn3(val3_1, val2_2);
     const tmp2 = fn4(tmp1);
     const tmp3 = remove_empty_string(tmp2);
-    // for_debug([tmp1, tmp2, tmp3]);
+    for_debug([tmp1, tmp2, tmp3, val2_2]);
     return tmp3;
 };
 
@@ -88,7 +114,7 @@ const execute = () => {
 const rendering1 = (VAL) => VAL.map(V=> <option>{V}</option> );
 // rendering2はコールバック関数を利用してonChange時に実行される
 const rendering2 = (X) => (()=>console.log("change!! the "+ X +"ABC"));
-const rendering3 = () => execute().map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={rendering2(VAL)}>{rendering1(VAL)}</select> );
+const rendering3 = () => execute().map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select data-result={VAL[2]} onChange={rendering2(VAL[0])}>{rendering1(VAL[1])}</select> );
 
 // useEffectの第二引数に空配列を渡すことで、初回レンダリング時のみ実行される
 React.useEffect(() => {
@@ -129,6 +155,30 @@ const checkRegExp = (ary) => {
     const reg = /[\^$\\.*+?()[\]{}|]/g;
     return ary.filter(V=> !reg.test(V));
 };
+</script>
+
+<script>
+// array that removed any element from array
+const remove_any_elelemnt_from_ary_one_liner = (ary, val) => ary.filter(V=> V !== "");
+
+// const f_i_b_composer = (FROM_ARY) => {
+//     return data3.reduce((ACC, CURRENT_VAL) => {
+//         const DATA_X = R.insert(0, '', shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(data3, CURRENT_VAL)).slice(0, 2).concat(CURRENT_VAL)));
+//         const DATA_Y = [CURRENT_VAL, DATA_X, data3[1]];
+//         ACC.push(DATA_Y);
+//         return ACC;
+//         },
+//         []
+//     );
+// };
+
+
+
+
+// .reduce((acc, cur) => acc.push(cur), [])
+
+// ['foo',['', 'foo', 'blabla', 'brabra'], false,],
+
 </script>
 
 </body>

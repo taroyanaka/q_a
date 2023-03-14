@@ -50,10 +50,6 @@ or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3
 日本語は自然言語のうちの一つで主に日本国内で使われています`);
     const two_way_bind_val3_1 = (event) => setVal3_1(event.target.value);
 
-    const [val4_1, setVal4_1] = React.useState([]);
-    const two_way_bind_val4_1 = (event) => setVal4_1(event.target.value);
-
-
 const fn2_1 = (target_str, replacer_str) => {
     const fn2_1_tmp1 = target_str.split(new RegExp(replacer_str));
     const fn2_1_tmp2 = R.intersperse([replacer_str], fn2_1_tmp1);
@@ -99,27 +95,31 @@ const f_i_b_composer = (ARG_ARY) => {
     // return [FROM_ARY]
 };
 
-let data_any = f_i_b_composer(val2_2);
+// let data_any = [];
 
-
-const fn4 = (ARY) => R.flatten(ARY).map(V=>val2_2.includes(V) ? data_any.filter(VAL=>VAL[0]===V)[0] : V);
+const fn4 = (ARY, REPLACE_ARY) => R.flatten(ARY).map(V=>val2_2.includes(V) ? REPLACE_ARY.filter(VAL=>VAL[0]===V)[0] : V);
 const remove_empty_string = (ary) => ary.filter(V=> V !== "");
 
 
 const execute = () => {
     const tmp1 = fn3(val3_1, val2_2);
-    const tmp2 = fn4(tmp1);
+    const tmp4 = f_i_b_composer(val2_2);
+    const tmp2 = fn4(tmp1, tmp4);
     const tmp3 = remove_empty_string(tmp2);
     // setVal4_1(f_i_b_composer(val2_2));
-    for_debug([tmp1, tmp2, tmp3, val2_2, data_any]);
+    // setVal4_1([1,2,3]);
+    for_debug([tmp1, tmp2, tmp3, val2_2, tmp4]);
     return tmp3;
 };
 
 
-const rendering1 = (VAL) => VAL.map(V=> <option>{V}</option> );
-// rendering2はコールバック関数を利用してonChange時に実行される
-const rendering2 = (X) => (()=>console.log("change!! the "+ X +"ABC"));
-const rendering3 = () => execute().map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select data-result={VAL[2]} onChange={rendering2(VAL[0])}>{rendering1(VAL[1])}</select> );
+const rendering1 = (VAL) => VAL.map(V=> <option value={V}>{V}</option> );
+// const rendering2 = (X) => ((Y)=>console.log("change!! the "+ X + "AND" + Y +"ABC"));
+
+// Q_A_CHECKはコールバック関数を利用してrender時に正解をセットしてonChange時にQ_Aチェックが実行される
+const Q_A_CHECK = (X, event) => ((event)=>console.log("CORRECT_ANSWER is "+ X + "ANSWER is " + event.target.value + "!!!"));
+// const rendering3 = () => execute().map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={rendering2(VAL[0])}>{rendering1(VAL[1])}</select> );
+const rendering3 = () => execute().map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={Q_A_CHECK(VAL[0])}>{rendering1(VAL[1])}</select> );
 
 // useEffectの第二引数に空配列を渡すことで、初回レンダリング時のみ実行される
 React.useEffect(() => {
@@ -163,26 +163,6 @@ const checkRegExp = (ary) => {
 </script>
 
 <script>
-// array that removed any element from array
-const remove_any_elelemnt_from_ary_one_liner = (ary, val) => ary.filter(V=> V !== "");
-
-// const f_i_b_composer = (FROM_ARY) => {
-//     return data3.reduce((ACC, CURRENT_VAL) => {
-//         const DATA_X = R.insert(0, '', shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(data3, CURRENT_VAL)).slice(0, 2).concat(CURRENT_VAL)));
-//         const DATA_Y = [CURRENT_VAL, DATA_X, data3[1]];
-//         ACC.push(DATA_Y);
-//         return ACC;
-//         },
-//         []
-//     );
-// };
-
-
-
-
-// .reduce((acc, cur) => acc.push(cur), [])
-
-// ['foo',['', 'foo', 'blabla', 'brabra'], false,],
 
 </script>
 

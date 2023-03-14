@@ -26,7 +26,7 @@ function Neko1() {
     data1 = data_ary[1];
     data2 = data_ary[2];
     data3 = data_ary[3];
-    // data4 = data_ary[4];
+    data4 = data_ary[4];
     // data5 = data_ary[5];
     // data6 = data_ary[6];
     // data7 = data_ary[7];
@@ -49,6 +49,9 @@ bowbow`);
 or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3
 日本語は自然言語のうちの一つで主に日本国内で使われています`);
     const two_way_bind_val3_1 = (event) => setVal3_1(event.target.value);
+
+    const [val4_1, setVal4_1] = React.useState([]);
+    const two_way_bind_val4_1 = (event) => setVal4_1(event.target.value);
 
 
 const fn2_1 = (target_str, replacer_str) => {
@@ -77,36 +80,38 @@ const fn3 = (target_str, replacer_str_ary) =>{
 };
 
 
-const remove_any_elelemnt_from_ary_one_liner = (ary, val) => ary.filter(V=> V !== "");
-const f_i_b_composer = (ARG_ARY, ARG_VAL) => {
-    // FROM_ARY = val2_2;
-    // FROM_ARY = ARG_ARY;
-    // CURRENT_VAL = ARG_VAL;
-    // return FROM_ARY.reduce((ACC) => {
-    //     const DATA_X = R.insert(0, '', shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(FROM_ARY, CURRENT_VAL)).slice(0, 2).concat(CURRENT_VAL)));
-    //     const DATA_Y = [CURRENT_VAL, DATA_X, FROM_ARY[1]];
-    //     ACC.push(DATA_Y);
-    //     return ACC;
-    //     },
-    //     []
-    // );
-        const DATA_X = R.insert(0, '', shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(ARG_ARY, ARG_VAL)).slice(0, 2).concat(ARG_VAL)));
-        const DATA_Y = [ARG_VAL, DATA_X, false];
-    return DATA_Y;
+const remove_any_elelemnt_from_ary_one_liner = (ary, val) => ary.filter(V=> V !== val);
+const f_i_b_composer = (ARG_ARY) => {
+// console.log(remove_any_elelemnt_from_ary_one_liner(ARG_ARY, 'foo'));
+
+    return ARG_ARY.reduce((ACC, VAL) => {
+        const DATA_X = R.insert(0, '', shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(ARG_ARY, VAL)).slice(0, 2).concat(VAL)));
+        const DATA_Y = [VAL, DATA_X, false];
+        ACC.push(DATA_Y);
+        return ACC;
+        },
+        []
+    );
+    //     const DATA_X = R.insert(0, '', shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(ARG_ARY, ARG_VAL)).slice(0, 2).concat(ARG_VAL)));
+    //     const DATA_Y = [ARG_VAL, DATA_X, false];
+    // return DATA_Y;
 
     // return [FROM_ARY]
 };
 
-const fn4 = (ARY) => R.flatten(ARY).map(V=>val2_2.includes(V) ? f_i_b_composer(val2_2, V) : V);
-const remove_empty_string = (ary) => ary.filter(V=> V !== "");
+let data_any = f_i_b_composer(val2_2);
 
+
+const fn4 = (ARY) => R.flatten(ARY).map(V=>val2_2.includes(V) ? data_any.filter(VAL=>VAL[0]===V)[0] : V);
+const remove_empty_string = (ary) => ary.filter(V=> V !== "");
 
 
 const execute = () => {
     const tmp1 = fn3(val3_1, val2_2);
     const tmp2 = fn4(tmp1);
     const tmp3 = remove_empty_string(tmp2);
-    for_debug([tmp1, tmp2, tmp3, val2_2]);
+    // setVal4_1(f_i_b_composer(val2_2));
+    for_debug([tmp1, tmp2, tmp3, val2_2, data_any]);
     return tmp3;
 };
 

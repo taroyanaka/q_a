@@ -116,8 +116,8 @@ const execute = () => {
 const rendering1 = (VAL) => VAL.map(V=> <option value={V}>{V}</option> );
 // const rendering2 = (X) => ((Y)=>console.log("change!! the "+ X + "AND" + Y +"ABC"));
 
-// Q_A_CHECKはコールバック関数を利用してrender時に正解をセットしてonChange時にQ_Aチェックが実行される
-const Q_A_CHECK = (X, event) => ((event)=>console.log("CORRECT_ANSWER is "+ X + "ANSWER is " + event.target.value + "!!!"));
+// Q_A_CHECKはコールバック関数を利用してrender時に正解をセットしてonChange時にevent_target_valueにてQ_Aチェックが実行される
+const Q_A_CHECK = (X, event) => ((event)=>console.log("CORRECT_ANSWER is "+ X + ", ANSWER is " + event.target.value + " !!!"));
 // const rendering3 = () => execute().map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={rendering2(VAL[0])}>{rendering1(VAL[1])}</select> );
 const rendering3 = () => execute().map(VAL => (typeof VAL) === 'string' ? <li>{VAL}</li> : <select onChange={Q_A_CHECK(VAL[0])}>{rendering1(VAL[1])}</select> );
 

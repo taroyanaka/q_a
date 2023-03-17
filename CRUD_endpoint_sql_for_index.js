@@ -1,5 +1,6 @@
 // https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave
 
+// bbaaaaaaaa
 // in vscode's workspace settings.json
 // {
 // "emeraldwalk.runonsave": {
@@ -91,7 +92,7 @@ const port = 8000;
 // app.listen(port, 'localhost', () => {
 app.listen(port, "0.0.0.0", () => {
 // app.listen(port, '127.0.0.1', () => {
-    console.log(`App listening!! at http://localhost:${port}`);
+    console.log(`App listening!!? at http://localhost:${port}`);
 });
 
 // '/read_q_a'というGETのリクエストを受け取るエンドポイントで、q_aの全てのidとcontentとcreated_atとupdated_atとuserのnameを返す。contentはJSON.parseする

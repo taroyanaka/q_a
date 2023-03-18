@@ -571,6 +571,8 @@ const removeIndex0 = (ary) => R.remove(0, 1, ary);
 // 正規表現による分割と区切り文字の挿入を組み合わせる
 const fn2_1 = (target_str, replacer_str) =>
   R.intersperse([replacer_str], target_str.split(new RegExp(replacer_str)));
+
+
 const fn2 = (target_str, replacer_str_ary) =>
   replacer_str_ary.length
     ? (typeof target_str === 'string' // 対象が文字列の場合は処理を行う
@@ -584,6 +586,24 @@ const fn3 = (target_str, replacer_str_ary) =>
   replacer_str_ary.length
     ? (RESULT_ARRAY => { fn2(target_str, replacer_str_ary, RESULT_ARRAY); return RESULT_ARRAY })([])
     : [];
+
+
+// 与えられた配列 ary から要素 val を取り除いた新しい配列を返すアロー関数
+const remove_any_elelemnt_from_ary_one_liner = (ary, val) => ary.filter(V=> V !== val);
+
+// ARG_ARY を reduce で繰り返し処理し
+// ARG_ARY から VAL を除いた配列をシャッフルし
+// 先頭2つと VAL を結合した配列を作成し
+// 結果をACCにpushしていく(初期値は空の配列)
+const f_i_b_composer = (ARG_ARY) => {
+  return ARG_ARY.reduce((ACC, VAL) => {
+    const shuffled = shuffle(remove_any_elelemnt_from_ary_one_liner(ARG_ARY, VAL)).slice(0, 2).concat(VAL);
+    ACC.push([VAL, R.insert(0, '', shuffle(shuffled)), false]);
+    return ACC;
+  }, []);
+};
+
+
 
 </script>
 </body>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>q_a_1</title>
+<title>f_i_b</title>
 
 <!-- <link rel="manifest" href="manifest.json"> -->
 
@@ -240,47 +240,45 @@ font-size: 2.5rem;
 
     <div class="contents">
     <div class="column-1" :class="{'column-1-none': column_1_none}">
-    <div class="optional_function">
-        <button @click="reverse_q_a">🔃</button>
-        <button @click="shuffle_q_a">🌪️</button>
-        <button @click="swap_q_a">🔁</button>
-        <button @click="save_data_to_all_save">🗂️</button>
-    </div>
-    <button @click="" class="save_opener">📂</button>
-    <!-- <button @click="fn19" class="save_opener">📂</button> -->
-    <ul class="save_data_set_list_parent" style='display: block;'>
-    <li v-for="(DATAVAL, DATAIDX) in f_i_b_all_save" class="save_data_set_list">
-        <span @click="f_i_b_save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span>
-        <!-- <span @click="f_i_b_save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span> -->
-        <button @click="f_i_b_save_data_set(DATAIDX)" class="save_data_set">📂</button>
-        <!-- <button @click="f_i_b_save_data_set(DATAIDX)" class="save_data_set">📂</button> -->
-        <button @click="f_i_b_save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button>
-        <!-- <button @click="f_i_b_save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button> -->
-    </li>
-    </ul>
+        <div class="optional_function">
+            <button @click="reverse_q_a">🔃</button>
+            <button @click="shuffle_q_a">🌪️</button>
+            <button @click="swap_q_a">🔁</button>
+            <button @click="save_data_to_all_save">🗂️</button>
+        </div>
+        <button @click="" class="save_opener">📂</button>
+        <!-- <button @click="fn19" class="save_opener">📂</button> -->
+        <ul class="save_data_set_list_parent" style='display: block;'>
+        <li v-for="(DATAVAL, DATAIDX) in f_i_b_all_save" class="save_data_set_list">
+            <span @click="f_i_b_save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span>
+            <!-- <span @click="f_i_b_save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span> -->
+            <button @click="f_i_b_save_data_set(DATAIDX)" class="save_data_set">📂</button>
+            <!-- <button @click="f_i_b_save_data_set(DATAIDX)" class="save_data_set">📂</button> -->
+            <button @click="f_i_b_save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button>
+            <!-- <button @click="f_i_b_save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button> -->
+        </li>
+        </ul>
 
-    <div class="link_button" @click="">
-    <!-- <div class="link_button" @click="fn14"> -->
-    <button class="link_button_top">🌐</button>
-    <progress max="4000" :value="f_i_b_progress_val" class="link_button_under"></progress>
-    </div>
+        <div class="link_button" @click="">
+        <!-- <div class="link_button" @click="fn14"> -->
+        <button class="link_button_top">🌐</button>
+        <progress max="4000" :value="f_i_b_progress_val" class="link_button_under"></progress>
+        </div>
 
-    <a :href="[0]" class="link_text">{{[0]}}</a>
-    <!-- <a :href="data11[0]" class="link_text">{{data11[0]}}</a> -->
-    <div class="textarea-column-1">
-    <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model=""></textarea>
-    <!-- <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data6"></textarea> -->
-    <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model=""></textarea>
-    <!-- <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data3"></textarea> -->
-    </div>
-    <!-- <button @click="fn21(1)" class="font_sizing">◉</button>
-    <button @click="fn21(-1)" class="font_sizing">⦿</button>
-    <button @click="fn21" class="font_sizing">◎</button> -->
+        <a :href="[0]" class="link_text">{{[0]}}</a>
+        <!-- <a :href="data11[0]" class="link_text">{{data11[0]}}</a> -->
+        <div class="textarea-column-1">
+        <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="f_i_b_data1"></textarea>
+        <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="f_i_b_data2"></textarea>
+        </div>
+        <!-- <button @click="fn21(1)" class="font_sizing">◉</button>
+        <button @click="fn21(-1)" class="font_sizing">⦿</button>
+        <button @click="fn21" class="font_sizing">◎</button> -->
     </div>
 
 
     <div class="column-2" :class="{'column-2-none': column_2_none}">
-    <template v-for="(DATAVAL, DATAIDX) in data4">
+    <template v-for="(DATAVAL, DATAIDX) in f_i_b_data4">
     <div class="q_and_a">
         <!-- <span class="text_right" @click="fn20(DATAIDX)">{{ data5[DATAIDX] }}</span> -->
         <!-- <button v-for="item in DATAVAL[1]" @click="fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button> -->
@@ -346,6 +344,18 @@ const app = Vue.createApp({
 data() {
 return {
 f_i_b_all_save: [],
+f_i_b_data1: `fo
+foo
+日
+qux
+qx
+日本
+blabla
+brabra
+bowbow`,
+f_i_b_data2: `foo bar baz
+or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3
+日本語は自然言語のうちの一つで主に日本国内で使われています`,
 f_i_b_data4: [],
 f_i_b_data10: [],
 test_mode: false,
@@ -497,9 +507,6 @@ this.css_var_set('--css-var-test-inline', 'inlilne');
 this.css_var_set('--css-var-color-1', 'aqua');
 this.css_var_set('--css-var-color-2', 'bisque');
 this.css_var_set('--css-var-color-3', 'crimson');
-this.test0();
-this.test1();
-this.test2();
 },
 
 
@@ -552,24 +559,31 @@ toggleDisplay(){
 
 
 <script>
-    const fn3 = (target_str, replacer_str_ary) =>{
-    replacer_str_ary = filter_and_DESC_sort_and_removeShortStr(replacer_str_ary, val3_1);
-    let RESULT_ARRAY = [];
-    const fn2 = (target_str, replacer_str_ary) => {
-        if (replacer_str_ary.length <= 0) {
-            return target_str;
-        } else {
-            // 文字列の場合にのみ関数を適用し、文字列でなければそのまま返す
-            const result = (typeof target_str === 'string') ? fn2_1(target_str, replacer_str_ary[0]) : target_str;
-            replacer_str_ary = removeIndex0(replacer_str_ary);
-            // 再帰
-            let res = result.map(V=>fn2(V, replacer_str_ary));
-            res.includes(undefined) === false ? RESULT_ARRAY.push(res) : null;
-        }
-    };
-    fn2(target_str, replacer_str_ary);
-    return RESULT_ARRAY;
-};
+// ['fo', 'foo', '日', 'qux', 'qx', '日本', 'blabla', 'brabra', 'bowbow']のような要素のその要素が含む文字列がある場合に、長い文字列の要素を残して短い文字列を削除する関数
+// この場合'fo'と'日'は削除される
+const removeShortStr = ary =>
+  ary.filter(V => !ary.some(VAL => VAL !== V && VAL.includes(V)));
+// フィルタリングして長さで降順ソートし、重複した短い要素を除外する
+const filter_and_DESC_sort_and_removeShortStr = (ary, str) =>
+  removeShortStr(ary.filter(v => str.includes(v)).sort((a, b) => b.length - a.length));
+// 配列の最初の要素を削除する
+const removeIndex0 = (ary) => R.remove(0, 1, ary);
+// 正規表現による分割と区切り文字の挿入を組み合わせる
+const fn2_1 = (target_str, replacer_str) =>
+  R.intersperse([replacer_str], target_str.split(new RegExp(replacer_str)));
+const fn2 = (target_str, replacer_str_ary) =>
+  replacer_str_ary.length
+    ? (typeof target_str === 'string' // 対象が文字列の場合は処理を行う
+        ? fn2_1(target_str, replacer_str_ary[0]) // 文字列の場合は置換処理を行う
+        : target_str // 文字列でない場合はそのまま返す
+      ).map(V => fn2(V, removeIndex0(replacer_str_ary))) // 再帰処理
+      .filter(res => res !== undefined) // undefinedを除外する
+    : target_str; // 置換文字列が空の場合はそのまま返す
+// replacer_str_aryが空でない場合、空の配列を生成して、fn2の結果を追加していく、空の場合は、空の配列を返す
+const fn3 = (target_str, replacer_str_ary) =>
+  replacer_str_ary.length
+    ? (RESULT_ARRAY => { fn2(target_str, replacer_str_ary, RESULT_ARRAY); return RESULT_ARRAY })([])
+    : [];
 
 </script>
 </body>

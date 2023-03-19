@@ -270,6 +270,7 @@ font-size: 2.5rem;
         <div class="textarea-column-1">
         <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="f_i_b_data1"></textarea>
         <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="f_i_b_data2"></textarea>
+        <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="f_i_b_data5"></textarea>
         </div>
         <!-- <button @click="fn21(1)" class="font_sizing">◉</button>
         <button @click="fn21(-1)" class="font_sizing">⦿</button>
@@ -358,7 +359,7 @@ or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3
 日本語は自然言語のうちの一つで主に日本国内で使われています`,
 f_i_b_data3: [],
 f_i_b_data4: [],
-f_i_b_data5: [],
+f_i_b_data5: '',
 f_i_b_data10: [],
 test_mode: false,
 column_1_none: false,
@@ -367,8 +368,17 @@ column_3_none: false,
 f_i_b_progress_val: 0,
 }},
 watch: {
-f_i_b_data4: {
+f_i_b_data1: {
     handler() {
+        this.data3_setup();
+        this.data4_5_setup();
+    },
+    deep: true
+},
+f_i_b_data2: {
+    handler() {
+        this.data3_setup();
+        this.data4_5_setup();
     },
     deep: true
 },
@@ -553,6 +563,78 @@ data11 = this.to_ary(this.data11);
 toggleDisplay(){
 },
 
+
+
+
+
+data3_setup(){
+    this.f_i_b_data3 = this.f_i_b_data1.split("\n");
+},
+data4_5_setup(){
+    this.f_i_b_data4 = this.filter_and_DESC_sort_and_removeShortStr(this.f_i_b_data3, this.f_i_b_data2);
+    this.f_i_b_data5 = this.f_i_b_data4.join("\n");
+},
+// ['fo', 'foo', '日', 'qux', 'qx', '日本', 'blabla', 'brabra', 'bowbow']のような要素のその要素が含む文字列がある場合に、長い文字列の要素を残して短い文字列を削除する関数
+// この場合'fo'と'日'は削除される
+removeShortStr(ary) {
+    return ary.filter(V => !ary.some(VAL => VAL !== V && VAL.includes(V)));
+},
+// フィルタリングして長さで降順ソートし、重複した短い要素を除外する。strに含まれない要素は除外される
+filter_and_DESC_sort_and_removeShortStr(ary, str){
+  return this.removeShortStr(ary.filter(v => str.includes(v)).sort((a, b) => b.length - a.length));
+},
+// 配列の最初の要素を削除する
+removeIndex0(ary) {
+    return R.remove(0, 1, ary);
+},
+// 正規表現による分割と区切り文字の挿入を組み合わせる
+fn2_1(target_str, replacer_str) {
+  R.intersperse([replacer_str], target_str.split(new RegExp(replacer_str)));
+},
+fn3(target_str, replacer_str_ary) {
+    const ARY = this.data4;
+    // const ARY = replacer_str_ary;
+    let RESULT_ARRAY = [];
+    const fn2 = (target_str, ARY) => {
+        if (ARY.length <= 0) { return target_str }
+        else {
+            const res = ((typeof target_str === 'string') ? this.fn2_1(target_str, ARY[0]) : target_str).map(V=>fn2(V, removeIndex0(ARY)));
+            res.includes(undefined) === false ? RESULT_ARRAY.push(res) : null;
+        }
+    };
+    fn2(target_str, ARY);
+    return RESULT_ARRAY;
+},
+// 与えられた配列 ary から要素 val を取り除いた新しい配列を返すアロー関数
+remove_any_elelemnt_from_ary_one_liner(ary, val) {
+    return ary.filter(V=> V !== val);
+},
+// ARG_ARYからVALを除外し、シャッフルした配列から先頭2つの要素を取得し、VALと結合し、シャッフルした配列を返す
+getShuffledArray(ARG_ARY, VAL){
+    return shuffle(shuffle(this.remove_any_elelemnt_from_ary_one_liner(ARG_ARY, VAL)).slice(0, 2).concat(VAL));
+},
+// ARG_ARY を reduce で繰り返し処理し
+// ARG_ARY から VAL を除いた配列をシャッフルし
+// 先頭2つと VAL を結合した配列を作成し
+// 結果をACCにpushしていく(初期値は空の配列)
+f_i_b_composer(ARG_ARY) {
+  return ARG_ARY.reduce((ACC, VAL) => {
+    ACC.push([VAL, R.insert(0, '', this.getShuffledArray(ARG_ARY, VAL)), false]);
+    return ACC;
+  }, []);
+},
+fn4(ARY, REPLACE_ARY) {
+    return R.flatten(ARY).map(V=>data4.includes(V) ? REPLACE_ARY.filter(VAL=>VAL[0]===V)[0] : V);
+},
+exe(){
+    this.tn4(this.tn3(this.data2), this.f_i_b_composer(this.data4));
+},
+
+
+
+
+
+
 },
 }).mount('.f_i_b');
 </script>
@@ -560,94 +642,5 @@ toggleDisplay(){
 
 
 
-<script>
-data1 = f_i_b.f_i_b_data1;
-data2 = f_i_b.f_i_b_data2;
-data3 = f_i_b.f_i_b_data1.split("\n");
-data4 = null;
-
-// ['fo', 'foo', '日', 'qux', 'qx', '日本', 'blabla', 'brabra', 'bowbow']のような要素のその要素が含む文字列がある場合に、長い文字列の要素を残して短い文字列を削除する関数
-// この場合'fo'と'日'は削除される
-const removeShortStr = ary =>
-  ary.filter(V => !ary.some(VAL => VAL !== V && VAL.includes(V)));
-// フィルタリングして長さで降順ソートし、重複した短い要素を除外する
-const filter_and_DESC_sort_and_removeShortStr = (ary, str) =>
-  removeShortStr(ary.filter(v => str.includes(v)).sort((a, b) => b.length - a.length));
-// 配列の最初の要素を削除する
-const removeIndex0 = (ary) => R.remove(0, 1, ary);
-// 正規表現による分割と区切り文字の挿入を組み合わせる
-const fn2_1 = (target_str, replacer_str) =>
-  R.intersperse([replacer_str], target_str.split(new RegExp(replacer_str)));
-
-
-// replacer_str_aryが空でない場合、空の配列を生成して、fn2の結果を追加していく、空の場合は、空の配列を返す
-// const fn3 = (target_str, replacer_str_ary) =>{
-//     replacer_str_ary = filter_and_DESC_sort_and_removeShortStr(replacer_str_ary, target_str);
-//     return replacer_str_ary.length
-//     ? (RESULT_ARRAY => { fn2(target_str, replacer_str_ary, RESULT_ARRAY); return RESULT_ARRAY })([])
-//     : [];
-// }
-
-// replacer_str_ary = filter_and_DESC_sort_and_removeShortStr(replacer_str_ary, data2);
-            // 文字列の場合にのみ関数を適用し、文字列でなければそのまま返す
-            // 再帰
-
-// const fn3 = (target_str, replacer_str_ary) =>{
-//     let RESULT_ARRAY = [];
-//     const fn2 = (target_str, replacer_str_ary) => {
-//         if (replacer_str_ary.length <= 0) {
-//             return target_str;
-//         } else {
-//             const result = (typeof target_str === 'string') ? fn2_1(target_str, replacer_str_ary[0]) : target_str;
-//             replacer_str_ary = removeIndex0(replacer_str_ary);
-//             let res = result.map(V=>fn2(V, replacer_str_ary));
-//             res.includes(undefined) === false ? RESULT_ARRAY.push(res) : null;
-//         }
-//     };
-//     fn2(target_str, replacer_str_ary);
-//     return RESULT_ARRAY;
-// };
-
-data4 = filter_and_DESC_sort_and_removeShortStr(data3, data2);
-const fn3 = (target_str, replacer_str_ary) =>{
-    // const ARY = filter_and_DESC_sort_and_removeShortStr(replacer_str_ary, target_str);
-    // const ARY = removeShortStr(replacer_str_ary);
-    const ARY = data4;
-    // const ARY = replacer_str_ary;
-    let RESULT_ARRAY = [];
-    const fn2 = (target_str, ARY) => {
-        if (ARY.length <= 0) { return target_str }
-        else {
-            const res = ((typeof target_str === 'string') ? fn2_1(target_str, ARY[0]) : target_str).map(V=>fn2(V, removeIndex0(ARY)));
-            res.includes(undefined) === false ? RESULT_ARRAY.push(res) : null;
-        }
-    };
-    fn2(target_str, ARY);
-    return RESULT_ARRAY;
-};
-
-
-
-
-// 与えられた配列 ary から要素 val を取り除いた新しい配列を返すアロー関数
-const remove_any_elelemnt_from_ary_one_liner = (ary, val) => ary.filter(V=> V !== val);
-// ARG_ARYからVALを除外し、シャッフルした配列から先頭2つの要素を取得し、VALと結合し、シャッフルした配列を返す
-const getShuffledArray = (ARG_ARY, VAL) => shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(ARG_ARY, VAL)).slice(0, 2).concat(VAL));
-// ARG_ARY を reduce で繰り返し処理し
-// ARG_ARY から VAL を除いた配列をシャッフルし
-// 先頭2つと VAL を結合した配列を作成し
-// 結果をACCにpushしていく(初期値は空の配列)
-const f_i_b_composer = (ARG_ARY) => {
-  return ARG_ARY.reduce((ACC, VAL) => {
-    ACC.push([VAL, R.insert(0, '', getShuffledArray(ARG_ARY, VAL)), false]);
-    return ACC;
-  }, []);
-};
-
-const fn4 = (ARY, REPLACE_ARY) => R.flatten(ARY).map(V=>data4.includes(V) ? REPLACE_ARY.filter(VAL=>VAL[0]===V)[0] : V);
-// fn4(fn3(data2, data4), f_i_b_composer(data4));
-fn4(fn3(data2), f_i_b_composer(data4));
-
-</script>
 </body>
 </html>

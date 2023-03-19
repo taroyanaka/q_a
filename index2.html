@@ -279,8 +279,9 @@ font-size: 2.5rem;
 
 
     <div class="column-2" :class="{'column-2-none': column_2_none}">
-    <template v-for="(DATAVAL, DATAIDX) in f_i_b_data4">
+    <template v-for="(DATAVAL, DATAIDX) in f_i_b_data6">
     <div class="q_and_a">
+        <span @click="">{{ DATAVAL }}</span>
         <!-- <span class="text_right" @click="fn20(DATAIDX)">{{ data5[DATAIDX] }}</span> -->
         <!-- <button v-for="item in DATAVAL[1]" @click="fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button> -->
         <!-- <span class="text_center">{{ DATAVAL[2] }}</span> -->
@@ -360,6 +361,7 @@ or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3
 f_i_b_data3: [],
 f_i_b_data4: [],
 f_i_b_data5: '',
+f_i_b_data6: [],
 f_i_b_data10: [],
 test_mode: false,
 column_1_none: false,
@@ -372,6 +374,7 @@ f_i_b_data1: {
     handler() {
         this.data3_setup();
         this.data4_5_setup();
+        this.exe();
     },
     deep: true
 },
@@ -379,6 +382,7 @@ f_i_b_data2: {
     handler() {
         this.data3_setup();
         this.data4_5_setup();
+        this.exe();
     },
     deep: true
 },
@@ -393,6 +397,10 @@ beforeMount(){
 mounted() {
 this.save_data_load();
 // this.toggleDisplay();
+        this.data3_setup();
+        this.data4_5_setup();
+        this.exe();
+
 this.test_mode === true ? this.test_exe() : null;
 },
 beforeUpdate() {
@@ -589,20 +597,39 @@ removeIndex0(ary) {
 },
 // 正規表現による分割と区切り文字の挿入を組み合わせる
 fn2_1(target_str, replacer_str) {
-  R.intersperse([replacer_str], target_str.split(new RegExp(replacer_str)));
+    return R.intersperse([replacer_str], target_str.split(new RegExp(replacer_str)));
 },
 fn3(target_str, replacer_str_ary) {
-    const ARY = this.data4;
-    // const ARY = replacer_str_ary;
+// fn3() {
+// console.log(target_str, replacer_str_ary);
+    let ARY = this.to_ary(this.f_i_b_data4);
+    // let RESULT_ARRAY = [];
+    // const fn2 = (target_str, ARY) => {
+    //     if (ARY.length <= 0) { return target_str }
+    //     else {
+    //         console.log(target_str, ARY);
+    //         const res = ((typeof target_str === 'string') ? this.fn2_1(target_str, ARY[0]) : target_str)
+    //                 .map(V=>fn2(V, removeIndex0(ARY)));
+    //         res.includes(undefined) === false ? RESULT_ARRAY.push(res) : null;
+    //     }
+    // };
+    // fn2(this.f_i_b_data2, ARY);
     let RESULT_ARRAY = [];
-    const fn2 = (target_str, ARY) => {
-        if (ARY.length <= 0) { return target_str }
-        else {
-            const res = ((typeof target_str === 'string') ? this.fn2_1(target_str, ARY[0]) : target_str).map(V=>fn2(V, removeIndex0(ARY)));
+    const fn2 = (target_str, replacer_str_ary) => {
+        if (replacer_str_ary.length <= 0) {
+            return target_str;
+        } else {
+            // 文字列の場合にのみ関数を適用し、文字列でなければそのまま返す
+            const result = (typeof target_str === 'string') ? this.fn2_1(target_str, replacer_str_ary[0]) : target_str;
+            replacer_str_ary = this.removeIndex0(replacer_str_ary);
+console.log(result);
+            // 再帰
+            let res = result.map(V=>fn2(V, replacer_str_ary));
             res.includes(undefined) === false ? RESULT_ARRAY.push(res) : null;
         }
     };
-    fn2(target_str, ARY);
+    // fn2(target_str, replacer_str_ary);
+    fn2(this.f_i_b_data2, this.to_ary(this.f_i_b_data4));
     return RESULT_ARRAY;
 },
 // 与えられた配列 ary から要素 val を取り除いた新しい配列を返すアロー関数
@@ -624,13 +651,13 @@ f_i_b_composer(ARG_ARY) {
   }, []);
 },
 fn4(ARY, REPLACE_ARY) {
-    return R.flatten(ARY).map(V=>data4.includes(V) ? REPLACE_ARY.filter(VAL=>VAL[0]===V)[0] : V);
+    return R.flatten(ARY).map(V=>this.f_i_b_data4.includes(V) ? REPLACE_ARY.filter(VAL=>VAL[0]===V)[0] : V);
 },
 exe(){
-    this.tn4(this.tn3(this.data2), this.f_i_b_composer(this.data4));
+    this.f_i_b_data6 = this.fn4(this.fn3(), this.f_i_b_composer(this.f_i_b_data4));
 },
 
-
+// fn4(fn3(data2), f_i_b_composer(data4));
 
 
 

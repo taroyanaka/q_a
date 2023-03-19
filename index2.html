@@ -599,21 +599,7 @@ removeIndex0(ary) {
 fn2_1(target_str, replacer_str) {
     return R.intersperse([replacer_str], target_str.split(new RegExp(replacer_str)));
 },
-fn3(target_str, replacer_str_ary) {
-// fn3() {
-// console.log(target_str, replacer_str_ary);
-    let ARY = this.to_ary(this.f_i_b_data4);
-    // let RESULT_ARRAY = [];
-    // const fn2 = (target_str, ARY) => {
-    //     if (ARY.length <= 0) { return target_str }
-    //     else {
-    //         console.log(target_str, ARY);
-    //         const res = ((typeof target_str === 'string') ? this.fn2_1(target_str, ARY[0]) : target_str)
-    //                 .map(V=>fn2(V, removeIndex0(ARY)));
-    //         res.includes(undefined) === false ? RESULT_ARRAY.push(res) : null;
-    //     }
-    // };
-    // fn2(this.f_i_b_data2, ARY);
+fn3() {
     let RESULT_ARRAY = [];
     const fn2 = (target_str, replacer_str_ary) => {
         if (replacer_str_ary.length <= 0) {
@@ -628,8 +614,7 @@ console.log(result);
             res.includes(undefined) === false ? RESULT_ARRAY.push(res) : null;
         }
     };
-    // fn2(target_str, replacer_str_ary);
-    fn2(this.f_i_b_data2, this.to_ary(this.f_i_b_data4));
+    fn2(this.f_i_b_data2, this.f_i_b_data4);
     return RESULT_ARRAY;
 },
 // 与えられた配列 ary から要素 val を取り除いた新しい配列を返すアロー関数
@@ -657,7 +642,6 @@ exe(){
     this.f_i_b_data6 = this.fn4(this.fn3(), this.f_i_b_composer(this.f_i_b_data4));
 },
 
-// fn4(fn3(data2), f_i_b_composer(data4));
 
 
 

@@ -280,12 +280,24 @@ font-size: 2.5rem;
 
     <div class="column-2" :class="{'column-2-none': column_2_none}">
     <template v-for="(DATAVAL, DATAIDX) in f_i_b_data6">
-    <div class="q_and_a">
-        <span @click="">{{ DATAVAL }}</span>
+    <!-- <div class="q_and_a"> -->
+
+        <button @click="">{{ (typeof DATAVAL === 'string') ? DATAVAL : null }}</button>
+
+<!-- <select @click=""> -->
+<template v-if="typeof DATAVAL === 'object'">
+<select name="" id="" @change="show">
+    <option v-for="(FOO, BAR) in DATAVAL[1]" :value="FOO">
+        {{ FOO }}
+    </option>
+</select>
+</template>
+<!-- </select> -->
+
         <!-- <span class="text_right" @click="fn20(DATAIDX)">{{ data5[DATAIDX] }}</span> -->
         <!-- <button v-for="item in DATAVAL[1]" @click="fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button> -->
         <!-- <span class="text_center">{{ DATAVAL[2] }}</span> -->
-    </div>
+    <!-- </div> -->
     </template>
     <button @click="" class="check_button">🎮</button>
     <!-- <button @click="fn4" class="check_button">🎮</button> -->
@@ -334,15 +346,15 @@ font-size: 2.5rem;
 <script src="lib/shuffle.js"></script>
 
 <script>
-// let data2 = null;
-// let data3 = null;
-// let data4 = null;
-// let data5 = null;
-// let data6 = null;
-// let data10 = null;
-// let data11 = null;
+let data1 = null;
+let data2 = null;
+let data3 = null;
+let data4 = null;
+let data5 = null;
+let data6 = null;
+let data7 = null;
 
-const f_i_b = Vue.createApp({
+const D = Vue.createApp({
 data() {
 return {
 f_i_b_all_save: [],
@@ -535,13 +547,13 @@ to_ary(it){
 return JSON.parse(JSON.stringify(it));
 },
 for_debug(){
-data2 = this.to_ary(this.data2);
-data3 = this.to_ary(this.data3);
-data4 = this.to_ary(this.data4);
-data5 = this.to_ary(this.data5);
-data6 = this.to_ary(this.data6);
-data10 = this.to_ary(this.data10);
-data11 = this.to_ary(this.data11);
+data1 = this.to_ary(this.f_i_b_data1);
+data2 = this.to_ary(this.f_i_b_data2);
+data3 = this.to_ary(this.f_i_b_data3);
+data4 = this.to_ary(this.f_i_b_data4);
+data5 = this.to_ary(this.f_i_b_data5);
+data6 = this.to_ary(this.f_i_b_data6);
+
 },
 
 
@@ -579,20 +591,20 @@ data3_setup(){
     this.f_i_b_data3 = this.f_i_b_data1.split("\n");
 },
 data4_5_setup(){
-    this.f_i_b_data4 = this.filter_and_DESC_sort_and_removeShortStr(this.f_i_b_data3, this.f_i_b_data2);
+    this.f_i_b_data4 = this.filter_and_DESC_sort_and_remove_short_str(this.f_i_b_data3, this.f_i_b_data2);
     this.f_i_b_data5 = this.f_i_b_data4.join("\n");
 },
 // ['fo', 'foo', '日', 'qux', 'qx', '日本', 'blabla', 'brabra', 'bowbow']のような要素のその要素が含む文字列がある場合に、長い文字列の要素を残して短い文字列を削除する関数
 // この場合'fo'と'日'は削除される
-removeShortStr(ary) {
+remove_short_str(ary) {
     return ary.filter(V => !ary.some(VAL => VAL !== V && VAL.includes(V)));
 },
 // フィルタリングして長さで降順ソートし、重複した短い要素を除外する。strに含まれない要素は除外される
-filter_and_DESC_sort_and_removeShortStr(ary, str){
-  return this.removeShortStr(ary.filter(v => str.includes(v)).sort((a, b) => b.length - a.length));
+filter_and_DESC_sort_and_remove_short_str(ary, str){
+  return this.remove_short_str(ary.filter(v => str.includes(v)).sort((a, b) => b.length - a.length));
 },
 // 配列の最初の要素を削除する
-removeIndex0(ary) {
+remove_index_0(ary) {
     return R.remove(0, 1, ary);
 },
 // 正規表現による分割と区切り文字の挿入を組み合わせる
@@ -607,8 +619,7 @@ fn3() {
         } else {
             // 文字列の場合にのみ関数を適用し、文字列でなければそのまま返す
             const result = (typeof target_str === 'string') ? this.fn2_1(target_str, replacer_str_ary[0]) : target_str;
-            replacer_str_ary = this.removeIndex0(replacer_str_ary);
-console.log(result);
+            replacer_str_ary = this.remove_index_0(replacer_str_ary);
             // 再帰
             let res = result.map(V=>fn2(V, replacer_str_ary));
             res.includes(undefined) === false ? RESULT_ARRAY.push(res) : null;
@@ -622,7 +633,7 @@ remove_any_elelemnt_from_ary_one_liner(ary, val) {
     return ary.filter(V=> V !== val);
 },
 // ARG_ARYからVALを除外し、シャッフルした配列から先頭2つの要素を取得し、VALと結合し、シャッフルした配列を返す
-getShuffledArray(ARG_ARY, VAL){
+get_shuffled_array(ARG_ARY, VAL){
     return shuffle(shuffle(this.remove_any_elelemnt_from_ary_one_liner(ARG_ARY, VAL)).slice(0, 2).concat(VAL));
 },
 // ARG_ARY を reduce で繰り返し処理し
@@ -631,15 +642,25 @@ getShuffledArray(ARG_ARY, VAL){
 // 結果をACCにpushしていく(初期値は空の配列)
 f_i_b_composer(ARG_ARY) {
   return ARG_ARY.reduce((ACC, VAL) => {
-    ACC.push([VAL, R.insert(0, '', this.getShuffledArray(ARG_ARY, VAL)), false]);
+    ACC.push([VAL, R.insert(0, '', this.get_shuffled_array(ARG_ARY, VAL)), false]);
     return ACC;
   }, []);
 },
 fn4(ARY, REPLACE_ARY) {
     return R.flatten(ARY).map(V=>this.f_i_b_data4.includes(V) ? REPLACE_ARY.filter(VAL=>VAL[0]===V)[0] : V);
 },
+// 配列から''を除外する
+remove_empty_str_from_ary(ary) {
+    return ary.filter(V => V !== '');
+},
 exe(){
     this.f_i_b_data6 = this.fn4(this.fn3(), this.f_i_b_composer(this.f_i_b_data4));
+    this.f_i_b_data6 = this.remove_empty_str_from_ary(this.f_i_b_data6);
+    this.for_debug();
+},
+
+show($event){
+    console.log(event.target.value);
 },
 
 

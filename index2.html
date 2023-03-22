@@ -648,9 +648,7 @@ fn3() {
         }
     };
     fn2(this.f_i_b_data2, this.f_i_b_data4);
-    // return RESULT_ARRAY;
     this.f_i_b_data8 = RESULT_ARRAY;
-    // return RESULT_ARRAY;
 },
 // 与えられた配列 ary から要素 val を取り除いた新しい配列を返すアロー関数
 remove_any_elelemnt_from_ary_one_liner(ary, val) {
@@ -664,29 +662,20 @@ get_shuffled_array(ARG_ARY, VAL){
 // ARG_ARY から VAL を除いた配列をシャッフルし
 // 先頭2つと VAL を結合した配列を作成し
 // 結果をACCにpushしていく(初期値は空の配列)
-// f_i_b_composer(ARG_ARY) {
 f_i_b_composer() {
   this.f_i_b_data7 = this.f_i_b_data4.reduce((ACC, VAL) => {
-    // ACC.push([VAL, R.insert(0, '', this.get_shuffled_array(ARG_ARY, VAL)), false]);
     ACC.push([VAL, R.insert(0, '', this.get_shuffled_array(this.f_i_b_data4, VAL))]);
     return ACC;
   }, []);
 },
-// fn4(ARY, REPLACE_ARY) {
-// fn4(ARY) {
 fn4() {
-    // return R.flatten(ARY).map(V=>this.f_i_b_data4.includes(V) ? this.f_i_b_data4.filter(VAL=>VAL===V)[0] : V);
-    // return R.flatten(this.f_i_b_data8).map(V=>this.f_i_b_data4.includes(V) ? this.f_i_b_data7.filter(VAL=>VAL[0]===V)[0] : V);
     this.f_i_b_data6 = R.flatten(this.f_i_b_data8).map(V=>this.f_i_b_data4.includes(V) ? this.f_i_b_data7.filter(VAL=>VAL[0]===V)[0] : V);
 },
 // 配列から''を除外する
-// remove_empty_str_from_ary(ary) {
 remove_empty_str_from_ary() {
-    // return ary.filter(V => V !== '');
     this.f_i_b_data9 = this.f_i_b_data6.filter(V => V !== '');
 },
 exe(){
-    // this.f_i_b_composer(this.f_i_b_data4);
     this.f_i_b_composer();
     this.fn3();
     this.fn4();
@@ -695,22 +684,8 @@ exe(){
 },
 
 show($event){
-console.log('value', event.target.value);
-
-
-
-// console.log(event.target.dataset.a);
-// console.log(event.target.dataset.aB);
-// console.log(event.target.dataset.ab);
-// console.log(event.target.dataset.aBC);
-// console.log(event.target.dataset.aBc);
-
-
-// console.log(event.target.dataset.abcc);
-
-// console.log(event.target.dataset.aBcc);
-console.log('data-correct', event.target.dataset.correct);
-
+    console.log('value', event.target.value);
+    console.log('data-correct', event.target.dataset.correct);
 },
 
 

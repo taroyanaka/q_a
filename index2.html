@@ -286,13 +286,16 @@ font-size: 2.5rem;
 
 <!-- <select @click=""> -->
 <template v-if="typeof DATAVAL === 'object'">
-<select name="" id="" @change="show">
+<select name="" id="" @change="show" data-a="a" data-a-b="a b" data-a-BCc="a b c" data-aBc="abc">
     <option v-for="(FOO, BAR) in DATAVAL[1]" :value="FOO">
         {{ FOO }}
     </option>
 </select>
 </template>
 <!-- </select> -->
+
+<!-- data属性のhtmlのサンプル -->
+
 
         <!-- <span class="text_right" @click="fn20(DATAIDX)">{{ data5[DATAIDX] }}</span> -->
         <!-- <button v-for="item in DATAVAL[1]" @click="fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button> -->
@@ -546,6 +549,7 @@ this.css_var_set('--css-var-color-3', 'crimson');
 to_ary(it){
 return JSON.parse(JSON.stringify(it));
 },
+
 for_debug(){
 data1 = this.to_ary(this.f_i_b_data1);
 data2 = this.to_ary(this.f_i_b_data2);
@@ -553,7 +557,14 @@ data3 = this.to_ary(this.f_i_b_data3);
 data4 = this.to_ary(this.f_i_b_data4);
 data5 = this.to_ary(this.f_i_b_data5);
 data6 = this.to_ary(this.f_i_b_data6);
-
+console.log(
+'f_i_b_data1:' , data1, '\n',
+'f_i_b_data2:' , data2, '\n',
+'f_i_b_data3:' , data3, '\n',
+'f_i_b_data4:' , data4, '\n',
+'f_i_b_data5:' , data5, '\n',
+'f_i_b_data6:' , data6, '\n',
+);
 },
 
 
@@ -656,11 +667,24 @@ remove_empty_str_from_ary(ary) {
 exe(){
     this.f_i_b_data6 = this.fn4(this.fn3(), this.f_i_b_composer(this.f_i_b_data4));
     this.f_i_b_data6 = this.remove_empty_str_from_ary(this.f_i_b_data6);
-    this.for_debug();
+    // this.for_debug();
 },
 
 show($event){
-    console.log(event.target.value);
+    // console.log(event.target.value);
+
+
+// <select name="" id="" @change="show" data-a="a" data-a-b="a b" data-a-BCc="a b c" data-aBc="abc">
+console.log(event.target.dataset.a);
+// console.log(event.target.dataset.aB);
+console.log(event.target.dataset.ab);
+// console.log(event.target.dataset.aBC);
+// console.log(event.target.dataset.aBc);
+
+// <select name="" id="" @change="show" data-a="a" data-a-b="a b" data-a-BCc="a b c" data-aBc="abc">
+// console.log(event.target.dataset.abcc);
+console.log(event.target.dataset.aBcc);
+
 },
 
 

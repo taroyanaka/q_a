@@ -313,7 +313,7 @@ font-size: 2.5rem;
     <!-- <button @click="fn18" class="result_opener">📖</button> -->
 
     </div>
-    <template v-for="(DATAVAL, DATAIDX) in data10">
+    <template v-for="(DATAVAL, DATAIDX) in data_X_1">
         <div class="textarea-column-2">
         <div class="a">
             <!-- <button @click="fn9(DATAIDX)" class="a-1">↩️</button> -->
@@ -382,7 +382,8 @@ f_i_b_data6: [],
 f_i_b_data7: [],
 f_i_b_data8: [],
 f_i_b_data9: [],
-f_i_b_data10: [],
+// Xはリファクタリング時に他のナンバリングの変数と被らないようにするためのもの
+f_i_b_data_X_1: [],
 test_mode: false,
 column_1_none: false,
 column_2_none: false,
@@ -477,7 +478,7 @@ this.data3 = JSON.parse(new URL(window.location.href).searchParams.get("A")).joi
 }
 },
 fn16(INDEX){
-this.data10.splice(INDEX, 1);
+this.data_X_1.splice(INDEX, 1);
 },
 fn17(INDEX){
 document.querySelectorAll('.textarea-'+INDEX).forEach(ELM=>{

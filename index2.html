@@ -279,7 +279,7 @@ font-size: 2.5rem;
 
 
     <div class="column-2" :class="{'column-2-none': column_2_none}">
-    <template v-for="(DATAVAL, DATAIDX) in f_i_b_data6">
+    <template v-for="(DATAVAL, DATAIDX) in f_i_b_data9">
     <!-- <div class="q_and_a"> -->
 
         <button @click="">{{ (typeof DATAVAL === 'string') ? DATAVAL : null }}</button>
@@ -357,6 +357,7 @@ let data5 = null;
 let data6 = null;
 let data7 = null;
 let data8 = null;
+let data9 = null;
 
 const D = Vue.createApp({
 data() {
@@ -380,6 +381,7 @@ f_i_b_data5: '',
 f_i_b_data6: [],
 f_i_b_data7: [],
 f_i_b_data8: [],
+f_i_b_data9: [],
 f_i_b_data10: [],
 test_mode: false,
 column_1_none: false,
@@ -562,6 +564,7 @@ data5 = this.to_ary(this.f_i_b_data5);
 data6 = this.to_ary(this.f_i_b_data6);
 data7 = this.to_ary(this.f_i_b_data7);
 data8 = this.to_ary(this.f_i_b_data8);
+data9 = this.to_ary(this.f_i_b_data9);
 console.log(
 'f_i_b_data1:' , data1, '\n',
 'f_i_b_data2:' , data2, '\n',
@@ -571,6 +574,7 @@ console.log(
 'f_i_b_data6:' , data6, '\n',
 'f_i_b_data7:' , data7, '\n',
 'f_i_b_data8:' , data8, '\n',
+'f_i_b_data9:' , data9, '\n',
 );
 },
 
@@ -674,8 +678,10 @@ fn4() {
     this.f_i_b_data6 = R.flatten(this.f_i_b_data8).map(V=>this.f_i_b_data4.includes(V) ? this.f_i_b_data7.filter(VAL=>VAL[0]===V)[0] : V);
 },
 // 配列から''を除外する
-remove_empty_str_from_ary(ary) {
-    return ary.filter(V => V !== '');
+// remove_empty_str_from_ary(ary) {
+remove_empty_str_from_ary() {
+    // return ary.filter(V => V !== '');
+    this.f_i_b_data9 = this.f_i_b_data6.filter(V => V !== '');
 },
 exe(){
     this.f_i_b_composer(this.f_i_b_data4);
@@ -685,7 +691,8 @@ exe(){
     this.fn4();
     // this.f_i_b_data6 = this.fn4(this.f_i_b_data8);
     // this.f_i_b_data6 = this.fn4(this.f_i_b_data8);
-    this.f_i_b_data6 = this.remove_empty_str_from_ary(this.f_i_b_data6);
+    // this.f_i_b_data9 = this.remove_empty_str_from_ary(this.f_i_b_data9);
+    this.remove_empty_str_from_ary();
     this.for_debug();
 },
 

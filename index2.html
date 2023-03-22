@@ -664,10 +664,11 @@ get_shuffled_array(ARG_ARY, VAL){
 // ARG_ARY から VAL を除いた配列をシャッフルし
 // 先頭2つと VAL を結合した配列を作成し
 // 結果をACCにpushしていく(初期値は空の配列)
-f_i_b_composer(ARG_ARY) {
-  this.f_i_b_data7 = ARG_ARY.reduce((ACC, VAL) => {
+// f_i_b_composer(ARG_ARY) {
+f_i_b_composer() {
+  this.f_i_b_data7 = this.f_i_b_data4.reduce((ACC, VAL) => {
     // ACC.push([VAL, R.insert(0, '', this.get_shuffled_array(ARG_ARY, VAL)), false]);
-    ACC.push([VAL, R.insert(0, '', this.get_shuffled_array(ARG_ARY, VAL))]);
+    ACC.push([VAL, R.insert(0, '', this.get_shuffled_array(this.f_i_b_data4, VAL))]);
     return ACC;
   }, []);
 },
@@ -685,14 +686,10 @@ remove_empty_str_from_ary() {
     this.f_i_b_data9 = this.f_i_b_data6.filter(V => V !== '');
 },
 exe(){
-    this.f_i_b_composer(this.f_i_b_data4);
-    // this.f_i_b_data6 = this.fn4(this.fn3(), this.f_i_b_data7);
-    // this.f_i_b_data6 = this.fn4(this.fn3(), this.f_i_b_data4);
+    // this.f_i_b_composer(this.f_i_b_data4);
+    this.f_i_b_composer();
     this.fn3();
     this.fn4();
-    // this.f_i_b_data6 = this.fn4(this.f_i_b_data8);
-    // this.f_i_b_data6 = this.fn4(this.f_i_b_data8);
-    // this.f_i_b_data9 = this.remove_empty_str_from_ary(this.f_i_b_data9);
     this.remove_empty_str_from_ary();
     this.for_debug();
 },

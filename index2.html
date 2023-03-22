@@ -657,22 +657,24 @@ get_shuffled_array(ARG_ARY, VAL){
     const remove_any_elelemnt_from_ary_one_liner = (ary, val) => ary.filter(V=> V !== val);
     return shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(ARG_ARY, VAL)).slice(0, 2).concat(VAL));
 },
-// ARG_ARY を reduce で繰り返し処理し
-// ARG_ARY から VAL を除いた配列をシャッフルし
-// 先頭2つと VAL を結合した配列を作成し
-// 結果をACCにpushしていく(初期値は空の配列)
+// [
+//     [VAL, ['', VAL, BAR, BAZ],
+//     [BAR, ['', BAR, VAL, BAZ],
+//     [BAZ, ['', VAL, BAR, BAZ],
+// ]
+// 上記のように[正解, [空文字, シャッフルされた正解を含む3つの要素]]の配列を作成する
 f_i_b_composer() {
-//   this.f_i_b_data7 = this.f_i_b_data4.reduce((ACC, VAL) => {
-//     ACC.push([VAL, R.insert(0, '', this.get_shuffled_array(this.f_i_b_data4, VAL))]);
-//     return ACC;
-//   }, []);
-    this.f_i_b_data7 = this.f_i_b_data4.map((VAL) => {
+    this.f_i_b_data7 = this.f_i_b_data4.map(VAL => {
         return [VAL, R.insert(0, '', this.get_shuffled_array(this.f_i_b_data4, VAL))];
     });
-
 },
+// 2次元配列を1次元配列に変換し、各要素に対して別の配列に含まれるかをチェックし、一致する要素を別の配列から取得して、最終的な1次元配列を生成する処理
 fn4() {
-    this.f_i_b_data6 = R.flatten(this.f_i_b_data8).map(V=>this.f_i_b_data4.includes(V) ? this.f_i_b_data7.filter(VAL=>VAL[0]===V)[0] : V);
+    this.f_i_b_data6 = R.flatten(this.f_i_b_data8).map(V=>{
+        return this.f_i_b_data4.includes(V) ?
+                    this.f_i_b_data7.filter(VAL=>VAL[0]===V)[0] :
+                    V
+    });
 },
 // 配列から''を除外する
 remove_empty_str_from_ary() {

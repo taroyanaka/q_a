@@ -613,18 +613,17 @@ toggleDisplay(){
 data3_setup(){
     this.f_i_b_data3 = this.f_i_b_data1.split("\n");
 },
-data4_5_setup(){
-    this.f_i_b_data4 = this.filter_and_DESC_sort_and_remove_short_str(this.f_i_b_data3, this.f_i_b_data2);
-    this.f_i_b_data5 = this.f_i_b_data4.join("\n");
-},
-// ['fo', 'foo', '日', 'qux', 'qx', '日本', 'blabla', 'brabra', 'bowbow']のような要素のその要素が含む文字列がある場合に、長い文字列の要素を残して短い文字列を削除する関数
-// この場合'fo'と'日'は削除される
-remove_short_str(ary) {
-    return ary.filter(V => !ary.some(VAL => VAL !== V && VAL.includes(V)));
-},
 // フィルタリングして長さで降順ソートし、重複した短い要素を除外する。strに含まれない要素は除外される
-filter_and_DESC_sort_and_remove_short_str(ary, str){
-  return this.remove_short_str(ary.filter(v => str.includes(v)).sort((a, b) => b.length - a.length));
+filter_and_DESC_sort_and_remove_short_str(){
+    // ['fo', 'foo', '日', 'qux', 'qx', '日本', 'blabla', 'brabra', 'bowbow']のような要素のその要素が含む文字列がある場合に、長い文字列の要素を残して短い文字列を削除する関数
+    // この場合'fo'と'日'は削除される
+    const remove_short_str = (ary) => ary.filter(V => !ary.some(VAL => VAL !== V && VAL.includes(V)));
+    this.f_i_b_data4 = remove_short_str(
+        this.f_i_b_data3.filter(v => this.f_i_b_data2.includes(v)).sort((a, b) => b.length - a.length));
+},
+data4_5_setup(){
+    this.filter_and_DESC_sort_and_remove_short_str();
+    this.f_i_b_data5 = this.f_i_b_data4.join("\n");
 },
 // 配列の最初の要素を削除する
 remove_index_0(ary) {

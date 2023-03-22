@@ -666,7 +666,8 @@ get_shuffled_array(ARG_ARY, VAL){
 // 結果をACCにpushしていく(初期値は空の配列)
 f_i_b_composer(ARG_ARY) {
   this.f_i_b_data7 = ARG_ARY.reduce((ACC, VAL) => {
-    ACC.push([VAL, R.insert(0, '', this.get_shuffled_array(ARG_ARY, VAL)), false]);
+    // ACC.push([VAL, R.insert(0, '', this.get_shuffled_array(ARG_ARY, VAL)), false]);
+    ACC.push([VAL, R.insert(0, '', this.get_shuffled_array(ARG_ARY, VAL))]);
     return ACC;
   }, []);
 },

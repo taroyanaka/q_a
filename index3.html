@@ -398,7 +398,7 @@ this.save_data_load();
 this.init();
 this.sample1();
 this.for_debug();
-this.test_mode === true ? this.test_exe() : null;
+this.test_mode === true ? sleep(100, this.test_exe) : null;
 },
 beforeUpdate() {
 },
@@ -408,6 +408,10 @@ methods: {
 fn1(){
 },
 test_exe(){
+    // 偶数か奇数かを判定して偶数ならtrue、奇数ならfalseを返す1行の関数
+    const is_even = num => num % 2 === 0;
+    this.data5 = this.data5.map((V,IDX)=>[V[0], V[1], is_even(IDX)])
+    this.filter_image_and_name();
 },
 remove(item, ary){
     // 指定した要素を配列から削除するramda.jsを使った1行の関数
@@ -431,7 +435,7 @@ this.data4 = this.to_ary(this.data4).map(V=> [V[0], shuffle(R.flatten(V))]
 this.data5 = R.zip(this.ary_data2, this.data4);
 // data5のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
 this.data5 = R.map(R.insert(2, false), this.data5);
-this.for_debug();
+// this.for_debug();
 },
 init(){
 this.data2_data3_string_to_array();
@@ -439,7 +443,7 @@ this.make_image_to_name_Q_A_array();
 },
 check_image_to_name(correct_URL, URL, IDX){
 this.data5[IDX][2] = correct_URL === URL ? true : false;
-this.for_debug();
+// this.for_debug();
 },
 check_name_to_image(correct_URL, URL, IDX){
 this.data9[IDX][2] = correct_URL === URL ? true : false;
@@ -461,6 +465,7 @@ data7 = this.to_ary(this.data7);
 data8 = this.to_ary(this.data8);
 data9 = this.to_ary(this.data9);
 data10 = this.to_ary(this.data10);
+console.log('data5', this.data5);
 },
 
 
@@ -590,6 +595,12 @@ function isURL(str) {
     } else {
     return true;
     }
+};
+
+// 1秒後に任意の関数を実行する関数、第一引数にmsを入れる、第二引数に関数を入れる
+// imgタグのsrcにURLを入れるときに使う
+function sleep(ms, fn) {
+    return new Promise(resolve => setTimeout(resolve, ms)).then(fn);
 };
 </script>
 </html>

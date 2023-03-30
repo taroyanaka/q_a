@@ -252,15 +252,14 @@ font-size: 2.5rem;
 <!-- <a :href="data11[0]" class="link_text">{{data11[0]}}</a> -->
 
 <div class="textarea-column-1">
-    <textarea v-model="data2"></textarea>
-    <textarea v-model="data3"></textarea>
+    <textarea v-model="data2" rows="50"></textarea>
+    <textarea v-model="data3" rows="50"></textarea>
 </div>
 <button @click="fn21(1)" class="font_sizing">◉</button>
 <button @click="fn21(-1)" class="font_sizing">⦿</button>
 <button @click="fn21" class="font_sizing">◎</button>
     <div class="button_list">
         <button @click="sample1">sample1</button>
-        <button @click="sample2">sample2</button>
     </div>
 </div>
 
@@ -289,8 +288,7 @@ font-size: 2.5rem;
 
 <div class="column-3" :class="{'column-3-none': column_3_none}">
 <div>
-<button @click="fn18" class="result_opener">📖</button>
-
+    <button @click="fn18" class="result_opener">📖</button>
 </div>
 <template v-for="(DATAVAL, DATAIDX) in data10">
     <div class="textarea-column-2">
@@ -306,6 +304,7 @@ font-size: 2.5rem;
     </div>
 </template>
 </div>
+
 
 </div>
 
@@ -470,19 +469,17 @@ this.data2 = `cat
 dog
 halr
 grf
-eleph`;
+eleph
+sushi
+cake
+pink_pixel
+paint`;
 this.data3 = `https://taroyanaka.github.io/q_a/cat.png
 https://taroyanaka.github.io/q_a/dog.png
 https://taroyanaka.github.io/q_a/halr.png
 https://taroyanaka.github.io/q_a/grf.png
-https://taroyanaka.github.io/q_a/eleph.png`;
-},
-sample2(){
-this.data2 = `sushi
-cake
-pink_pixel
-paint`;
-this.data3 = `https://pbs.twimg.com/media/FpfSgHdaEAE-Ts6?format=jpg
+https://taroyanaka.github.io/q_a/eleph.png
+https://pbs.twimg.com/media/FpfSgHdaEAE-Ts6?format=jpg
 https://pbs.twimg.com/media/FpfRSXQacAARY-a?format=jpg
 https://pbs.twimg.com/media/FoaB5b9aUAAXgAU?format=jpg
 https://pbs.twimg.com/media/FjuxRy-agAAgAFJ?format=jpg`;

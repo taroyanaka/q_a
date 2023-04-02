@@ -247,12 +247,10 @@ font-size: 2.5rem;
 </ul>
 
 <div class="link_button" @click="fn14">
-<button class="link_button_top">🌐</button>
-<!-- <progress max="4000" :value="progress_val" class="link_button_under"></progress> -->
-<!-- <progress max="4000" class="link_button_under"></progress> -->
+    <button class="link_button_top">🌐</button>
+    <progress max="4000" :value="progress_val" class="link_button_under"></progress>
 </div>
-
-<!-- <a :href="data11[0]" class="link_text">{{data11[0]}}</a> -->
+<a :href="data11" class="link_text">{{data11}}</a>
 
 <div class="textarea-column-1">
     <textarea v-model="data2" rows="50"></textarea>
@@ -345,6 +343,8 @@ let data7 = null;
 let data8 = null;
 let data9 = null;
 let data10 = null;
+let data11 = null;
+
 
 
 
@@ -367,10 +367,12 @@ data7:[],
 data8:[],
 data9:[],
 data10:[],
+data11:'',
 
 all_save: [],
+progress_val: 0,
 
-test_mode: true,
+test_mode: false,
 
 data5_result: true,
 data9_result: false,
@@ -401,7 +403,8 @@ beforeMount(){
 mounted() {
 this.save_data_load();
 this.init();
-this.sample1();
+this.fn15();
+// this.sample1();
 this.for_debug();
 this.test_mode === true ? sleep(100, this.test_exe) : null;
 },
@@ -470,6 +473,7 @@ for_debug(){
     data8 = this.to_ary(this.data8);
     data9 = this.to_ary(this.data9);
     data10 = this.to_ary(this.data10);
+    data11 = this.to_ary(this.data11);
     console.log('data5', this.data5);
 },
 
@@ -585,6 +589,17 @@ fn17(INDEX){
 true_or_false_to_emoji(bool){
     return bool ? "⭕️" : "❎";
 },
+fn14(){
+    this.data11 = this.data11 === '' ? window.location.origin + window.location.pathname + "?Q=" + JSON.stringify(this.to_ary(this.data2).split("\n")) + "&A=" + JSON.stringify(this.to_ary(this.data3).split("\n")) : '';
+    this.progress_val = this.data11.length;
+    if(this.data11.length > 4000){this.data11 = ''};
+},
+fn15(){
+    if(new URL(window.location.href).searchParams.get("Q") && new URL(window.location.href).searchParams.get("A")){
+        this.data2 = JSON.parse(new URL(window.location.href).searchParams.get("Q")).join("\n");
+        this.data3 = JSON.parse(new URL(window.location.href).searchParams.get("A")).join("\n");
+    }
+},
 
 },
 }).mount('.app');
@@ -612,40 +627,5 @@ function sleep(ms, fn) {
     return new Promise(resolve => setTimeout(resolve, ms)).then(fn);
 };
 
-// abcdefghijklmnopqrstuvwxyzを3文字ごとに改行して3文字を1要素とする配列にする関数
-function abcdefghijklmnopqrstuvwxyz(){
-    const res = [];
-    for(let i = 0; i < 26; i++){
-        res.push(String.fromCharCode(97 + i));
-    }
-    return res.map((V, I)=> I % 3 === 0 ? V + "\n" : V).join("");
-};
-// a=あ、b=い、c=う、d=え、e=お、f=か、g=き、h=く、i=け、j=こ、k=さ、l=し、m=す、n=せ、o=そ、p=た、q=ち、r=つ、s=て、t=と、u=な、v=に、w=ぬ、x=ね、y=の、z=は、
-// というように、aからzまでのアルファベットをひらがなに変換する関数
-function hiragana(str){
-    const res = [];
-    for(let i = 0; i < str.length; i++){
-        res.push(String.fromCharCode(12353 + str.charCodeAt(i) - 97));
-    }
-    return res.join("");
-};
-function alph_to_hiragana(){
-    return abcdefghijklmnopqrstuvwxyz().split("\n").map(V=>hiragana(V)).join("\n");
-};
-// ひらがなをカタカナに変換する関数
-function katakana(str){
-    const res = [];
-    for(let i = 0; i < str.length; i++){
-        res.push(String.fromCharCode(12449 + str.charCodeAt(i) - 97));
-    }
-    return res.join("");
-};
-function alph_to_katakana(){
-    return abcdefghijklmnopqrstuvwxyz().split("\n").map(V=>katakana(V)).join("\n");
-};
-// trueだったら⭕️、falseだったら❌を返す関数
-function true_or_false(bool){
-    return bool ? "⭕️" : "❌";
-};
 </script>
 </html>

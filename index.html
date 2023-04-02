@@ -272,6 +272,8 @@ font-size: 2.5rem;
     <button @click="test0" class="test-fn-none-inline">test0</button>
     <button @click="test1" class="test-fn-none-inline">test1</button>
     <button @click="test2" class="test-fn-none-inline">test2</button>
+    <button @click="test_data0" class="test-fn-none-inline">test_data0</button>
+    <button @click="test_data1" class="test-fn-none-inline">test_data1</button>
     </div>
     <template v-for="(DATAVAL, DATAIDX) in data4">
     <div class="q_and_a">
@@ -358,7 +360,7 @@ data5: [],
 data6: '',
 data10: [],
 data11: [''],
-test_mode: false,
+test_mode: true,
 column_1_none: false,
 column_2_none: false,
 column_3_none: false,
@@ -604,6 +606,48 @@ data11 = this.to_ary(this.data11);
 test0(){this.test_index(0)},
 test1(){this.test_index(1)},
 test2(){this.test_index(2)},
+test_data0(){
+    this.data6 = `az
+bcd
+efg
+hij
+klm
+nop
+qrs
+tuv
+wxy`;
+    this.data3 = `AZ
+BCD
+EFG
+HIJ
+KLM
+NOP
+QRS
+TUV
+WXY`;
+},
+test_data1(){
+    this.data6 = `ぁ
+あぃい
+ぅうぇ
+えぉお
+かがき
+ぎくぐ
+けげこ
+ごさざ
+しじす
+ず`;
+    this.data3 = `ァ
+アィイ
+ゥウェ
+エォオ
+カガキ
+ギクグ
+ケゲコ
+ゴサザ
+シジス
+ズ`;
+},
 
 
 

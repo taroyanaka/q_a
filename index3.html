@@ -214,6 +214,11 @@ font-size: 2.5rem;
     width: 2rem;
     height: 2rem;
 }
+
+.test_exe{
+    width: 100%;
+    height: 4rem;
+}
 </style>
 </head>
 <body class="app">
@@ -235,9 +240,7 @@ font-size: 2.5rem;
 <button @click="fn19" class="save_opener">📂</button>
 <ul class="save_data_set_list_parent" style='display: block;'>
 <li v-for="(DATAVAL, DATAIDX) in all_save" class="save_data_set_list">
-<!-- <li class="save_data_set_list"> -->
     <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span>
-    <span @click="save_data_set(DATAIDX)">{{  }}</span>
     <button @click="save_data_set(DATAIDX)" class="save_data_set">📂</button>
     <button @click="save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button>
 </li>
@@ -265,6 +268,7 @@ font-size: 2.5rem;
 
 
 <div class="column-2" :class="{'column-2-none': column_2_none}">
+    <button @click="test_exe" class="test_exe" :style="{display: test_mode ? 'block' : 'none'}">test_exe</button>
 <ul>
 <li v-for="(item, IDX) in data5" :key="item" class="result_color" :style="{display: data5_result ? 'block' : 'none'}">
     <span>{{ item[0] }}</span>
@@ -365,7 +369,7 @@ data10:[],
 
 all_save: [],
 
-test_mode: false,
+test_mode: true,
 
 data5_result: true,
 data9_result: false,
@@ -424,53 +428,53 @@ take2(ary){
     return take2(ary);
 },
 data2_data3_string_to_array(){
-this.ary_data2 = this.data2.split("\n")
-this.ary_data3 = this.data3.split("\n")
+    this.ary_data2 = this.data2.split("\n")
+    this.ary_data3 = this.data3.split("\n")
 },
 make_image_to_name_Q_A_array(){
-this.data4 = this.to_ary(this.ary_data3).map(V=> [V, this.take2(shuffle(this.remove(V, this.ary_data3)))]
-)
-this.data4 = this.to_ary(this.data4).map(V=> [V[0], shuffle(R.flatten(V))]
-);
-this.data5 = R.zip(this.ary_data2, this.data4);
-// data5のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
-this.data5 = R.map(R.insert(2, false), this.data5);
-// this.for_debug();
+    this.data4 = this.to_ary(this.ary_data3).map(V=> [V, this.take2(shuffle(this.remove(V, this.ary_data3)))]
+    )
+    this.data4 = this.to_ary(this.data4).map(V=> [V[0], shuffle(R.flatten(V))]
+    );
+    this.data5 = R.zip(this.ary_data2, this.data4);
+    // data5のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
+    this.data5 = R.map(R.insert(2, false), this.data5);
+    // this.for_debug();
 },
 init(){
-this.data2_data3_string_to_array();
-this.make_image_to_name_Q_A_array();
+    this.data2_data3_string_to_array();
+    this.make_image_to_name_Q_A_array();
 },
 check_image_to_name(correct_URL, URL, IDX){
-this.data5[IDX][2] = correct_URL === URL ? true : false;
-// this.for_debug();
+    this.data5[IDX][2] = correct_URL === URL ? true : false;
+    // this.for_debug();
 },
 check_name_to_image(correct_URL, URL, IDX){
-this.data9[IDX][2] = correct_URL === URL ? true : false;
+    this.data9[IDX][2] = correct_URL === URL ? true : false;
 },
 
 to_ary(it){
-return JSON.parse(JSON.stringify(it));
+    return JSON.parse(JSON.stringify(it));
 },
 for_debug(){
-data1 = this.to_ary(this.data1);
-data2 = this.to_ary(this.data2);
-data3 = this.to_ary(this.data3);
-data4 = this.to_ary(this.data4);
-ary_data2 = this.to_ary(this.ary_data2);
-ary_data3 = this.to_ary(this.ary_data3);
-data5 = this.to_ary(this.data5);
-data6 = this.to_ary(this.data6);
-data7 = this.to_ary(this.data7);
-data8 = this.to_ary(this.data8);
-data9 = this.to_ary(this.data9);
-data10 = this.to_ary(this.data10);
-console.log('data5', this.data5);
+    data1 = this.to_ary(this.data1);
+    data2 = this.to_ary(this.data2);
+    data3 = this.to_ary(this.data3);
+    data4 = this.to_ary(this.data4);
+    ary_data2 = this.to_ary(this.ary_data2);
+    ary_data3 = this.to_ary(this.ary_data3);
+    data5 = this.to_ary(this.data5);
+    data6 = this.to_ary(this.data6);
+    data7 = this.to_ary(this.data7);
+    data8 = this.to_ary(this.data8);
+    data9 = this.to_ary(this.data9);
+    data10 = this.to_ary(this.data10);
+    console.log('data5', this.data5);
 },
 
 
 sample1(){
-this.data2 = `cat
+    this.data2 = `cat
 dog
 halr
 grf
@@ -479,7 +483,7 @@ sushi
 cake
 pink_pixel
 paint`;
-this.data3 = `https://taroyanaka.github.io/q_a/cat.png
+    this.data3 = `https://taroyanaka.github.io/q_a/cat.png
 https://taroyanaka.github.io/q_a/dog.png
 https://taroyanaka.github.io/q_a/halr.png
 https://taroyanaka.github.io/q_a/grf.png
@@ -491,90 +495,90 @@ https://pbs.twimg.com/media/FjuxRy-agAAgAFJ?format=jpg`;
 },
 // data2とdata3を逆ソートする関数
 reverse_q_a(){
-this.data2 = this.data2.split("\n").reverse().join("\n");
-this.data3 = this.data3.split("\n").reverse().join("\n");
+    this.data2 = this.data2.split("\n").reverse().join("\n");
+    this.data3 = this.data3.split("\n").reverse().join("\n");
 },
 shuffle_q_a(){
-const ary1 = R.zip(this.data2.split("\n"), this.data3.split("\n"));
-const ary2 = shuffle(ary1);
-[this.data2, this.data3] = R.pipe(R.transpose, R.map(R.join("\n")))(ary2);
+    const ary1 = R.zip(this.data2.split("\n"), this.data3.split("\n"));
+    const ary2 = shuffle(ary1);
+    [this.data2, this.data3] = R.pipe(R.transpose, R.map(R.join("\n")))(ary2);
 },
 
 data6_data7_string_to_array(){
-this.ary_data6 = this.data2.split("\n")
-this.ary_data7 = this.data3.split("\n")
+    this.ary_data6 = this.data2.split("\n")
+    this.ary_data7 = this.data3.split("\n")
 },
 // swap_:ary_data6とary_data7を入れ替える関数
 swap_data6_data7(){
-[this.ary_data6, this.ary_data7] = [this.ary_data7, this.ary_data6];
+    [this.ary_data6, this.ary_data7] = [this.ary_data7, this.ary_data6];
 },
 // data5_resultとdata9_resultのtrue/falseの切り替え
 change_result(){
-this.data5_result = !this.data5_result;
-this.data9_result = !this.data9_result;
+    this.data5_result = !this.data5_result;
+    this.data9_result = !this.data9_result;
 },
 swap_q_a(){
-this.data6_data7_string_to_array();
-this.swap_data6_data7();
-this.change_result();
-this.data8 = this.to_ary(this.ary_data7).map(V=> [V, this.take2(shuffle(this.remove(V, this.ary_data7)))]
-)
-this.data8 = this.to_ary(this.data8).map(V=> [V[0], shuffle(R.flatten(V))]
-);
-this.data9 = R.zip(this.ary_data6, this.data8);
-// data9のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
-this.data9 = R.map(R.insert(2, false), this.data9);
-this.for_debug();
+    this.data6_data7_string_to_array();
+    this.swap_data6_data7();
+    this.change_result();
+    this.data8 = this.to_ary(this.ary_data7).map(V=> [V, this.take2(shuffle(this.remove(V, this.ary_data7)))]
+    )
+    this.data8 = this.to_ary(this.data8).map(V=> [V[0], shuffle(R.flatten(V))]
+    );
+    this.data9 = R.zip(this.ary_data6, this.data8);
+    // data9のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
+    this.data9 = R.map(R.insert(2, false), this.data9);
+    this.for_debug();
 },
 
 async save_data_to_all_save(){
-this.all_save.push(this.to_ary([this.data2, this.data3]));
-await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
+    this.all_save.push(this.to_ary([this.data2, this.data3]));
+    await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
 },
 async save_data_load() {
-this.all_save = JSON.parse(await localforage.getItem('i_t_n')) || [];
+    this.all_save = JSON.parse(await localforage.getItem('i_t_n')) || [];
 },
 save_data_set(INDEX){
-this.data2 = this.all_save[INDEX][0];
-this.data3 = this.all_save[INDEX][1];
+    this.data2 = this.all_save[INDEX][0];
+    this.data3 = this.all_save[INDEX][1];
 },
 async save_data_delete(INDEX){
-if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
-    this.all_save.splice(INDEX, 1);
-    await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
-};
+    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
+        this.all_save.splice(INDEX, 1);
+        await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
+    };
 },
 
 
 
 filter_image_and_name(){
-if(data5.map(V=>V[2]).every(V=>V === true)){
-    this.data5 = [];
-    alert("すべての問題が正解しました。🦖\nすべての問題が正解しました。🦕");
-    return;
-}
-const res1 = this.data5.filter(V=>V[2] === false);
-const res2 = R.transpose(
-    res1.map(V=> [V[0], V[1][0]])
-);
-this.data10.push([res2[0].join("\n"), res2[1].join("\n")]);
-this.for_debug();
+    if(data5.map(V=>V[2]).every(V=>V === true)){
+        this.data5 = [];
+        alert("すべての問題が正解しました。🦖\nすべての問題が正解しました。🦕");
+        return;
+    }
+    const res1 = this.data5.filter(V=>V[2] === false);
+    const res2 = R.transpose(
+        res1.map(V=> [V[0], V[1][0]])
+    );
+    this.data10.push([res2[0].join("\n"), res2[1].join("\n")]);
+    this.for_debug();
 },
 
 fn9(IDX){
-this.data2 = this.data10[IDX][0];
-this.data3 = this.data10[IDX][1];
+    this.data2 = this.data10[IDX][0];
+    this.data3 = this.data10[IDX][1];
 },
 fn16(INDEX){
-this.data10.splice(INDEX, 1);
+    this.data10.splice(INDEX, 1);
 },
 fn17(INDEX){
-document.querySelectorAll('.textarea-'+INDEX).forEach(ELM=>{
-    if(ELM.style.display === "block" || ELM.style.display === ''){
-    ELM.style.display = "none"}else{
-    ELM.style.display = "block"
-    }
-});
+    document.querySelectorAll('.textarea-'+INDEX).forEach(ELM=>{
+        if(ELM.style.display === "block" || ELM.style.display === ''){
+        ELM.style.display = "none"}else{
+        ELM.style.display = "block"
+        }
+    });
 },
 
 },

@@ -211,14 +211,45 @@ font-size: 2.5rem;
 
 /* for only index3 */
 .png_image{
-    width: 2rem;
-    height: 2rem;
+    /* display: inline-block; */
+    width: 100%;
+    /* height: 2rem; */
 }
 
 .test_exe{
-    width: 100%;
+    width: 10%;
     height: 4rem;
 }
+
+.result_color{
+    display: grid;
+  grid-template-columns: repeat(1fr);
+    grid-template-rows: 1fr;
+    /* background-color: red; */
+}
+.centering{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows:  repeat(auto-fit, minmax(3rem, 1fr));
+    justify-items: center;
+    /* align-items: center; */
+    /* gap: 0.5rem; */
+}
+.column-2{
+    display: grid;
+    grid-template-rows: 1fr;
+}
+.OK_or_NG{
+    font-size:3rem;
+}
+.answer{
+    font-size: 3rem;
+}
+.any > *{
+    /* width: minmax(0, 3rem); */
+    width: 6rem;
+}
+
 </style>
 </head>
 <body class="app">
@@ -266,24 +297,22 @@ font-size: 2.5rem;
 
 
 <div class="column-2" :class="{'column-2-none': column_2_none}">
-    <button @click="test_exe" class="test_exe" :style="{display: test_mode ? 'block' : 'none'}">test_exe</button>
-<ul>
-<li v-for="(item, IDX) in data5" :key="item" class="result_color" :style="{display: data5_result ? 'block' : 'none'}">
-    <span class="OK_or_NG">{{ true_or_false_to_emoji(item[2]) }}</span>
-    <span>{{ item[0] }}</span>
-    <!-- <img :src="item[1][0]" :alt="item[0]" class="png_image"> -->
-    <span v-for="item2 in item[1][1]">
-    <img :src="item2" :alt="item[0]" class="png_image png_image_back" @click="check_image_to_name(item[1][0], item2, IDX)">
-    </span>
-</li>
-<li v-for="(item, IDX) in data9" :key="item" class="result_color" :style="{display: data9_result ? 'block' : 'none'}">
-    <span class="OK_or_NG">{{ true_or_false_to_emoji(item[2]) }}</span>
-    <img :src="item[0]" :alt="item[0]" class="png_image png_image_back" >
-    <span v-for="item2 in item[1][1]">
-        <button @click="check_name_to_image(item[1][0], item2, IDX)">{{ item2 }}</button>
-    </span>
-    <!-- <span class="OK_or_NG">{{ item[2] }}</span> -->
-</li>
+    <!-- <button @click="test_exe" class="test_exe" :style="{display: test_mode ? 'block' : 'none'}">test_exe</button> -->
+<ul class="centering">
+    <li v-for="(item, IDX) in data5" :key="item" class="result_color" :style="{display: data5_result ? 'block' : 'none'}">
+        <span class="OK_or_NG">{{ true_or_false_to_emoji(item[2]) }}</span>
+        <span class="answer">{{ item[0] }}</span>
+        <span v-for="item2 in item[1][1]" class="any">
+            <img :src="item2" :alt="item[0]" class="png_image png_image_back" @click="check_image_to_name(item[1][0], item2, IDX)">
+        </span>
+    </li>
+    <div v-for="(item, IDX) in data9" :key="item" class="result_color result_color2" :style="{display: data9_result ? 'block' : 'none'}">
+        <span class="OK_or_NG">{{ true_or_false_to_emoji(item[2]) }}</span>
+        <img :src="item[0]" :alt="item[0]" class="png_image png_image_back" >
+        <span v-for="item2 in item[1][1]">
+            <button @click="check_name_to_image(item[1][0], item2, IDX)">{{ item2 }}</button>
+        </span>
+    </div>
 </ul>
 <button @click="filter_image_and_name" class="check_button">🎮</button>
 </div>

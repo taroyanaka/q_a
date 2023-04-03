@@ -179,7 +179,7 @@ grid-template-columns: repeat(4, 1fr);
 }
 .optional_function button{
 height: 4rem;
-font-size: 1.5rem;
+/* font-size: 1.5rem; */
 }
 .processing{
 width: 100%;
@@ -229,25 +229,30 @@ font-size: 2.5rem;
 }
 .centering{
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows:  repeat(auto-fit, minmax(3rem, 1fr));
+    /* grid-template-columns: 1fr; */
+    /* grid-template-rows:  repeat(auto-fit, minmax(1rem, 1fr)); */
     justify-items: center;
     /* align-items: center; */
-    /* gap: 0.5rem; */
+    gap: 0rem;
+    /* width: 30vw; */
+}
+.centering *{
+    word-wrap: break-word;
 }
 .column-2{
     display: grid;
     grid-template-rows: 1fr;
 }
 .OK_or_NG{
-    font-size:3rem;
+    font-size:2rem;
 }
 .answer{
-    font-size: 3rem;
+    font-size: 2rem;
 }
 .any > *{
     /* width: minmax(0, 3rem); */
-    width: 6rem;
+    /* width:  minmax(1rem, auto); */
+width: 4rem;
 }
 
 </style>

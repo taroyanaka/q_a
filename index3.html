@@ -285,7 +285,7 @@ font-size: 2.5rem;
     <!-- <span class="OK_or_NG">{{ item[2] }}</span> -->
 </li>
 </ul>
-<button @click="filter_image_and_name">🎮</button>
+<button @click="filter_image_and_name" class="check_button">🎮</button>
 </div>
 
 
@@ -372,13 +372,17 @@ data11:'',
 all_save: [],
 progress_val: 0,
 
-test_mode: false,
+test_mode: true,
 
 data5_result: true,
 data9_result: false,
 
 HOST: 'http://localhost',
 PORT: '8000',
+
+column_1_none: false,
+column_2_none: false,
+column_3_none: false,
 }},
 watch: {
 data2: {
@@ -404,9 +408,8 @@ mounted() {
 this.save_data_load();
 this.init();
 this.fn15();
-// this.sample1();
-this.for_debug();
-this.test_mode === true ? sleep(100, this.test_exe) : null;
+// this.for_debug();
+this.test_mode === true ? (this.sample1(), sleep(100, this.test_exe)) : null;
 },
 beforeUpdate() {
 },
@@ -557,7 +560,7 @@ async save_data_delete(INDEX){
 
 
 filter_image_and_name(){
-    if(data5.map(V=>V[2]).every(V=>V === true)){
+    if(this.data5.map(V=>V[2]).every(V=>V === true)){
         this.data5 = [];
         alert("すべての問題が正解しました。🦖\nすべての問題が正解しました。🦕");
         return;
@@ -599,6 +602,19 @@ fn15(){
         this.data2 = JSON.parse(new URL(window.location.href).searchParams.get("Q")).join("\n");
         this.data3 = JSON.parse(new URL(window.location.href).searchParams.get("A")).join("\n");
     }
+},
+
+css_var_set(VAR_NAME, VAR){
+document.documentElement.style.setProperty(VAR_NAME, VAR);
+},
+column_1_none_fn(){
+this.column_1_none === true ? (this.css_var_set('--css-var-column-1-none', '1fr'), this.column_1_none = false) : (this.css_var_set('--css-var-column-1-none', '0px'), this.column_1_none = true);
+},
+column_2_none_fn(){
+this.column_2_none === true ? (this.css_var_set('--css-var-column-2-none', '1fr'), this.column_2_none = false) : (this.css_var_set('--css-var-column-2-none', '0px'), this.column_2_none = true);
+},
+column_3_none_fn(){
+this.column_3_none === true ? (this.css_var_set('--css-var-column-3-none', '1fr'), this.column_3_none = false) : (this.css_var_set('--css-var-column-3-none', '0px'), this.column_3_none = true);
 },
 
 },

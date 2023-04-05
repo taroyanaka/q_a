@@ -281,16 +281,16 @@ font-size: 2.5rem;
             <button @click="test_data1" class="test-fn-none-inline">test_data1</button>
         </div>
         
-    <template v-for="(DATAVAL, DATAIDX) in f_i_b_data9">
+    <div v-for="(DATAVAL, DATAIDX) in f_i_b_data9">
         <span @click="" v-if="typeof DATAVAL === 'string'">{{ DATAVAL }}</span>
         <template v-if="typeof DATAVAL === 'object'">
-        <select name="" id="" @change="show" :data-correct="DATAVAL[0]">
+        <select name="" id="A" @change="show" :data-correct="DATAVAL[0]"  style="background-color: ''" ref="core" :data-incorrect="">
             <option v-for="(FOO, BAR) in DATAVAL[1]" :value="FOO">
                 {{ FOO }}
             </option>
         </select>
         </template>
-    </template>
+    </div>
     <button @click="" class="check_button">🎮</button>
     <!-- <button @click="fn4" class="check_button">🎮</button> -->
     </div>
@@ -347,6 +347,11 @@ let data6 = null;
 let data7 = null;
 let data8 = null;
 let data9 = null;
+let data_X_1 = null;
+let data_X_2 = null;
+let data_X_3 = null;
+let data_X_4 = null;
+let data_X_5 = null;
 
 const app = Vue.createApp({
 data() {
@@ -373,6 +378,11 @@ f_i_b_data8: [],
 f_i_b_data9: [],
 // Xはリファクタリング時に他のナンバリングの変数と被らないようにするためのもの
 f_i_b_data_X_1: [],
+f_i_b_data_X_2: [],
+f_i_b_data_X_3: [],
+f_i_b_data_X_4: [],
+f_i_b_data_X_5: [],
+
 test_mode: true,
 column_1_none: false,
 column_2_none: false,
@@ -555,6 +565,11 @@ data6 = this.to_ary(this.f_i_b_data6);
 data7 = this.to_ary(this.f_i_b_data7);
 data8 = this.to_ary(this.f_i_b_data8);
 data9 = this.to_ary(this.f_i_b_data9);
+data_X_1 = this.to_ary(this.f_i_b_data_X_1);
+data_X_2 = this.to_ary(this.f_i_b_data_X_2);
+data_X_3 = this.to_ary(this.f_i_b_data_X_3);
+data_X_4 = this.to_ary(this.f_i_b_data_X_4);
+data_X_5 = this.to_ary(this.f_i_b_data_X_5);
 console.log(
 'f_i_b_data1:' , data1, '\n',
 'f_i_b_data2:' , data2, '\n',
@@ -565,6 +580,15 @@ console.log(
 'f_i_b_data7:' , data7, '\n',
 'f_i_b_data8:' , data8, '\n',
 'f_i_b_data9:' , data9, '\n',
+'f_i_b_data_X_1' , data_X_1, '\n',
+'f_i_b_data_X_2' , data_X_2, '\n',
+'f_i_b_data_X_3' , data_X_3, '\n',
+'f_i_b_data_X_4' , data_X_4, '\n',
+'f_i_b_data_X_5' , data_X_5, '\n',
+
+
+
+
 );
 },
 
@@ -712,19 +736,36 @@ exe(){
     this.remove_empty_str_from_ary();
     this.for_debug();
 },
-
 show($event){
     console.log('value', event.target.value);
     console.log('data-correct', event.target.dataset.correct);
+    event.target.style.backgroundColor =
+        event.target.value === event.target.dataset.correct
+            ? '' :
+            '#F9E4C6'; //ミルレージュ（Mille Feuille）
+            // '#D6A5A5'; //ダスティローズ（Dusty Rose）
+            // '#8A9A5B'; //モスグリーン（Moss Green）
+            // '#B0E0E6'; //パウダーブルー（Powder Blue）
+            // '#E2725B'; //テラコッタ（Terracotta）
+            // '#36454F'; //チャコールグレー（Charcoal Gray）
+            // '#6699CC'; //ブルーグレイ（Blue Gray）
+            // '#98FF98'; //ミントグリーン（Mint Green）
+            // '#B76E79'; //ローズゴールド（Rose Gold）
+            // '#800000'; //マルーン（Maroon）
+// 'CSSでオシャレと評価されてる色の名前とコードを10個' in chatgpt
+event.target.dataset.incorrect =
+        event.target.value === event.target.dataset.correct
+            ? '' :
+            event.target.dataset.correct;
+// this.f_i_b_data_X_1 = this.$refs.core;
+this.f_i_b_data_X_1 = app.$refs.core.map(ELM=>ELM.dataset.incorrect);
+this.for_debug();
+
 },
-
-
-
 
 
 },
 }).mount('.app');
-
 </script>
 </body>
 </html>

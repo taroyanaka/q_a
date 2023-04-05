@@ -619,12 +619,13 @@ fn16(INDEX){
     this.data10.splice(INDEX, 1);
 },
 fn17(INDEX){
-    document.querySelectorAll('.textarea-'+INDEX).forEach(ELM=>{
-        if(ELM.style.display === "block" || ELM.style.display === ''){
-        ELM.style.display = "none"}else{
-        ELM.style.display = "block"
-        }
-    });
+    const TARGET_INDEX_FIRST = INDEX * 2;
+    const TARGET_INDEX_SECOND = INDEX * 2 + 1;
+    this.$refs.results[TARGET_INDEX_FIRST].style.display =
+    this.$refs.results[TARGET_INDEX_SECOND].style.display =
+        this.$refs.results[TARGET_INDEX_FIRST].style.display === "block"
+        ||
+        this.$refs.results[TARGET_INDEX_FIRST].style.display === '' ? "none" : "block";
 },
 // trueだったら⭕️、falseだったら❎を返す関数
 true_or_false_to_emoji(bool){

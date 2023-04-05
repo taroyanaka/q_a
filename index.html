@@ -32,12 +32,6 @@ font-size: var(--css-var-root-font-size);
 --css-var-color-3: ;
 --test: 'blue';
 
-
-
-
---FITB-button-ul-height: 20vh;
---FITB-li-visibility: visible;
---FITB-collapse-display: block;
 }
 button{
 border: none;
@@ -313,7 +307,7 @@ font-size: 2.5rem;
 
 
 <!-- Fill-in will be mounted here. -->
-<div class="fill_in">
+<!-- <div class="fill_in">
     <ul class="ul">
     <li class="li-1"><button class="collapseChanger" @click="collapseChanger">👐</button></li>
     <li class="li-2"><button class="sample" onclick="sample()">📝</button></li>
@@ -325,7 +319,7 @@ font-size: 2.5rem;
     </div>
     <div class="answer"></div>
     <button class="retry" onclick="retry()">🔁</button>
-</div>
+</div> -->
 
 
 
@@ -579,9 +573,9 @@ this.column_3_none === true ? (this.css_var_set('--css-var-column-3-none', '1fr'
 },
 test_exe(){
 this.css_var_set('--css-var-test-inline', 'inlilne');
-this.css_var_set('--css-var-color-1', 'aqua');
-this.css_var_set('--css-var-color-2', 'bisque');
-this.css_var_set('--css-var-color-3', 'crimson');
+this.css_var_set('--css-var-color-1', 'LightGray');
+this.css_var_set('--css-var-color-2', 'SlateGray');
+this.css_var_set('--css-var-color-3', 'DimGray');
 this.test0();
 this.test1();
 this.test2();
@@ -667,9 +661,9 @@ test_data1(){
 
 
 
-collapseChanger(){
-document.querySelector(":root").classList.value === "close" ? document.querySelector(":root").classList.remove("close") : document.querySelector(":root").classList.add("close");
-},
+// collapseChanger(){
+// document.querySelector(":root").classList.value === "close" ? document.querySelector(":root").classList.remove("close") : document.querySelector(":root").classList.add("close");
+// },
 
 
 

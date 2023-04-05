@@ -31,13 +31,6 @@ font-size: var(--css-var-root-font-size);
 --css-var-color-2: ;
 --css-var-color-3: ;
 --test: 'blue';
-
-
-
-
---FITB-button-ul-height: 20vh;
---FITB-li-visibility: visible;
---FITB-collapse-display: block;
 }
 button{
 border: none;
@@ -221,7 +214,7 @@ font-size: 2.5rem;
 <!-- <link rel="stylesheet" href="style_for_fill_in.css"> -->
 
 </head>
-<body class="f_i_b">
+<body class="app">
 
 <div class="toggleDisplay_parent">
 <!-- <button @click="toggleDisplay" class="toggleDisplay">🔽</button> -->
@@ -279,6 +272,15 @@ font-size: 2.5rem;
 
 
     <div class="column-2" :class="{'column-2-none': column_2_none}">
+
+        <div>
+            <button @click="test0" class="test-fn-none-inline">test0</button>
+            <button @click="test1" class="test-fn-none-inline">test1</button>
+            <button @click="test2" class="test-fn-none-inline">test2</button>
+            <button @click="test_data0" class="test-fn-none-inline">test_data0</button>
+            <button @click="test_data1" class="test-fn-none-inline">test_data1</button>
+        </div>
+        
     <template v-for="(DATAVAL, DATAIDX) in f_i_b_data9">
     <!-- <div class="q_and_a"> -->
 
@@ -359,7 +361,7 @@ let data7 = null;
 let data8 = null;
 let data9 = null;
 
-const D = Vue.createApp({
+const app = Vue.createApp({
 data() {
 return {
 f_i_b_all_save: [],
@@ -545,9 +547,9 @@ this.column_3_none === true ? (this.css_var_set('--css-var-column-3-none', '1fr'
 },
 test_exe(){
 this.css_var_set('--css-var-test-inline', 'inlilne');
-this.css_var_set('--css-var-color-1', 'aqua');
-this.css_var_set('--css-var-color-2', 'bisque');
-this.css_var_set('--css-var-color-3', 'crimson');
+this.css_var_set('--css-var-color-1', 'LightGray');
+this.css_var_set('--css-var-color-2', 'SlateGray');
+this.css_var_set('--css-var-color-3', 'DimGray');
 },
 
 
@@ -579,7 +581,44 @@ console.log(
 );
 },
 
-
+test_index(TEST_INDEX){
+// this.data4.forEach((V,IDX)=>this.fn3(V[0], V[1][TEST_INDEX], IDX));
+// this.fn4();
+},
+test0(){this.test_index(0)},
+test1(){this.test_index(1)},
+test2(){this.test_index(2)},
+test_data0(){
+    this.f_i_b_data1 = `fo
+foo
+日
+qux
+qx
+日本
+blabla
+brabra
+bowbow`;
+    this.f_i_b_data2 = `foo bar baz
+or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3
+日本語は自然言語のうちの一つで主に日本国内で使われています`;
+this.data3_setup();
+        this.data4_5_setup();
+        this.exe();
+},
+test_data1(){
+    this.f_i_b_data1 = `FO
+FOO
+中
+QUX
+QX
+中华人民共和国
+BLABLA
+BRABRA
+BOWBOW`;
+    this.f_i_b_data2 = `FOO BAR BAZ
+OR FOO2BARQUXQUX42BA😄ABC😄Z3ISFOO2BAR2BAZ3
+中文是自然语言中的一种，主要在中华人民共和国国内使用`;
+},
 
 
 
@@ -697,7 +736,11 @@ show($event){
 
 
 },
-}).mount('.f_i_b');
+}).mount('.app');
+
+
+// ドイツ語のアルファベットを全部羅列する関数
+
 </script>
 
 

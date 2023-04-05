@@ -282,27 +282,14 @@ font-size: 2.5rem;
         </div>
         
     <template v-for="(DATAVAL, DATAIDX) in f_i_b_data9">
-    <!-- <div class="q_and_a"> -->
-
-        <button @click="">{{ (typeof DATAVAL === 'string') ? DATAVAL : null }}</button>
-
-<!-- <select @click=""> -->
-<template v-if="typeof DATAVAL === 'object'">
-<select name="" id="" @change="show" :data-correct="DATAVAL[0]">
-    <option v-for="(FOO, BAR) in DATAVAL[1]" :value="FOO">
-        {{ FOO }}
-    </option>
-</select>
-</template>
-<!-- </select> -->
-
-<!-- data属性のhtmlのサンプル -->
-
-
-        <!-- <span class="text_right" @click="fn20(DATAIDX)">{{ data5[DATAIDX] }}</span> -->
-        <!-- <button v-for="item in DATAVAL[1]" @click="fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button> -->
-        <!-- <span class="text_center">{{ DATAVAL[2] }}</span> -->
-    <!-- </div> -->
+        <span @click="" v-if="typeof DATAVAL === 'string'">{{ DATAVAL }}</span>
+        <template v-if="typeof DATAVAL === 'object'">
+        <select name="" id="" @change="show" :data-correct="DATAVAL[0]">
+            <option v-for="(FOO, BAR) in DATAVAL[1]" :value="FOO">
+                {{ FOO }}
+            </option>
+        </select>
+        </template>
     </template>
     <button @click="" class="check_button">🎮</button>
     <!-- <button @click="fn4" class="check_button">🎮</button> -->
@@ -386,7 +373,7 @@ f_i_b_data8: [],
 f_i_b_data9: [],
 // Xはリファクタリング時に他のナンバリングの変数と被らないようにするためのもの
 f_i_b_data_X_1: [],
-test_mode: false,
+test_mode: true,
 column_1_none: false,
 column_2_none: false,
 column_3_none: false,
@@ -738,13 +725,6 @@ show($event){
 },
 }).mount('.app');
 
-
-// ドイツ語のアルファベットを全部羅列する関数
-
 </script>
-
-
-
-
 </body>
 </html>

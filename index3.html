@@ -656,6 +656,12 @@ column_3_none_fn(){
 this.column_3_none === true ? (this.css_var_set('--css-var-column-3-none', '1fr'), this.column_3_none = false) : (this.css_var_set('--css-var-column-3-none', '0px'), this.column_3_none = true);
 },
 
+fn18(){
+Array.from(document.querySelectorAll('.textarea-column-2 > textarea')).map(ELM=>ELM.style.display).some(DISPLAY=>DISPLAY==='block' || DISPLAY==='') ?
+document.querySelectorAll('.textarea-column-2 > textarea').forEach(ELM=>ELM.style.display = 'none') :
+document.querySelectorAll('.textarea-column-2 > textarea').forEach(ELM=>ELM.style.display = 'block');
+},
+
 },
 }).mount('.app');
 

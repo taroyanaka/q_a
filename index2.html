@@ -758,7 +758,14 @@ event.target.dataset.incorrect =
             ? '' :
             event.target.dataset.correct;
 // this.f_i_b_data_X_1 = this.$refs.core;
-this.f_i_b_data_X_1 = app.$refs.core.map(ELM=>ELM.dataset.incorrect);
+this.f_i_b_data_X_1 = this.$refs.core.map(ELM=>ELM.dataset.incorrect);
+
+// !!!!
+// event使わずにdata9かdata8かdata6の配列にtrue/falseの要素を追加して
+// 成否判定を行なった結果をtrue/falseを操作するように実装を変更する
+// (testコードで成否判定にアクセスするのが難しいため)
+// !!!!
+
 this.for_debug();
 
 },

@@ -339,9 +339,8 @@ display: inline;
         <button @click="fn16(DATAIDX)" class="a-2">🗑️</button>
         <button @click="fn17(DATAIDX)" class="a-3">📚</button>
     </div>
-<textarea name="" cols="30" rows="10" class="b" :class="'textarea-'+DATAIDX" style='display: block;'>{{ DATAVAL[0] }}</textarea>
-<!-- <textarea name="" cols="30" rows="10" class="b" style='display: block;'>{{  }}</textarea> -->
-<textarea name="" cols="30" rows="10" class="c" :class="'textarea-'+DATAIDX" style='display: block;'>{{ DATAVAL[1] }}</textarea>
+<textarea name="" cols="30" rows="10" class="b" style='display: block;' ref="results">{{ DATAVAL[0] }}</textarea>
+<textarea name="" cols="30" rows="10" class="c" style='display: block;' ref="results">{{ DATAVAL[1] }}</textarea>
 <!-- <textarea name="" cols="30" rows="10" class="c"  style='display: block;'>{{  }}</textarea> -->
     </div>
 </template>
@@ -657,9 +656,10 @@ this.column_3_none === true ? (this.css_var_set('--css-var-column-3-none', '1fr'
 },
 
 fn18(){
-Array.from(document.querySelectorAll('.textarea-column-2 > textarea')).map(ELM=>ELM.style.display).some(DISPLAY=>DISPLAY==='block' || DISPLAY==='') ?
-document.querySelectorAll('.textarea-column-2 > textarea').forEach(ELM=>ELM.style.display = 'none') :
-document.querySelectorAll('.textarea-column-2 > textarea').forEach(ELM=>ELM.style.display = 'block');
+    const RESULTS = this.$refs.results;
+    RESULTS.map(ELM=>ELM.style.display).some(DISPLAY=>DISPLAY==='block' || DISPLAY==='') ?
+        RESULTS.map(ELM=>ELM.style.display = 'none') :
+        RESULTS.map(ELM=>ELM.style.display = 'block');
 },
 
 },

@@ -740,11 +740,14 @@ exe(){
 
 check_option(INDEX){
     // this.f_i_b_data9からarrayの要素だけを取り出す一行コード
-    // this.f_i_b_data_X_2 = this.f_i_b_data9.filter(V=>Array.isArray(V));
+
+    // this.f_i_b_data9.filter(V=>Array.isArray(V)).map(V=>V[0] = 'foo');
+    // app.$refs.core.filter(V=>Array.isArray(V)).map(V=>V[0] = 'foo');
+
+    app.$refs.core.filter(V=>V.id === 'A').map(V=>V.value = 'foo');
     console.log('INDEX', INDEX);
     this.f_i_b_data9[INDEX][2] =
         this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value ? true : false;
-    this.for_debug();
     this.$refs.core[INDEX].style.backgroundColor =
         this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value
             ? '' :
@@ -758,6 +761,11 @@ check_option(INDEX){
             // '#98FF98'; //ミントグリーン（Mint Green）
             // '#B76E79'; //ローズゴールド（Rose Gold）
             // '#800000'; //マルーン（Maroon）
+    this.f_i_b_data_X_2 = this.f_i_b_data9.filter(V=>Array.isArray(V)).filter(V=>V[2]===false);
+    this.f_i_b_data_X_3 = this.f_i_b_data4.filter(V=>R.pluck(0, this.f_i_b_data_X_2).includes(V));
+    this.f_i_b_data_X_4 = this.f_i_b_data_X_3.join("\n");
+    this.for_debug();
+
 },
 
 

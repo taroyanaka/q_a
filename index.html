@@ -354,7 +354,7 @@ data5: [],
 data6: '',
 data10: [],
 data11: '',
-test_mode: false,
+test_mode: true,
 column_1_none: false,
 column_2_none: false,
 column_3_none: false,
@@ -398,7 +398,7 @@ mounted() {
 this.processing();
 this.save_data_load();
 this.fn15();
-this.toggleDisplay();
+// this.toggleDisplay();
 this.test_mode === true ? this.test_exe() : null;
 },
 beforeUpdate() {
@@ -671,18 +671,6 @@ test_data1(){
 
 
 
-// header_and_contentsとfill_inの表示非表示のトグル
-toggleDisplay(){
-    const header_and_contents = document.querySelector(".header_and_contents");
-    const fill_in = document.querySelector(".fill_in");
-    if(header_and_contents.style.display === "block"){
-        header_and_contents.style.display = "none";
-        fill_in.style.display = "block";
-    }else{
-        header_and_contents.style.display = "block";
-        fill_in.style.display = "none";
-    }
-},
 
 },
 }).mount('.app');

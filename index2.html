@@ -348,6 +348,7 @@ let data6 = null;
 let data7 = null;
 let data8 = null;
 let data9 = null;
+
 let data_X_1 = null;
 let data_X_2 = null;
 let data_X_3 = null;
@@ -477,9 +478,7 @@ this.data6 = JSON.parse(new URL(window.location.href).searchParams.get("Q")).joi
 this.data3 = JSON.parse(new URL(window.location.href).searchParams.get("A")).join("\n");
 }
 },
-fn16(INDEX){
-this.data_X_1.splice(INDEX, 1);
-},
+
 fn17(INDEX){
 document.querySelectorAll('.textarea-'+INDEX).forEach(ELM=>{
     if(ELM.style.display === "block" || ELM.style.display === ''){
@@ -765,7 +764,20 @@ check_option(INDEX){
     this.f_i_b_data_X_3 = this.f_i_b_data4.filter(V=>R.pluck(0, this.f_i_b_data_X_2).includes(V));
     this.f_i_b_data_X_4 = this.f_i_b_data_X_3.join("\n");
     this.for_debug();
+},
 
+fn4_3(){
+    this.data_X_1.push([
+        R.transpose(this.data4)[2].join("\n"),
+        R.transpose(this.data4)[0].join("\n"),
+    ]);
+},
+fn9(IDX){
+    this.data6 = this.data_X_1[IDX][0];
+    this.data3 = this.data_X_1[IDX][1];
+},
+fn16(INDEX){
+    this.data_X_1.splice(INDEX, 1);
 },
 
 

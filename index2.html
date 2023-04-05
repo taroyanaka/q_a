@@ -766,11 +766,25 @@ check_option(INDEX){
     this.for_debug();
 },
 
+fn4_2(){
+this.data5 = [];
+},
 fn4_3(){
     this.data_X_1.push([
         R.transpose(this.data4)[2].join("\n"),
         R.transpose(this.data4)[0].join("\n"),
     ]);
+},
+fn4_4(){
+return this.to_ary(this.data5).every(V=>V === '⭕️')
+},
+fn4(){
+if(this.fn4_4()){
+    this.data4 = this.data5 = [];
+    return;
+};
+this.fn4_2();
+this.fn4_3();
 },
 fn9(IDX){
     this.data6 = this.data_X_1[IDX][0];

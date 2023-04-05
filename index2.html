@@ -737,11 +737,16 @@ exe(){
     this.remove_empty_str_from_ary();
     this.for_debug();
 },
-show($event){
-    console.log('value', event.target.value);
-    console.log('data-correct', event.target.dataset.correct);
-    event.target.style.backgroundColor =
-        event.target.value === event.target.dataset.correct
+
+check_option(INDEX){
+    // this.f_i_b_data9からarrayの要素だけを取り出す一行コード
+    // this.f_i_b_data_X_2 = this.f_i_b_data9.filter(V=>Array.isArray(V));
+    console.log('INDEX', INDEX);
+    this.f_i_b_data9[INDEX][2] =
+        this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value ? true : false;
+    this.for_debug();
+    this.$refs.core[INDEX].style.backgroundColor =
+        this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value
             ? '' :
             '#F9E4C6'; //ミルレージュ（Mille Feuille）
             // '#D6A5A5'; //ダスティローズ（Dusty Rose）
@@ -753,28 +758,6 @@ show($event){
             // '#98FF98'; //ミントグリーン（Mint Green）
             // '#B76E79'; //ローズゴールド（Rose Gold）
             // '#800000'; //マルーン（Maroon）
-// 'CSSでオシャレと評価されてる色の名前とコードを10個' in chatgpt
-event.target.dataset.incorrect =
-        event.target.value === event.target.dataset.correct
-            ? '' :
-            event.target.dataset.correct;
-
-
-// !!!!
-// event使わずにdata9かdata8かdata6の配列にtrue/falseの要素を追加して
-// 成否判定を行なった結果をtrue/falseを操作するように実装を変更する
-// (testコードで成否判定にアクセスするのが難しいため)
-// !!!!
-
-
-},
-check_option(INDEX){
-    // this.f_i_b_data9からarrayの要素だけを取り出す一行コード
-    // this.f_i_b_data_X_2 = this.f_i_b_data9.filter(V=>Array.isArray(V));
-    console.log('INDEX', INDEX);
-    this.f_i_b_data9[INDEX][2] =
-        this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value ? true : false;
-    this.for_debug();
 },
 
 

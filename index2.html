@@ -281,7 +281,7 @@ font-size: 2.5rem;
             <button @click="test_data1" class="test-fn-none-inline">test_data1</button>
         </div>
         
-    <div v-for="(DATAVAL, DATAIDX) in f_i_b_data9">
+    <span v-for="(DATAVAL, DATAIDX) in f_i_b_data9">
         <span @click="" v-if="typeof DATAVAL === 'string'">{{ DATAVAL }}</span>
         <template v-if="typeof DATAVAL === 'object'">
         <select name="" id="A" @change="show" :data-correct="DATAVAL[0]"  style="background-color: ''" ref="core" :data-incorrect="">
@@ -290,7 +290,8 @@ font-size: 2.5rem;
             </option>
         </select>
         </template>
-    </div>
+    </span>
+
     <button @click="" class="check_button">🎮</button>
     <!-- <button @click="fn4" class="check_button">🎮</button> -->
     </div>
@@ -714,7 +715,7 @@ get_shuffled_array(ARG_ARY, VAL){
 // 上記のように[正解, [空文字, シャッフルされた正解を含む3つの要素]]の配列を作成する
 f_i_b_composer() {
     this.f_i_b_data7 = this.f_i_b_data4.map(VAL => {
-        return [VAL, R.insert(0, '', this.get_shuffled_array(this.f_i_b_data4, VAL))];
+        return [VAL, R.insert(0, '', this.get_shuffled_array(this.f_i_b_data4, VAL)), false];
     });
 },
 // 2次元配列を1次元配列に変換し、各要素に対して別の配列に含まれるかをチェックし、一致する要素を別の配列から取得して、最終的な1次元配列を生成する処理

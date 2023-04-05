@@ -279,7 +279,7 @@ display: inline;
     <button @click="save_data_to_all_save">🗂️</button>
 </div>
 <button @click="fn19" class="save_opener">📂</button>
-<ul class="save_data_set_list_parent" style='display: block;'>
+<ul style='display: block;' ref="save_data_set_list_parent">
 <li v-for="(DATAVAL, DATAIDX) in all_save" class="save_data_set_list">
     <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span>
     <button @click="save_data_set(DATAIDX)" class="save_data_set">📂</button>
@@ -341,7 +341,6 @@ display: inline;
     </div>
 <textarea name="" cols="30" rows="10" class="b" style='display: block;' ref="results">{{ DATAVAL[0] }}</textarea>
 <textarea name="" cols="30" rows="10" class="c" style='display: block;' ref="results">{{ DATAVAL[1] }}</textarea>
-<!-- <textarea name="" cols="30" rows="10" class="c"  style='display: block;'>{{  }}</textarea> -->
     </div>
 </template>
 </div>
@@ -661,6 +660,10 @@ fn18(){
     RESULTS.map(ELM=>ELM.style.display).some(DISPLAY=>DISPLAY==='block' || DISPLAY==='') ?
         RESULTS.map(ELM=>ELM.style.display = 'none') :
         RESULTS.map(ELM=>ELM.style.display = 'block');
+},
+fn19(){
+    const THE_STYLE_DISPLAY = this.$refs.save_data_set_list_parent.style.display;
+    this.$refs.save_data_set_list_parent.style.display = (THE_STYLE_DISPLAY === 'block' || THE_STYLE_DISPLAY === '') ? 'none' : 'block';
 },
 
 },

@@ -282,9 +282,9 @@ font-size: 2.5rem;
         </div>
         
     <span v-for="(DATAVAL, DATAIDX) in f_i_b_data9">
-        <span @click="" v-if="typeof DATAVAL === 'string'">{{ DATAVAL }}</span>
+        <span @click="" v-if="typeof DATAVAL === 'string'" ref="core" >{{ DATAVAL }}</span>
         <template v-if="typeof DATAVAL === 'object'">
-        <select name="" id="A" @change="show" :data-correct="DATAVAL[0]"  style="background-color: ''" ref="core" :data-incorrect="">
+        <select name="" id="A" @change="check_option(DATAIDX)" style="background-color: ''" ref="core">
             <option v-for="(FOO, BAR) in DATAVAL[1]" :value="FOO">
                 {{ FOO }}
             </option>
@@ -758,8 +758,7 @@ event.target.dataset.incorrect =
         event.target.value === event.target.dataset.correct
             ? '' :
             event.target.dataset.correct;
-// this.f_i_b_data_X_1 = this.$refs.core;
-this.f_i_b_data_X_1 = this.$refs.core.map(ELM=>ELM.dataset.incorrect);
+
 
 // !!!!
 // event使わずにdata9かdata8かdata6の配列にtrue/falseの要素を追加して
@@ -767,8 +766,15 @@ this.f_i_b_data_X_1 = this.$refs.core.map(ELM=>ELM.dataset.incorrect);
 // (testコードで成否判定にアクセスするのが難しいため)
 // !!!!
 
-this.for_debug();
 
+},
+check_option(INDEX){
+    // this.f_i_b_data9からarrayの要素だけを取り出す一行コード
+    // this.f_i_b_data_X_2 = this.f_i_b_data9.filter(V=>Array.isArray(V));
+    console.log('INDEX', INDEX);
+    this.f_i_b_data9[INDEX][2] =
+        this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value ? true : false;
+    this.for_debug();
 },
 
 

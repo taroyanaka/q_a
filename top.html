@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>q_a</title>
+    <link rel="stylesheet" href="./lib/reset.css">
     <script src="./lib/vue@3.2.36.global.prod.js"></script>
 <!--taro yanaka
 iframeは非推奨？
@@ -12,40 +13,53 @@ iframeは非推奨？
 つまり、<iframe>は非推奨ではなく、使用には注意が必要です。適切に使用される場合、依然として有用なウェブ開発のツールとして機能することができます。
 -->
   <style>
-    .container {
-      width: 100%;
-      height: 100%;
-      margin: 0 auto;
-    }
-    .row::after {
-      content: "";
-      clear: both;
-      display: table;
-    }
-    textarea{
-        width: 100%;
-        height: 200px;
-        resize: none;
-        overflow-y: hidden;
-    }
-    .textarea-container textarea {
-        display: block;
-    }
-    button{
-        height: 2rem;
-        /* margin: 0.2rem 0 0 0; */
-    }
+.container {
+width: 100%;
+height: 100%;
+margin: 0 auto;
+}
+.row::after {
+content: "";
+clear: both;
+display: table;
+}
+textarea{
+width: 100%;
+height: 200px;
+resize: none;
+overflow-y: hidden;
+}
+.textarea-container textarea {
+display: block;
+}
+.parent {
+width: 100%;
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+}
+button{
+height: 2rem;
+}
+button.child {
+width: 100%;
+max-width: 100%;
+}
+/* toggleTextareaを右端に寄せる */
+.toggleTextarea {
+float: right;
+width: 50%;
+}
   </style>
 </head>
 <body>
 <div class="app">
     <div class="textarea-container">
-        <button @click="toggleTextarea">Toggle Textarea</button>
+        <button @click="toggleTextarea" class="toggleTextarea">Toggle Textarea</button>
         <textarea v-model="urls" @input="onInput" ref="textarea" ></textarea>
     </div>
 
-    <div>
-        <button v-for="(url, index) in urlList" :key="index" @click="changeUrl(index)">
+    <div class="parent">
+        <button class="child" v-for="(url, index) in urlList" :key="index" @click="changeUrl(index)">
           {{ getFilenameFromURL(url) }}
         </button>
     </div>

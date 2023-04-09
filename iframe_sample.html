@@ -43,6 +43,10 @@ iframeは非推奨？
         resize: none;
         overflow-y: hidden;
     }
+    .textarea-container textarea {
+        display: none;
+    }
+
 
     @media only screen and (max-width: 768px) {
       .column {
@@ -56,6 +60,7 @@ iframeは非推奨？
 </head>
 <body>
 <div class="app">
+    <button @click="toggleTextarea">Toggle Textarea</button>
     <textarea v-model="urls" @input="onInput" ref="textarea" ></textarea>
     <!-- <button @click="loadSites">Load Sites</button> -->
     <div>
@@ -85,6 +90,7 @@ index2.html
 index3.html`,
       urlList: [],
       currentIndex: 0,
+      isTextareaOpen: true,
     }
 },
 watch: {
@@ -100,6 +106,7 @@ mounted() {
     this.loadSites();
     sleep(300, this.adjustIframeSize);
     this.onInput();
+    
 },
 beforeUpdate() {
 },
@@ -138,6 +145,16 @@ methods: {
       textarea.style.height = "auto";
       const height = textarea.scrollHeight + "px";
       textarea.style.height = height;
+    },
+    toggleTextarea() {
+      this.isTextareaOpen = !this.isTextareaOpen;
+      const textarea = this.$refs.textarea;
+      if (this.isTextareaOpen) {
+        textarea.style.display = "block";
+        // textarea.focus();
+      } else {
+        textarea.style.display = "none";
+      }
     },
 },
 }).mount('.app');

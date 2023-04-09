@@ -292,7 +292,7 @@ font-size: 2.5rem;
         </template>
     </span>
 
-    <button @click="" class="check_button">🎮</button>
+    <button @click="fn5" class="check_button">🎮</button>
     <!-- <button @click="fn4" class="check_button">🎮</button> -->
     </div>
 
@@ -303,12 +303,12 @@ font-size: 2.5rem;
     <!-- <button @click="fn18" class="result_opener">📖</button> -->
 
     </div>
-    <template v-for="(DATAVAL, DATAIDX) in data_X_1">
+    <template v-for="(DATAVAL, DATAIDX) in f_i_b_data_X_1">
         <div class="textarea-column-2">
         <div class="a">
-            <!-- <button @click="fn9(DATAIDX)" class="a-1">↩️</button> -->
-            <!-- <button @click="fn16(DATAIDX)" class="a-2">🗑️</button> -->
-            <!-- <button @click="fn17(DATAIDX)" class="a-3">📚</button> -->
+            <button @click="fn9(DATAIDX)" class="a-1">↩️</button>
+            <button @click="fn16(DATAIDX)" class="a-2">🗑️</button>
+            <button @click="fn17(DATAIDX)" class="a-3">📚</button>
         </div>
     <textarea name="" cols="30" rows="10" class="b" :class="'textarea-'+DATAIDX" style='display: block;'>{{ DATAVAL[0] }}</textarea>
     <textarea name="" cols="30" rows="10" class="c" :class="'textarea-'+DATAIDX" style='display: block;'>{{ DATAVAL[1] }}</textarea>
@@ -767,31 +767,32 @@ check_option(INDEX){
 },
 
 fn4_2(){
-this.data5 = [];
+// this.data5 = [];
 },
 fn4_3(){
-    this.data_X_1.push([
-        R.transpose(this.data4)[2].join("\n"),
-        R.transpose(this.data4)[0].join("\n"),
+    this.f_i_b_data_X_1.push([
+        this.f_i_b_data_X_4,
+        this.f_i_b_data2,
     ]);
 },
 fn4_4(){
-return this.to_ary(this.data5).every(V=>V === '⭕️')
+    return this.f_i_b_data9.filter(V=>Array.isArray(V)).every(V=>V[2]===true);
 },
-fn4(){
+fn5(){
 if(this.fn4_4()){
-    this.data4 = this.data5 = [];
+    // this.data4 = this.data5 = [];
+    window.alert("正解です！");
     return;
 };
-this.fn4_2();
-this.fn4_3();
+    // this.fn4_2();
+    this.fn4_3();
 },
 fn9(IDX){
-    this.data6 = this.data_X_1[IDX][0];
-    this.data3 = this.data_X_1[IDX][1];
+    this.f_i_b_data1 = this.f_i_b_data_X_1[IDX][0];
+    this.f_i_b_data2 = this.f_i_b_data_X_1[IDX][1];
 },
 fn16(INDEX){
-    this.data_X_1.splice(INDEX, 1);
+    this.f_i_b_data_X_1.splice(INDEX, 1);
 },
 
 

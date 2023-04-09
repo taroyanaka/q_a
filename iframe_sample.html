@@ -31,6 +31,10 @@ iframeは非推奨？
     .textarea-container textarea {
         display: block;
     }
+    button{
+        height: 2rem;
+        /* margin: 0.2rem 0 0 0; */
+    }
   </style>
 </head>
 <body>
@@ -42,7 +46,7 @@ iframeは非推奨？
 
     <div>
         <button v-for="(url, index) in urlList" :key="index" @click="changeUrl(index)">
-          {{ url }}
+          {{ getFilenameFromURL(url) }}
         </button>
     </div>
 
@@ -114,6 +118,11 @@ methods: {
         this.isTextareaOpen = !this.isTextareaOpen;
         this.$refs.textarea.style.display = this.isTextareaOpen ? "block" : "none";
     },
+    // URLからファイル名だけを取り出す関数
+    getFilenameFromURL(url) {
+        const filename = url.substring(url.lastIndexOf('/') + 1);
+        return filename;
+    },
 
 },
 }).mount('.app');
@@ -139,5 +148,6 @@ function getBaseURL() {
   const baseURL = new URL(url).origin;
   return baseURL + removeFilenameFromPathname() +'/';
 }
+
 </script>
 </html>

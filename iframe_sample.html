@@ -71,9 +71,9 @@ data() {
 //       urls: `https://en.wikipedia.org/wiki/Lorem_ipsum
 // https://en.wikipedia.org/wiki/Dolor_sit_amet
 // https://en.wikipedia.org/wiki/Consectetur_adipiscing_elit`,
-      urls: `/index.html
-/index2.html
-/index3.html`,
+      urls: `index.html
+index2.html
+index3.html`,
       urlList: []
     }
 },
@@ -121,12 +121,23 @@ methods: {
 function sleep(ms, fn) {
     return new Promise(resolve => setTimeout(resolve, ms)).then(fn);
 };
+
+function removeFilenameFromPathname() {
+  const pathname = window.location.pathname;
+  const filename = pathname.substring(pathname.lastIndexOf('/') + 1);
+
+  if (filename.includes('.')) {
+    return pathname.substring(0, pathname.lastIndexOf('/'));
+  } else {
+    return pathname;
+  }
+}
 // テスト環境でも本番環境でも動く
 // http://127.0.0.1:3000/ or https://taroyanaka.github.io/q_a/ を想定
 function getBaseURL() {
   const url = window.location.href;
   const baseURL = new URL(url).origin;
-  return baseURL;
+  return baseURL + removeFilenameFromPathname() +'/';
 }
 
 

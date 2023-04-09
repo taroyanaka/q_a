@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+    <script src="./lib/vue@3.2.36.global.prod.js"></script>
+
+    <!-- taro yanaka
+iframeは非推奨？
+
+いいえ、<iframe>自体は非推奨ではありませんが、使用には注意が必要です。
+
+<iframe>は、他のウェブサイトやコンテンツを埋め込むために使用されます。しかし、この方法はセキュリティ上の問題があることが知られています。例えば、<iframe>を使用すると、サイトの外部からの悪意のあるコンテンツを埋め込むことができます。
+
+代わりに、<iframe>の代替手段として、<object>、<embed>、またはHTML5の新しい要素である<video>や<audio>を使用することができます。また、セキュリティ上の問題を回避するために、<iframe>を使用する場合は、信頼できるソースからのコンテンツのみを埋め込むようにする必要があります。
+
+つまり、<iframe>は非推奨ではなく、使用には注意が必要です。適切に使用される場合、依然として有用なウェブ開発のツールとして機能することができます。 -->
+<!-- 
+    上記をCSSでデスクトップ版では3カラムレイアウト、モバイル版では3レコードレイアウトで、HTMLファイル一枚で出力して
+
+以下は、デスクトップ版では3カラムレイアウト、モバイル版では3レコードレイアウトになるように、CSSを使用してレスポンシブにレイアウトを調整するサンプルコードです。また、すべてのコードを1つのHTMLファイルにまとめています。 -->
+  <style>
+    .container {
+      width: 90%;
+      margin: 0 auto;
+    }
+    
+    .column {
+      float: left;
+      width: 35%;
+      box-sizing: border-box;
+      padding: 10px;
+    }
+    
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+    textarea{
+        width: 100%;
+        height: 200px;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .column {
+        width: 100%;
+      }
+    }
+
+    
+
+  </style>
+</head>
+<body>
+<div class="app">
+    <textarea v-model="urls"></textarea>
+    <button @click="loadSites">Load Sites</button>
+    <div class="container">
+    <div class="row">
+        <div class="column" v-for="(url, index) in urlList" :key="index">
+        <iframe :src="url" ref="iframe" frameborder="0" width="100%" height="400"></iframe>
+        </div>
+    </div>
+    </div>
+</div>
+</body>
+<script>
+const app = Vue.createApp({
+data() {
+    return {
+//       urls: `https://en.wikipedia.org/wiki/Lorem_ipsum
+// https://en.wikipedia.org/wiki/Dolor_sit_amet
+// https://en.wikipedia.org/wiki/Consectetur_adipiscing_elit`,
+      urls: `/index.html
+/index2.html
+/index3.html`,
+      urlList: []
+    }
+},
+watch: {
+   any: {
+     handler() {
+     },
+     deep: true
+   },
+},
+beforeMounte(){
+},
+mounted() {
+    this.loadSites();
+    sleep(500, this.adjustIframeSize);
+},
+beforeUpdate() {
+},
+updated() {
+},
+methods: {
+    to_ary(it){
+        return JSON.parse(JSON.stringify(it));
+    },
+    loadSites() {
+      this.urlList = this.to_ary(this.urls).split('\n').map(V=>getBaseURL() + V).filter(url => url.trim() !== '')
+    },
+    adjustIframeSize() {
+        const iframes = this.$refs.iframe;
+        iframes.forEach((iframe) => {
+            const win = iframe.contentWindow;
+            const doc = win.document;
+            const height = doc.body.scrollHeight;
+            const width = doc.body.scrollWidth;
+            iframe.width = `${width}px`;
+            iframe.height = `${height}px`;
+            // });
+        });
+    },
+},
+}).mount('.app');
+
+// 1秒後に任意の関数を実行する関数、第一引数にmsを入れる、第二引数に関数を入れる
+// srcにURLを入れるときに使う
+function sleep(ms, fn) {
+    return new Promise(resolve => setTimeout(resolve, ms)).then(fn);
+};
+// テスト環境でも本番環境でも動く
+// http://127.0.0.1:3000/ or https://taroyanaka.github.io/q_a/ を想定
+function getBaseURL() {
+  const url = window.location.href;
+  const baseURL = new URL(url).origin;
+  return baseURL;
+}
+
+
+</script>
+</html>

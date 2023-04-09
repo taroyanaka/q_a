@@ -40,6 +40,8 @@ iframeは非推奨？
     textarea{
         width: 100%;
         height: 200px;
+        resize: none;
+        overflow-y: hidden;
     }
 
     @media only screen and (max-width: 768px) {
@@ -54,7 +56,7 @@ iframeは非推奨？
 </head>
 <body>
 <div class="app">
-    <textarea v-model="urls"></textarea>
+    <textarea v-model="urls" @input="onInput" ref="textarea" ></textarea>
     <!-- <button @click="loadSites">Load Sites</button> -->
     <div>
         <button v-for="(url, index) in urlList" :key="index" @click="changeUrl(index)">
@@ -97,6 +99,7 @@ beforeMounte(){
 mounted() {
     this.loadSites();
     sleep(300, this.adjustIframeSize);
+    this.onInput();
 },
 beforeUpdate() {
 },
@@ -129,7 +132,13 @@ methods: {
     //   if (this.currentIndex >= this.urls.length) {
     //     this.currentIndex = 0;
     //   }
-    }
+    },
+    onInput() {
+      const textarea = this.$refs.textarea;
+      textarea.style.height = "auto";
+      const height = textarea.scrollHeight + "px";
+      textarea.style.height = height;
+    },
 },
 }).mount('.app');
 

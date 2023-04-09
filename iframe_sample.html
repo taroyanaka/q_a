@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Example</title>
+    <title>q_a</title>
     <script src="./lib/vue@3.2.36.global.prod.js"></script>
-
     <!-- taro yanaka
 iframeは非推奨？
 
@@ -24,14 +23,6 @@ iframeは非推奨？
       height: 100%;
       margin: 0 auto;
     }
-    
-    .column {
-      /* float: left; */
-      /* width: 35%; */
-      /* box-sizing: border-box; */
-      /* padding: 10px; */
-    }
-    
     .row::after {
       content: "";
       clear: both;
@@ -44,25 +35,17 @@ iframeは非推奨？
         overflow-y: hidden;
     }
     .textarea-container textarea {
-        display: none;
+        display: block;
     }
-
-
-    @media only screen and (max-width: 768px) {
-      .column {
-        width: 100%;
-      }
-    }
-
-    
-
   </style>
 </head>
 <body>
 <div class="app">
-    <button @click="toggleTextarea">Toggle Textarea</button>
-    <textarea v-model="urls" @input="onInput" ref="textarea" ></textarea>
-    <!-- <button @click="loadSites">Load Sites</button> -->
+    <div class="textarea-container">
+        <button @click="toggleTextarea">Toggle Textarea</button>
+        <textarea v-model="urls" @input="onInput" ref="textarea" ></textarea>
+    </div>
+
     <div>
         <button v-for="(url, index) in urlList" :key="index" @click="changeUrl(index)">
           {{ url }}
@@ -70,10 +53,7 @@ iframeは非推奨？
       </div>
     <div class="container">
     <div class="row">
-        <!-- <div class="column" v-for="(url, index) in urlList" :key="index"> -->
-        <!-- <iframe :src="url" ref="iframe" frameborder="0" width="100%" height="400"></iframe> -->
         <iframe :src="urlList[currentIndex]" ref="iframe" frameborder="0" width="100%" height="400"></iframe>
-        <!-- </div> -->
     </div>
     </div>
 </div>
@@ -82,31 +62,28 @@ iframeは非推奨？
 const app = Vue.createApp({
 data() {
     return {
-//       urls: `https://en.wikipedia.org/wiki/Lorem_ipsum
-// https://en.wikipedia.org/wiki/Dolor_sit_amet
-// https://en.wikipedia.org/wiki/Consectetur_adipiscing_elit`,
       urls: `index.html
 index2.html
-index3.html`,
+index3.html
+portal.html`,
       urlList: [],
       currentIndex: 0,
       isTextareaOpen: true,
     }
 },
-watch: {
-   any: {
-     handler() {
-     },
-     deep: true
-   },
-},
+// watch: {
+//    any: {
+//      handler() {
+//      },
+//      deep: true
+//    },
+// },
 beforeMounte(){
 },
 mounted() {
     this.loadSites();
     sleep(300, this.adjustIframeSize);
     this.onInput();
-    
 },
 beforeUpdate() {
 },
@@ -120,25 +97,17 @@ methods: {
       this.urlList = this.to_ary(this.urls).split('\n').map(V=>getBaseURL() + V).filter(url => url.trim() !== '')
     },
     adjustIframeSize() {
-        // const iframes = this.$refs.iframe;
-        // const iframe = this.$refs.iframe[0];
         const iframe = this.$refs.iframe;
-        // iframes.forEach((iframe) => {
-            const win = iframe.contentWindow;
-            const doc = win.document;
-            const height = doc.body.scrollHeight;
-            const width = doc.body.scrollWidth;
-            iframe.width = `${width}px`;
-            iframe.height = `${height}px`;
-            // });
-        // });
+        const win = iframe.contentWindow;
+        const doc = win.document;
+        const height = doc.body.scrollHeight;
+        const width = doc.body.scrollWidth;
+        iframe.width = `${width}px`;
+        iframe.height = `${height}px`;
     },
     changeUrl(index) {
       this.currentIndex = index;
       this.adjustIframeSize();
-    //   if (this.currentIndex >= this.urls.length) {
-    //     this.currentIndex = 0;
-    //   }
     },
     onInput() {
       const textarea = this.$refs.textarea;
@@ -147,28 +116,21 @@ methods: {
       textarea.style.height = height;
     },
     toggleTextarea() {
-      this.isTextareaOpen = !this.isTextareaOpen;
-      const textarea = this.$refs.textarea;
-      if (this.isTextareaOpen) {
-        textarea.style.display = "block";
-        // textarea.focus();
-      } else {
-        textarea.style.display = "none";
-      }
+        this.isTextareaOpen = !this.isTextareaOpen;
+        this.$refs.textarea.style.display = this.isTextareaOpen ? "block" : "none";
     },
+
 },
 }).mount('.app');
 
-// 1秒後に任意の関数を実行する関数、第一引数にmsを入れる、第二引数に関数を入れる
+// ms後に任意の関数を実行する関数、第一引数にmsを入れる、第二引数に関数を入れる
 // srcにURLを入れるときに使う
 function sleep(ms, fn) {
     return new Promise(resolve => setTimeout(resolve, ms)).then(fn);
 };
-
 function removeFilenameFromPathname() {
   const pathname = window.location.pathname;
   const filename = pathname.substring(pathname.lastIndexOf('/') + 1);
-
   if (filename.includes('.')) {
     return pathname.substring(0, pathname.lastIndexOf('/'));
   } else {
@@ -182,7 +144,5 @@ function getBaseURL() {
   const baseURL = new URL(url).origin;
   return baseURL + removeFilenameFromPathname() +'/';
 }
-
-
 </script>
 </html>

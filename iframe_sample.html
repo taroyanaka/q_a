@@ -20,15 +20,16 @@ iframeは非推奨？
 以下は、デスクトップ版では3カラムレイアウト、モバイル版では3レコードレイアウトになるように、CSSを使用してレスポンシブにレイアウトを調整するサンプルコードです。また、すべてのコードを1つのHTMLファイルにまとめています。 -->
   <style>
     .container {
-      width: 90%;
+      width: 100%;
+      height: 100%;
       margin: 0 auto;
     }
     
     .column {
-      float: left;
-      width: 35%;
-      box-sizing: border-box;
-      padding: 10px;
+      /* float: left; */
+      /* width: 35%; */
+      /* box-sizing: border-box; */
+      /* padding: 10px; */
     }
     
     .row::after {
@@ -54,12 +55,18 @@ iframeは非推奨？
 <body>
 <div class="app">
     <textarea v-model="urls"></textarea>
-    <button @click="loadSites">Load Sites</button>
+    <!-- <button @click="loadSites">Load Sites</button> -->
+    <div>
+        <button v-for="(url, index) in urlList" :key="index" @click="changeUrl(index)">
+          {{ url }}
+        </button>
+      </div>
     <div class="container">
     <div class="row">
-        <div class="column" v-for="(url, index) in urlList" :key="index">
-        <iframe :src="url" ref="iframe" frameborder="0" width="100%" height="400"></iframe>
-        </div>
+        <!-- <div class="column" v-for="(url, index) in urlList" :key="index"> -->
+        <!-- <iframe :src="url" ref="iframe" frameborder="0" width="100%" height="400"></iframe> -->
+        <iframe :src="urlList[currentIndex]" ref="iframe" frameborder="0" width="100%" height="400"></iframe>
+        <!-- </div> -->
     </div>
     </div>
 </div>
@@ -74,7 +81,8 @@ data() {
       urls: `index.html
 index2.html
 index3.html`,
-      urlList: []
+      urlList: [],
+      currentIndex: 0,
     }
 },
 watch: {
@@ -88,7 +96,7 @@ beforeMounte(){
 },
 mounted() {
     this.loadSites();
-    sleep(500, this.adjustIframeSize);
+    sleep(300, this.adjustIframeSize);
 },
 beforeUpdate() {
 },
@@ -102,8 +110,10 @@ methods: {
       this.urlList = this.to_ary(this.urls).split('\n').map(V=>getBaseURL() + V).filter(url => url.trim() !== '')
     },
     adjustIframeSize() {
-        const iframes = this.$refs.iframe;
-        iframes.forEach((iframe) => {
+        // const iframes = this.$refs.iframe;
+        // const iframe = this.$refs.iframe[0];
+        const iframe = this.$refs.iframe;
+        // iframes.forEach((iframe) => {
             const win = iframe.contentWindow;
             const doc = win.document;
             const height = doc.body.scrollHeight;
@@ -111,8 +121,15 @@ methods: {
             iframe.width = `${width}px`;
             iframe.height = `${height}px`;
             // });
-        });
+        // });
     },
+    changeUrl(index) {
+      this.currentIndex = index;
+      this.adjustIframeSize();
+    //   if (this.currentIndex >= this.urls.length) {
+    //     this.currentIndex = 0;
+    //   }
+    }
 },
 }).mount('.app');
 

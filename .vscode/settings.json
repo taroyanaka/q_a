@@ -2,8 +2,8 @@
     "emeraldwalk.runonsave": {
         "commands": [
             {
-                "match": "/Users/yanakataro/Desktop/js2/q_a/CRUD_endpoint_sql_for_index.js",
-                "cmd": "cp /Users/yanakataro/Desktop/js2/q_a/CRUD_endpoint_sql_for_index.js /Users/yanakataro/Desktop/npm_package/CRUD_endpoint_sql_for_index.js"
+                "match": "/Users/taroyanaka/Desktop/program/q_a/CRUD_endpoint_sql_for_index.js",
+                "cmd": "cp /Users/taroyanaka/Desktop/program/q_a/CRUD_endpoint_sql_for_index.js /Users/taroyanaka/Desktop/program/q_a_server/index.js"
             }
         ]
     }

@@ -1,13 +1,14 @@
 // https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave
 
-// bbaaaaaaaa
-// in vscode's workspace settings.json
+// CCCCD
+// in vscode's 
+// ./.vscode/settings.json
 // {
 // "emeraldwalk.runonsave": {
 //     "commands": [
 //         {
-//             "match": "/Users/yanakataro/Desktop/js2/q_a/CRUD_endpoint_sql_for_index.js",
-//             "cmd": "cp /Users/yanakataro/Desktop/js2/q_a/CRUD_endpoint_sql_for_index.js /Users/yanakataro/Desktop/npm_package/CRUD_endpoint_sql_for_index.js"
+//             "match": "/Users/taroyanaka/Desktop/program/q_a/CRUD_endpoint_sql_for_index.js",
+//             "cmd": "cp /Users/taroyanaka/Desktop/program/q_a/CRUD_endpoint_sql_for_index.js /Users/taroyanaka/Desktop/program/nodejs/CRUD_endpoint_sql_for_index.js"
 //         }
 //     ]
 // }
@@ -27,8 +28,10 @@
 
 // npm install express better-sqlite3 validator cors
 // touch ./q_a.sqlite3
+// cp ../q_a/sql_init_for_index.sql ./sql_init_for_index.sql
 // sqlite3 ./q_a.sqlite3 < ./sql_init_for_index.sql
 // node ./CRUD_endpoint_sql_for_index.js
+// nodemon ./CRUD_endpoint_sql_for_index.js
 
 
 //  ユーザーのテーブル。カラムはIDはと名前とパスワードと作成日と更新日を持つ。IDは自動的に増加する
@@ -98,6 +101,7 @@ app.listen(port, "0.0.0.0", () => {
 // '/read_q_a'というGETのリクエストを受け取るエンドポイントで、q_aの全てのidとcontentとcreated_atとupdated_atとuserのnameを返す。contentはJSON.parseする
 app.get('/read_q_a', (req, res) => {
     const read_q_a = db.prepare('SELECT q_a.id, q_a.content, q_a.created_at, q_a.updated_at, users.name FROM q_a INNER JOIN users ON q_a.user_id = users.id').all();
+    console.log(read_q_a);
     res.send(read_q_a);
 });
 

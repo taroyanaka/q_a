@@ -249,9 +249,6 @@ async q_a_save_data_to_localforage(content){
 
 
 
-// read_q_a
-// insert_q_a
-// delete_q_a
 async fetch_read_q_a_by_GET(){
     const res = await fetch(this.HOST + ':' + this.PORT + '/read_f_i_b');
     const data = await res.json();
@@ -296,6 +293,156 @@ async fetch_delete_q_a_by_POST(ID){
 },
 }).mount('.F_I_B_app');
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="I_T_N_app">
+    <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_1"></textarea>
+    <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_2"></textarea>
+    <button @click="q_a_save_data_to_q_a_all_save">q_a_save_data_to_q_a_all_save</button>
+    
+    <ul class="save_data_set_list_parent" style='display: block;'>
+    <li v-for="(DATAVAL, DATAIDX) in q_a_all_save" class="save_data_set_list">
+        <span @click="">{{ [DATAVAL[0], DATAVAL[1]] }}</span>
+        <button @click="q_a_save_data_delete(DATAIDX)" class="q_a_save_data_delete">🗑️</button>
+        <button @click="fetch_insert_q_a_by_POST(DATAVAL)" class="fetch_insert_q_a_by_POST">📤</button>
+    
+        <button @click="q_a_set_data_to_textarea(DATAVAL[0], DATAVAL[1])" class="q_a_set_data_to_textarea">🥍</button>
+    </li>
+    </ul>
+    
+    <ul class="save_data_set_list_parent" style='display: block;'>
+    <li v-for="(DATAVAL, DATAIDX) in q_a_data_of_servers_fetched" class="save_data_set_list">
+    <span @click="">{{ JSON.parse(DATAVAL.content) }}</span>
+    <span @click="">{{ DATAVAL.created_at }}</span>
+    <span @click="">{{ DATAVAL.name }}</span>
+    <span @click="">{{ DATAVAL.updated_at }}</span>
+    <button @click="fetch_delete_q_a_by_POST(DATAVAL.id)">DELETE it</button>
+    <button @click="q_a_save_data_to_localforage(DATAVAL.content)">SAVE it to Your data</button>
+    </li>
+    </ul>
+</div>
+
+<script>
+const I_T_N_app = Vue.createApp({
+data() {
+    return {
+q_a_data_1: '',
+q_a_data_2: '',
+
+q_a_all_save: [],
+
+name: 'name1',
+password: 'password1',
+
+HOST: 'http://localhost',
+PORT: '8000',
+
+q_a_data_of_servers_fetched: null,
+}},
+watch: {
+},
+beforeMounte(){
+},
+mounted() {
+    this.q_a_save_data_load();
+    this.fetch_read_q_a_by_GET();
+},
+beforeUpdate() {
+},
+updated() {
+},
+methods: {
+to_ary(it){
+    return JSON.parse(JSON.stringify(it));
+},
+
+
+async q_a_save_data_to_q_a_all_save(){
+    this.q_a_all_save.push(this.to_ary([this.q_a_data_1, this.q_a_data_2]));
+    await localforage.setItem('I_T_N', JSON.stringify(this.q_a_all_save));
+},
+async q_a_save_data_load() {
+    this.q_a_all_save = JSON.parse(await localforage.getItem('I_T_N')) || [];
+},
+async q_a_save_data_delete(INDEX){
+    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.q_a_all_save[INDEX][0].split("\n"), this.q_a_all_save[INDEX][1].split("\n")).join("\n") )) {
+        this.q_a_all_save.splice(INDEX, 1);
+        await localforage.setItem('I_T_N', JSON.stringify(this.q_a_all_save));
+    };
+},
+async q_a_set_data_to_textarea(q_a_data_1, q_a_data_2){
+    this.q_a_data_1 = q_a_data_1;
+    this.q_a_data_2 = q_a_data_2;
+},
+// q_aの引数をcontentをlocalforageに追加保存する関数
+async q_a_save_data_to_localforage(content){
+    const parsed_content = JSON.parse(content);
+    this.q_a_all_save.push(parsed_content);
+    await localforage.setItem('I_T_N', JSON.stringify(this.q_a_all_save));
+},
+
+
+
+
+
+async fetch_read_q_a_by_GET(){
+    const res = await fetch(this.HOST + ':' + this.PORT + '/read_i_t_n');
+    const data = await res.json();
+    console.log(data);
+    this.q_a_data_of_servers_fetched = data;
+},
+
+async fetch_insert_q_a_by_POST(CONTENT){
+    const res = await fetch(this.HOST + ':' + this.PORT + '/insert_i_t_n', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: this.name,
+            password: this.password,
+            content: CONTENT,
+        }),
+    });
+    const data = await res.json();
+    this.q_a_data_of_servers_fetched = data;
+    console.log(data);
+},
+
+async fetch_delete_q_a_by_POST(ID){
+    const res = await fetch(this.HOST + ':' + this.PORT + '/delete_i_t_n', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: this.name,
+            password: this.password,
+            id: ID,
+        }),
+    });
+    const data = await res.json();
+    this.q_a_data_of_servers_fetched = data;
+    console.log(data);
+},
+
+},
+}).mount('.I_T_N_app');
+</script>
+
+
+
+
 
 </body>
 </html>

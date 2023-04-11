@@ -428,16 +428,15 @@ updated() {
 methods: {
 
 async save_data_to_all_save(){
-    console.log("save_data_to_all_save")
-this.f_i_b_all_save.push(this.to_ary([this.f_i_b_data1, this.f_i_b_data2]));
-await localforage.setItem('F_I_B', JSON.stringify(this.f_i_b_all_save));
+    this.f_i_b_all_save.push(this.to_ary([this.f_i_b_data1, this.f_i_b_data2]));
+    await localforage.setItem('F_I_B', JSON.stringify(this.f_i_b_all_save));
 },
 async save_data_load() {
-this.f_i_b_all_save = JSON.parse(await localforage.getItem('F_I_B')) || [];
+    this.f_i_b_all_save = JSON.parse(await localforage.getItem('F_I_B')) || [];
 },
 save_data_set(INDEX){
-this.f_i_b_data1 = this.f_i_b_all_save[INDEX][0];
-this.f_i_b_data2 = this.f_i_b_all_save[INDEX][1];
+    this.f_i_b_data1 = this.f_i_b_all_save[INDEX][0];
+    this.f_i_b_data2 = this.f_i_b_all_save[INDEX][1];
 },
 async save_data_delete(INDEX){
 // if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.f_i_b_all_save[INDEX][0].split("\n"), this.f_i_b_all_save[INDEX][1].split("\n")).join("\n") )) {

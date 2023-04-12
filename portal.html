@@ -7,20 +7,47 @@
     <title>portal</title>
 
 <link rel="stylesheet" href="./lib/reset.css">
+<style>
+.F_C_app, .F_I_B_app, .I_T_N_app{
+    display: grid;
+    grid-template-columns: 5rem 5rem 2rem 1fr 1fr;
+}
+button, span{
+    /* white-space: nowrap; */
+    /* テキストが改行されないようにする */
+    overflow: hidden; /* 親要素からはみ出た部分を隠す */
+    text-overflow: ellipsis; /* ...を表示して、長いテキストを非表示にする */
+}
+.TEXT{
+    width: 2rem; /* 要素の幅を指定する */    
+}
+
+</style>
 <script src="./lib/localforage@1.10.0.js"></script>
 <script src="./lib/vue@3.2.36.global.prod.js"></script>
 <script src="./lib/ramda.@0.28.0.js"></script>
 
 </head>
 <body>
-<div class="app">
+
+<script>
+    // 文字数を10文字に制限する
+    const limitLength = R.pipe(
+        R.split(''),
+        R.take(10),
+        R.join('')
+    );
+</script>
+
+<div class="F_C_app">
     <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_1"></textarea>
     <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_2"></textarea>
     <button @click="q_a_save_data_to_q_a_all_save">q_a_save_data_to_q_a_all_save</button>
     
     <ul class="save_data_set_list_parent" style='display: block;'>
     <li v-for="(DATAVAL, DATAIDX) in q_a_all_save" class="save_data_set_list">
-        <span @click="">{{ [DATAVAL[0], DATAVAL[1]] }}</span>
+        <!-- <span @click="">{{ [DATAVAL[0].slice(0, 3), DATAVAL[1].slice(0, 3)]  }}</span> -->
+        <span @click="">{{ DATAVAL[0].slice(0, 10)  }}</span>
         <button @click="q_a_save_data_delete(DATAIDX)" class="q_a_save_data_delete">🗑️</button>
         <button @click="fetch_insert_q_a_by_POST(DATAVAL)" class="fetch_insert_q_a_by_POST">📤</button>
     
@@ -30,10 +57,12 @@
     
     <ul class="save_data_set_list_parent" style='display: block;'>
     <li v-for="(DATAVAL, DATAIDX) in q_a_data_of_servers_fetched" class="save_data_set_list">
-    <span @click="">{{ JSON.parse(DATAVAL.content) }}</span>
-    <span @click="">{{ DATAVAL.created_at }}</span>
-    <span @click="">{{ DATAVAL.name }}</span>
-    <span @click="">{{ DATAVAL.updated_at }}</span>
+    <span @click="">{{ JSON.parse(DATAVAL.content)[0].slice(0, 30) }}</span>
+    <span @click="">{{ JSON.parse(DATAVAL.content)[1].slice(0, 100) }}</span>
+    <!-- <span @click="">{{ JSON.parse(DATAVAL.content)[1].slice(0, 10) }}</span> -->
+    <!-- <span @click="">{{ DATAVAL.created_at }}</span> -->
+    <!-- <span @click="">{{ DATAVAL.name }}</span> -->
+    <!-- <span @click="">{{ DATAVAL.updated_at }}</span> -->
     <button @click="fetch_delete_q_a_by_POST(DATAVAL.id)">DELETE it</button>
     <button @click="q_a_save_data_to_localforage(DATAVAL.content)">SAVE it to Your data</button>
     </li>
@@ -41,7 +70,7 @@
 </div>
 
 <script>
-const app = Vue.createApp({
+const F_C_app = Vue.createApp({
 data() {
     return {
 q_a_data_1: '',
@@ -140,7 +169,7 @@ async fetch_delete_q_a_by_POST(ID){
 },
 
 },
-}).mount('.app');
+}).mount('.F_C_app');
 </script>
 
 
@@ -166,7 +195,8 @@ async fetch_delete_q_a_by_POST(ID){
     
     <ul class="save_data_set_list_parent" style='display: block;'>
     <li v-for="(DATAVAL, DATAIDX) in q_a_all_save" class="save_data_set_list">
-        <span @click="">{{ [DATAVAL[0], DATAVAL[1]] }}</span>
+        <!-- <span @click="">{{ [DATAVAL[0].slice(0, 3), DATAVAL[1].slice(0, 3)]  }}</span> -->
+        <span @click="">{{ DATAVAL[0].slice(0, 10)  }}</span>
         <button @click="q_a_save_data_delete(DATAIDX)" class="q_a_save_data_delete">🗑️</button>
         <button @click="fetch_insert_q_a_by_POST(DATAVAL)" class="fetch_insert_q_a_by_POST">📤</button>
     
@@ -176,10 +206,12 @@ async fetch_delete_q_a_by_POST(ID){
     
     <ul class="save_data_set_list_parent" style='display: block;'>
     <li v-for="(DATAVAL, DATAIDX) in q_a_data_of_servers_fetched" class="save_data_set_list">
-    <span @click="">{{ JSON.parse(DATAVAL.content) }}</span>
-    <span @click="">{{ DATAVAL.created_at }}</span>
-    <span @click="">{{ DATAVAL.name }}</span>
-    <span @click="">{{ DATAVAL.updated_at }}</span>
+    <span @click="">{{ JSON.parse(DATAVAL.content)[0].slice(0, 30) }}</span>
+    <span @click="">{{ JSON.parse(DATAVAL.content)[1].slice(0, 100) }}</span>
+    <!-- <span @click="">{{ JSON.parse(DATAVAL.content)[1].slice(0, 10) }}</span> -->
+    <!-- <span @click="">{{ DATAVAL.created_at }}</span> -->
+    <!-- <span @click="">{{ DATAVAL.name }}</span> -->
+    <!-- <span @click="">{{ DATAVAL.updated_at }}</span> -->
     <button @click="fetch_delete_q_a_by_POST(DATAVAL.id)">DELETE it</button>
     <button @click="q_a_save_data_to_localforage(DATAVAL.content)">SAVE it to Your data</button>
     </li>
@@ -312,7 +344,8 @@ async fetch_delete_q_a_by_POST(ID){
     
     <ul class="save_data_set_list_parent" style='display: block;'>
     <li v-for="(DATAVAL, DATAIDX) in q_a_all_save" class="save_data_set_list">
-        <span @click="">{{ [DATAVAL[0], DATAVAL[1]] }}</span>
+        <!-- <span @click="">{{ [DATAVAL[0].slice(0, 3), DATAVAL[1].slice(0, 3)]  }}</span> -->
+        <span @click="">{{ DATAVAL[0].slice(0, 10)  }}</span>
         <button @click="q_a_save_data_delete(DATAIDX)" class="q_a_save_data_delete">🗑️</button>
         <button @click="fetch_insert_q_a_by_POST(DATAVAL)" class="fetch_insert_q_a_by_POST">📤</button>
     
@@ -322,10 +355,12 @@ async fetch_delete_q_a_by_POST(ID){
     
     <ul class="save_data_set_list_parent" style='display: block;'>
     <li v-for="(DATAVAL, DATAIDX) in q_a_data_of_servers_fetched" class="save_data_set_list">
-    <span @click="">{{ JSON.parse(DATAVAL.content) }}</span>
-    <span @click="">{{ DATAVAL.created_at }}</span>
-    <span @click="">{{ DATAVAL.name }}</span>
-    <span @click="">{{ DATAVAL.updated_at }}</span>
+    <span @click="">{{ JSON.parse(DATAVAL.content)[0].slice(0, 3) }}</span>
+    <span @click="">{{ JSON.parse(DATAVAL.content)[1].slice(0, 100) }}</span>
+    <!-- <span @click="">{{ JSON.parse(DATAVAL.content)[1].slice(0, 10) }}</span> -->
+    <!-- <span @click="">{{ DATAVAL.created_at }}</span> -->
+    <!-- <span @click="">{{ DATAVAL.name }}</span> -->
+    <!-- <span @click="">{{ DATAVAL.updated_at }}</span> -->
     <button @click="fetch_delete_q_a_by_POST(DATAVAL.id)">DELETE it</button>
     <button @click="q_a_save_data_to_localforage(DATAVAL.content)">SAVE it to Your data</button>
     </li>

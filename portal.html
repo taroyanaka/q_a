@@ -29,15 +29,50 @@ button, span{
 
 </head>
 <body>
-
+<div class="name_password">
+    name: <input type="text" v-model="name" class="name">
+    password: <input type="text" v-model="password" class="password">
+    <button @click="toggle_and_change">toggle_and_change</button>
+</div>
 <script>
-    // 文字数を10文字に制限する
-    const limitLength = R.pipe(
-        R.split(''),
-        R.take(10),
-        R.join('')
-    );
+    const name_password_app = Vue.createApp({
+        data() {
+            return {
+                name: 'name1',
+                password: 'password1',
+            }
+        },
+        watch: {
+        },
+        beforeMounte(){
+        },
+        mounted() {
+        },
+        beforeUpdate() {
+        },
+        updated() {
+        },
+        methods: {
+            // 'PUBLIC', 'delete_24_hours'
+            // 'name1', 'password1'
+            toggle(){
+                this.name === 'name1' ? this.name = 'PUBLIC' : this.name = 'name1';
+                this.password === 'password1' ? this.password = 'delete_24_hours' : this.password = 'password1';
+            },
+            change_other_apps_name_password(){
+                [F_C_app.name, F_I_B_app.name, I_T_N_app.name]
+                    = [this.name, this.name, this.name];
+                [F_C_app.password, F_I_B_app.password, I_T_N_app.password]
+                    = [this.password, this.password, this.password];
+            },
+            toggle_and_change(){
+                this.toggle();
+                this.change_other_apps_name_password();
+            }
+        },
+    }).mount('.name_password');
 </script>
+
 
 <div class="F_C_app">
     <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_1"></textarea>
@@ -478,6 +513,14 @@ async fetch_delete_q_a_by_POST(ID){
 
 
 
+<script>
+// F_C_app, F_I_B_app, I_T_N_appそれぞれのthis.nameとthis.passwordを name: 'name1',　password: 'password1' もしくは name: 'PUBLIC', password: 'delete_24_hours' に変更する関数
+// 'PUBLIC', 'delete_24_hours'
+// 'name1', 'password1'
+function name_password_toggle(){
 
+}
+
+</script>
 </body>
 </html>

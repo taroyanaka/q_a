@@ -43,6 +43,14 @@ button, span{
             }
         },
         watch: {
+            name: function (newVal, oldVal) {
+                this.change_other_apps_name_password();
+                // console.log('name changed');
+            },
+            password: function (newVal, oldVal) {
+                this.change_other_apps_name_password();
+                // console.log('password changed');
+            },
         },
         beforeMounte(){
         },

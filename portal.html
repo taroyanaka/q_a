@@ -10,7 +10,27 @@
 <style>
 .F_C_app, .F_I_B_app, .I_T_N_app{
     display: grid;
-    grid-template-columns: 5rem 5rem 2rem 1fr 1fr;
+    grid-template-columns: 10rem 2rem 1fr 1fr;
+}
+.parent_of_alert_and_textarea{
+    display: grid;
+    grid-template-areas: 
+    "alert alert"
+    "q_a_data_1 q_a_data_2";
+    grid-template-rows:
+    1rem
+    1fr;
+}
+.alert{
+    height: 1rem;
+    grid-area: alert;
+    color: blueviolet;
+}
+.q_a_data_1{
+    grid-area: q_a_data_1;
+}
+.q_a_data_2{
+    grid-area: q_a_data_2;
 }
 button, span{
     /* white-space: nowrap; */
@@ -83,8 +103,11 @@ button, span{
 
 
 <div class="F_C_app">
-    <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_1"></textarea>
-    <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_2"></textarea>
+    <div class="parent_of_alert_and_textarea">
+        <p class="alert">{{ alert_val }}</p>
+        <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_1" class="q_a_data_1"></textarea>
+        <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_2" class="q_a_data_2"></textarea>
+    </div>
     <button @click="q_a_save_data_to_q_a_all_save">q_a_save_data_to_q_a_all_save</button>
     
     <ul class="save_data_set_list_parent" style='display: block;'>
@@ -128,8 +151,21 @@ HOST: 'http://localhost',
 PORT: '8000',
 
 q_a_data_of_servers_fetched: null,
+alert_val: '',
 }},
 watch: {
+q_a_data_1: {
+    handler() {
+        this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string();
+    },
+    deep: true
+},
+q_a_data_2: {
+    handler() {
+        this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string();
+    },
+    deep: true
+},
 },
 beforeMounte(){
 },
@@ -145,7 +181,9 @@ methods: {
 to_ary(it){
     return JSON.parse(JSON.stringify(it));
 },
-
+alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string(){
+    this.alert_val = JSON.stringify(this.q_a_data_1 + this.q_a_data_2).length < 4000 ? '4000 OK' : '4000 NG';
+},
 
 async q_a_save_data_to_q_a_all_save(){
     this.q_a_all_save.push(this.to_ary([this.q_a_data_1, this.q_a_data_2]));
@@ -232,8 +270,11 @@ async fetch_delete_q_a_by_POST(ID){
 
 
 <div class="F_I_B_app">
-    <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_1"></textarea>
-    <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_2"></textarea>
+    <div class="parent_of_alert_and_textarea">
+        <p class="alert">{{ alert_val }}</p>
+        <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_1" class="q_a_data_1"></textarea>
+        <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_2" class="q_a_data_2"></textarea>
+    </div>
     <button @click="q_a_save_data_to_q_a_all_save">q_a_save_data_to_q_a_all_save</button>
     
     <ul class="save_data_set_list_parent" style='display: block;'>
@@ -277,8 +318,21 @@ HOST: 'http://localhost',
 PORT: '8000',
 
 q_a_data_of_servers_fetched: null,
+alert_val: '',
 }},
 watch: {
+q_a_data_1: {
+    handler() {
+        this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string();
+    },
+    deep: true
+},
+q_a_data_2: {
+    handler() {
+        this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string();
+    },
+    deep: true
+},
 },
 beforeMounte(){
 },
@@ -294,7 +348,9 @@ methods: {
 to_ary(it){
     return JSON.parse(JSON.stringify(it));
 },
-
+alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string(){
+    this.alert_val = JSON.stringify(this.q_a_data_1 + this.q_a_data_2).length < 4000 ? '4000 OK' : '4000 NG';
+},
 
 async q_a_save_data_to_q_a_all_save(){
     this.q_a_all_save.push(this.to_ary([this.q_a_data_1, this.q_a_data_2]));
@@ -381,8 +437,11 @@ async fetch_delete_q_a_by_POST(ID){
 
 
 <div class="I_T_N_app">
-    <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_1"></textarea>
-    <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_2"></textarea>
+    <div class="parent_of_alert_and_textarea">
+        <p class="alert">{{ alert_val }}</p>
+        <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_1" class="q_a_data_1"></textarea>
+        <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_2" class="q_a_data_2"></textarea>
+    </div>
     <button @click="q_a_save_data_to_q_a_all_save">q_a_save_data_to_q_a_all_save</button>
     
     <ul class="save_data_set_list_parent" style='display: block;'>
@@ -426,8 +485,21 @@ HOST: 'http://localhost',
 PORT: '8000',
 
 q_a_data_of_servers_fetched: null,
+alert_val: '',
 }},
 watch: {
+q_a_data_1: {
+    handler() {
+        this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string();
+    },
+    deep: true
+},
+q_a_data_2: {
+    handler() {
+        this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string();
+    },
+    deep: true
+},
 },
 beforeMounte(){
 },
@@ -442,6 +514,9 @@ updated() {
 methods: {
 to_ary(it){
     return JSON.parse(JSON.stringify(it));
+},
+alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string(){
+    this.alert_val = JSON.stringify(this.q_a_data_1 + this.q_a_data_2).length < 4000 ? '4000 OK' : '4000 NG';
 },
 
 

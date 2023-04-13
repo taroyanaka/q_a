@@ -534,7 +534,7 @@ async q_a_save_data_to_q_a_all_save(){
         return;
     }
     this.q_a_all_save.push(this.to_ary([this.q_a_data_1, this.q_a_data_2]));
-    await localforage.setItem('q_a_1', JSON.stringify(this.q_a_all_save));
+    await localforage.setItem('I_T_N', JSON.stringify(this.q_a_all_save));
 },
 async q_a_save_data_load() {
     this.q_a_all_save = JSON.parse(await localforage.getItem('I_T_N')) || [];

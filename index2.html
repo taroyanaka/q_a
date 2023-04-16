@@ -677,7 +677,11 @@ remove_index_0(ary) {
 },
 // 正規表現による分割と区切り文字の挿入を組み合わせる
 fn2_1(target_str, replacer_str) {
-    return R.intersperse([replacer_str], target_str.split(new RegExp(replacer_str)));
+    // JSの正規表現で使う記号を全てサニタイズするJSの関数escape_reg_expをconst形式の1行関数で
+    const escape_reg_exp = string => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const escaped_result = escape_reg_exp(replacer_str);
+    const RESULT = R.intersperse([escaped_result], target_str.split(new RegExp(escaped_result)))
+    return RESULT;
 },
 fn3() {
     let RESULT_ARRAY = [];

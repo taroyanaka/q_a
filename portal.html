@@ -46,8 +46,9 @@ button, span{
 <script src="./lib/localforage@1.10.0.js"></script>
 <script src="./lib/vue@3.2.36.global.prod.js"></script>
 <script src="./lib/ramda.@0.28.0.js"></script>
-
 </head>
+
+
 <body>
 <div class="name_password">
     name: <input type="text" v-model="name" class="name">
@@ -182,8 +183,9 @@ to_ary(it){
     return JSON.parse(JSON.stringify(it));
 },
 alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string(){
-    this.alert_val = JSON.stringify(this.q_a_data_1 + this.q_a_data_2).length < 4000 ? '4000 OK' : '4000 NG';
-    return JSON.stringify(this.q_a_data_1 + this.q_a_data_2).length < 4000 ? true : false;
+    const true_if_within_4000_characters_and_not_empty = (str) => str.length > 2 && str.length <= 4000 && typeof str === 'string';
+    this.alert_val = true_if_within_4000_characters_and_not_empty(JSON.stringify(this.q_a_data_1 + this.q_a_data_2)) ? '1-4000 OK' : '1-4000 NG';
+    return true_if_within_4000_characters_and_not_empty(JSON.stringify(this.q_a_data_1 + this.q_a_data_2)) ? true : false;
 },
 
 async q_a_save_data_to_q_a_all_save(){
@@ -353,8 +355,9 @@ to_ary(it){
     return JSON.parse(JSON.stringify(it));
 },
 alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string(){
-    this.alert_val = JSON.stringify(this.q_a_data_1 + this.q_a_data_2).length < 4000 ? '4000 OK' : '4000 NG';
-    return JSON.stringify(this.q_a_data_1 + this.q_a_data_2).length < 4000 ? true : false;
+    const true_if_within_4000_characters_and_not_empty = (str) => str.length > 2 && str.length <= 4000 && typeof str === 'string';
+    this.alert_val = true_if_within_4000_characters_and_not_empty(JSON.stringify(this.q_a_data_1 + this.q_a_data_2)) ? '1-4000 OK' : '1-4000 NG';
+    return true_if_within_4000_characters_and_not_empty(JSON.stringify(this.q_a_data_1 + this.q_a_data_2)) ? true : false;
 },
 
 async q_a_save_data_to_q_a_all_save(){
@@ -524,8 +527,9 @@ to_ary(it){
     return JSON.parse(JSON.stringify(it));
 },
 alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string(){
-    this.alert_val = JSON.stringify(this.q_a_data_1 + this.q_a_data_2).length < 4000 ? '4000 OK' : '4000 NG';
-    return JSON.stringify(this.q_a_data_1 + this.q_a_data_2).length < 4000 ? true : false;
+    const true_if_within_4000_characters_and_not_empty = (str) => str.length > 2 && str.length <= 4000 && typeof str === 'string';
+    this.alert_val = true_if_within_4000_characters_and_not_empty(JSON.stringify(this.q_a_data_1 + this.q_a_data_2)) ? '1-4000 OK' : '1-4000 NG';
+    return true_if_within_4000_characters_and_not_empty(JSON.stringify(this.q_a_data_1 + this.q_a_data_2)) ? true : false;
 },
 
 
@@ -603,6 +607,9 @@ async fetch_delete_q_a_by_POST(ID){
 
 },
 }).mount('.I_T_N_app');
+
+
+
 </script>
 
 
@@ -612,10 +619,6 @@ async fetch_delete_q_a_by_POST(ID){
 // F_C_app, F_I_B_app, I_T_N_appそれぞれのthis.nameとthis.passwordを name: 'name1',　password: 'password1' もしくは name: 'PUBLIC', password: 'delete_24_hours' に変更する関数
 // 'PUBLIC', 'delete_24_hours'
 // 'name1', 'password1'
-function name_password_toggle(){
-
-}
-
 </script>
 </body>
 </html>

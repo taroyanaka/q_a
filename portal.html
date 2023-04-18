@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" href="./lib/reset.css">
 <style>
-.F_C_app, .F_I_B_app, .I_T_N_app{
+.f_c_app, .f_i_b_app, .i_t_n_app{
     display: grid;
     grid-template-columns: 10rem 2rem 1fr 1fr;
 }
@@ -89,9 +89,9 @@ button, span{
                 this.password === 'password1' ? this.password = 'delete_24_hours' : this.password = 'password1';
             },
             change_other_apps_name_password(){
-                [F_C_app.name, F_I_B_app.name, I_T_N_app.name]
+                [f_c_app.name, f_i_b_app.name, i_t_n_app.name]
                     = [this.name, this.name, this.name];
-                [F_C_app.password, F_I_B_app.password, I_T_N_app.password]
+                [f_c_app.password, f_i_b_app.password, i_t_n_app.password]
                     = [this.password, this.password, this.password];
             },
             toggle_and_change(){
@@ -102,48 +102,111 @@ button, span{
     }).mount('.name_password');
 </script>
 
+<script>
+// DROP TABLE IF EXISTS users;
+// DROP TABLE IF EXISTS user_permission;
+// DROP TABLE IF EXISTS f_c;
+// DROP TABLE IF EXISTS f_i_b;
+// DROP TABLE IF EXISTS i_t_n;
 
-<div class="F_C_app">
+
+// CREATE TABLE users (
+//   id INTEGER PRIMARY KEY AUTOINCREMENT,
+//   role_id INTEGER NOT NULL,
+//   name TEXT NOT NULL,
+//   password TEXT NOT NULL,
+//   created_at DATETIME NOT NULL,
+//   updated_at DATETIME NOT NULL
+// );
+// CREATE TABLE user_permission (
+//   id INTEGER PRIMARY KEY,
+
+//   permission TEXT NOT NULL,
+//   readable INTEGER NOT NULL,
+//   writable INTEGER NOT NULL,
+//   deletable INTEGER NOT NULL, 
+
+//   created_at DATETIME NOT NULL,
+//   updated_at DATETIME NOT NULL
+// );
+
+// CREATE TABLE f_c (
+//   id INTEGER PRIMARY KEY AUTOINCREMENT,
+//   user_id INTEGER NOT NULL,
+//   content_1 TEXT NOT NULL,
+//   content_2 TEXT NOT NULL,
+//   created_at DATETIME NOT NULL,
+//   updated_at DATETIME NOT NULL,
+//   FOREIGN KEY (user_id) REFERENCES users(id)
+// );
+
+// CREATE TABLE f_i_b (
+//   id INTEGER PRIMARY KEY AUTOINCREMENT,
+//   user_id INTEGER NOT NULL,
+//   content_1 TEXT NOT NULL,
+//   content_2 TEXT NOT NULL,
+//   created_at DATETIME NOT NULL,
+//   updated_at DATETIME NOT NULL,
+//   FOREIGN KEY (user_id) REFERENCES users(id)
+// );
+// CREATE TABLE i_t_n (
+//   id INTEGER PRIMARY KEY AUTOINCREMENT,
+//   user_id INTEGER NOT NULL,
+//   content_1 TEXT NOT NULL,
+//   content_2 TEXT NOT NULL,
+//   created_at DATETIME NOT NULL,
+//   updated_at DATETIME NOT NULL,
+//   FOREIGN KEY (user_id) REFERENCES users(id)
+// );
+
+// INSERT INTO users (role_id, name, password, created_at, updated_at) VALUES (1, 'PUBLIC', 'delete_24_hours', DATETIME('now'), DATETIME('now'));
+// INSERT INTO users (role_id, name, password, created_at, updated_at) VALUES (2, 'name1', 'password1', DATETIME('now'), DATETIME('now'));
+// INSERT INTO user_permission (id, permission, readable, writable, deletable, created_at, updated_at) VALUES (1, 'guest', 1, 0, 0, DATETIME('now'), DATETIME('now'));
+// INSERT INTO user_permission (id, permission, readable, writable, deletable, created_at, updated_at) VALUES (2, 'user', 1, 1, 1, DATETIME('now'), DATETIME('now'));
+</script>
+
+
+
+<div class="f_c_app">
     <div class="parent_of_alert_and_textarea">
         <p class="alert">{{ alert_val }}</p>
-        <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_1" class="q_a_data_1"></textarea>
-        <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_2" class="q_a_data_2"></textarea>
+        <textarea name="" id="" cols="10" rows="10" v-model="f_c_data_1" class="f_c_data_1"></textarea>
+        <textarea name="" id="" cols="10" rows="10" v-model="f_c_data_2" class="f_c_data_2"></textarea>
     </div>
-    <button @click="q_a_save_data_to_q_a_all_save">q_a_save_data_to_q_a_all_save</button>
+    <button @click="f_c_save_data_to_f_c_all_save">f_c_save_data_to_f_c_all_save</button>
     
     <ul class="save_data_set_list_parent" style='display: block;'>
-    <li v-for="(DATAVAL, DATAIDX) in q_a_all_save" class="save_data_set_list">
+    <li v-for="(DATAVAL, DATAIDX) in f_c_all_save" class="save_data_set_list">
         <!-- <span @click="">{{ [DATAVAL[0].slice(0, 3), DATAVAL[1].slice(0, 3)]  }}</span> -->
         <span @click="">{{ DATAVAL[0].slice(0, 10)  }}</span>
-        <button @click="q_a_save_data_delete(DATAIDX)" class="q_a_save_data_delete">🗑️</button>
-        <button @click="fetch_insert_q_a_by_POST(DATAVAL)" class="fetch_insert_q_a_by_POST">📤</button>
+        <button @click="f_c_save_data_delete(DATAIDX)" class="f_c_save_data_delete">🗑️</button>
+        <button @click="fetch_insert_f_c_by_POST(DATAVAL[0], DATAVAL[1])" class="fetch_insert_f_c_by_POST">📤</button>
     
-        <button @click="q_a_set_data_to_textarea(DATAVAL[0], DATAVAL[1])" class="q_a_set_data_to_textarea">🥍</button>
+        <button @click="f_c_set_data_to_textarea(DATAVAL[0], DATAVAL[1])" class="f_c_set_data_to_textarea">🥍</button>
     </li>
     </ul>
     
     <ul class="save_data_set_list_parent" style='display: block;'>
-    <li v-for="(DATAVAL, DATAIDX) in q_a_data_of_servers_fetched" class="save_data_set_list">
-    <span @click="">{{ JSON.parse(DATAVAL.content)[0].slice(0, 30) }}</span>
-    <span @click="">{{ JSON.parse(DATAVAL.content)[1].slice(0, 100) }}</span>
-    <!-- <span @click="">{{ JSON.parse(DATAVAL.content)[1].slice(0, 10) }}</span> -->
-    <!-- <span @click="">{{ DATAVAL.created_at }}</span> -->
-    <!-- <span @click="">{{ DATAVAL.name }}</span> -->
-    <!-- <span @click="">{{ DATAVAL.updated_at }}</span> -->
-    <button @click="fetch_delete_q_a_by_POST(DATAVAL.id)">DELETE it</button>
-    <button @click="q_a_save_data_to_localforage(DATAVAL.content)">SAVE it to Your data</button>
+    <li v-for="(DATAVAL, DATAIDX) in f_c_data_of_servers_fetched" class="save_data_set_list">
+    <span @click="">{{ DATAVAL.content_1.slice(0, 30) }}</span>
+    <span @click="">{{ DATAVAL.content_2.slice(0, 30) }}</span>
+    <!-- <span @click="">{{ JSON.parse(DATAVAL.content_1).slice(0, 30) }}</span> -->
+    <!-- <span @click="">{{ JSON.parse(DATAVAL.content_2).slice(0, 30) }}</span> -->
+    <!-- <span @click="">{{ JSON.parse(DATAVAL.content_2).slice(0, 30) }}</span> -->
+    <button @click="fetch_delete_f_c_by_POST(DATAVAL.id)">DELETE it</button>
+    <button @click="f_c_save_data_to_localforage(DATAVAL.content_1, DATAVAL.content_2)">SAVE it to Your data</button>
     </li>
     </ul>
 </div>
 
 <script>
-const F_C_app = Vue.createApp({
+const f_c_app = Vue.createApp({
 data() {
     return {
-q_a_data_1: '',
-q_a_data_2: '',
+f_c_data_1: '',
+f_c_data_2: '',
 
-q_a_all_save: [],
+f_c_all_save: [],
 
 name: 'name1',
 password: 'password1',
@@ -151,17 +214,17 @@ password: 'password1',
 HOST: 'http://localhost',
 PORT: '8000',
 
-q_a_data_of_servers_fetched: null,
+f_c_data_of_servers_fetched: null,
 alert_val: '',
 }},
 watch: {
-q_a_data_1: {
+f_c_data_1: {
     handler() {
         this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string();
     },
     deep: true
 },
-q_a_data_2: {
+f_c_data_2: {
     handler() {
         this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string();
     },
@@ -171,8 +234,8 @@ q_a_data_2: {
 beforeMounte(){
 },
 mounted() {
-    this.q_a_save_data_load();
-    this.fetch_read_q_a_by_GET();
+    this.f_c_save_data_load();
+    this.fetch_read_f_c_by_GET();
 },
 beforeUpdate() {
 },
@@ -184,45 +247,46 @@ to_ary(it){
 },
 alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string(){
     const true_if_within_4000_characters_and_not_empty = (str) => str.length > 2 && str.length <= 4000 && typeof str === 'string';
-    this.alert_val = true_if_within_4000_characters_and_not_empty(JSON.stringify(this.q_a_data_1 + this.q_a_data_2)) ? '1-4000 OK' : '1-4000 NG';
-    return true_if_within_4000_characters_and_not_empty(JSON.stringify(this.q_a_data_1 + this.q_a_data_2)) ? true : false;
+    this.alert_val = true_if_within_4000_characters_and_not_empty(JSON.stringify(this.f_c_data_1 + this.f_c_data_2)) ? '1-4000 OK' : '1-4000 NG';
+    return true_if_within_4000_characters_and_not_empty(JSON.stringify(this.f_c_data_1 + this.f_c_data_2)) ? true : false;
 },
 
-async q_a_save_data_to_q_a_all_save(){
+async f_c_save_data_to_f_c_all_save(){
     if(this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string() === false){
         return;
     }
-    this.q_a_all_save.push(this.to_ary([this.q_a_data_1, this.q_a_data_2]));
-    await localforage.setItem('q_a_1', JSON.stringify(this.q_a_all_save));
+    this.f_c_all_save.push(this.to_ary([this.f_c_data_1, this.f_c_data_2]));
+    await localforage.setItem('f_c', JSON.stringify(this.f_c_all_save));
 },
-async q_a_save_data_load() {
-    this.q_a_all_save = JSON.parse(await localforage.getItem('q_a_1')) || [];
+async f_c_save_data_load() {
+    this.f_c_all_save = JSON.parse(await localforage.getItem('f_c')) || [];
 },
-async q_a_save_data_delete(INDEX){
-    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.q_a_all_save[INDEX][0].split("\n"), this.q_a_all_save[INDEX][1].split("\n")).join("\n") )) {
-        this.q_a_all_save.splice(INDEX, 1);
-        await localforage.setItem('q_a_1', JSON.stringify(this.q_a_all_save));
+async f_c_save_data_delete(INDEX){
+    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.f_c_all_save[INDEX][0].split("\n"), this.f_c_all_save[INDEX][1].split("\n")).join("\n") )) {
+        this.f_c_all_save.splice(INDEX, 1);
+        await localforage.setItem('f_c', JSON.stringify(this.f_c_all_save));
     };
 },
-async q_a_set_data_to_textarea(q_a_data_1, q_a_data_2){
-    this.q_a_data_1 = q_a_data_1;
-    this.q_a_data_2 = q_a_data_2;
+async f_c_set_data_to_textarea(f_c_data_1, f_c_data_2){
+    this.f_c_data_1 = f_c_data_1;
+    this.f_c_data_2 = f_c_data_2;
 },
-// q_aの引数をcontentをlocalforageに追加保存する関数
-async q_a_save_data_to_localforage(content){
-    const parsed_content = JSON.parse(content);
-    this.q_a_all_save.push(parsed_content);
-    await localforage.setItem('q_a_1', JSON.stringify(this.q_a_all_save));
+// f_cの引数をcontent_1, content_2をlocalforageに追加保存する関数
+async f_c_save_data_to_localforage(content_1, content_2){
+    const parsed_content_1 = content_1;
+    const parsed_content_2 = content_2;
+    this.f_c_all_save.push([parsed_content_1, parsed_content_2]);
+    await localforage.setItem('f_c', JSON.stringify(this.f_c_all_save));
 },
 
-async fetch_read_q_a_by_GET(){
-    const res = await fetch(this.HOST + ':' + this.PORT + '/read_q_a');
+async fetch_read_f_c_by_GET(){
+    const res = await fetch(this.HOST + ':' + this.PORT + '/read_f_c');
     const data = await res.json();
-    this.q_a_data_of_servers_fetched = data;
+    this.f_c_data_of_servers_fetched = data;
 },
 
-async fetch_insert_q_a_by_POST(CONTENT){
-    const res = await fetch(this.HOST + ':' + this.PORT + '/insert_q_a', {
+async fetch_insert_f_c_by_POST(CONTENT_1, CONTENT_2){
+    const res = await fetch(this.HOST + ':' + this.PORT + '/insert_f_c', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -230,16 +294,17 @@ async fetch_insert_q_a_by_POST(CONTENT){
         body: JSON.stringify({
             name: this.name,
             password: this.password,
-            content: CONTENT,
+            content_1: CONTENT_1,
+            content_2: CONTENT_2,
         }),
     });
     const data = await res.json();
-    this.q_a_data_of_servers_fetched = data;
+    this.f_c_data_of_servers_fetched = data;
     console.log(data);
 },
 
-async fetch_delete_q_a_by_POST(ID){
-    const res = await fetch(this.HOST + ':' + this.PORT + '/delete_q_a', {
+async fetch_delete_f_c_by_POST(ID){
+    const res = await fetch(this.HOST + ':' + this.PORT + '/delete_f_c', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -251,71 +316,57 @@ async fetch_delete_q_a_by_POST(ID){
         }),
     });
     const data = await res.json();
-    this.q_a_data_of_servers_fetched = data;
+    this.f_c_data_of_servers_fetched = data;
     console.log(data);
 },
 
 },
-}).mount('.F_C_app');
+}).mount('.f_c_app');
 </script>
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="F_I_B_app">
+<div class="f_i_b_app">
     <div class="parent_of_alert_and_textarea">
         <p class="alert">{{ alert_val }}</p>
-        <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_1" class="q_a_data_1"></textarea>
-        <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_2" class="q_a_data_2"></textarea>
+        <textarea name="" id="" cols="10" rows="10" v-model="f_i_b_data_1" class="f_i_b_data_1"></textarea>
+        <textarea name="" id="" cols="10" rows="10" v-model="f_i_b_data_2" class="f_i_b_data_2"></textarea>
     </div>
-    <button @click="q_a_save_data_to_q_a_all_save">q_a_save_data_to_q_a_all_save</button>
+    <button @click="f_i_b_save_data_to_f_i_b_all_save">f_i_b_save_data_to_f_i_b_all_save</button>
     
     <ul class="save_data_set_list_parent" style='display: block;'>
-    <li v-for="(DATAVAL, DATAIDX) in q_a_all_save" class="save_data_set_list">
+    <li v-for="(DATAVAL, DATAIDX) in f_i_b_all_save" class="save_data_set_list">
         <!-- <span @click="">{{ [DATAVAL[0].slice(0, 3), DATAVAL[1].slice(0, 3)]  }}</span> -->
         <span @click="">{{ DATAVAL[0].slice(0, 10)  }}</span>
-        <button @click="q_a_save_data_delete(DATAIDX)" class="q_a_save_data_delete">🗑️</button>
-        <button @click="fetch_insert_q_a_by_POST(DATAVAL)" class="fetch_insert_q_a_by_POST">📤</button>
+        <button @click="f_i_b_save_data_delete(DATAIDX)" class="f_i_b_save_data_delete">🗑️</button>
+        <button @click="fetch_insert_f_i_b_by_POST(DATAVAL[0], DATAVAL[1])" class="fetch_insert_f_i_b_by_POST">📤</button>
     
-        <button @click="q_a_set_data_to_textarea(DATAVAL[0], DATAVAL[1])" class="q_a_set_data_to_textarea">🥍</button>
+        <button @click="f_i_b_set_data_to_textarea(DATAVAL[0], DATAVAL[1])" class="f_i_b_set_data_to_textarea">🥍</button>
     </li>
     </ul>
     
     <ul class="save_data_set_list_parent" style='display: block;'>
-    <li v-for="(DATAVAL, DATAIDX) in q_a_data_of_servers_fetched" class="save_data_set_list">
-    <span @click="">{{ JSON.parse(DATAVAL.content)[0].slice(0, 30) }}</span>
-    <span @click="">{{ JSON.parse(DATAVAL.content)[1].slice(0, 100) }}</span>
-    <!-- <span @click="">{{ JSON.parse(DATAVAL.content)[1].slice(0, 10) }}</span> -->
-    <!-- <span @click="">{{ DATAVAL.created_at }}</span> -->
-    <!-- <span @click="">{{ DATAVAL.name }}</span> -->
-    <!-- <span @click="">{{ DATAVAL.updated_at }}</span> -->
-    <button @click="fetch_delete_q_a_by_POST(DATAVAL.id)">DELETE it</button>
-    <button @click="q_a_save_data_to_localforage(DATAVAL.content)">SAVE it to Your data</button>
+    <li v-for="(DATAVAL, DATAIDX) in f_i_b_data_of_servers_fetched" class="save_data_set_list">
+    <span @click="">{{ DATAVAL.content_1.slice(0, 30) }}</span>
+    <span @click="">{{ DATAVAL.content_2.slice(0, 30) }}</span>
+    <!-- <span @click="">{{ JSON.parse(DATAVAL.content_1).slice(0, 30) }}</span> -->
+    <!-- <span @click="">{{ JSON.parse(DATAVAL.content_2).slice(0, 30) }}</span> -->
+    <!-- <span @click="">{{ JSON.parse(DATAVAL.content_2).slice(0, 30) }}</span> -->
+    <button @click="fetch_delete_f_i_b_by_POST(DATAVAL.id)">DELETE it</button>
+    <button @click="f_i_b_save_data_to_localforage(DATAVAL.content_1, DATAVAL.content_2)">SAVE it to Your data</button>
     </li>
     </ul>
 </div>
 
 <script>
-const F_I_B_app = Vue.createApp({
+const f_i_b_app = Vue.createApp({
 data() {
     return {
-q_a_data_1: '',
-q_a_data_2: '',
+f_i_b_data_1: '',
+f_i_b_data_2: '',
 
-q_a_all_save: [],
+f_i_b_all_save: [],
 
 name: 'name1',
 password: 'password1',
@@ -323,17 +374,17 @@ password: 'password1',
 HOST: 'http://localhost',
 PORT: '8000',
 
-q_a_data_of_servers_fetched: null,
+f_i_b_data_of_servers_fetched: null,
 alert_val: '',
 }},
 watch: {
-q_a_data_1: {
+f_i_b_data_1: {
     handler() {
         this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string();
     },
     deep: true
 },
-q_a_data_2: {
+f_i_b_data_2: {
     handler() {
         this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string();
     },
@@ -343,8 +394,8 @@ q_a_data_2: {
 beforeMounte(){
 },
 mounted() {
-    this.q_a_save_data_load();
-    this.fetch_read_q_a_by_GET();
+    this.f_i_b_save_data_load();
+    this.fetch_read_f_i_b_by_GET();
 },
 beforeUpdate() {
 },
@@ -356,49 +407,45 @@ to_ary(it){
 },
 alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string(){
     const true_if_within_4000_characters_and_not_empty = (str) => str.length > 2 && str.length <= 4000 && typeof str === 'string';
-    this.alert_val = true_if_within_4000_characters_and_not_empty(JSON.stringify(this.q_a_data_1 + this.q_a_data_2)) ? '1-4000 OK' : '1-4000 NG';
-    return true_if_within_4000_characters_and_not_empty(JSON.stringify(this.q_a_data_1 + this.q_a_data_2)) ? true : false;
+    this.alert_val = true_if_within_4000_characters_and_not_empty(JSON.stringify(this.f_i_b_data_1 + this.f_i_b_data_2)) ? '1-4000 OK' : '1-4000 NG';
+    return true_if_within_4000_characters_and_not_empty(JSON.stringify(this.f_i_b_data_1 + this.f_i_b_data_2)) ? true : false;
 },
 
-async q_a_save_data_to_q_a_all_save(){
+async f_i_b_save_data_to_f_i_b_all_save(){
     if(this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string() === false){
         return;
     }
-    this.q_a_all_save.push(this.to_ary([this.q_a_data_1, this.q_a_data_2]));
-    await localforage.setItem('q_a_1', JSON.stringify(this.q_a_all_save));
+    this.f_i_b_all_save.push(this.to_ary([this.f_i_b_data_1, this.f_i_b_data_2]));
+    await localforage.setItem('f_i_b', JSON.stringify(this.f_i_b_all_save));
 },
-async q_a_save_data_load() {
-    this.q_a_all_save = JSON.parse(await localforage.getItem('F_I_B')) || [];
+async f_i_b_save_data_load() {
+    this.f_i_b_all_save = JSON.parse(await localforage.getItem('f_i_b')) || [];
 },
-async q_a_save_data_delete(INDEX){
-    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.q_a_all_save[INDEX][0].split("\n"), this.q_a_all_save[INDEX][1].split("\n")).join("\n") )) {
-        this.q_a_all_save.splice(INDEX, 1);
-        await localforage.setItem('F_I_B', JSON.stringify(this.q_a_all_save));
+async f_i_b_save_data_delete(INDEX){
+    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.f_i_b_all_save[INDEX][0].split("\n"), this.f_i_b_all_save[INDEX][1].split("\n")).join("\n") )) {
+        this.f_i_b_all_save.splice(INDEX, 1);
+        await localforage.setItem('f_i_b', JSON.stringify(this.f_i_b_all_save));
     };
 },
-async q_a_set_data_to_textarea(q_a_data_1, q_a_data_2){
-    this.q_a_data_1 = q_a_data_1;
-    this.q_a_data_2 = q_a_data_2;
+async f_i_b_set_data_to_textarea(f_i_b_data_1, f_i_b_data_2){
+    this.f_i_b_data_1 = f_i_b_data_1;
+    this.f_i_b_data_2 = f_i_b_data_2;
 },
-// q_aの引数をcontentをlocalforageに追加保存する関数
-async q_a_save_data_to_localforage(content){
-    const parsed_content = JSON.parse(content);
-    this.q_a_all_save.push(parsed_content);
-    await localforage.setItem('F_I_B', JSON.stringify(this.q_a_all_save));
+// f_i_bの引数をcontent_1, content_2をlocalforageに追加保存する関数
+async f_i_b_save_data_to_localforage(content_1, content_2){
+    const parsed_content_1 = content_1;
+    const parsed_content_2 = content_2;
+    this.f_i_b_all_save.push([parsed_content_1, parsed_content_2]);
+    await localforage.setItem('f_i_b', JSON.stringify(this.f_i_b_all_save));
 },
 
-
-
-
-
-async fetch_read_q_a_by_GET(){
+async fetch_read_f_i_b_by_GET(){
     const res = await fetch(this.HOST + ':' + this.PORT + '/read_f_i_b');
     const data = await res.json();
-    console.log(data);
-    this.q_a_data_of_servers_fetched = data;
+    this.f_i_b_data_of_servers_fetched = data;
 },
 
-async fetch_insert_q_a_by_POST(CONTENT){
+async fetch_insert_f_i_b_by_POST(CONTENT_1, CONTENT_2){
     const res = await fetch(this.HOST + ':' + this.PORT + '/insert_f_i_b', {
         method: 'POST',
         headers: {
@@ -407,15 +454,16 @@ async fetch_insert_q_a_by_POST(CONTENT){
         body: JSON.stringify({
             name: this.name,
             password: this.password,
-            content: CONTENT,
+            content_1: CONTENT_1,
+            content_2: CONTENT_2,
         }),
     });
     const data = await res.json();
-    this.q_a_data_of_servers_fetched = data;
+    this.f_i_b_data_of_servers_fetched = data;
     console.log(data);
 },
 
-async fetch_delete_q_a_by_POST(ID){
+async fetch_delete_f_i_b_by_POST(ID){
     const res = await fetch(this.HOST + ':' + this.PORT + '/delete_f_i_b', {
         method: 'POST',
         headers: {
@@ -428,66 +476,57 @@ async fetch_delete_q_a_by_POST(ID){
         }),
     });
     const data = await res.json();
-    this.q_a_data_of_servers_fetched = data;
+    this.f_i_b_data_of_servers_fetched = data;
     console.log(data);
 },
 
 },
-}).mount('.F_I_B_app');
+}).mount('.f_i_b_app');
 </script>
 
 
 
 
-
-
-
-
-
-
-
-
-<div class="I_T_N_app">
+<div class="i_t_n_app">
     <div class="parent_of_alert_and_textarea">
         <p class="alert">{{ alert_val }}</p>
-        <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_1" class="q_a_data_1"></textarea>
-        <textarea name="" id="" cols="10" rows="10" v-model="q_a_data_2" class="q_a_data_2"></textarea>
+        <textarea name="" id="" cols="10" rows="10" v-model="i_t_n_data_1" class="i_t_n_data_1"></textarea>
+        <textarea name="" id="" cols="10" rows="10" v-model="i_t_n_data_2" class="i_t_n_data_2"></textarea>
     </div>
-    <button @click="q_a_save_data_to_q_a_all_save">q_a_save_data_to_q_a_all_save</button>
+    <button @click="i_t_n_save_data_to_i_t_n_all_save">i_t_n_save_data_to_i_t_n_all_save</button>
     
     <ul class="save_data_set_list_parent" style='display: block;'>
-    <li v-for="(DATAVAL, DATAIDX) in q_a_all_save" class="save_data_set_list">
+    <li v-for="(DATAVAL, DATAIDX) in i_t_n_all_save" class="save_data_set_list">
         <!-- <span @click="">{{ [DATAVAL[0].slice(0, 3), DATAVAL[1].slice(0, 3)]  }}</span> -->
         <span @click="">{{ DATAVAL[0].slice(0, 10)  }}</span>
-        <button @click="q_a_save_data_delete(DATAIDX)" class="q_a_save_data_delete">🗑️</button>
-        <button @click="fetch_insert_q_a_by_POST(DATAVAL)" class="fetch_insert_q_a_by_POST">📤</button>
+        <button @click="i_t_n_save_data_delete(DATAIDX)" class="i_t_n_save_data_delete">🗑️</button>
+        <button @click="fetch_insert_i_t_n_by_POST(DATAVAL[0], DATAVAL[1])" class="fetch_insert_i_t_n_by_POST">📤</button>
     
-        <button @click="q_a_set_data_to_textarea(DATAVAL[0], DATAVAL[1])" class="q_a_set_data_to_textarea">🥍</button>
+        <button @click="i_t_n_set_data_to_textarea(DATAVAL[0], DATAVAL[1])" class="i_t_n_set_data_to_textarea">🥍</button>
     </li>
     </ul>
     
     <ul class="save_data_set_list_parent" style='display: block;'>
-    <li v-for="(DATAVAL, DATAIDX) in q_a_data_of_servers_fetched" class="save_data_set_list">
-    <span @click="">{{ JSON.parse(DATAVAL.content)[0].slice(0, 3) }}</span>
-    <span @click="">{{ JSON.parse(DATAVAL.content)[1].slice(0, 100) }}</span>
-    <!-- <span @click="">{{ JSON.parse(DATAVAL.content)[1].slice(0, 10) }}</span> -->
-    <!-- <span @click="">{{ DATAVAL.created_at }}</span> -->
-    <!-- <span @click="">{{ DATAVAL.name }}</span> -->
-    <!-- <span @click="">{{ DATAVAL.updated_at }}</span> -->
-    <button @click="fetch_delete_q_a_by_POST(DATAVAL.id)">DELETE it</button>
-    <button @click="q_a_save_data_to_localforage(DATAVAL.content)">SAVE it to Your data</button>
+    <li v-for="(DATAVAL, DATAIDX) in i_t_n_data_of_servers_fetched" class="save_data_set_list">
+    <span @click="">{{ DATAVAL.content_1.slice(0, 30) }}</span>
+    <span @click="">{{ DATAVAL.content_2.slice(0, 30) }}</span>
+    <!-- <span @click="">{{ JSON.parse(DATAVAL.content_1).slice(0, 30) }}</span> -->
+    <!-- <span @click="">{{ JSON.parse(DATAVAL.content_2).slice(0, 30) }}</span> -->
+    <!-- <span @click="">{{ JSON.parse(DATAVAL.content_2).slice(0, 30) }}</span> -->
+    <button @click="fetch_delete_i_t_n_by_POST(DATAVAL.id)">DELETE it</button>
+    <button @click="i_t_n_save_data_to_localforage(DATAVAL.content_1, DATAVAL.content_2)">SAVE it to Your data</button>
     </li>
     </ul>
 </div>
 
 <script>
-const I_T_N_app = Vue.createApp({
+const i_t_n_app = Vue.createApp({
 data() {
     return {
-q_a_data_1: '',
-q_a_data_2: '',
+i_t_n_data_1: '',
+i_t_n_data_2: '',
 
-q_a_all_save: [],
+i_t_n_all_save: [],
 
 name: 'name1',
 password: 'password1',
@@ -495,17 +534,17 @@ password: 'password1',
 HOST: 'http://localhost',
 PORT: '8000',
 
-q_a_data_of_servers_fetched: null,
+i_t_n_data_of_servers_fetched: null,
 alert_val: '',
 }},
 watch: {
-q_a_data_1: {
+i_t_n_data_1: {
     handler() {
         this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string();
     },
     deep: true
 },
-q_a_data_2: {
+i_t_n_data_2: {
     handler() {
         this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string();
     },
@@ -515,8 +554,8 @@ q_a_data_2: {
 beforeMounte(){
 },
 mounted() {
-    this.q_a_save_data_load();
-    this.fetch_read_q_a_by_GET();
+    this.i_t_n_save_data_load();
+    this.fetch_read_i_t_n_by_GET();
 },
 beforeUpdate() {
 },
@@ -528,50 +567,45 @@ to_ary(it){
 },
 alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string(){
     const true_if_within_4000_characters_and_not_empty = (str) => str.length > 2 && str.length <= 4000 && typeof str === 'string';
-    this.alert_val = true_if_within_4000_characters_and_not_empty(JSON.stringify(this.q_a_data_1 + this.q_a_data_2)) ? '1-4000 OK' : '1-4000 NG';
-    return true_if_within_4000_characters_and_not_empty(JSON.stringify(this.q_a_data_1 + this.q_a_data_2)) ? true : false;
+    this.alert_val = true_if_within_4000_characters_and_not_empty(JSON.stringify(this.i_t_n_data_1 + this.i_t_n_data_2)) ? '1-4000 OK' : '1-4000 NG';
+    return true_if_within_4000_characters_and_not_empty(JSON.stringify(this.i_t_n_data_1 + this.i_t_n_data_2)) ? true : false;
 },
 
-
-async q_a_save_data_to_q_a_all_save(){
+async i_t_n_save_data_to_i_t_n_all_save(){
     if(this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string() === false){
         return;
     }
-    this.q_a_all_save.push(this.to_ary([this.q_a_data_1, this.q_a_data_2]));
-    await localforage.setItem('I_T_N', JSON.stringify(this.q_a_all_save));
+    this.i_t_n_all_save.push(this.to_ary([this.i_t_n_data_1, this.i_t_n_data_2]));
+    await localforage.setItem('i_t_n', JSON.stringify(this.i_t_n_all_save));
 },
-async q_a_save_data_load() {
-    this.q_a_all_save = JSON.parse(await localforage.getItem('I_T_N')) || [];
+async i_t_n_save_data_load() {
+    this.i_t_n_all_save = JSON.parse(await localforage.getItem('i_t_n')) || [];
 },
-async q_a_save_data_delete(INDEX){
-    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.q_a_all_save[INDEX][0].split("\n"), this.q_a_all_save[INDEX][1].split("\n")).join("\n") )) {
-        this.q_a_all_save.splice(INDEX, 1);
-        await localforage.setItem('I_T_N', JSON.stringify(this.q_a_all_save));
+async i_t_n_save_data_delete(INDEX){
+    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.i_t_n_all_save[INDEX][0].split("\n"), this.i_t_n_all_save[INDEX][1].split("\n")).join("\n") )) {
+        this.i_t_n_all_save.splice(INDEX, 1);
+        await localforage.setItem('i_t_n', JSON.stringify(this.i_t_n_all_save));
     };
 },
-async q_a_set_data_to_textarea(q_a_data_1, q_a_data_2){
-    this.q_a_data_1 = q_a_data_1;
-    this.q_a_data_2 = q_a_data_2;
+async i_t_n_set_data_to_textarea(i_t_n_data_1, i_t_n_data_2){
+    this.i_t_n_data_1 = i_t_n_data_1;
+    this.i_t_n_data_2 = i_t_n_data_2;
 },
-// q_aの引数をcontentをlocalforageに追加保存する関数
-async q_a_save_data_to_localforage(content){
-    const parsed_content = JSON.parse(content);
-    this.q_a_all_save.push(parsed_content);
-    await localforage.setItem('I_T_N', JSON.stringify(this.q_a_all_save));
+// i_t_nの引数をcontent_1, content_2をlocalforageに追加保存する関数
+async i_t_n_save_data_to_localforage(content_1, content_2){
+    const parsed_content_1 = content_1;
+    const parsed_content_2 = content_2;
+    this.i_t_n_all_save.push([parsed_content_1, parsed_content_2]);
+    await localforage.setItem('i_t_n', JSON.stringify(this.i_t_n_all_save));
 },
 
-
-
-
-
-async fetch_read_q_a_by_GET(){
+async fetch_read_i_t_n_by_GET(){
     const res = await fetch(this.HOST + ':' + this.PORT + '/read_i_t_n');
     const data = await res.json();
-    console.log(data);
-    this.q_a_data_of_servers_fetched = data;
+    this.i_t_n_data_of_servers_fetched = data;
 },
 
-async fetch_insert_q_a_by_POST(CONTENT){
+async fetch_insert_i_t_n_by_POST(CONTENT_1, CONTENT_2){
     const res = await fetch(this.HOST + ':' + this.PORT + '/insert_i_t_n', {
         method: 'POST',
         headers: {
@@ -580,15 +614,16 @@ async fetch_insert_q_a_by_POST(CONTENT){
         body: JSON.stringify({
             name: this.name,
             password: this.password,
-            content: CONTENT,
+            content_1: CONTENT_1,
+            content_2: CONTENT_2,
         }),
     });
     const data = await res.json();
-    this.q_a_data_of_servers_fetched = data;
+    this.i_t_n_data_of_servers_fetched = data;
     console.log(data);
 },
 
-async fetch_delete_q_a_by_POST(ID){
+async fetch_delete_i_t_n_by_POST(ID){
     const res = await fetch(this.HOST + ':' + this.PORT + '/delete_i_t_n', {
         method: 'POST',
         headers: {
@@ -601,24 +636,42 @@ async fetch_delete_q_a_by_POST(ID){
         }),
     });
     const data = await res.json();
-    this.q_a_data_of_servers_fetched = data;
+    this.i_t_n_data_of_servers_fetched = data;
     console.log(data);
 },
 
 },
-}).mount('.I_T_N_app');
-
-
-
+}).mount('.i_t_n_app');
 </script>
 
 
 
 
 <script>
-// F_C_app, F_I_B_app, I_T_N_appそれぞれのthis.nameとthis.passwordを name: 'name1',　password: 'password1' もしくは name: 'PUBLIC', password: 'delete_24_hours' に変更する関数
+// f_c_app, f_i_b_app, i_t_n_appそれぞれのthis.nameとthis.passwordを name: 'name1',　password: 'password1' もしくは name: 'PUBLIC', password: 'delete_24_hours' に変更する関数
 // 'PUBLIC', 'delete_24_hours'
 // 'name1', 'password1'
+
+
+// 上記のクライアント側の境界値テストのe2eテストのためのコード
+// '境界値テスト'のようなテストケースの類義語を10個
+
+// 以下に「境界値テスト」のようなテストケースの類義語を10個挙げます。
+
+// 端数処理テスト
+// 最大値テスト
+// 最小値テスト
+// 範囲テスト
+// 極端値テスト
+// 不正値テスト
+// 正常系テスト
+// 例外処理テスト
+// 網羅テスト
+// 省略テスト
+// 異常系テスト
+
+
+
 </script>
 </body>
 </html>

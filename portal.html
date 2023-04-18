@@ -299,6 +299,10 @@ async fetch_insert_f_c_by_POST(CONTENT_1, CONTENT_2){
         }),
     });
     const data = await res.json();
+    if(data.error){
+        alert(data.error);
+        return;
+    }
     this.f_c_data_of_servers_fetched = data;
     console.log(data);
 },
@@ -323,6 +327,7 @@ async fetch_delete_f_c_by_POST(ID){
 },
 }).mount('.f_c_app');
 </script>
+
 
 
 
@@ -459,6 +464,10 @@ async fetch_insert_f_i_b_by_POST(CONTENT_1, CONTENT_2){
         }),
     });
     const data = await res.json();
+    if(data.error){
+        alert(data.error);
+        return;
+    }
     this.f_i_b_data_of_servers_fetched = data;
     console.log(data);
 },
@@ -483,6 +492,8 @@ async fetch_delete_f_i_b_by_POST(ID){
 },
 }).mount('.f_i_b_app');
 </script>
+
+
 
 
 
@@ -619,6 +630,10 @@ async fetch_insert_i_t_n_by_POST(CONTENT_1, CONTENT_2){
         }),
     });
     const data = await res.json();
+    if(data.error){
+        alert(data.error);
+        return;
+    }
     this.i_t_n_data_of_servers_fetched = data;
     console.log(data);
 },
@@ -646,30 +661,37 @@ async fetch_delete_i_t_n_by_POST(ID){
 
 
 
-
 <script>
 // f_c_app, f_i_b_app, i_t_n_appそれぞれのthis.nameとthis.passwordを name: 'name1',　password: 'password1' もしくは name: 'PUBLIC', password: 'delete_24_hours' に変更する関数
 // 'PUBLIC', 'delete_24_hours'
 // 'name1', 'password1'
 
-
-// 上記のクライアント側の境界値テストのe2eテストのためのコード
-// '境界値テスト'のようなテストケースの類義語を10個
-
-// 以下に「境界値テスト」のようなテストケースの類義語を10個挙げます。
-
-// 端数処理テスト
-// 最大値テスト
-// 最小値テスト
-// 範囲テスト
-// 極端値テスト
-// 不正値テスト
-// 正常系テスト
-// 例外処理テスト
-// 網羅テスト
-// 省略テスト
-// 異常系テスト
-
+// 正常系
+// fetch('http://localhost:8000/insert_f_c', {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({
+//         name: 'name1',
+//         password: 'password1',
+//         content_1: 'content_1'.repeat(10),
+//         content_2: 'content_2'.repeat(10),
+//     }),
+// }).then(res => res.json()).then(data => console.log(data));
+// 異常系
+// fetch('http://localhost:8000/insert_f_c', {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({
+//         name: 'name1',
+//         password: 'password1',
+//         content_1: 'content_1'.repeat(1000),
+//         content_2: 'content_2'.repeat(1000),
+//     }),
+// }).then(res => res.json()).then(data => console.log(data));
 
 
 </script>

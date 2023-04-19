@@ -265,6 +265,13 @@ f_c_data_2: {
     },
     deep: true
 },
+f_c_data_of_servers_fetched: {
+    handler() {
+        this.f_c_save_data_load();
+        this.fetch_read_f_c_by_GET();
+    },
+    deep: true
+},
 },
 beforeMounte(){
 },
@@ -334,12 +341,9 @@ async fetch_insert_f_c_by_POST(CONTENT_1, CONTENT_2){
         }),
     });
     const data = await res.json();
-    if(data.error){
-        alert(data.error);
-        return;
-    }
-    this.f_c_data_of_servers_fetched = data;
-    console.log(data);
+    if(data.error){alert(data.error); return;}
+    this.f_c_data_of_servers_fetched = data.response;
+    console.log(data.response);
 },
 
 async fetch_delete_f_c_by_POST(ID){
@@ -355,13 +359,15 @@ async fetch_delete_f_c_by_POST(ID){
         }),
     });
     const data = await res.json();
-    this.f_c_data_of_servers_fetched = data;
-    console.log(data);
+    if(data.error){alert(data.error); return;}
+    this.f_c_data_of_servers_fetched = data.response;
+    console.log(data.response);
 },
 
 },
 }).mount('.f_c_app');
 </script>
+
 
 
 
@@ -427,6 +433,13 @@ f_i_b_data_1: {
 f_i_b_data_2: {
     handler() {
         this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string();
+    },
+    deep: true
+},
+f_i_b_data_of_servers_fetched: {
+    handler() {
+        this.f_i_b_save_data_load();
+        this.fetch_read_f_i_b_by_GET();
     },
     deep: true
 },
@@ -499,12 +512,9 @@ async fetch_insert_f_i_b_by_POST(CONTENT_1, CONTENT_2){
         }),
     });
     const data = await res.json();
-    if(data.error){
-        alert(data.error);
-        return;
-    }
-    this.f_i_b_data_of_servers_fetched = data;
-    console.log(data);
+    if(data.error){alert(data.error); return;}
+    this.f_i_b_data_of_servers_fetched = data.response;
+    console.log(data.response);
 },
 
 async fetch_delete_f_i_b_by_POST(ID){
@@ -520,13 +530,16 @@ async fetch_delete_f_i_b_by_POST(ID){
         }),
     });
     const data = await res.json();
-    this.f_i_b_data_of_servers_fetched = data;
-    console.log(data);
+    if(data.error){alert(data.error); return;}
+    this.f_i_b_data_of_servers_fetched = data.response;
+    console.log(data.response);
 },
 
 },
 }).mount('.f_i_b_app');
 </script>
+
+
 
 
 
@@ -593,6 +606,13 @@ i_t_n_data_1: {
 i_t_n_data_2: {
     handler() {
         this.alert_to_alert_val_if_within_4000_characters_data1_and_data2_json_string();
+    },
+    deep: true
+},
+i_t_n_data_of_servers_fetched: {
+    handler() {
+        this.i_t_n_save_data_load();
+        this.fetch_read_i_t_n_by_GET();
     },
     deep: true
 },
@@ -665,12 +685,9 @@ async fetch_insert_i_t_n_by_POST(CONTENT_1, CONTENT_2){
         }),
     });
     const data = await res.json();
-    if(data.error){
-        alert(data.error);
-        return;
-    }
-    this.i_t_n_data_of_servers_fetched = data;
-    console.log(data);
+    if(data.error){alert(data.error); return;}
+    this.i_t_n_data_of_servers_fetched = data.response;
+    console.log(data.response);
 },
 
 async fetch_delete_i_t_n_by_POST(ID){
@@ -686,13 +703,15 @@ async fetch_delete_i_t_n_by_POST(ID){
         }),
     });
     const data = await res.json();
-    this.i_t_n_data_of_servers_fetched = data;
-    console.log(data);
+    if(data.error){alert(data.error); return;}
+    this.i_t_n_data_of_servers_fetched = data.response;
+    console.log(data.response);
 },
 
 },
 }).mount('.i_t_n_app');
 </script>
+
 
 
 

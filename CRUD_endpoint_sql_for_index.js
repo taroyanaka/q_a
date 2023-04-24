@@ -23,7 +23,7 @@
 // DB周りやることリスト(優先順位順)
     // 優先順位0位 => DB周りのサンドボックス環境の実装
     // DB周りのサンドボックス無いと、一発本番でプロダクトのコード書く無理ゲーになるから、
-    // https://taroyanaka.github.io/javascript/etc/dup_replacer_web.html をDB周りのサンドボックスとして使う
+    // https://taroyanaka.github.io/dup_replacer_web/dup_replacer_web.html をDB周りのサンドボックスとして使う
         // (めちゃくちゃな使い方とか思いつきの実装を試して、積極的にアンチパターンとか地雷を踏み抜いていく)
 // 2週間か1週間の期日決めて、期日内に必須のものをピックアップして、余ったら期日までに+αでやる
 // 必須

@@ -81,6 +81,14 @@ ChatGPT
       width: 10rem;
       height: 3rem;
     }
+    .to_inline{
+      display: inline;
+    }
+    .sound_the_chord{
+      width: 3rem;
+      height: 3rem;
+    }
+
 
   </style>
 </head>
@@ -88,11 +96,47 @@ ChatGPT
   <div id="app">
     <h1>Chord Quiz</h1>
 
+    bpm: <input type="number" name="bpm" class="bpm" v-model="bpm" placeholder="bpm" min="60" max="240">
+    notes_num: <input type="number" name="notes_num" class="notes_num" v-model="notes_num" placeholder="notes_num" min="1" max="12">
+    <!-- ただ指定したメロを鳴らす -->
+    <ul>
+      <li class="to_inline" v-for="melo in melos.filter(chord=>chord.name.includes('2'))">
+        <button class="sound_the_chord" @click="sound_the_chord(melo)">{{ melo.name }}</button>
+      </li>
+      <br>
+      <li class="to_inline" v-for="melo in melos.filter(chord=>chord.name.includes('3'))">
+        <button class="sound_the_chord" @click="sound_the_chord(melo)">{{ melo.name }}</button>
+      </li>
+      <br>
+      <li class="to_inline" v-for="melo in melos.filter(chord=>chord.name.includes('4'))">
+        <button class="sound_the_chord" @click="sound_the_chord(melo)">{{ melo.name }}</button>
+      </li>
+      <br>
+    </ul>
+    <!-- ただ指定したコードを鳴らす -->
+    <ul>
+      <li class="to_inline" v-for="chord in chords.filter(chord=>chord.name.includes('2'))">
+        <button class="sound_the_chord" @click="sound_the_chord(chord)">{{ chord.name }}</button>
+      </li>
+      <br>
+      <li class="to_inline" v-for="chord in chords.filter(chord=>chord.name.includes('3'))">
+        <button class="sound_the_chord" @click="sound_the_chord(chord)">{{ chord.name }}</button>
+      </li>
+      <br>
+      <li class="to_inline" v-for="chord in chords.filter(chord=>chord.name.includes('4'))">
+        <button class="sound_the_chord" @click="sound_the_chord(chord)">{{ chord.name }}</button>
+      </li>
+      <br>
+    </ul>
+
+
     show_melody_notes: <input type="checkbox" name="show_melody_notes" class="show_melody_notes" @change="show_melody_notes = !show_melody_notes">
-    shuffle_on: <input type="checkbox" name="shuffle_on" class="shuffle_on" @change="shuffle_on = !shuffle_on">
+    shuffle_on: <input type="checkbox" name="shuffle_on" class="shuffle_on" @change="shuffle_on = !shuffle_on" checked="true">
     <!-- <p>Click the button to play a random chord. Select the chord and click the "Check Answer" button.</p> -->
     <button @click="playMelodyRepeat">Play Melody Repeat</button>
     <button @click="repeatStop">Repeat Stop</button>
+    <button @click="repeatReplay">Repeat Replay</button>
+    <!-- <button @click="repeatClear">Repeat Clear</button> -->
     <button @click="playChord">Play Chord</button>
     <select class="checkAnswer" @change="checkAnswer" v-model="selectedChord">
       <option value="">Select a chord</option>
@@ -114,6 +158,31 @@ ChatGPT
     const app = Vue.createApp({
       data() {
         return {
+          bpm: 120,
+          notes_num: 4,
+          melos: [
+        {name: '2 C', notes: ['C2']},
+        {name: '2 D', notes: ['D2']},
+        {name: '2 E', notes: ['E2']},
+        {name: '2 F', notes: ['F2']},
+        {name: '2 G', notes: ['G2']},
+        {name: '2 A', notes: ['A2']},
+        {name: '2 B', notes: ['B2']},
+        {name: '3 C', notes: ['C3']},
+        {name: '3 D', notes: ['D3']},
+        {name: '3 E', notes: ['E3']},
+        {name: '3 F', notes: ['F3']},
+        {name: '3 G', notes: ['G3']},
+        {name: '3 A', notes: ['A3']},
+        {name: '3 B', notes: ['B3']},
+        {name: '4 C', notes: ['C4']},
+        {name: '4 D', notes: ['D4']},
+        {name: '4 E', notes: ['E4']},
+        {name: '4 F', notes: ['F4']},
+        {name: '4 G', notes: ['G4']},
+        {name: '4 A', notes: ['A4']},
+        {name: '4 B', notes: ['B4']},
+    ],
           chords: [
         {name: '2 C Major', notes: ['C2', 'E2', 'G2']},
         {name: '2 D Minor', notes: ['D2', 'F2', 'A2']},
@@ -150,87 +219,151 @@ ChatGPT
           currentChord: "",
           answerMge: "",
           melody_notes: null,
-          shuffle_on: false,
+          shuffle_on: true,
           show_melody_notes: false,
 
         }
       },
-      methods: {
-        playChord() {
-          // synthを初期化
-    Tone.start();
+methods: {
+playChord() {
+  // synthを初期化
+  Tone.start();
 
-          const ary_chords = JSON.parse(JSON.stringify(this.chords));
-    // ランダムな和音を選択
-    let currentChord = ary_chords[Math.floor(Math.random() * ary_chords.length)];
-    this.currentChord = currentChord.name;
+  const ary_chords = JSON.parse(JSON.stringify(this.chords));
+  // ランダムな和音を選択
+  let currentChord = ary_chords[Math.floor(Math.random() * ary_chords.length)];
+  this.currentChord = currentChord.name;
 
-    // Synthを作成
+  // Synthを作成
+  const synth = new Tone.Synth().toDestination();
+  currentChord.notes.forEach(note => {
+  synth.triggerAttackRelease(note, 1);
+  });
+  Tone.Transport.stop();
+  Tone.Transport.cancel();
+},
+checkAnswer() {
+  this.correct_answerMessage = null;
+  this.incorrect_answerMessage = null;
+  this.selectedChord === this.currentChord ?
+  this.correct_answerMessage = "Correct!" :
+  this.incorrect_answerMessage = this.currentChord;
+},
+// 配列をshuffleする関数
+shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+  let r = Math.floor(Math.random() * (i + 1));
+  let tmp = array[i];
+  array[i] = array[r];
+  array[r] = tmp;
+  }
+  return array;
+},
+playMelodyRepeat() {
+  this.repeatClear();
+  Tone.start();
+  // synthを初期化
+  const synth = new Tone.Synth().toDestination();
+  // メロディーを作成
+  let melody = [
+  // { note: "C2", duration: "2n" },
+  // { note: "D2", duration: "2n" },
+  // { note: "E2", duration: "2n" },
+  // { note: "F2", duration: "2n" },
+  // { note: "G2", duration: "2n" },
+  // { note: "A2", duration: "2n" },
+  // { note: "B2", duration: "2n" },
+  { note: "C3", duration: "2n" },
+  { note: "D3", duration: "2n" },
+  { note: "E3", duration: "2n" },
+  { note: "F3", duration: "2n" },
+  { note: "G3", duration: "2n" },
+  { note: "A3", duration: "2n" },
+  { note: "B3", duration: "2n" },
+  { note: "C3", duration: "2n" },
+  { note: "D3", duration: "2n" },
+  { note: "E3", duration: "2n" },
+  { note: "F3", duration: "2n" },
+  { note: "G3", duration: "2n" },
+  { note: "A3", duration: "2n" },
+  { note: "B3", duration: "2n" },
+  // { note: "C4", duration: "2n" },
+  // { note: "D4", duration: "2n" },
+  // { note: "E4", duration: "2n" },
+  // { note: "F4", duration: "2n" },
+  // { note: "G4", duration: "2n" },
+  // { note: "A4", duration: "2n" },
+  // { note: "B4", duration: "2n" },
+  // { note: "C4", duration: "2n" },
+  // { note: "D4", duration: "2n" },
+  // { note: "E4", duration: "2n" },
+  // { note: "F4", duration: "2n" },
+  // { note: "G4", duration: "2n" },
+  // { note: "A4", duration: "2n" },
+  // { note: "B4", duration: "2n" },
+  ];
+  // const cMajorPentatonic = ["C4", "D4", "E4", "G4", "A4"];
+  // const cMixolydian = ["C4", "D4", "E4", "F4", "G4", "A4", "Bb4"];
+  const filter_MajorPentatonic = (melody) => {
+    return melody.filter(note => {
+      return note.note.includes("C") || note.note.includes("D") || note.note.includes("E") || note.note.includes("G") || note.note.includes("A");
+    });
+  };
+  melody = this.shuffle_on ? this.shuffle(melody).slice(0, this.notes_num) : melody;
+  // melody = this.shuffle_on ? filter_MajorPentatonic(this.shuffle(melody)).slice(0, 7) : melody;
+
+// melodyに休符を挿入
+melody.push({ note: 0, duration: "2n" });
+
+  // Tone.jsのTransportを初期化
+  Tone.Transport.cancel();
+
+  Tone.Transport.bpm.value = this.bpm;
+  Tone.Transport.scheduleRepeat(repeat, "8n");
+  this.melody_notes = [];
+  this.melody_notes = melody.map(note => note.note);
+  Tone.Transport.start();
+  let index = 0;
+  function repeat(time) {
+    const notes = melody[index % melody.length];
+    synth.triggerAttackRelease(notes.note, notes.duration, time);
+    index++;
+  }
+},
+repeatStop(){
+  Tone.Transport.stop();
+  // tone.jsのTransportを初期化
+  // Tone.Transport.cancel();
+},
+repeatReplay(){
+  Tone.Transport.start();
+},
+repeatClear(){
+  Tone.Transport.stop();
+  Tone.Transport.cancel();
+  // this.melody_notes = [];
+},
+sound_the_chord(CHORD){
+  Tone.start();
+  const now = Tone.now()
+  JSON.parse(JSON.stringify(CHORD.notes)).forEach(note => {
+    console.log(note);
     const synth = new Tone.Synth().toDestination();
-    currentChord.notes.forEach(note => {
-        synth.triggerAttackRelease(note, '2n', Tone.now());
-      });
+    synth.triggerAttackRelease(note, 1);
+  });
 
-        },
-        checkAnswer() {
-          this.correct_answerMessage = null;
-          this.incorrect_answerMessage = null;
-          this.selectedChord === this.currentChord ?
-            this.correct_answerMessage = "Correct!" :
-            this.incorrect_answerMessage = this.currentChord;
-        },
-        // 配列をshuffleする関数
-        shuffle(array) {
-          for (let i = array.length - 1; i > 0; i--) {
-            let r = Math.floor(Math.random() * (i + 1));
-            let tmp = array[i];
-            array[i] = array[r];
-            array[r] = tmp;
-          }
-          return array;
-        },
-        playMelodyRepeat() {
-          Tone.start();
-          // synthを初期化
-const synth = new Tone.Synth().toDestination();
+  // data = JSON.parse(JSON.stringify(CHORD.notes));
+  // synth = new Tone.Synth().toDestination();
+  // synth.triggerAttackRelease(
+  //   data[0],
+  //   1
+  // );
 
-// メロディーを作成
-let melody = [
-  { note: "C3", duration: "1n" },
-  { note: "D3", duration: "1n" },
-  { note: "E3", duration: "1n" },
-  { note: "C3", duration: "1n" },
-  { note: "E3", duration: "1n" },
-  { note: "D3", duration: "1n" },
-  // { note: "C4", duration: "1n" },
-];
-// const cMajorPentatonic = ["C4", "D4", "E4", "G4", "A4"];
-// const cMixolydian = ["C4", "D4", "E4", "F4", "G4", "A4", "Bb4"];
 
-melody = this.shuffle_on ? this.shuffle(melody) : melody;
-
-// リピートするメロディーを再生
-
-Tone.Transport.bpm.value = 120;
-Tone.Transport.scheduleRepeat(repeat, "8n");
-this.melody_notes = [];
-this.melody_notes = melody.map(note => note.note);
-Tone.Transport.start();
-
-let index = 0;
-function repeat(time) {
-  const notes = melody[index % melody.length];
-  synth.triggerAttackRelease(notes.note, notes.duration, time);
-  index++;
+  Tone.Transport.stop();
+  Tone.Transport.cancel();
+},
 }
-        },
-        repeatStop(){
-          Tone.Transport.stop();
-          // tone.jsのTransportを初期化
-          Tone.Transport.cancel();
-        },
-
-      }
     });
     app.mount("#app");
   </script>

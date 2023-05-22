@@ -226,18 +226,16 @@ ChatGPT
       },
 methods: {
 playChord() {
-  // synthを初期化
-  Tone.start();
-
   const ary_chords = JSON.parse(JSON.stringify(this.chords));
   // ランダムな和音を選択
   let currentChord = ary_chords[Math.floor(Math.random() * ary_chords.length)];
   this.currentChord = currentChord.name;
-
-  // Synthを作成
-  const synth = new Tone.Synth().toDestination();
-  currentChord.notes.forEach(note => {
-  synth.triggerAttackRelease(note, 1);
+console.log(currentChord.name);
+console.log(currentChord.notes);
+Tone.start();  // synthを初期化
+const synth = new Tone.Synth().toDestination();
+currentChord.notes.forEach(note => {
+    synth.triggerAttackRelease(note, 1);
   });
   Tone.Transport.stop();
   Tone.Transport.cancel();
@@ -345,10 +343,10 @@ repeatClear(){
 },
 sound_the_chord(CHORD){
   Tone.start();
-  const now = Tone.now()
+  // const now = Tone.now();
+  const synth = new Tone.Synth().toDestination();
   JSON.parse(JSON.stringify(CHORD.notes)).forEach(note => {
     console.log(note);
-    const synth = new Tone.Synth().toDestination();
     synth.triggerAttackRelease(note, 1);
   });
 

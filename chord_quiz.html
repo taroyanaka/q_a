@@ -94,7 +94,7 @@ ChatGPT
     <button @click="playMelodyRepeat">Play Melody Repeat</button>
     <button @click="repeatStop">Repeat Stop</button>
     <button @click="playChord">Play Chord</button>
-    <select class="checkAnswer" @change="checkAnswer">
+    <select class="checkAnswer" @change="checkAnswer" v-model="selectedChord">
       <option value="">Select a chord</option>
       <option v-for="chord in chords" :value="chord.name">{{ chord.name }}</option>
     </select>
@@ -166,6 +166,8 @@ ChatGPT
 
         },
         checkAnswer() {
+          this.correct_answerMessage = null;
+          this.incorrect_answerMessage = null;
           this.selectedChord === this.currentChord ?
             this.correct_answerMessage = "Correct!" :
             this.incorrect_answerMessage = this.currentChord;
@@ -196,6 +198,7 @@ let melody = [
   // { note: "C4", duration: "1n" },
 ];
 // const cMajorPentatonic = ["C4", "D4", "E4", "G4", "A4"];
+// const cMixolydian = ["C4", "D4", "E4", "F4", "G4", "A4", "Bb4"];
 
 melody = this.shuffle_on ? this.shuffle(melody) : melody;
 

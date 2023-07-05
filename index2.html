@@ -355,18 +355,24 @@ const app = Vue.createApp({
 data() {
 return {
 f_i_b_all_save: [],
-f_i_b_data1: `fo
-foo
-日
-qux
-qx
-日本
-blabla
-brabra
-bowbow`,
-f_i_b_data2: `foo bar baz
-or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3
-日本語は自然言語のうちの一つで主に日本国内で使われています`,
+f_i_b_data1: `COVID-19
+ジョー・バイデン
+イギリス
+スペースX
+貿易摩擦
+アフガニスタン
+東京
+パレスチナ
+暗号通貨`,
+f_i_b_data2: `COVID-19パンデミックが世界中で続き、影響を与えました。
+ジョー・バイデンがアメリカ合衆国の46代目大統領に就任しました。
+イギリスが欧州連合から正式に離脱しました。
+宇宙開発が盛んで、NASAやスペースXが火星や月などへの探査を行いました。
+アメリカと中国の間で貿易摩擦が続き、世界経済に影響を与えました。
+アメリカがアフガニスタンからの軍事撤退を実施し、情勢が不安定化しました。
+2020年に延期された東京オリンピックが開催され、世界中の注目を集めました。
+ガザ地区での紛争が再燃し、イスラエルとパレスチナの間で激しい戦闘が行われました。
+ビットコインや他の暗号通貨の価値が急上昇し、注目を集めました。`,
 f_i_b_data3: [],
 f_i_b_data4: [],
 f_i_b_data5: '',
@@ -516,7 +522,8 @@ ELM.style.backgroundColor = ELM.value.split("\n").every(V=>this.is_not_blank(V))
 check_if_same_length(){
 const length_any_textarea = (TARGET) => document.querySelector(TARGET).value.split("\n").length;
 const both_target_coloring = (COLOR) => document.querySelectorAll(".textarea-column-1 > textarea").forEach(TEXTAREA=>TEXTAREA.style.backgroundColor = COLOR || TEXTAREA.style.backgroundColor);
-length_any_textarea("#textarea-column-1-1") === length_any_textarea("#textarea-column-1-2") ? both_target_coloring() : both_target_coloring('coral');
+// length_any_textarea("#textarea-column-1-1") === length_any_textarea("#textarea-column-1-2") ? both_target_coloring() : both_target_coloring('coral');
+length_any_textarea("#textarea-column-1-1") === length_any_textarea("#textarea-column-1-2") ? both_target_coloring() : both_target_coloring('white');
 },
 all_error_check(){
 this.blank_check("#textarea-column-1-1");

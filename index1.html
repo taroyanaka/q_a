@@ -263,9 +263,9 @@ font-size: 2.5rem;
 
     <div class="column-2" :class="{'column-2-none': column_2_none}">
     <div>
-    <button @click="test0" class="test-fn-none-inline">test0</button>
-    <button @click="test1" class="test-fn-none-inline">test1</button>
-    <button @click="test2" class="test-fn-none-inline">test2</button>
+    <!-- <button @click="test0" class="test-fn-none-inline">test0</button> -->
+    <!-- <button @click="test1" class="test-fn-none-inline">test1</button> -->
+    <!-- <button @click="test2" class="test-fn-none-inline">test2</button> -->
     <button @click="test_data0" class="test-fn-none-inline">test_data0</button>
     <button @click="test_data1" class="test-fn-none-inline">test_data1</button>
     </div>
@@ -603,24 +603,26 @@ test0(){this.test_index(0)},
 test1(){this.test_index(1)},
 test2(){this.test_index(2)},
 test_data0(){
-    this.data6 = `az
-bcd
-efg
-hij
-klm
-nop
-qrs
-tuv
-wxy`;
-    this.data3 = `AZ
-BCD
-EFG
-HIJ
-KLM
-NOP
-QRS
-TUV
-WXY`;
+    this.data6 = `Hello
+Thank you
+Goodbye
+Yes
+No
+Please
+Sorry
+Excuse me
+Good
+Bad`;
+    this.data3 = `こんにちは
+ありがとう
+さようなら
+はい
+いいえ
+お願いします
+ごめんなさい
+失礼します
+良い
+悪い`;
 },
 test_data1(){
     this.data6 = `ぁ

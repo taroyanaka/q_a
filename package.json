@@ -1,0 +1,23 @@
+{
+  "name": "duct",
+  "version": "1.0.0",
+  "description": "with https://github.com/taroyanaka/q_a_server",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^8.4.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "ramda": "^0.29.0",
+    "validator": "^13.9.0"
+  },
+  "directories": {
+    "lib": "lib"
+  }
+}

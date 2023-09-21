@@ -26,43 +26,37 @@
 <div v-if="web_data['message']">
 
 
-<ul>
-    <li v-for="(DATA_VAL, DATA_IDX) in web_data['message']">
-        <div>{{ DATA_VAL['id'] }}</div>
-        <div>{{ DATA_VAL['name'] }}</div>
-        <div>{{ DATA_VAL['link'] }}</div>
-        <div>{{ DATA_VAL['like'] }}</div>
-        <div>{{ DATA_VAL['created_at'] }}</div>
-        <div>{{ DATA_VAL['updated_at'] }}</div>
-        <div>{{ DATA_VAL['comment'] }}</div>
-        <div>{{ DATA_VAL['comment_reply'] }}</div>
-        <div>{{ DATA_VAL['tag'] }}</div>
-        <div>{{ DATA_VAL['tag_id'] }}</div>
-        <div>{{ DATA_VAL['comment_id'] }}</div>
-        <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
+<template v-for="(DATA_VAL, DATA_IDX) in web_data['message']">
+    <!-- 以下のプロパティを全てレンダリングする -->
+    <!--  { "id": 3, "link": "https://yanaka.dev/", "created_at": "2023-06-07T09:16:24.846Z", "updated_at": "2023-06-07T09:16:24.846Z", "user_id": 2, "username": "user1", "like_count": 0, "tags": [], "comments_and_replies": [] } -->
+    <div>{{ DATA_VAL.id }}</div>
+    <!-- DATA_VAL.idからlinkを削除する -->
+    <button @click="fetch_delete_link(DATA_VAL.id)">fetch_delete_link</button>
+    <div>{{ DATA_VAL.link }}</div>
+    <div>{{ DATA_VAL.created_at }}</div>
+    <div>{{ DATA_VAL.updated_at }}</div>
+    <div>{{ DATA_VAL.user_id }}</div>
+    <div>{{ DATA_VAL.username }}</div>
+    <!-- like_count, tags, comments_and_replies に関しては空か空の配列の場合はレンダリングしない -->
+    <div v-if="DATA_VAL.like_count">{{ DATA_VAL.like_count }}</div>
+    <!-- <div v-if="DATA_VAL.tags.length">{{ DATA_VAL.tags }}</div> -->
+    <div>{{ DATA_VAL.tags }}</div>
+    <!-- fetch_insert_tagでタグを挿入するためのinput:text -->
+    <input type="text" v-model="tag" placeholder="tag" maxlength="7" minlength="1" @input="tag_check($event.target.value)">
+    <!-- fetch_insert_tagを実行するボタン -->
+    <button @click="fetch_insert_tag(DATA_VAL.id)">fetch_insert_tag</button>
+        <!-- tags配列をレンダリングする -->
+        <template v-for="(DATA_VAL_2, DATA_IDX_2) in DATA_VAL.tags">
+            <!-- 以下のプロパティを全てレンダリングする -->
+            <!-- { "id": 1, "tag": "tag1" } -->
+            <div>{{ DATA_VAL_2.id }}</div>
+            <div>{{ DATA_VAL_2.tag }}</div>
+            <!-- DATA_VAL_2.idからtagを削除する。パラメーターはLINK_ID, TAG_ID -->
+            <button @click="fetch_delete_tag(DATA_VAL.id, DATA_VAL_2.id)">fetch_delete_tag</button>
+        </template>
 
-        <!-- 上記には以下のボタンが必要 -->
-        <!-- fetch_like_increment_or_decrement -->
-        <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
-        <!-- fetch_insert_comment -->
-        <input type="text" v-model="comment" placeholder="comment">
-        <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
-        <!-- fetch_delete_comment -->
-        <button @click="fetch_delete_comment(DATA_VAL['comment_id'])">fetch_delete_comment</button>
-        <!-- fetch_insert_comment_reply -->
-        <input type="text" v-model="comment_reply" placeholder="comment_reply">
-        <button @click="fetch_insert_comment_reply(DATA_VAL['comment_id'])">fetch_insert_comment_reply</button>
-        <!-- fetch_delete_comment_reply -->
-        <button @click="fetch_delete_comment_reply(DATA_VAL['comment_reply_id'])">fetch_delete_comment_reply</button>
-        <!-- fetch_insert_tag -->
-        <input type="text" v-model="tag" placeholder="tag">
-        <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
-        <!-- fetch_get_tags_for_autocomplete -->
-        <button @click="fetch_get_tags_for_autocomplete">fetch_get_tags_for_autocomplete</button>
-        <!-- fetch_delete_tag -->
-        <button @click="fetch_delete_tag(DATA_VAL['id'], DATA_VAL['tag_id'])">fetch_delete_tag</button>
-    </li>
-</ul>
+    <div v-if="DATA_VAL.comments_and_replies.length">{{ DATA_VAL.comments_and_replies }}</div>
+</template>
 
 </div>
 

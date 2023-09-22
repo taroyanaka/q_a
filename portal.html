@@ -34,26 +34,56 @@
         <div>{{ DATA_VAL['like'] }}</div>
         <div>{{ DATA_VAL['created_at'] }}</div>
         <div>{{ DATA_VAL['updated_at'] }}</div>
-        <div>{{ DATA_VAL['comment'] }}</div>
-        <div>{{ DATA_VAL['comment_reply'] }}</div>
+
+                <input type="text" v-model="comment" placeholder="comment">
+                <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
+
+
+                <!-- {{ DATA_VAL['comments_and_replies'] }} -->
+
+                            <ul>
+                            <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+                id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }}
+                comment: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+                                <button @click="fetch_delete_comment(
+                                    COMMENT_AND_REPLIES[COMMENT_IDX]['id']
+                                )">fetch_delete_comment</button>
+
+                    <input type="text" v-model="comment_reply" placeholder="comment_reply">
+                <button @click="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_insert_comment_reply</button>        
+
+                                    <ul>
+                                    <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+                id: {{ REPLIES['id'] }}
+                reply: {{ REPLIES['reply'] }}
+                username: {{ REPLIES['username'] }}
+                                        <button @click="fetch_delete_comment_reply(
+                                            REPLIES['id']
+                                        )">fetch_delete_comment_reply</button>
+                                    </li>
+                                    </ul>
+                            </li>
+                            </ul>
+
+<span v-for="(like, like_i) in DATA_VAL['likes']">
+    {{ '❤️' }}
+</span>
+<button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
+
+
         <div>{{ DATA_VAL['tag'] }}</div>
         <div>{{ DATA_VAL['tag_id'] }}</div>
-        <div>{{ DATA_VAL['comment_id'] }}</div>
+
         <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
 
         <!-- 上記には以下のボタンが必要 -->
         <!-- fetch_like_increment_or_decrement -->
-        <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
+
         <!-- fetch_insert_comment -->
-        <input type="text" v-model="comment" placeholder="comment">
-        <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
         <!-- fetch_delete_comment -->
-        <button @click="fetch_delete_comment(DATA_VAL['comment_id'])">fetch_delete_comment</button>
+        <!-- <button @click="fetch_delete_comment(DATA_VAL['comment_id'])">fetch_delete_comment</button> -->
         <!-- fetch_insert_comment_reply -->
-        <input type="text" v-model="comment_reply" placeholder="comment_reply">
-        <button @click="fetch_insert_comment_reply(DATA_VAL['comment_id'])">fetch_insert_comment_reply</button>
-        <!-- fetch_delete_comment_reply -->
-        <button @click="fetch_delete_comment_reply(DATA_VAL['comment_reply_id'])">fetch_delete_comment_reply</button>
+
         <!-- fetch_insert_tag -->
         <input type="text" v-model="tag" placeholder="tag">
         <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
@@ -87,7 +117,8 @@ web_data: {},
 link: 'https://yanaka.dev/',
 tag: 'tag1',
 comment: 'comment1',
-comment_reply: 'comment_reply1',
+comment_reply: 'comRep',
+data: null,
     }},
 watch: {
 //    any: {
@@ -152,8 +183,9 @@ async fetch_delete_link(LINK_ID){
 
 // app.post('/like_increment_or_decrement', (req, res) => {
 async fetch_like_increment_or_decrement(LINK_ID){
+    // console.log(LINK_ID);
     const res = await fetch('http://localhost:8000' + '/like_increment_or_decrement', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, id: LINK_ID }),
+        body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID }),
     });
     const data = await res.json(); console.log(data);
 },
@@ -170,8 +202,9 @@ async fetch_insert_comment(LINK_ID){
 // app.post('/delete_comment', (req, res) => {
     // this.comment
 async fetch_delete_comment(COMMENT_ID){
+    console.log(COMMENT_ID);
     const res = await fetch('http://localhost:8000' + '/delete_comment', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, id: COMMENT_ID }),
+        body: JSON.stringify({ name: this.name, password: this.password, comment_id: COMMENT_ID }),
     });
     const data = await res.json(); console.log(data);
 },
@@ -179,6 +212,7 @@ async fetch_delete_comment(COMMENT_ID){
 // app.post('/insert_comment_reply', (req, res) => {
     // this.comment_reply
 async fetch_insert_comment_reply(COMMENT_ID){
+    console.log(COMMENT_ID);
     const res = await fetch('http://localhost:8000' + '/insert_comment_reply', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, comment_id: COMMENT_ID, comment_reply: this.comment_reply }),
     });
@@ -187,11 +221,11 @@ async fetch_insert_comment_reply(COMMENT_ID){
 
 
 // app.post('/delete_comment_reply', (req, res) => {
-    async fetch_delete_comment_reply(COMMENT_REPLY_ID){
+async fetch_delete_comment_reply(COMMENT_REPLY_ID){
     const res = await fetch('http://localhost:8000' + '/delete_comment_reply', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, id: COMMENT_REPLY_ID }),
+        body: JSON.stringify({ name: this.name, password: this.password, comment_reply_id: COMMENT_REPLY_ID }),
     });
-    const data = await res.json(); console.log(data);
+    this.data = await res.json(); console.log(this.data);
 },
 
 // app.post('/insert_tag', (req, res) => {

@@ -776,7 +776,7 @@ app.post('/insert_comment', (req, res) => {
 app.post('/delete_comment', (req, res) => {
     try {
         const user = get_user_with_permission(req);
-        user || user.commentable ? null : (()=>{throw new Error('権限がありません')})();
+        user || user.commentable ? null : (()=>{throw new Error('権限がありません1')})();
         // commentに紐づくcomment_replyがある場合は、comment_replyのレコードを削除す
         db.prepare(`SELECT * FROM comment_replies WHERE comment_id = ? AND user_id = ?`).get(req.body.comment_id, user.user_id)
             ?
@@ -785,7 +785,7 @@ app.post('/delete_comment', (req, res) => {
         db.prepare(`SELECT * FROM comments WHERE id = ? AND user_id = ?`).get(req.body.comment_id, user.user_id)
             ?
             db.prepare(`DELETE FROM comments WHERE id = ? AND user_id = ?`).run(req.body.comment_id, user.user_id)
-            : (()=>{throw new Error('権限がありません')})();
+            : (()=>{throw new Error('権限がありません2')})();
     res.status(200)
         .json({result: 'success'
             ,status: 200
@@ -842,11 +842,16 @@ app.post('/delete_comment_reply', (req, res) => {
     try {
 
         const user = get_user_with_permission(req);
-        user || user.commentable ? null : (()=>{throw new Error('権限がありません')})();
+        user || user.commentable ? null : (()=>{throw new Error('権限がありません1')})();
+
+console.log(
+    req.body.comment_reply_id, user.user_id
+)
+
         db.prepare(`SELECT * FROM comment_replies WHERE id = ? AND user_id = ?`).get(req.body.comment_reply_id, user.user_id)
             ?
             db.prepare(`DELETE FROM comment_replies WHERE id = ? AND user_id = ?`).run(req.body.comment_reply_id, user.user_id)
-            : (()=>{throw new Error('権限がありません')})();
+            : (()=>{throw new Error('権限がありません2')})();
 
         collect_value_for_test('__delete_comment_reply__req.body.comment_reply_id', req.body.comment_reply_id);
         collect_value_for_test('__delete_comment_reply__user.user_id', user.user_id);

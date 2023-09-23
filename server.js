@@ -692,46 +692,46 @@ console.log('make_tag_and_insert_tag_for_insert_tag 3');
         }
     };
 app.post('/insert_tag', (req, res) => {
-
-    try {
-collect_value_for_test('__/insert_tag__req.body.tag', req.body.tag);
-collect_value_for_test('__/insert_tag__req.body.link_id', req.body.link_id);
-
-console.log(req.body.tag);
-    // const error_check_result = error_check_insert_tag(req.body.tag);
-    const error_check_result = all_validation_checking_client_server_both['validation_insert_tag'](req.body.tag);
-    console.log(error_check_result);
-    error_check_result === 'OK' ? null : (()=>{throw new Error(error_check_result)})();
-    const user = get_user_with_permission(req);
-    user || user.writable ? null : (()=>{throw new Error('書き込み権限がありません')})();
-console.log('get_tag_id_by_tag_name_for_insert_tag');
-    const tag_id = get_tag_id_by_tag_name_for_insert_tag(req.body.tag) ? req.body.tag : null;
-console.log('tag_id', tag_id);
-tag_id ? insert_tag_for_insert_tag(req, req.body.tag) : make_tag_and_insert_tag_for_insert_tag(req.body.tag, req.body.link_id);
-
-collect_value_for_test('__/insert_tag__tag_id', tag_id);
+        try {
+            console.log(req.body.new_tag);
+    collect_value_for_test('__/insert_tag__req.body.tag', req.body.new_tag);
+    collect_value_for_test('__/insert_tag__req.body.link_id', req.body.link_id);
 
 
-    res.status(200)
-        .json({result: 'success'
-            ,status: 200
-        });
+        // const error_check_result = error_check_insert_tag(req.body.new_tag);
+        const error_check_result = all_validation_checking_client_server_both['validation_insert_tag'](req.body.new_tag);
+        console.log(error_check_result);
+        error_check_result === 'OK' ? null : (()=>{throw new Error(error_check_result)})();
+        const user = get_user_with_permission(req);
+        user || user.writable ? null : (()=>{throw new Error('書き込み権限がありません')})();
+    // console.log('get_tag_id_by_tag_name_for_insert_tag');
+        const tag_id = get_tag_id_by_tag_name_for_insert_tag(req.body.new_tag) ? req.body.new_tag : null;
+    // console.log('tag_id', tag_id);
+    tag_id ? insert_tag_for_insert_tag(req, req.body.new_tag) : make_tag_and_insert_tag_for_insert_tag(req.body.new_tag, req.body.link_id);
 
-    } catch (error) {
-        console.log(error.message);
-        res.status(400).json({status: 400, result: 'fail', message: error.message});
-    }
+    collect_value_for_test('__/insert_tag__tag_id', tag_id);
+
+
+        res.status(200)
+            .json({result: 'success'
+                ,status: 200
+            });
+
+        } catch (error) {
+            console.log(error.message);
+            res.status(400).json({status: 400, result: 'fail', message: error.message});
+        }
 });
 
 app.post('/get_tags_for_autocomplete', (req, res) => {
     try {
-    console.log(req.body.tag);
+    console.log(req.body.search_tag);
     const user = get_user_with_permission(req);
     user.readable === 1 ? null : (()=>{throw new Error('読み込み権限がありません')})();
     const tags = 
-        req.body.tag === undefined ?
+        req.body.search_tag === undefined ?
             db.prepare(`SELECT * FROM tags LIMIT 100`).all() :
-            db.prepare(`SELECT * FROM tags WHERE tag LIKE '%${req.body.tag}%' LIMIT 100`).all();
+            db.prepare(`SELECT * FROM tags WHERE tag LIKE '%${req.body.search_tag}%' LIMIT 100`).all();
 
     res.status(200)
         .json({result: 'success'

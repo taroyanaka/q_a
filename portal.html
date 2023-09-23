@@ -10,6 +10,30 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.36/vue.cjs.js"></script> -->
 </head>
 <body class="app">
+
+    <div>
+        <input v-model="search_tag" list="autocomplete_list" type="text" name="" id="hoge" placeholder="tag" @input="fetch_get_tags_for_autocomplete">
+        <datalist id="autocomplete_list" v-for="(Tag, Tag_I) in tags">
+            <option value="Tag">
+        </datalist>
+    </div>
+    <div>
+        <li v-for="(Tag, Tag_I) in tags">
+        <div>{{Tag}} {{Tag_I}}</div>
+        </li>
+    </div>
+
+<!-- <div>
+    <input bind:this={TAG_VAL} list="autocomplete_list" type="text" name="" id="hoge" bind:value={TAG} placeholder="tag" on:input={fetch_get_tags_for_autocomplete}>
+    <datalist id="autocomplete_list">
+        {#each ALL_TAGS as item, index}
+        <option value={item.tag}>
+        {/each}
+    </datalist>
+    <button on:click={fetch_insert_tag(item.id)}>fetch_insert_tag</button>
+</div> -->
+
+
     <button @click="fetch_hello">fetch_hello</button>
     <!-- this.nameのinput:text -->
     <input type="text" v-model="name" placeholder="name">
@@ -27,7 +51,17 @@
 
 
 <ul>
-    <li v-for="(DATA_VAL, DATA_IDX) in web_data['message']">
+<li v-for="(DATA_VAL, DATA_IDX) in web_data['message']">
+
+
+            <!-- fetch_insert_tag -->
+<input type="text" v-model="new_tag" placeholder="new_tag">
+<button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+        <!-- fetch_get_tags_for_autocomplete -->
+        <button @click="fetch_get_tags_for_autocomplete">fetch_get_tags_for_autocomplete</button>
+        <!-- fetch_delete_tag -->
+        <button @click="fetch_delete_tag(DATA_VAL['id'], DATA_VAL['tag_id'])">fetch_delete_tag</button>
+
         <div>{{ DATA_VAL['id'] }}</div>
         <div>{{ DATA_VAL['name'] }}</div>
         <div>{{ DATA_VAL['link'] }}</div>
@@ -71,9 +105,6 @@
 <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
 
 
-        <div>{{ DATA_VAL['tag'] }}</div>
-        <div>{{ DATA_VAL['tag_id'] }}</div>
-
         <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
 
         <!-- 上記には以下のボタンが必要 -->
@@ -84,14 +115,13 @@
         <!-- <button @click="fetch_delete_comment(DATA_VAL['comment_id'])">fetch_delete_comment</button> -->
         <!-- fetch_insert_comment_reply -->
 
-        <!-- fetch_insert_tag -->
-        <input type="text" v-model="tag" placeholder="tag">
-        <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
-        <!-- fetch_get_tags_for_autocomplete -->
-        <button @click="fetch_get_tags_for_autocomplete">fetch_get_tags_for_autocomplete</button>
-        <!-- fetch_delete_tag -->
-        <button @click="fetch_delete_tag(DATA_VAL['id'], DATA_VAL['tag_id'])">fetch_delete_tag</button>
-    </li>
+<li v-for="(Tag, Tag_I) in tags">
+<!-- <span>{{Tag}}</span> -->
+<span>id: {{Tag['id']}}</span>
+<span>Tag: {{Tag['tag']}}</span>
+</li>
+
+</li>
 </ul>
 
 </div>
@@ -115,10 +145,12 @@ name: 'user1',
 password: 'user_pass1',
 web_data: {},
 link: 'https://yanaka.dev/',
-tag: 'tag1',
 comment: 'comment1',
 comment_reply: 'comRep',
 data: null,
+new_tag: '',
+search_tag: '',
+tags: [],
     }},
 watch: {
 //    any: {
@@ -132,6 +164,7 @@ beforeMounte(){
 mounted() {
     // this.fetch_hello_world();
     this.fetch_read_all();
+    this.fetch_get_tags_for_autocomplete();
 },
 beforeUpdate() {
 },
@@ -231,31 +264,30 @@ async fetch_delete_comment_reply(COMMENT_REPLY_ID){
 // app.post('/insert_tag', (req, res) => {
     // this.tag
 async fetch_insert_tag(LINK_ID){
+    console.log(LINK_ID);
     const res = await fetch('http://localhost:8000' + '/insert_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, tag: this.tag }),
+        body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, new_tag: this.new_tag }),
+        // body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, tag: this.tag }),
     });
     const data = await res.json(); console.log(data);
 },
+
 
 // app.post('/get_tags_for_autocomplete', (req, res) => {
     // this.tag
 async fetch_get_tags_for_autocomplete(){
     const res = await fetch('http://localhost:8000' + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, tag: this.tag }),
+        body: JSON.stringify({ name: this.name, password: this.password, search_tag: this.search_tag }),
     });
-    const data = await res.json(); console.log(data);
+    const data = await res.json();
+    this.tags = data['message'];
+    // console.log(data);
 },
 
 // delete_tagはペンディング
 // // app.post('/delete_tag', (req, res) => {
     
 
-async fetch_insert_tag(LINK_ID, TAG){
-    const res = await fetch('http://localhost:8000' + '/insert_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, tag: this.tag }),
-    });
-    const data = await res.json(); console.log(data);
-},
 
 async fetch_delete_tag(LINK_ID, TAG_ID){
     const res = await fetch('http://localhost:8000' + '/delete_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},

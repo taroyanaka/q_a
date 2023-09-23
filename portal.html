@@ -10,132 +10,66 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.36/vue.cjs.js"></script> -->
 </head>
 <body class="app">
-
+<input type="text" v-model="name" placeholder="name">
+<input type="password" v-model="password" placeholder="password">
+<input type="url" v-model="link" placeholder="link">
+<button @click="fetch_insert_link">fetch_insert_link</button>
+<button @click="fetch_test_db_init">fetch_test_db_init</button>
+<div v-if="web_data['message']">
+<ul>
+<li v-for="(DATA_VAL, DATA_IDX) in web_data['message']">
+    <div>id: {{ DATA_VAL['id'] }}</div>
+    <div>link: {{ DATA_VAL['link'] }}</div>
+    <div>username: {{ DATA_VAL['username'] }}</div>
+    <!-- <div>{{ DATA_VAL['created_at'] }}</div> -->
+    <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
+    <!-- <div>{{ DATA_VAL['updated_at'] }}</div> -->
+    <input type="text" v-model="comment" placeholder="comment">
+    <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
+    <ul>
+    <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+        id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }}
+        comment: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+        <button @click="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_delete_comment</button>
+        <input type="text" v-model="comment_reply" placeholder="comment_reply">
+        <button @click="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_insert_comment_reply</button>
+        <ul>
+            <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+            id: {{ REPLIES['id'] }}
+            reply: {{ REPLIES['reply'] }}
+            username: {{ REPLIES['username'] }}
+            <button @click="fetch_delete_comment_reply(REPLIES['id'])">fetch_delete_comment_reply</button>
+            </li>
+        </ul>
+    </li>
+    </ul>
+    <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span>
+    <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
     <div>
         <input v-model="search_tag" list="autocomplete_list" type="text" name="" id="hoge" placeholder="tag" @input="fetch_get_tags_for_autocomplete">
         <datalist id="autocomplete_list" v-for="(Tag, Tag_I) in tags">
             <option value="Tag">
         </datalist>
     </div>
+    <ul>
+    <li v-for="(Tag, Tag_I) in tags">
+        <span>id: {{Tag['id']}}</span>
+        <span>Tag: {{Tag['tag']}}</span>
+        <!-- <div>{{ DATA_VAL['id'] }}</div> -->
+        <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
+        <!-- <button @click="fetch_delete_tag(DATA_VAL['id'], 3)">fetch_delete_tag</button> -->
+    </li>
+    </ul>
+    <input type="text" v-model="new_tag" placeholder="new_tag">
+    <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+
     <div>
-        <li v-for="(Tag, Tag_I) in tags">
-        <div>{{Tag}} {{Tag_I}}</div>
-        </li>
-    </div>
-
-<!-- <div>
-    <input bind:this={TAG_VAL} list="autocomplete_list" type="text" name="" id="hoge" bind:value={TAG} placeholder="tag" on:input={fetch_get_tags_for_autocomplete}>
-    <datalist id="autocomplete_list">
-        {#each ALL_TAGS as item, index}
-        <option value={item.tag}>
-        {/each}
-    </datalist>
-    <button on:click={fetch_insert_tag(item.id)}>fetch_insert_tag</button>
-</div> -->
-
-
-    <button @click="fetch_hello">fetch_hello</button>
-    <!-- this.nameのinput:text -->
-    <input type="text" v-model="name" placeholder="name">
-    <!-- this.passwordのinput -->
-    <input type="password" v-model="password" placeholder="password">
-    <!-- this.linkのinput -->
-    <input type="url" v-model="link" placeholder="link">
-    <!-- fetch_insert_linkを実行するボタン -->
-    <button @click="fetch_insert_link">fetch_insert_link</button>
-    <button @click="fetch_test_db_init">fetch_test_db_init</button>
-
-
-
-<div v-if="web_data['message']">
-
-
-<ul>
-<li v-for="(DATA_VAL, DATA_IDX) in web_data['message']">
-
-
-            <!-- fetch_insert_tag -->
-<input type="text" v-model="new_tag" placeholder="new_tag">
-<button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
-        <!-- fetch_get_tags_for_autocomplete -->
-        <button @click="fetch_get_tags_for_autocomplete">fetch_get_tags_for_autocomplete</button>
-        <!-- fetch_delete_tag -->
-        <button @click="fetch_delete_tag(DATA_VAL['id'], DATA_VAL['tag_id'])">fetch_delete_tag</button>
-
-        <div>{{ DATA_VAL['id'] }}</div>
-        <div>{{ DATA_VAL['name'] }}</div>
-        <div>{{ DATA_VAL['link'] }}</div>
-        <div>{{ DATA_VAL['like'] }}</div>
-        <div>{{ DATA_VAL['created_at'] }}</div>
-        <div>{{ DATA_VAL['updated_at'] }}</div>
-
-                <input type="text" v-model="comment" placeholder="comment">
-                <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
-
-
-                <!-- {{ DATA_VAL['comments_and_replies'] }} -->
-
-                            <ul>
-                            <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
-                id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }}
-                comment: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
-                                <button @click="fetch_delete_comment(
-                                    COMMENT_AND_REPLIES[COMMENT_IDX]['id']
-                                )">fetch_delete_comment</button>
-
-                    <input type="text" v-model="comment_reply" placeholder="comment_reply">
-                <button @click="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_insert_comment_reply</button>        
-
-                                    <ul>
-                                    <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
-                id: {{ REPLIES['id'] }}
-                reply: {{ REPLIES['reply'] }}
-                username: {{ REPLIES['username'] }}
-                                        <button @click="fetch_delete_comment_reply(
-                                            REPLIES['id']
-                                        )">fetch_delete_comment_reply</button>
-                                    </li>
-                                    </ul>
-                            </li>
-                            </ul>
-
-<span v-for="(like, like_i) in DATA_VAL['likes']">
-    {{ '❤️' }}
-</span>
-<button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
-
-
         <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
-
-        <!-- 上記には以下のボタンが必要 -->
-        <!-- fetch_like_increment_or_decrement -->
-
-        <!-- fetch_insert_comment -->
-        <!-- fetch_delete_comment -->
-        <!-- <button @click="fetch_delete_comment(DATA_VAL['comment_id'])">fetch_delete_comment</button> -->
-        <!-- fetch_insert_comment_reply -->
-
-<li v-for="(Tag, Tag_I) in tags">
-<!-- <span>{{Tag}}</span> -->
-<span>id: {{Tag['id']}}</span>
-<span>Tag: {{Tag['tag']}}</span>
-</li>
-
+    </div>
 </li>
 </ul>
 
-</div>
 
-
-    <h1>duct</h1>
-    <h2> :ja ductはlink共有とlinkへのコメントをするwebサービスです </h2>
-    <h2> :en duct is a web service that allows you to share links and comment on them. </h2>
-
-<!-- <button @click="fn_0">fn_0</button>
-<template v-for="(DATA_VAL, DATA_IDX) in data_1">
-<div>{{ DATA_VAL }}</div>
-</template>
-<textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea> -->
 </body>
 <script>
 const app = Vue.createApp({
@@ -153,11 +87,6 @@ search_tag: '',
 tags: [],
     }},
 watch: {
-//    any: {
-//      handler() {
-//      },
-//      deep: true
-//    },
 },
 beforeMounte(){
 },
@@ -182,58 +111,38 @@ async fetch_test_db_init(){
 
 // read_allをfetchする関数
 async fetch_hello(){
-    // const res = await fetch('http://localhost:8000' + '/test', {method: 'POST',headers: {'Content-Type': 'application/json',},
-    // const res = await fetch('http://localhost:8000/', {method: 'POST',headers: {'Content-Type': 'application/json',},
-    //     body: JSON.stringify({ name: this.name, password: this.password, link: this.link }),
-    // });
-    // const data = await res.json(); console.log(data);
     const res = await fetch('http://localhost:8000' + '/', {method: 'GET', headers: {'Content-Type': 'application/json',},});
     const hello_data = await res.json();
     console.log(hello_data);
 },
-
-
-// read_allをfetchする関数
 async fetch_read_all(){
     const res = await fetch('http://localhost:8000' + '/read_all', {method: 'GET', headers: {'Content-Type': 'application/json',},});
     this.web_data = await res.json(); console.log(this.web_data);
-    // const sample = await res.json(); console.log(sample);
 },
-
 async fetch_insert_link(){
     const res = await fetch('http://localhost:8000' + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, link: this.link }),
     });
     const data = await res.json(); console.log(data);
 },
-
 async fetch_delete_link(LINK_ID){
     const res = await fetch('http://localhost:8000' + '/delete_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, id: LINK_ID }),
     });
     const data = await res.json(); console.log(data);
 },
-
-// app.post('/like_increment_or_decrement', (req, res) => {
 async fetch_like_increment_or_decrement(LINK_ID){
-    // console.log(LINK_ID);
     const res = await fetch('http://localhost:8000' + '/like_increment_or_decrement', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID }),
     });
     const data = await res.json(); console.log(data);
 },
-
-// app.post('/insert_comment', (req, res) => {
-    // this.comment
 async fetch_insert_comment(LINK_ID){
     const res = await fetch('http://localhost:8000' + '/insert_comment', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, comment: this.comment }),
     });
     const data = await res.json(); console.log(data);
 },
-
-// app.post('/delete_comment', (req, res) => {
-    // this.comment
 async fetch_delete_comment(COMMENT_ID){
     console.log(COMMENT_ID);
     const res = await fetch('http://localhost:8000' + '/delete_comment', {method: 'POST',headers: {'Content-Type': 'application/json',},
@@ -241,9 +150,6 @@ async fetch_delete_comment(COMMENT_ID){
     });
     const data = await res.json(); console.log(data);
 },
-
-// app.post('/insert_comment_reply', (req, res) => {
-    // this.comment_reply
 async fetch_insert_comment_reply(COMMENT_ID){
     console.log(COMMENT_ID);
     const res = await fetch('http://localhost:8000' + '/insert_comment_reply', {method: 'POST',headers: {'Content-Type': 'application/json',},
@@ -251,51 +157,34 @@ async fetch_insert_comment_reply(COMMENT_ID){
     });
     const data = await res.json(); console.log(data);
 },
-
-
-// app.post('/delete_comment_reply', (req, res) => {
 async fetch_delete_comment_reply(COMMENT_REPLY_ID){
     const res = await fetch('http://localhost:8000' + '/delete_comment_reply', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, comment_reply_id: COMMENT_REPLY_ID }),
     });
     this.data = await res.json(); console.log(this.data);
 },
-
-// app.post('/insert_tag', (req, res) => {
-    // this.tag
 async fetch_insert_tag(LINK_ID){
     console.log(LINK_ID);
     const res = await fetch('http://localhost:8000' + '/insert_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, new_tag: this.new_tag }),
-        // body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, tag: this.tag }),
     });
     const data = await res.json(); console.log(data);
 },
-
-
-// app.post('/get_tags_for_autocomplete', (req, res) => {
-    // this.tag
 async fetch_get_tags_for_autocomplete(){
     const res = await fetch('http://localhost:8000' + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, search_tag: this.search_tag }),
     });
     const data = await res.json();
     this.tags = data['message'];
-    // console.log(data);
 },
-
-// delete_tagはペンディング
-// // app.post('/delete_tag', (req, res) => {
-    
-
-
 async fetch_delete_tag(LINK_ID, TAG_ID){
+    // console.log(LINK_ID, TAG_ID)
+    // console.log(typeof LINK_ID, TAG_ID)
     const res = await fetch('http://localhost:8000' + '/delete_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, id: TAG_ID }),
+        body: JSON.stringify({ name: this.name, password: this.password, id: TAG_ID, link_id: LINK_ID, }),
     });
     const data = await res.json(); console.log(data);
 },
-
 all_error_check(){
     const error_check_for_insert_comment = (comment, DATA_LIMIT) => {
         const reserved_words = ['SELECT', 'FROM', 'WHERE', 'INSERT', 'DELETE', 'UPDATE', 'DROP', 'ALTER', 'CREATE', 'TABLE', 'INTO', 'VALUES', 'AND', 'OR', 'NOT', 'NULL', 'TRUE', 'FALSE'];
@@ -335,7 +224,13 @@ all_error_check(){
         }
     }
 },
-
+date_time_form(DATE_TIME){
+    // const date = new Date('2023-09-22T16:40:19.249Z');
+    const date = new Date(DATE_TIME);
+    const formattedDate = date.toLocaleString('ja-JP', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false});
+    // console.log(formattedDate);
+    return formattedDate;
+},
 },
 }).mount('.app');
 </script>

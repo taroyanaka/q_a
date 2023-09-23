@@ -993,6 +993,36 @@ app.post('/insert_link', (req, res) => {
 });
 
 
+
+// tagのデータを削除する
+// 他に紐づくlinkが有る場合は、links_tagsのレコードを削除する
+// 他に紐づくlinkが無い場合は、tagsのレコードとlinks_tagsのレコードを削除する
+//   // tagの所有権(tagを作成したユーザー、もしくはlinkにタグを追加したユーザー)の仕様が決まらないため、一旦コメントアウト
+app.post('/delete_tag', (req, res) => {
+    try {
+        const user = get_user_with_permission(req);
+        user || user.deletable ? null : (()=>{throw new Error('権限がありません')})();
+        const result = db.prepare(`SELECT COUNT(*) AS count FROM links_tags WHERE tag_id = ?`).get(req.body.id);
+        result.count > 1
+            ? db.prepare(`DELETE FROM links_tags WHERE tag_id = ? AND link_id = ?`).run(req.body.id, req.body.link_id)
+            : (
+                db.prepare(`DELETE FROM links_tags WHERE tag_id = ?`).run(req.body.id),
+                db.prepare(`DELETE FROM tags WHERE id = ?`).run(req.body.id)
+              );
+    // res.json({message: 'success'});
+    res.status(200)
+        .json({result: 'success'
+            ,status: 200
+            // ,message: 'test_db_init done'
+        });
+    } catch (error) {
+        console.log(error);
+        error_response(res, '原因不明のエラー' + error);
+    }
+});
+
+
+
 app.post('/get_collect_value_for_test', (req, res) => {
     try {
         res.status(200)

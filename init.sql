@@ -1,3 +1,44 @@
+-- q_as link_id, id, question, answer, created_at, updated_at
+-- f_i_bs link_id, id, fill, sentence, created_at, updated_at
+-- i_t_ns link_id, id, label, uri, created_at, updated_at
+
+q_a: question, answer,
+f_i_b: fill, sentence,
+i_t_n: label, uri,
+
+CREATE TABLE q_as (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  link_id INTEGER NOT NULL,
+  question TEXT NOT NULL,
+  answer TEXT NOT NULL,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+  FOREIGN KEY (link_id) REFERENCES links(id)
+);
+
+
+CREATE TABLE f_i_bs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  link_id INTEGER NOT NULL,
+  fill TEXT NOT NULL,
+  sentence TEXT NOT NULL,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+  FOREIGN KEY (link_id) REFERENCES links(id)
+);
+
+CREATE TABLE i_t_ns (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  link_id INTEGER NOT NULL,
+  label TEXT NOT NULL,
+  uri TEXT NOT NULL,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+  FOREIGN KEY (link_id) REFERENCES links(id)
+);
+
+
+
 -- sqlite3で全てのテーブルとそのデータを削除するクエリ
 DROP TABLE IF EXISTS user_permission;
 DROP TABLE IF EXISTS users;
@@ -45,6 +86,10 @@ CREATE TABLE users (
 CREATE TABLE links (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   link TEXT NOT NULL,
+
+  data_type TEXT NOT NULL, -- 'q_a', 'f_i_b', 'i_t_n',
+  data_json TEXT NOT NULL, -- JSON string
+
   user_id INTEGER NOT NULL,
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,

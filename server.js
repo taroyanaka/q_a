@@ -101,13 +101,12 @@ const collect_value_for_test = (Prop, Val) => {
             }
         }
         const error_check_insert_link = (link) => {
-
             const WHITE_LIST_URL_ARRAY = [
                 'https://yanaka.dev/',
                 'https://www.yahoo.co.jp/',
                 'https://www.google.co.jp/',
                 'https://www.youtube.com/',
-            ];    
+            ];
             const reserved_words = ['SELECT', 'FROM', 'WHERE', 'INSERT', 'DELETE', 'UPDATE', 'DROP', 'ALTER', 'CREATE', 'TABLE', 'INTO', 'VALUES', 'AND', 'OR', 'NOT', 'NULL', 'TRUE', 'FALSE'];
             const is_url = (url) => (/^(https?):\/\/[^\s/$.?#].[^\s]*$/i).test(url);
             const is_include_WHITE_LIST_URL = (target_url_str) => WHITE_LIST_URL_ARRAY.some((WHITE_LIST_URL) => target_url_str.startsWith(WHITE_LIST_URL));
@@ -120,6 +119,26 @@ const collect_value_for_test = (Prop, Val) => {
                 case link.length > 2000: return 'URLが長すぎます'; break;
                 case !is_url(link): return 'URLの形式が正しくありません'; break;
                 case !is_include_WHITE_LIST_URL(link): return '許可されていないURLです'; break;
+                case !is_include_DATA_TYPE(req.body.data_type): return '許可されていないdata_typeです'; break;
+                default: return 'OK'; break;
+            }
+            // !is_url(link) ? (()=>{throw new Error('URLの形式が正しくありません')})() : null;
+            // console.log('link is' + link + '!!');
+            // return !is_url(link) ? 'URLの形式が正しくありません' : null;
+        };
+
+        const error_check_insert_data = (data_type, data_json) => {
+            const DATA_TYPE_ARRAY = [
+                'q_a',
+                'f_i_b',
+                'i_t_n',
+            ];
+            const is_include_DATA_TYPE = (target_data_type_str) => DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
+
+            switch (true) {
+                case data_json === undefined: return 'dataが空です'; break;
+                case data_json.length > 10000: return 'dataが長すぎます'; break;
+                case !is_include_DATA_TYPE(data_type): return '許可されていないdata_typeです'; break;
                 default: return 'OK'; break;
             }
             // !is_url(link) ? (()=>{throw new Error('URLの形式が正しくありません')})() : null;
@@ -132,6 +151,7 @@ const collect_value_for_test = (Prop, Val) => {
             'validation_insert_comment': error_check_insert_comment,
             'validation_insert_comment_reply': error_check_insert_comment_reply,
             'validation_insert_link': error_check_insert_link,
+            'validation_insert_data': error_check_insert_data,
         };
         // 以下のように利用する
         // all_validation_checking_client_server_both['validation_insert_tag']('test', 10);
@@ -702,6 +722,13 @@ app.post('/insert_tag', (req, res) => {
         const error_check_result = all_validation_checking_client_server_both['validation_insert_tag'](req.body.new_tag);
         console.log(error_check_result);
         error_check_result === 'OK' ? null : (()=>{throw new Error(error_check_result)})();
+
+
+        const error_check_result = all_validation_checking_client_server_both['validation_insert_tag'](req.body.new_tag);
+        console.log(error_check_result);
+        error_check_result === 'OK' ? null : (()=>{throw new Error(error_check_result)})();
+
+
         const user = get_user_with_permission(req);
         user || user.writable ? null : (()=>{throw new Error('書き込み権限がありません')})();
     // console.log('get_tag_id_by_tag_name_for_insert_tag');
@@ -955,6 +982,14 @@ app.post('/insert_link', (req, res) => {
         const error_check_result = all_validation_checking_client_server_both['validation_insert_link'](req.body.link);
         console.log(error_check_result);
         error_check_result === 'OK' ? null : (()=>{throw new Error(error_check_result)})();
+
+// req.body.data_json はJSONストリング。JSONオブジェクトには変換せずに保管する
+// req.body.data_json　はクライアント側でJSON.stringify()されている
+// req.body.data_json　はクライアント側でJSONストリングとJSONオブジェクトの相互変換をしている
+
+const error_check_data = all_validation_checking_client_server_both['validation_insert_data'](req.body.data_type, req.body.data_json);
+console.log(error_check_data);
+error_check_data === 'OK' ? null : (()=>{throw new Error(error_check_data)})();
 
         const user = get_user_with_permission(req);
         user || user.writable ? null : (()=>{throw new Error('権限がありません')})();

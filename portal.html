@@ -10,6 +10,20 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.36/vue.cjs.js"></script> -->
 </head>
 <body class="app">
+<button @click="sample_data_insert">sample_data_insert</button>
+<!-- selectとoptionでdata_type('q_a', 'f_i_b', 'i_t_n',)を選択 -->
+<select v-model="data_type">
+    <option value="q_a">q_a</option>
+    <option value="f_i_b">f_i_b</option>
+    <option value="i_t_n">i_t_n</option>
+</select>
+<textarea name="data1" id="" cols="30" rows="10" v-model="data1"></textarea>
+<textarea name="data2" id="" cols="30" rows="10" v-model="data2"></textarea>
+
+
+<!-- <input type="text" v-model="data_json" placeholder="data_json"> -->
+
+
 <input type="text" v-model="name" placeholder="name">
 <input type="password" v-model="password" placeholder="password">
 <input type="url" v-model="link" placeholder="link">
@@ -18,6 +32,12 @@
 <div v-if="web_data['message']">
 <ul>
 <li v-for="(DATA_VAL, DATA_IDX) in web_data['message']">
+    <div>data_type: {{ DATA_VAL['data_type'] }}</div>
+    <!-- data_json_parse_data1_data2 -->
+    <div>data_1: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'] }}</div>
+    <div>data_2: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'] }}</div>
+    <!-- <div>data_json: {{ DATA_VAL['data_json_str']['data1'] }}</div> -->
+    <!-- <div>data_json: {{ DATA_VAL['data_json_str']['data2'] }}</div> -->
     <div>id: {{ DATA_VAL['id'] }}</div>
     <div>link: {{ DATA_VAL['link'] }}</div>
     <div>username: {{ DATA_VAL['username'] }}</div>
@@ -75,6 +95,11 @@
 const app = Vue.createApp({
 data() {
     return {
+sample_data: [`abc
+def
+FOOBAR`, `エービーシー
+ディーイーエフ
+フーバー`],
 name: 'user1',
 password: 'user_pass1',
 web_data: {},
@@ -85,6 +110,10 @@ data: null,
 new_tag: '',
 search_tag: '',
 tags: [],
+data_type: 'q_a',
+data_json_str: '{"data1": "question1", "data2": "answer1"}',
+data1: '',
+data2: '',
     }},
 watch: {
 },
@@ -119,12 +148,67 @@ async fetch_read_all(){
     const res = await fetch('http://localhost:8000' + '/read_all', {method: 'GET', headers: {'Content-Type': 'application/json',},});
     this.web_data = await res.json(); console.log(this.web_data);
 },
+
+// req.body.data_type, req.body.data_json
 async fetch_insert_link(){
+try {
+    const error_check_data1_data2 = (data1, data2) => {
+        switch (true) {
+            case data1 === undefined || data1 === null || data1.length === 0: return 'data1が空です'; break;
+            case data2 === undefined || data2 === null || data2.length === 0: return 'data2が空です'; break;
+            default: return 'OK'; break;
+        }
+    };
+
+    const error_check_insert_data = (data_type, data_json_str) => {
+        const DATA_TYPE_ARRAY = [
+            'q_a',
+            'f_i_b',
+            'i_t_n',
+        ];
+        const is_include_DATA_TYPE = (target_data_type_str) => DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
+        switch (true) {
+            case data_json_str === undefined: return 'dataが空です'; break;
+            case data_json_str.length > 10000: return 'dataが長すぎます'; break;
+            case !is_include_DATA_TYPE(data_type): return '許可されていないdata_typeです'; break;
+            default: return 'OK'; break;
+        }
+    };
+
+    error_check_data1_data2(this.data1, this.data2) === 'OK' ? null : (()=>{throw new Error(error_check_data1_data2(this.data1, this.data2))})();
+
+
+    const data_convert_jsonstr = (data1, data2) => JSON.stringify({'data1': data1, 'data2': data2});
+    const data_json_str = data_convert_jsonstr(this.data1, this.data2);
+
+    error_check_insert_data(this.data_type, data_json_str) === 'OK' ? null : (()=>{throw new Error(error_check_insert_data(this.data_type, data_json_str))})();
+
     const res = await fetch('http://localhost:8000' + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, link: this.link }),
+        body: JSON.stringify({ name: this.name, password: this.password, link: this.link,
+            data_type: this.data_type,
+            data_json_str: data_json_str,
+        }),
     });
     const data = await res.json(); console.log(data);
+} catch (error) {
+    console.log(error);
+}
 },
+// async fetch_insert_link(){
+//     const res = await fetch('http://localhost:8000' + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
+//         body: JSON.stringify({ name: this.name, password: this.password, link: this.link }),
+//     });
+//     const data = await res.json(); console.log(data);
+// },
+
+
+
+// async fetch_insert_link(){
+//     const res = await fetch('http://localhost:8000' + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
+//         body: JSON.stringify({ name: this.name, password: this.password, link: this.link }),
+//     });
+//     const data = await res.json(); console.log(data);
+// },
 async fetch_delete_link(LINK_ID){
     const res = await fetch('http://localhost:8000' + '/delete_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, id: LINK_ID }),
@@ -231,6 +315,16 @@ date_time_form(DATE_TIME){
     // console.log(formattedDate);
     return formattedDate;
 },
+
+
+sample_data_insert(){
+    this.data1 = this.sample_data[0];
+    this.data2 = this.sample_data[1];
+},
+data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
+    return JSON.parse(JSON_STR_DATA1_DATA2);
+},
+
 },
 }).mount('.app');
 </script>

@@ -119,7 +119,6 @@ const collect_value_for_test = (Prop, Val) => {
                 case link.length > 2000: return 'URLが長すぎます'; break;
                 case !is_url(link): return 'URLの形式が正しくありません'; break;
                 case !is_include_WHITE_LIST_URL(link): return '許可されていないURLです'; break;
-                case !is_include_DATA_TYPE(req.body.data_type): return '許可されていないdata_typeです'; break;
                 default: return 'OK'; break;
             }
             // !is_url(link) ? (()=>{throw new Error('URLの形式が正しくありません')})() : null;
@@ -127,7 +126,7 @@ const collect_value_for_test = (Prop, Val) => {
             // return !is_url(link) ? 'URLの形式が正しくありません' : null;
         };
 
-        const error_check_insert_data = (data_type, data_json) => {
+        const error_check_insert_data = (data_type, data_json_str) => {
             const DATA_TYPE_ARRAY = [
                 'q_a',
                 'f_i_b',
@@ -136,8 +135,8 @@ const collect_value_for_test = (Prop, Val) => {
             const is_include_DATA_TYPE = (target_data_type_str) => DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
 
             switch (true) {
-                case data_json === undefined: return 'dataが空です'; break;
-                case data_json.length > 10000: return 'dataが長すぎます'; break;
+                case data_json_str === undefined: return 'dataが空です'; break;
+                case data_json_str.length > 10000: return 'dataが長すぎます'; break;
                 case !is_include_DATA_TYPE(data_type): return '許可されていないdata_typeです'; break;
                 default: return 'OK'; break;
             }
@@ -406,10 +405,10 @@ app.get('/read_all', (req, res) => {
             const tag_join_option = req.query.tag ? ' LEFT JOIN links_tags ON links.id = links_tags.link_id LEFT JOIN tags ON links_tags.tag_id = tags.id' : '';
 
             // https://gist.github.com/taroyanaka/046ebfeb3ef9e47bc403b25220f571bd
-            const STANDARD_READ_QUERY_1 = 'SELECT links.id AS id, links.link AS link, links.created_at AS created_at, links.updated_at AS updated_at, users.id AS user_id, users.username AS username FROM links LEFT JOIN users ON links.user_id = users.id '
+            const STANDARD_READ_QUERY_1 = 'SELECT links.id AS id, links.link AS link, links.data_type AS data_type, links.data_json_str AS data_json_str, links.created_at AS created_at, links.updated_at AS updated_at, users.id AS user_id, users.username AS username FROM links LEFT JOIN users ON links.user_id = users.id '
                 + tag_join_option + WHERE + ' ORDER BY ' + ORDER_BY_COLUMN + ' ' + ORDER_BY + ';';
 
-            const STANDARD_READ_QUERY_2 = 'SELECT links.id AS id, links.link AS link, links.created_at AS created_at, links.updated_at AS updated_at, users.id AS user_id, users.username AS username FROM links LEFT JOIN users ON links.user_id = users.id'
+            const STANDARD_READ_QUERY_2 = 'SELECT links.id AS id, links.link AS link, links.data_type AS data_type, links.data_json_str AS data_json_str, links.created_at AS created_at, links.updated_at AS updated_at, users.id AS user_id, users.username AS username FROM links LEFT JOIN users ON links.user_id = users.id'
                 + tag_join_option + ' ORDER BY ' + ORDER_BY_COLUMN + ' ' + ORDER_BY + ';';
 
             // WHEREがtruthy(WHEREがnullではない)なら、query_type: 1を返す。WHEREがfalsyなら、query_type: 2を返す
@@ -724,9 +723,6 @@ app.post('/insert_tag', (req, res) => {
         error_check_result === 'OK' ? null : (()=>{throw new Error(error_check_result)})();
 
 
-        const error_check_result = all_validation_checking_client_server_both['validation_insert_tag'](req.body.new_tag);
-        console.log(error_check_result);
-        error_check_result === 'OK' ? null : (()=>{throw new Error(error_check_result)})();
 
 
         const user = get_user_with_permission(req);
@@ -983,11 +979,11 @@ app.post('/insert_link', (req, res) => {
         console.log(error_check_result);
         error_check_result === 'OK' ? null : (()=>{throw new Error(error_check_result)})();
 
-// req.body.data_json はJSONストリング。JSONオブジェクトには変換せずに保管する
-// req.body.data_json　はクライアント側でJSON.stringify()されている
-// req.body.data_json　はクライアント側でJSONストリングとJSONオブジェクトの相互変換をしている
+// req.body.data_json_str はJSONストリング。JSONオブジェクトには変換せずに保管する
+// req.body.data_json_str　はクライアント側でJSON.stringify()されている
+// req.body.data_json_str　はクライアント側でJSONストリングとJSONオブジェクトの相互変換をしている
 
-const error_check_data = all_validation_checking_client_server_both['validation_insert_data'](req.body.data_type, req.body.data_json);
+const error_check_data = all_validation_checking_client_server_both['validation_insert_data'](req.body.data_type, req.body.data_json_str);
 console.log(error_check_data);
 error_check_data === 'OK' ? null : (()=>{throw new Error(error_check_data)})();
 
@@ -998,11 +994,13 @@ error_check_data === 'OK' ? null : (()=>{throw new Error(error_check_data)})();
         link_exists ? (()=>{throw new Error('同じlinkが存在します')})() : null;
 
         const response = db.prepare(`
-            INSERT INTO links (user_id, link, created_at, updated_at) VALUES (
-                @user_id, @link, @created_at, @updated_at
+            INSERT INTO links (user_id, link, data_type, data_json_str, created_at, updated_at) VALUES (
+                @user_id, @link, @data_type, @data_json_str, @created_at, @updated_at
         )`).run({
                 user_id: user.user_id,
                 link: req.body.link,
+                data_type: req.body.data_type,
+                data_json_str: req.body.data_json_str,
                 created_at: now(),
                 updated_at: now()
             });

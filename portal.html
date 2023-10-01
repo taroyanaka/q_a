@@ -36,6 +36,8 @@
     <!-- data_json_parse_data1_data2 -->
     <div>data_1: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'] }}</div>
     <div>data_2: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'] }}</div>
+<button @click="download_data(DATA_IDX)">download_data</button>
+
     <!-- <div>data_json: {{ DATA_VAL['data_json_str']['data1'] }}</div> -->
     <!-- <div>data_json: {{ DATA_VAL['data_json_str']['data2'] }}</div> -->
     <div>id: {{ DATA_VAL['id'] }}</div>
@@ -324,6 +326,11 @@ sample_data_insert(){
 data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
     return JSON.parse(JSON_STR_DATA1_DATA2);
 },
+download_data(ID){
+    this.data1 = JSON.parse(this.web_data.message[ID].data_json_str).data1;
+    this.data2 = JSON.parse(this.web_data.message[ID].data_json_str).data2;
+},
+
 
 },
 }).mount('.app');

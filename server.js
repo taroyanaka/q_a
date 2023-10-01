@@ -975,9 +975,9 @@ console.log(
 // ユーザーが書き込み権限を持っていないときに400 Bad Requestを返す
 app.post('/insert_link', (req, res) => {
     try {
-        const error_check_result = all_validation_checking_client_server_both['validation_insert_link'](req.body.link);
-        console.log(error_check_result);
-        error_check_result === 'OK' ? null : (()=>{throw new Error(error_check_result)})();
+        // const error_check_result = all_validation_checking_client_server_both['validation_insert_link'](req.body.link);
+        // console.log(error_check_result);
+        // error_check_result === 'OK' ? null : (()=>{throw new Error(error_check_result)})();
 
 // req.body.data_json_str はJSONストリング。JSONオブジェクトには変換せずに保管する
 // req.body.data_json_str　はクライアント側でJSON.stringify()されている
@@ -990,15 +990,17 @@ error_check_data === 'OK' ? null : (()=>{throw new Error(error_check_data)})();
         const user = get_user_with_permission(req);
         user || user.writable ? null : (()=>{throw new Error('権限がありません')})();
         // 同じlinkが存在するなら、エラーを返す
-        const link_exists = db.prepare(`SELECT * FROM links WHERE link = ?`).get(req.body.link);
-        link_exists ? (()=>{throw new Error('同じlinkが存在します')})() : null;
+        // const link_exists = db.prepare(`SELECT * FROM links WHERE link = ?`).get(req.body.link);
+        // link_exists ? (()=>{throw new Error('同じlinkが存在します')})() : null;
+
 
         const response = db.prepare(`
             INSERT INTO links (user_id, link, data_type, data_json_str, created_at, updated_at) VALUES (
                 @user_id, @link, @data_type, @data_json_str, @created_at, @updated_at
         )`).run({
                 user_id: user.user_id,
-                link: req.body.link,
+                // req.body.link = '';
+                link: '',
                 data_type: req.body.data_type,
                 data_json_str: req.body.data_json_str,
                 created_at: now(),

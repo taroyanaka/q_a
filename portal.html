@@ -491,15 +491,13 @@ change_list_order(){
     this.web_data['message'] = list3;
 },
 change_TOP_OF_TYPE_and_change_list_order(DATA_TYPE){
-    // console.log(event.target.value);
     this.TOP_OF_TYPE = DATA_TYPE ? DATA_TYPE : 'q_a';
     this.change_list_order();
 },
-// セパレート　英語で 
 separate_each_list(){
-this.only_q_a_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'q_a');
-this.only_f_i_b_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'f_i_b');
-this.only_i_t_n_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'i_t_n');
+    this.only_q_a_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'q_a');
+    this.only_f_i_b_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'f_i_b');
+    this.only_i_t_n_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'i_t_n');
 },
 
 

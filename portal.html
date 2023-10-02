@@ -26,7 +26,9 @@
 
 <input type="text" v-model="name" placeholder="name">
 <input type="password" v-model="password" placeholder="password">
-<input type="url" v-model="link" placeholder="link">
+
+<!-- <input type="url" v-model="link" placeholder="link"> -->
+
 <button @click="fetch_insert_link">fetch_insert_link</button>
 <button @click="fetch_test_db_init">fetch_test_db_init</button>
 <div v-if="web_data['message']">
@@ -116,6 +118,8 @@ data_type: 'q_a',
 data_json_str: '{"data1": "question1", "data2": "answer1"}',
 data1: '',
 data2: '',
+list_order: [],
+
     }},
 watch: {
 },
@@ -327,9 +331,24 @@ data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
     return JSON.parse(JSON_STR_DATA1_DATA2);
 },
 download_data(ID){
+    this.data_type = this.web_data.message[ID].data_type;
     this.data1 = JSON.parse(this.web_data.message[ID].data_json_str).data1;
     this.data2 = JSON.parse(this.web_data.message[ID].data_json_str).data2;
 },
+
+// web_data['message']の表示順序をdata_typeによって変更する関数
+// change_list(){
+
+// },
+change_list_order(TOP_OF_TYPE='q_a'){
+    // TOP_OF_TYPEで指定したdata_typeを一番上に持ってくる
+    let old_list = R.clone(this.web_data['message']);
+    // old_listからTOP_OF_TYPEを削除してnew_listに追加する
+    let new_list = old_list.filter((DATA_VAL) => DATA_VAL['data_type'] !== TOP_OF_TYPE);
+    new_list.unshift(old_list.filter((DATA_VAL) => DATA_VAL['data_type'] === TOP_OF_TYPE)[0]);
+    this.web_data['message'] = new_list;
+},
+
 
 
 },

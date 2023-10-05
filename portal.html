@@ -38,10 +38,12 @@
 <!-- <input type="text" v-model="data_json" placeholder="data_json"> -->
 
 
-show_user: <button v-if="show_user" @click="show_all_user">{{ show_user }}</button>
-
 <input type="text" v-model="name" placeholder="name">
 <input type="password" v-model="password" placeholder="password">
+
+<div>
+show_user: <button v-if="show_user" @click="show_all_user">{{ show_user }}</button>
+</div>
 
 <!-- <input type="url" v-model="link" placeholder="link"> -->
 
@@ -342,7 +344,7 @@ DATA_TYPE_ARRAY: [
     'i_t_n',
 ],
 
-show_user: 'user1',
+show_user: '',
 
     }},
 watch: {

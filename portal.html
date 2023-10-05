@@ -103,6 +103,14 @@
     <div v-if="temporary_list[0]" class="flex_child">
     <ul>
     <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[0]">
+        <ul>
+            <li v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+                <button @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+                )">synapse: {{ Other_Of_One }}</button>
+            </li>
+        </ul>
         <div>data_type: {{ DATA_VAL['data_type'] }}</div>
         <button @click="change_TOP_OF_TYPE_and_change_list_order(DATA_VAL['data_type'])">change_TOP_OF_TYPE_and_change_list_order</button>
         <div>data_1: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'] }}</div>
@@ -156,9 +164,18 @@
     </div>
 
 
+
     <div v-if="temporary_list[1]" class="flex_child">
         <ul>
         <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[1]">
+            <ul>
+                <li v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+                    <button @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+                    )">synapse: {{ Other_Of_One }}</button>
+                </li>
+            </ul>
             <div>data_type: {{ DATA_VAL['data_type'] }}</div>
             <button @click="change_TOP_OF_TYPE_and_change_list_order(DATA_VAL['data_type'])">change_TOP_OF_TYPE_and_change_list_order</button>
             <div>data_1: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'] }}</div>
@@ -214,6 +231,14 @@
     <div v-if="temporary_list[2]" class="flex_child">
         <ul>
         <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[2]">
+            <ul>
+                <li v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+                    <button @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+                    )">synapse: {{ Other_Of_One }}</button>
+                </li>
+            </ul>
             <div>data_type: {{ DATA_VAL['data_type'] }}</div>
             <button @click="change_TOP_OF_TYPE_and_change_list_order(DATA_VAL['data_type'])">change_TOP_OF_TYPE_and_change_list_order</button>
             <div>data_1: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'] }}</div>
@@ -306,6 +331,11 @@ list_0: [],
 list_1: [],
 list_2: [],
 temporary_list: [],
+DATA_TYPE_ARRAY: [
+    'q_a',
+    'f_i_b',
+    'i_t_n',
+],
 
     }},
 watch: {
@@ -363,12 +393,7 @@ try {
     };
 
     const error_check_insert_data = (data_type, data_json_str) => {
-        const DATA_TYPE_ARRAY = [
-            'q_a',
-            'f_i_b',
-            'i_t_n',
-        ];
-        const is_include_DATA_TYPE = (target_data_type_str) => DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
+        const is_include_DATA_TYPE = (target_data_type_str) => this.DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
         switch (true) {
             case data_json_str === undefined: return 'dataが空です'; break;
             case data_json_str.length > 10000: return 'dataが長すぎます'; break;
@@ -578,14 +603,16 @@ separate_each_list(){
         this.TOP_OF_TYPE === 'i_t_n' ? [this.only_i_t_n_list,
             ...this.temporary_list.filter((DATA_VAL) => DATA_VAL !== this.only_i_t_n_list)] :
         this.temporary_list;
-
-
-
-
-
 },
-
-
+other_data_type(DATA_TYPE){
+    return this.DATA_TYPE_ARRAY.filter(V=>V !== DATA_TYPE);
+},
+async synapse(FROM_TYPE='q_a', TO_TYPE='i_t_n', DATA_1, DATA_2){
+    this.data1 = DATA_1;
+    this.data2 = DATA_2;
+    this.data_type = TO_TYPE;
+    await this.fetch_insert_link();
+},
 },
 }).mount('.app');
 </script>

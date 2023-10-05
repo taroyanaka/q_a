@@ -22,6 +22,8 @@
 </style>
 </head>
 <body class="app">
+<button @click="fetch_read_all">fetch_read_all</button>
+
 <button @click="sample_data_insert">sample_data_insert</button>
 <!-- selectとoptionでdata_type('q_a', 'f_i_b', 'i_t_n',)を選択 -->
 <select v-model="data_type">
@@ -35,6 +37,8 @@
 
 <!-- <input type="text" v-model="data_json" placeholder="data_json"> -->
 
+
+show_user: <button v-if="show_user" @click="show_all_user">{{ show_user }}</button>
 
 <input type="text" v-model="name" placeholder="name">
 <input type="password" v-model="password" placeholder="password">
@@ -55,7 +59,8 @@
         <button @click="download_data(DATA_IDX)">download_data</button>
         <div>id: {{ DATA_VAL['id'] }}</div>
         <div>link: {{ DATA_VAL['link'] }}</div>
-        <div>username: {{ DATA_VAL['username'] }}</div>
+        <!-- <div>username: {{ DATA_VAL['username'] }}</div> -->
+        <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
         <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
         <input type="text" v-model="comment" placeholder="comment">
         <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
@@ -70,7 +75,7 @@
                 <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
                 id: {{ REPLIES['id'] }}
                 reply: {{ REPLIES['reply'] }}
-                username: {{ REPLIES['username'] }}
+                username: <button @click="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
                 <button @click="fetch_delete_comment_reply(REPLIES['id'])">fetch_delete_comment_reply</button>
                 </li>
             </ul>
@@ -118,7 +123,7 @@
         <button @click="download_data(DATA_IDX)">download_data</button>
         <div>id: {{ DATA_VAL['id'] }}</div>
         <div>link: {{ DATA_VAL['link'] }}</div>
-        <div>username: {{ DATA_VAL['username'] }}</div>
+        <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
         <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
         <input type="text" v-model="comment" placeholder="comment">
         <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
@@ -133,7 +138,7 @@
                 <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
                 id: {{ REPLIES['id'] }}
                 reply: {{ REPLIES['reply'] }}
-                username: {{ REPLIES['username'] }}
+                username: <button @click="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
                 <button @click="fetch_delete_comment_reply(REPLIES['id'])">fetch_delete_comment_reply</button>
                 </li>
             </ul>
@@ -183,7 +188,7 @@
             <button @click="download_data(DATA_IDX)">download_data</button>
             <div>id: {{ DATA_VAL['id'] }}</div>
             <div>link: {{ DATA_VAL['link'] }}</div>
-            <div>username: {{ DATA_VAL['username'] }}</div>
+            <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
             <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
             <input type="text" v-model="comment" placeholder="comment">
             <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
@@ -198,7 +203,7 @@
                     <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
                     id: {{ REPLIES['id'] }}
                     reply: {{ REPLIES['reply'] }}
-                    username: {{ REPLIES['username'] }}
+                    username: <button @click="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
                     <button @click="fetch_delete_comment_reply(REPLIES['id'])">fetch_delete_comment_reply</button>
                     </li>
                 </ul>
@@ -246,7 +251,7 @@
             <button @click="download_data(DATA_IDX)">download_data</button>
             <div>id: {{ DATA_VAL['id'] }}</div>
             <div>link: {{ DATA_VAL['link'] }}</div>
-            <div>username: {{ DATA_VAL['username'] }}</div>
+            <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
             <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
             <input type="text" v-model="comment" placeholder="comment">
             <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
@@ -261,7 +266,7 @@
                     <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
                     id: {{ REPLIES['id'] }}
                     reply: {{ REPLIES['reply'] }}
-                    username: {{ REPLIES['username'] }}
+                    username: <button @click="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
                     <button @click="fetch_delete_comment_reply(REPLIES['id'])">fetch_delete_comment_reply</button>
                     </li>
                 </ul>
@@ -337,6 +342,8 @@ DATA_TYPE_ARRAY: [
     'i_t_n',
 ],
 
+show_user: 'user1',
+
     }},
 watch: {
     // separate_each_listをdeep watchする
@@ -346,8 +353,12 @@ watch: {
         },
         deep: true,
     },
-    
-
+    show_user: {
+        async handler(newVal, oldVal) {
+            await this.fetch_read_all();
+        },
+        deep: true,
+    },
 },
 beforeMounte(){
 },
@@ -377,7 +388,19 @@ async fetch_hello(){
     console.log(hello_data);
 },
 async fetch_read_all(){
-    const res = await fetch('http://localhost:8000' + '/read_all', {method: 'GET', headers: {'Content-Type': 'application/json',},});
+    this.show_user = this.show_user === '' ? '' : this.show_user;
+    const params_for_get = {
+    user: this.show_user,
+    //   page: 1,
+    //   limit: 10
+    };
+    const url = new URL('http://localhost:8000/read_all');
+    url.search = new URLSearchParams(params_for_get).toString();
+    console.log(url);
+
+    // const res = await fetch('http://localhost:8000' + '/read_all', {method: 'GET', headers: {'Content-Type': 'application/json',},});
+    // const res = await fetch('http://localhost:8000' + '/read_all?user=user2', {method: 'GET', headers: {'Content-Type': 'application/json',},});
+    const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
     this.web_data = await res.json(); console.log(this.web_data);
 },
 
@@ -613,6 +636,13 @@ async synapse(FROM_TYPE='q_a', TO_TYPE='i_t_n', DATA_1, DATA_2){
     this.data_type = TO_TYPE;
     await this.fetch_insert_link();
 },
+change_show_user(USER){
+    this.show_user = USER;
+},
+show_all_user(){
+    this.show_user = '';
+},
+
 },
 }).mount('.app');
 </script>

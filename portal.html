@@ -22,6 +22,11 @@
 </style>
 </head>
 <body class="app">
+            <select v-model="selected_tag" @change="test">
+                <option disabled value=""></option>
+                <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+            </select>
+    
 <button @click="fetch_read_all">fetch_read_all</button>
 
 <button @click="sample_data_insert">sample_data_insert</button>
@@ -94,7 +99,7 @@ show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
         </div>
         <ul>
         <li v-for="(Tag, Tag_I) in tags">
-            <span>id: {{Tag['id']}}</span>
+            <span>id: {{Tag['id']}}</span>        
             <!-- <span>Tag: {{Tag['tag']}}</span> -->
             <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
             <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
@@ -159,7 +164,8 @@ show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
         <ul>
         <li v-for="(Tag, Tag_I) in tags">
             <span>id: {{Tag['id']}}</span>
-            <span>Tag: {{Tag['tag']}}</span>
+            <!-- <span>Tag: {{Tag['tag']}}</span> -->
+            <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
             <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
         </li>
         </ul>
@@ -224,7 +230,8 @@ show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
             <ul>
             <li v-for="(Tag, Tag_I) in tags">
                 <span>id: {{Tag['id']}}</span>
-                <span>Tag: {{Tag['tag']}}</span>
+                <!-- <span>Tag: {{Tag['tag']}}</span> -->
+                <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
                 <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
             </li>
             </ul>
@@ -287,7 +294,8 @@ show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
             <ul>
             <li v-for="(Tag, Tag_I) in tags">
                 <span>id: {{Tag['id']}}</span>
-                <span>Tag: {{Tag['tag']}}</span>
+                <!-- <span>Tag: {{Tag['tag']}}</span> -->
+                <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
                 <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
             </li>
             </ul>
@@ -324,6 +332,7 @@ comment_reply: 'comRep',
 data: null,
 new_tag: '',
 search_tag: '',
+selected_tag: '',
 tags: [],
 data_type: 'q_a',
 data_json_str: '{"data1": "question1", "data2": "answer1"}',
@@ -661,6 +670,9 @@ change_show_tag(TAG){
 },
 show_all_tag(){
     this.show_tag = '';
+},
+test(){
+    console.log(this.selected_tag);
 },
 
 },

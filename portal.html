@@ -43,6 +43,7 @@
 
 <div>
 show_user: <button v-if="show_user" @click="show_all_user">{{ show_user }}</button>
+show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
 </div>
 
 <!-- <input type="url" v-model="link" placeholder="link"> -->
@@ -94,7 +95,8 @@ show_user: <button v-if="show_user" @click="show_all_user">{{ show_user }}</butt
         <ul>
         <li v-for="(Tag, Tag_I) in tags">
             <span>id: {{Tag['id']}}</span>
-            <span>Tag: {{Tag['tag']}}</span>
+            <!-- <span>Tag: {{Tag['tag']}}</span> -->
+            <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
             <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
         </li>
         </ul>
@@ -345,6 +347,7 @@ DATA_TYPE_ARRAY: [
 ],
 
 show_user: '',
+show_tag: '',
 
     }},
 watch: {
@@ -356,6 +359,12 @@ watch: {
         deep: true,
     },
     show_user: {
+        async handler(newVal, oldVal) {
+            await this.fetch_read_all();
+        },
+        deep: true,
+    },
+    show_tag: {
         async handler(newVal, oldVal) {
             await this.fetch_read_all();
         },
@@ -391,8 +400,10 @@ async fetch_hello(){
 },
 async fetch_read_all(){
     this.show_user = this.show_user === '' ? '' : this.show_user;
+    this.show_tag = this.show_tag === '' ? '' : this.show_tag;
     const params_for_get = {
     user: this.show_user,
+    tag: this.show_tag,
     //   page: 1,
     //   limit: 10
     };
@@ -643,6 +654,13 @@ change_show_user(USER){
 },
 show_all_user(){
     this.show_user = '';
+},
+
+change_show_tag(TAG){
+    this.show_tag = TAG;
+},
+show_all_tag(){
+    this.show_tag = '';
 },
 
 },

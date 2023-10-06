@@ -21,12 +21,18 @@
 }
 </style>
 </head>
-<body class="app">
-            <select v-model="selected_tag" @change="test">
-                <option disabled value=""></option>
-                <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
-            </select>
-    
+<body class="app">    
+
+<div>
+    <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+    <datalist id="tag-options">
+        <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+    </datalist>
+    <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+    <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
+</div>
+
+
 <button @click="fetch_read_all">fetch_read_all</button>
 
 <button @click="sample_data_insert">sample_data_insert</button>
@@ -91,22 +97,22 @@ show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
         </ul>
         <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span>
         <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
-        <div>
-            <input v-model="search_tag" list="autocomplete_list" type="text" name="" placeholder="tag" @input="fetch_get_tags_for_autocomplete">
-            <datalist id="autocomplete_list" v-for="(Tag, Tag_I) in tags">
-                <option value="Tag">
-            </datalist>
-        </div>
+
         <ul>
-        <li v-for="(Tag, Tag_I) in tags">
+        <li v-for="(Tag, Tag_I) in DATA_VAL['tags']">
             <span>id: {{Tag['id']}}</span>        
-            <!-- <span>Tag: {{Tag['tag']}}</span> -->
             <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
             <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
         </li>
         </ul>
-        <input type="text" v-model="new_tag" placeholder="new_tag">
-        <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+        <div>
+            <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+            <datalist id="tag-options">
+                <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+            </datalist>
+            <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+        </div>
+        
         <div>
             <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
         </div>
@@ -155,22 +161,22 @@ show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
         </ul>
         <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span>
         <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
-        <div>
-            <input v-model="search_tag" list="autocomplete_list" type="text" name="" placeholder="tag" @input="fetch_get_tags_for_autocomplete">
-            <datalist id="autocomplete_list" v-for="(Tag, Tag_I) in tags">
-                <option value="Tag">
-            </datalist>
-        </div>
+
         <ul>
-        <li v-for="(Tag, Tag_I) in tags">
-            <span>id: {{Tag['id']}}</span>
-            <!-- <span>Tag: {{Tag['tag']}}</span> -->
+        <li v-for="(Tag, Tag_I) in DATA_VAL['tags']">
+            <span>id: {{Tag['id']}}</span>        
             <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
             <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
         </li>
         </ul>
-        <input type="text" v-model="new_tag" placeholder="new_tag">
-        <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+        <div>
+            <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+            <datalist id="tag-options">
+                <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+            </datalist>
+            <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+        </div>
+        
         <div>
             <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
         </div>
@@ -221,22 +227,22 @@ show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
             </ul>
             <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span>
             <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
-            <div>
-                <input v-model="search_tag" list="autocomplete_list" type="text" name="" placeholder="tag" @input="fetch_get_tags_for_autocomplete">
-                <datalist id="autocomplete_list" v-for="(Tag, Tag_I) in tags">
-                    <option value="Tag">
-                </datalist>
-            </div>
+    
             <ul>
-            <li v-for="(Tag, Tag_I) in tags">
-                <span>id: {{Tag['id']}}</span>
-                <!-- <span>Tag: {{Tag['tag']}}</span> -->
+            <li v-for="(Tag, Tag_I) in DATA_VAL['tags']">
+                <span>id: {{Tag['id']}}</span>        
                 <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
                 <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
             </li>
             </ul>
-            <input type="text" v-model="new_tag" placeholder="new_tag">
-            <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+            <div>
+                <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+                <datalist id="tag-options">
+                    <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+                </datalist>
+                <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+            </div>
+            
             <div>
                 <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
             </div>
@@ -285,22 +291,22 @@ show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
             </ul>
             <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span>
             <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
-            <div>
-                <input v-model="search_tag" list="autocomplete_list" type="text" name="" placeholder="tag" @input="fetch_get_tags_for_autocomplete">
-                <datalist id="autocomplete_list" v-for="(Tag, Tag_I) in tags">
-                    <option value="Tag">
-                </datalist>
-            </div>
+    
             <ul>
-            <li v-for="(Tag, Tag_I) in tags">
-                <span>id: {{Tag['id']}}</span>
-                <!-- <span>Tag: {{Tag['tag']}}</span> -->
+            <li v-for="(Tag, Tag_I) in DATA_VAL['tags']">
+                <span>id: {{Tag['id']}}</span>        
                 <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
                 <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
             </li>
             </ul>
-            <input type="text" v-model="new_tag" placeholder="new_tag">
-            <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+            <div>
+                <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+                <datalist id="tag-options">
+                    <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+                </datalist>
+                <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+            </div>
+            
             <div>
                 <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
             </div>
@@ -332,7 +338,6 @@ comment_reply: 'comRep',
 data: null,
 new_tag: '',
 search_tag: '',
-selected_tag: '',
 tags: [],
 data_type: 'q_a',
 data_json_str: '{"data1": "question1", "data2": "answer1"}',
@@ -520,9 +525,9 @@ async fetch_delete_comment_reply(COMMENT_REPLY_ID){
     this.data = await res.json(); console.log(this.data);
 },
 async fetch_insert_tag(LINK_ID){
-    console.log(LINK_ID);
     const res = await fetch('http://localhost:8000' + '/insert_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, new_tag: this.new_tag }),
+        // body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, new_tag: this.new_tag }),
+        body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, new_tag: this.search_tag }),
     });
     const data = await res.json(); console.log(data);
 },
@@ -532,10 +537,15 @@ async fetch_get_tags_for_autocomplete(){
     });
     const data = await res.json();
     this.tags = data['message'];
+    // this.new_tag = '';
+    // const is_include_search_tag = this.tags.some((TAG) => TAG['tag'] === this.search_tag);
+    // this.new_tag = is_include_search_tag ? '' : this.search_tag;
+    // console.log('this.new_tag',this.new_tag);
+    // console.log('is_include_search_tag',is_include_search_tag);
+    // console.log('this.search_tag',this.search_tag);
+
 },
 async fetch_delete_tag(LINK_ID, TAG_ID){
-    // console.log(LINK_ID, TAG_ID)
-    // console.log(typeof LINK_ID, TAG_ID)
     const res = await fetch('http://localhost:8000' + '/delete_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, id: TAG_ID, link_id: LINK_ID, }),
     });
@@ -670,9 +680,6 @@ change_show_tag(TAG){
 },
 show_all_tag(){
     this.show_tag = '';
-},
-test(){
-    console.log(this.selected_tag);
 },
 
 },

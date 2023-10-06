@@ -42,7 +42,6 @@ const collect_value_for_test = (Prop, Val) => {
 // all_validation_checking_client_server_bothという名前のobjectを作成して、その中に、それぞれのvalidation_checkingの関数を入れていく
 
         const error_check_insert_tag = (tag) => {
-
             const reserved_words = ['SELECT', 'FROM', 'WHERE', 'INSERT', 'DELETE', 'UPDATE', 'DROP', 'ALTER', 'CREATE', 'TABLE', 'INTO', 'VALUES', 'AND', 'OR', 'NOT', 'NULL', 'TRUE', 'FALSE'];
             // 空白を含むかチェックする1行の関数。大文字の空白もチェックする。含まれていたらtrueを返す
             const checkForSpaces = (tag) => [' ', '　'].some((space) => tag.includes(space));
@@ -55,6 +54,7 @@ const collect_value_for_test = (Prop, Val) => {
                 case tag === undefined: return 'tagが空です'; break;
                 case checkForSpaces(tag): return '空白を含む場合はエラー'; break;
                 case checkForSymbols(tag): return '記号を含む場合はエラー'; break;
+                case tag.length === 0: return '0文字はエラー'; break;
                 case tag.length > 7: return '7文字以上はエラー'; break;
                 case reserved_words.includes(tag): return 'SQLの予約語を含む場合はエラー'; break;
                 default: return 'OK'; break;
@@ -607,12 +607,12 @@ app.post('/like_increment_or_decrement', (req, res) => {
         const tag_id = db.prepare(`SELECT tag FROM tags WHERE tag = ?`).get(TAG)
             ? db.prepare(`SELECT id, tag FROM tags WHERE tag = ?`).get(TAG).id
             : null;
-        console.log('get_tag_id_by_tag_name_for_insert_tag', tag_id);
+        // console.log('get_tag_id_by_tag_name_for_insert_tag', tag_id);
             return tag_id;
     };
     const insert_tag_for_insert_tag = (REQ, TAG) => {
         try {
-console.log('insert_tag_for_insert_tag 1');
+// console.log('insert_tag_for_insert_tag 1');
         // linkに対して既に同じタグがついているかチェックし、ついていたらエラーを返す
         const TAG_RESULT = db.prepare(`
         SELECT
@@ -625,7 +625,7 @@ console.log('insert_tag_for_insert_tag 1');
         TAG_RESULT
             ? (()=>{throw new Error('既に同じタグがついています')})()
             : null;
-console.log('insert_tag_for_insert_tag 2');
+// console.log('insert_tag_for_insert_tag 2');
 console.log(REQ.body.link_id, TAG.id, TAG, TAG_RESULT);
 
 // const TAG_ID = TAG_RESULT === null ? db.prepare(`SELECT id, tag FROM tags WHERE tag = ?`).get(TAG).id : null;
@@ -646,8 +646,8 @@ console.log(REQ.body.link_id, TAG.id, TAG, TAG_RESULT);
                 })
                 ? 'OK'
                 : (()=>{throw new Error('links_tagsにレコードを挿入できませんでした')})();
-console.log('insert_tag_for_insert_tag 3');
-        console.log('RESULT is', RESULT);
+// console.log('insert_tag_for_insert_tag 3');
+        // console.log('RESULT is', RESULT);
         // return RESULT;
         } catch (error) {
             // (()=>{throw new Error('既に同じタグがついているか、何かのタグの新規追加エラー')})()
@@ -703,7 +703,7 @@ console.log('make_tag_and_insert_tag_for_insert_tag 2');
             ? null
             // : (()=>{throw new Error({res: 'links_tagsにレコードを挿入できませんでした', status: 500})})();
             : (()=>{throw new Error('links_tagsにレコードを挿入できませんでした')})();
-console.log('make_tag_and_insert_tag_for_insert_tag 3');
+// console.log('make_tag_and_insert_tag_for_insert_tag 3');
         return newTag;
         } catch (error) {
             // (()=>{throw new Error('既に同じタグがついているか、何かの既存タグ追加エラー')})()
@@ -718,9 +718,9 @@ app.post('/insert_tag', (req, res) => {
 
 
         // const error_check_result = error_check_insert_tag(req.body.new_tag);
-        const error_check_result = all_validation_checking_client_server_both['validation_insert_tag'](req.body.new_tag);
-        console.log(error_check_result);
-        error_check_result === 'OK' ? null : (()=>{throw new Error(error_check_result)})();
+const error_check_result = all_validation_checking_client_server_both['validation_insert_tag'](req.body.new_tag);
+// console.log('error_check_result', error_check_result);
+error_check_result === 'OK' ? null : (()=>{throw new Error(error_check_result)})();
 
 
 

@@ -11,11 +11,12 @@
 <style>
 .flex_parent{
   display:flex;
+  place-content: flex-start;
 }
 .flex_child{
   display:flex;
-  justify-content:center;
-  align-items:center;
+  /* justify-content: center; */
+  /* align-items:center; */
   /* width:100px; */
   /* height:100px; */
 }
@@ -55,6 +56,7 @@
 <div>
 show_user: <button v-if="show_user" @click="show_all_user">{{ show_user }}</button>
 show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
+change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}</button>
 </div>
 
 <!-- <input type="url" v-model="link" placeholder="link"> -->
@@ -66,6 +68,14 @@ show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
     <div v-if="web_data['message']" class="flex_child">
     <ul>
     <li v-for="(DATA_VAL, DATA_IDX) in web_data['message']">
+        <ul>
+            <li v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+                <button @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+                )">synapse: {{ Other_Of_One }}</button>
+            </li>
+        </ul>
         <div>data_type: {{ DATA_VAL['data_type'] }}</div>
         <button @click="change_TOP_OF_TYPE_and_change_list_order(DATA_VAL['data_type'])">change_TOP_OF_TYPE_and_change_list_order</button>
         <div>data_1: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'] }}</div>
@@ -362,6 +372,7 @@ DATA_TYPE_ARRAY: [
 
 show_user: '',
 show_tag: '',
+show_order_by: 'DESC',
 
     }},
 watch: {
@@ -379,6 +390,12 @@ watch: {
         deep: true,
     },
     show_tag: {
+        async handler(newVal, oldVal) {
+            await this.fetch_read_all();
+        },
+        deep: true,
+    },
+    show_order_by: {
         async handler(newVal, oldVal) {
             await this.fetch_read_all();
         },
@@ -415,11 +432,13 @@ async fetch_hello(){
 async fetch_read_all(){
     this.show_user = this.show_user === '' ? '' : this.show_user;
     this.show_tag = this.show_tag === '' ? '' : this.show_tag;
+
     const params_for_get = {
-    user: this.show_user,
-    tag: this.show_tag,
-    //   page: 1,
-    //   limit: 10
+        user: this.show_user,
+        tag: this.show_tag,
+        order_by: this.show_order_by,
+        //   page: 1,
+        //   limit: 10
     };
     const url = new URL('http://localhost:8000/read_all');
     url.search = new URLSearchParams(params_for_get).toString();
@@ -680,6 +699,9 @@ change_show_tag(TAG){
 },
 show_all_tag(){
     this.show_tag = '';
+},
+change_show_order_by(){
+    this.show_order_by = this.show_order_by === 'DESC' ? 'ASC' : 'DESC';
 },
 
 },

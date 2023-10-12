@@ -68,6 +68,10 @@ visibility: hidden;
 .column-3-none{
 visibility: hidden;
 }
+.textarea-column-0{
+display: grid;
+grid-template-columns: 1fr 1fr;
+}
 .textarea-column-1{
 display: grid;
 grid-template-columns: 1fr 1fr;
@@ -251,6 +255,110 @@ font-size: 2.5rem;
     </div>
     <a :href="data11" class="link_text">{{data11}}</a>
 
+    <div class="textarea-column-0">
+    <textarea name="" id="textarea-column-0-1" rows="30" cols="" v-model="web_data1"></textarea>
+    <textarea name="" id="textarea-column-0-2" rows="30" cols="" v-model="web_data2"></textarea>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div>
+        show_user: <button v-if="show_user" @click="show_all_user">{{ show_user }}</button>
+        show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
+        change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}</button>
+    </div>
+
+
+    <div v-if="q_a_web_data" class="flex_child">
+        <ul>
+        <li v-for="(DATA_VAL, DATA_IDX) in q_a_web_data">
+            <div>data_type: {{ DATA_VAL['data_type'] }}</div>
+            <!-- <button @click="change_TOP_OF_TYPE_and_change_list_order(DATA_VAL['data_type'])">change_TOP_OF_TYPE_and_change_list_order</button> -->
+            <div>data_1: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'] }}</div>
+            <div>data_2: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'] }}</div>
+            <button @click="download_data(DATA_IDX)">download_data</button>
+            <div>id: {{ DATA_VAL['id'] }}</div>
+            <div>link: {{ DATA_VAL['link'] }}</div>
+            <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
+            <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
+            <!-- <input type="text" v-model="comment" placeholder="comment"> -->
+            <!-- <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button> -->
+            <ul>
+            <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+                id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }}
+                <!-- comment: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }} -->
+                <!-- <button @click="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_delete_comment</button> -->
+                <!-- <input type="text" v-model="comment_reply" placeholder="comment_reply"> -->
+                <!-- <button @click="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_insert_comment_reply</button> -->
+                <ul>
+                    <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+                    id: {{ REPLIES['id'] }}
+                    reply: {{ REPLIES['reply'] }}
+                    username: <button @click="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                    <!-- <button @click="fetch_delete_comment_reply(REPLIES['id'])">fetch_delete_comment_reply</button> -->
+                    </li>
+                </ul>
+            </li>
+            </ul>
+            <!-- <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span> -->
+            <!-- <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button> -->
+    
+            <ul>
+            <li v-for="(Tag, Tag_I) in DATA_VAL['tags']">
+                <span>id: {{Tag['id']}}</span>        
+                <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
+                <!-- <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button> -->
+            </li>
+            </ul>
+            <div>
+                <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+                <datalist id="tag-options">
+                    <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+                </datalist>
+                <!-- <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button> -->
+            </div>
+            
+            <div>
+                <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
+            </div>
+        </li>
+        </ul>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
     <div class="textarea-column-1">
     <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data6"></textarea>
     <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data3"></textarea>
@@ -360,16 +468,31 @@ column_2_none: false,
 column_3_none: false,
 progress_val: 0,
 
-fib_text: '',
-fib_option: '',
-fib_qa_text: '',
-fib_options: [
-'',
-'',
-'',
+
+name: 'user1',
+password: 'user_pass1',
+tags: [],
+search_tag: '',
+
+
+web_data: {},
+q_a_web_data: {},
+DATA_TYPE_ARRAY: [
+    'q_a',
+    'f_i_b',
+    'i_t_n',
 ],
-fib_a: '',
-fib_data: [],
+
+show_user: '',
+show_tag: '',
+show_order_by: 'DESC',
+
+data_type: 'q_a',
+web_data1: '',
+web_data2: '',
+
+
+
 }},
 watch: {
 data3: {
@@ -395,6 +518,8 @@ this.css_var_set('--css-var-root-font-size', "12px");
 beforeMount(){
 },
 mounted() {
+this.fetch_read_all();
+
 this.processing();
 this.save_data_load();
 this.fn15();
@@ -653,15 +778,75 @@ test_data1(){
 
 
 
+async fetch_read_all(){
+    this.show_user = this.show_user === '' ? '' : this.show_user;
+    this.show_tag = this.show_tag === '' ? '' : this.show_tag;
+    const params_for_get = {
+        user: this.show_user,
+        tag: this.show_tag,
+        order_by: this.show_order_by,
+    };
+    const url = new URL('http://localhost:8000/read_all');
+    url.search = new URLSearchParams(params_for_get).toString();
+    const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
+    this.web_data = await res.json(); console.log(this.web_data);
+    this.only_service_data();
+},
+only_service_data(){
+    // this.data_type = this.web_data.message[ID].data_type;
+    // this.data_type = 
+    this.q_a_web_data = this.web_data.message.filter(V=>this.data_type === 'q_a');
+},
+set_data(){
+    // this.web_data1 = JSON.parse(this.web_data.message[ID].data_json_str).data1;
+    // this.web_data2 = JSON.parse(this.web_data.message[ID].data_json_str).data2;
+},
 
 
+other_data_type(DATA_TYPE){
+    return this.DATA_TYPE_ARRAY.filter(V=>V !== DATA_TYPE);
+},
 
+data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
+    return JSON.parse(JSON_STR_DATA1_DATA2);
+},
+date_time_form(DATE_TIME){
+    // const date = new Date('2023-09-22T16:40:19.249Z');
+    const date = new Date(DATE_TIME);
+    const formattedDate = date.toLocaleString('ja-JP', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false});
+    // console.log(formattedDate);
+    return formattedDate;
+},
+change_show_user(USER){
+    this.show_user = USER;
+},
+show_all_user(){
+    this.show_user = '';
+},
+change_show_tag(TAG){
+    this.show_tag = TAG;
+},
+show_all_tag(){
+    this.show_tag = '';
+},
+change_show_order_by(){
+    this.show_order_by = this.show_order_by === 'DESC' ? 'ASC' : 'DESC';
+},
 
+async fetch_get_tags_for_autocomplete(){
+    const res = await fetch('http://localhost:8000' + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify({ name: this.name, password: this.password, search_tag: this.search_tag }),
+    });
+    const data = await res.json();
+    this.tags = data['message'];
+    // this.new_tag = '';
+    // const is_include_search_tag = this.tags.some((TAG) => TAG['tag'] === this.search_tag);
+    // this.new_tag = is_include_search_tag ? '' : this.search_tag;
+    // console.log('this.new_tag',this.new_tag);
+    // console.log('is_include_search_tag',is_include_search_tag);
+    // console.log('this.search_tag',this.search_tag);
 
-
-
-
-
+},
 
 // collapseChanger(){
 // document.querySelector(":root").classList.value === "close" ? document.querySelector(":root").classList.remove("close") : document.querySelector(":root").classList.add("close");

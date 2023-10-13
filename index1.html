@@ -509,6 +509,25 @@ data6: {
     },
     deep: true
 },
+
+show_user: {
+    async handler(newVal, oldVal) {
+        await this.fetch_read_all();
+    },
+    deep: true,
+},
+show_tag: {
+    async handler(newVal, oldVal) {
+        await this.fetch_read_all();
+    },
+    deep: true,
+},
+show_order_by: {
+    async handler(newVal, oldVal) {
+        await this.fetch_read_all();
+    },
+    deep: true,
+},
 },
 beforeCreate(){
 },

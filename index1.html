@@ -68,10 +68,6 @@ visibility: hidden;
 .column-3-none{
 visibility: hidden;
 }
-.textarea-column-0{
-display: grid;
-grid-template-columns: 1fr 1fr;
-}
 .textarea-column-1{
 display: grid;
 grid-template-columns: 1fr 1fr;
@@ -255,10 +251,10 @@ font-size: 2.5rem;
     </div>
     <a :href="data11" class="link_text">{{data11}}</a>
 
-    <div class="textarea-column-0">
+    <!-- <div class="textarea-column-0"> -->
     <!-- <textarea name="" id="textarea-column-0-1" rows="30" cols="" v-model="web_data1"></textarea> -->
     <!-- <textarea name="" id="textarea-column-0-2" rows="30" cols="" v-model="web_data2"></textarea> -->
-    </div>
+    <!-- </div> -->
 
 
 
@@ -280,6 +276,13 @@ font-size: 2.5rem;
         change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}</button>
     </div>
 
+    <div class="all_tags" v-if="tags && show_tag === ''">
+        <ul>
+            <li v-for="(tag, tag_i) in tags">
+                {{tag['id']}}: <button @click="change_show_tag(tag['tag'])">{{ tag['tag'] }}</button>
+            </li>
+        </ul>
+    </div>
 
     <div v-if="q_a_web_data" class="flex_child">
         <ul>
@@ -488,8 +491,6 @@ show_tag: '',
 show_order_by: 'DESC',
 
 data_type: 'q_a',
-// web_data1: '',
-// web_data2: '',
 
 
 
@@ -528,6 +529,7 @@ show_order_by: {
     },
     deep: true,
 },
+
 },
 beforeCreate(){
 },
@@ -538,6 +540,7 @@ beforeMount(){
 },
 mounted() {
 this.fetch_read_all();
+this.fetch_get_tags_for_autocomplete();
 
 this.processing();
 this.save_data_load();
@@ -796,7 +799,9 @@ test_data1(){
 
 
 
-
+only_service_data(){
+    this.q_a_web_data = this.web_data.message.filter(V=> V.data_type === this.data_type);
+},
 async fetch_read_all(){
     this.show_user = this.show_user === '' ? '' : this.show_user;
     this.show_tag = this.show_tag === '' ? '' : this.show_tag;
@@ -811,11 +816,10 @@ async fetch_read_all(){
     this.web_data = await res.json(); console.log(this.web_data);
     this.only_service_data();
 },
-only_service_data(){
-    this.q_a_web_data = this.web_data.message.filter(V=> V.data_type === this.data_type);
+data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
+    return JSON.parse(JSON_STR_DATA1_DATA2);
 },
 download_data(Data_Id){
-    console.log(Data_Id);
     const pre_data1_2 = app.q_a_web_data.filter(V=>V.data_type === 'q_a').filter(V=> V.id === Data_Id )[0];
     const pre_data1 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data1'];
     const pre_data2 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data2'];
@@ -823,22 +827,11 @@ download_data(Data_Id){
     this.data3 = pre_data2;
     this.all_error_check();
     this.processing();
-
-},
-
-
-// other_data_type(DATA_TYPE){
-//     return this.DATA_TYPE_ARRAY.filter(V=>V !== DATA_TYPE);
-// },
-
-data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
-    return JSON.parse(JSON_STR_DATA1_DATA2);
 },
 date_time_form(DATE_TIME){
     // const date = new Date('2023-09-22T16:40:19.249Z');
     const date = new Date(DATE_TIME);
     const formattedDate = date.toLocaleString('ja-JP', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false});
-    // console.log(formattedDate);
     return formattedDate;
 },
 change_show_user(USER){
@@ -856,25 +849,13 @@ show_all_tag(){
 change_show_order_by(){
     this.show_order_by = this.show_order_by === 'DESC' ? 'ASC' : 'DESC';
 },
-
 async fetch_get_tags_for_autocomplete(){
     const res = await fetch('http://localhost:8000' + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, search_tag: this.search_tag }),
     });
     const data = await res.json();
     this.tags = data['message'];
-    // this.new_tag = '';
-    // const is_include_search_tag = this.tags.some((TAG) => TAG['tag'] === this.search_tag);
-    // this.new_tag = is_include_search_tag ? '' : this.search_tag;
-    // console.log('this.new_tag',this.new_tag);
-    // console.log('is_include_search_tag',is_include_search_tag);
-    // console.log('this.search_tag',this.search_tag);
-
 },
-
-// collapseChanger(){
-// document.querySelector(":root").classList.value === "close" ? document.querySelector(":root").classList.remove("close") : document.querySelector(":root").classList.add("close");
-// },
 
 
 

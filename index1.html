@@ -256,8 +256,8 @@ font-size: 2.5rem;
     <a :href="data11" class="link_text">{{data11}}</a>
 
     <div class="textarea-column-0">
-    <textarea name="" id="textarea-column-0-1" rows="30" cols="" v-model="web_data1"></textarea>
-    <textarea name="" id="textarea-column-0-2" rows="30" cols="" v-model="web_data2"></textarea>
+    <!-- <textarea name="" id="textarea-column-0-1" rows="30" cols="" v-model="web_data1"></textarea> -->
+    <!-- <textarea name="" id="textarea-column-0-2" rows="30" cols="" v-model="web_data2"></textarea> -->
     </div>
 
 
@@ -284,13 +284,13 @@ font-size: 2.5rem;
     <div v-if="q_a_web_data" class="flex_child">
         <ul>
         <li v-for="(DATA_VAL, DATA_IDX) in q_a_web_data">
-            <div>data_type: {{ DATA_VAL['data_type'] }}</div>
+            <!-- <div>data_type: {{ DATA_VAL['data_type'] }}</div> -->
             <!-- <button @click="change_TOP_OF_TYPE_and_change_list_order(DATA_VAL['data_type'])">change_TOP_OF_TYPE_and_change_list_order</button> -->
             <div>data_1: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'] }}</div>
             <div>data_2: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'] }}</div>
-            <button @click="download_data(DATA_IDX)">download_data</button>
+            <button @click="download_data(DATA_VAL['id'])">download_data</button>
             <div>id: {{ DATA_VAL['id'] }}</div>
-            <div>link: {{ DATA_VAL['link'] }}</div>
+            <!-- <div>link: {{ DATA_VAL['link'] }}</div> -->
             <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
             <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
             <!-- <input type="text" v-model="comment" placeholder="comment"> -->
@@ -330,9 +330,9 @@ font-size: 2.5rem;
                 <!-- <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button> -->
             </div>
             
-            <div>
-                <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
-            </div>
+            <!-- <div> -->
+                <!-- <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button> -->
+            <!-- </div> -->
         </li>
         </ul>
     </div>
@@ -488,8 +488,8 @@ show_tag: '',
 show_order_by: 'DESC',
 
 data_type: 'q_a',
-web_data1: '',
-web_data2: '',
+// web_data1: '',
+// web_data2: '',
 
 
 
@@ -793,19 +793,24 @@ async fetch_read_all(){
     this.only_service_data();
 },
 only_service_data(){
-    // this.data_type = this.web_data.message[ID].data_type;
-    // this.data_type = 
-    this.q_a_web_data = this.web_data.message.filter(V=>this.data_type === 'q_a');
+    this.q_a_web_data = this.web_data.message.filter(V=> V.data_type === this.data_type);
 },
-set_data(){
-    // this.web_data1 = JSON.parse(this.web_data.message[ID].data_json_str).data1;
-    // this.web_data2 = JSON.parse(this.web_data.message[ID].data_json_str).data2;
+download_data(Data_Id){
+    console.log(Data_Id);
+    const pre_data1_2 = app.q_a_web_data.filter(V=>V.data_type === 'q_a').filter(V=> V.id === Data_Id )[0];
+    const pre_data1 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data1'];
+    const pre_data2 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data2'];
+    this.data6 = pre_data1;
+    this.data3 = pre_data2;
+    this.all_error_check();
+    this.processing();
+
 },
 
 
-other_data_type(DATA_TYPE){
-    return this.DATA_TYPE_ARRAY.filter(V=>V !== DATA_TYPE);
-},
+// other_data_type(DATA_TYPE){
+//     return this.DATA_TYPE_ARRAY.filter(V=>V !== DATA_TYPE);
+// },
 
 data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
     return JSON.parse(JSON_STR_DATA1_DATA2);

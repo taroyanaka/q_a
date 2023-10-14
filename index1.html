@@ -269,13 +269,13 @@ font-size: 2.5rem;
 
 
 
-
+<button @click="fn19" class="save_opener">📂</button>
+<div style='display: block;' ref="save_data_set_list_parent">
     <div>
         show_user: <button v-if="show_user" @click="show_all_user">{{ show_user }}</button>
         show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
         change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}</button>
     </div>
-
     all_tag:
     <div class="all_tags" v-if="tags && show_tag === ''">
         <ul>
@@ -341,8 +341,7 @@ font-size: 2.5rem;
         </li>
         </ul>
     </div>
-
-
+</div>
 
 
 

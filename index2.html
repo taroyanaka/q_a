@@ -221,7 +221,7 @@ font-size: 2.5rem;
             <button @click="save_data_to_all_save">🗂️</button>
         </div>
         <button @click="" class="save_opener">📂</button>
-        <ul class="save_data_set_list_parent" style='display: block;'>
+        <ul class="save_data_set_list_parent1" style='display: block;'>
         <li v-for="(DATAVAL, DATAIDX) in f_i_b_all_save" class="save_data_set_list">
             <span @click="save_data_set(DATAIDX)">{{ DATAVAL[0] ? [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] : '' }}</span>
             <button @click="save_data_set(DATAIDX)" class="save_data_set">📂</button>
@@ -923,7 +923,7 @@ data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
     return JSON.parse(JSON_STR_DATA1_DATA2);
 },
 download_data(Data_Id){
-    const pre_data1_2 = app.f_i_b_web_data.filter(V=>V.data_type === 'f_i_b').filter(V=> V.id === Data_Id )[0];
+    const pre_data1_2 = app.f_i_b_web_data.filter(V=>V.data_type === this.data_type).filter(V=> V.id === Data_Id )[0];
     const pre_data1 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data1'];
     const pre_data2 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data2'];
     // this.data6 = pre_data1;
@@ -931,7 +931,7 @@ download_data(Data_Id){
     // this.data3 = pre_data2;
     this.data2_connector(pre_data2);
     this.all_error_check();
-    this.processing();
+    // this.processing();
 },
 date_time_form(DATE_TIME){
     // const date = new Date('2023-09-22T16:40:19.249Z');
@@ -1010,6 +1010,17 @@ data2_connector(data2_param){
 
 },
 }).mount('.app');
+
+
+
+
+
+
+
+// this.download_data()の中の
+// this.all_error_check();
+// this.processing();
+// の処理をindex2.htmlとindex3.htmlで共通化するために移植or既存の関数の名称変更が必要
 </script>
 </body>
 </html>

@@ -10,11 +10,11 @@
 <script src="./lib/ramda.@0.28.0.js"></script>
 <style>
 .flex_parent{
-  display:flex;
+  display: flex;
   place-content: flex-start;
 }
 .flex_child{
-  display:flex;
+  display: flex;
   /* justify-content: center; */
   /* align-items:center; */
   /* width:100px; */
@@ -32,7 +32,6 @@
     <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
     <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
 </div>
-
 
 <button @click="fetch_read_all">fetch_read_all</button>
 
@@ -432,20 +431,13 @@ async fetch_hello(){
 async fetch_read_all(){
     this.show_user = this.show_user === '' ? '' : this.show_user;
     this.show_tag = this.show_tag === '' ? '' : this.show_tag;
-
     const params_for_get = {
         user: this.show_user,
         tag: this.show_tag,
         order_by: this.show_order_by,
-        //   page: 1,
-        //   limit: 10
     };
     const url = new URL('http://localhost:8000/read_all');
     url.search = new URLSearchParams(params_for_get).toString();
-    console.log(url);
-
-    // const res = await fetch('http://localhost:8000' + '/read_all', {method: 'GET', headers: {'Content-Type': 'application/json',},});
-    // const res = await fetch('http://localhost:8000' + '/read_all?user=user2', {method: 'GET', headers: {'Content-Type': 'application/json',},});
     const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
     this.web_data = await res.json(); console.log(this.web_data);
 },
@@ -703,6 +695,14 @@ show_all_tag(){
 change_show_order_by(){
     this.show_order_by = this.show_order_by === 'DESC' ? 'ASC' : 'DESC';
 },
+
+
+
+
+
+
+
+
 
 },
 }).mount('.app');

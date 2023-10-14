@@ -477,13 +477,10 @@ column_2_none: false,
 column_3_none: false,
 // progress_val: 0,
 
-
 name: 'user1',
 password: 'user_pass1',
 tags: [],
 search_tag: '',
-
-
 web_data: {},
 q_a_web_data: {},
 DATA_TYPE_ARRAY: [
@@ -491,16 +488,11 @@ DATA_TYPE_ARRAY: [
     'f_i_b',
     'i_t_n',
 ],
-
 show_user: '',
 show_tag: '',
 show_order_by: 'DESC',
-
 data_type: 'q_a',
 link: '',
-
-
-
 }},
 watch: {
 data3: {
@@ -831,7 +823,7 @@ data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
     return JSON.parse(JSON_STR_DATA1_DATA2);
 },
 download_data(Data_Id){
-    const pre_data1_2 = app.q_a_web_data.filter(V=>V.data_type === 'q_a').filter(V=> V.id === Data_Id )[0];
+    const pre_data1_2 = this.q_a_web_data.filter(V=>V.data_type === 'q_a').filter(V=> V.id === Data_Id )[0];
     const pre_data1 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data1'];
     const pre_data2 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data2'];
     // this.data6 = pre_data1;

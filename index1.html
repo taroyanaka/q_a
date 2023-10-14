@@ -834,8 +834,10 @@ download_data(Data_Id){
     const pre_data1_2 = app.q_a_web_data.filter(V=>V.data_type === 'q_a').filter(V=> V.id === Data_Id )[0];
     const pre_data1 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data1'];
     const pre_data2 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data2'];
-    this.data6 = pre_data1;
-    this.data3 = pre_data2;
+    // this.data6 = pre_data1;
+    this.data1_connector(pre_data1);
+    // this.data3 = pre_data2;
+    this.data2_connector(pre_data2);
     this.all_error_check();
     this.processing();
 },
@@ -876,7 +878,6 @@ try {
             default: return 'OK'; break;
         }
     };
-
     const error_check_insert_data = (data_type, data_json_str) => {
         const is_include_DATA_TYPE = (target_data_type_str) => this.DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
         switch (true) {
@@ -886,17 +887,10 @@ try {
             default: return 'OK'; break;
         }
     };
-
-    error_check_data1_data2(this.data6, this.data3) === 'OK' ? null : (()=>{throw new Error(error_check_data1_data2(this.data1, this.data2))})();
-
-
+    error_check_data1_data2(this.data1_connector(), this.data2_connector()) === 'OK' ? null : (()=>{throw new Error(error_check_data1_data2(this.data1, this.data2))})();
     const data_convert_jsonstr = (data1, data2) => JSON.stringify({'data1': data1, 'data2': data2});
-
-    // this.data6とthis.data3は、data1とdata2に変換される。
-    const data_json_str = data_convert_jsonstr(this.data6, this.data3);
-
+    const data_json_str = data_convert_jsonstr(this.data1_connector(), this.data2_connector());
     error_check_insert_data(this.data_type, data_json_str) === 'OK' ? null : (()=>{throw new Error(error_check_insert_data(this.data_type, data_json_str))})();
-
     const res = await fetch('http://localhost:8000' + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, link: this.link,
             data_type: this.data_type,
@@ -908,7 +902,15 @@ try {
     console.log(error);
 }
 },
-
+// this.data1_connector()とthis.data2_connector()によって、webのdata1とdata2は変換される。
+data1_connector(data1_param){
+    if(data1_param){this.data6 = data1_param};
+    return this.data6;
+},
+data2_connector(data2_param){
+    if(data2_param){this.data3 = data2_param};
+    return this.data3;
+},
 
 
 

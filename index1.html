@@ -276,10 +276,12 @@ font-size: 2.5rem;
         change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}</button>
     </div>
 
+    all_tag:
     <div class="all_tags" v-if="tags && show_tag === ''">
         <ul>
             <li v-for="(tag, tag_i) in tags">
-                {{tag['id']}}: <button @click="change_show_tag(tag['tag'])">{{ tag['tag'] }}</button>
+                <!-- {{tag['id']}}: -->
+                <button @click="change_show_tag(tag['tag'])">{{ tag['tag'] }}</button>
             </li>
         </ul>
     </div>
@@ -365,6 +367,11 @@ font-size: 2.5rem;
     <div class="textarea-column-1">
     <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data6"></textarea>
     <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data3"></textarea>
+    </div>
+    <div>
+        <button @click="fetch_insert_link">fetch_insert_link</button>
+        <input type="text" v-model="name" placeholder="name">
+        <input type="password" v-model="password" placeholder="password">
     </div>
     <button @click="fn21(1)" class="font_sizing">◉</button>
     <button @click="fn21(-1)" class="font_sizing">⦿</button>
@@ -491,6 +498,7 @@ show_tag: '',
 show_order_by: 'DESC',
 
 data_type: 'q_a',
+link: '',
 
 
 
@@ -856,7 +864,47 @@ async fetch_get_tags_for_autocomplete(){
     const data = await res.json();
     this.tags = data['message'];
 },
+async fetch_insert_link(){
+try {
+    const error_check_data1_data2 = (data1, data2) => {
+        switch (true) {
+            case data1 === undefined || data1 === null || data1.length === 0: return 'data1が空です'; break;
+            case data2 === undefined || data2 === null || data2.length === 0: return 'data2が空です'; break;
+            default: return 'OK'; break;
+        }
+    };
 
+    const error_check_insert_data = (data_type, data_json_str) => {
+        const is_include_DATA_TYPE = (target_data_type_str) => this.DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
+        switch (true) {
+            case data_json_str === undefined: return 'dataが空です'; break;
+            case data_json_str.length > 10000: return 'dataが長すぎます'; break;
+            case !is_include_DATA_TYPE(data_type): return '許可されていないdata_typeです'; break;
+            default: return 'OK'; break;
+        }
+    };
+
+    error_check_data1_data2(this.data6, this.data3) === 'OK' ? null : (()=>{throw new Error(error_check_data1_data2(this.data1, this.data2))})();
+
+
+    const data_convert_jsonstr = (data1, data2) => JSON.stringify({'data1': data1, 'data2': data2});
+
+    // this.data6とthis.data3は、data1とdata2に変換される。
+    const data_json_str = data_convert_jsonstr(this.data6, this.data3);
+
+    error_check_insert_data(this.data_type, data_json_str) === 'OK' ? null : (()=>{throw new Error(error_check_insert_data(this.data_type, data_json_str))})();
+
+    const res = await fetch('http://localhost:8000' + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify({ name: this.name, password: this.password, link: this.link,
+            data_type: this.data_type,
+            data_json_str: data_json_str,
+        }),
+    });
+    const data = await res.json(); console.log(data);
+} catch (error) {
+    console.log(error);
+}
+},
 
 
 

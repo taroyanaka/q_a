@@ -551,7 +551,7 @@ this.fetch_get_tags_for_autocomplete();
 
 this.processing();
 this.save_data_load();
-this.fn15();
+// this.fn15();
 // this.toggleDisplay();
 this.test_mode === false ? this.test_exe() : null;
 },
@@ -650,12 +650,12 @@ swap_q_a(){
 // this.progress_val = this.data11.length;
 // if(this.data11.length > 4000){this.data11 = ''};
 // },
-fn15(){
-if(new URL(window.location.href).searchParams.get("Q") && new URL(window.location.href).searchParams.get("A")){
-this.data6 = JSON.parse(new URL(window.location.href).searchParams.get("Q")).join("\n");
-this.data3 = JSON.parse(new URL(window.location.href).searchParams.get("A")).join("\n");
-}
-},
+// fn15(){
+// if(new URL(window.location.href).searchParams.get("Q") && new URL(window.location.href).searchParams.get("A")){
+// this.data6 = JSON.parse(new URL(window.location.href).searchParams.get("Q")).join("\n");
+// this.data3 = JSON.parse(new URL(window.location.href).searchParams.get("A")).join("\n");
+// }
+// },
 fn16(INDEX){
 this.data10.splice(INDEX, 1);
 },

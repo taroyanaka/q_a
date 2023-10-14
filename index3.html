@@ -129,31 +129,11 @@ justify-self: center;
 align-self: center;
 font-size: 3rem;
 }
-.link_button, .result_opener, .save_opener{
+.result_opener, .save_opener{
 width: 100%;
 height: 4rem;
 font-size: 1.5rem;
 position: relative;
-}
-.link_button{
-display: block;
-}
-.link_text{
-display: block;
-word-break: break-all;
-width: auto;
-inline-size: 33vw;
-overflow: hidden;
-}
-.link_button_top{
-position: absolute;
-right: 50%;
-z-index: 1;
-}
-.link_button_under{
-position: absolute;
-width: 100%;
-z-index: 0;
 }
 .text_center{
 display: inline-block;
@@ -287,12 +267,6 @@ display: inline;
 </li>
 </ul>
 
-<div class="link_button" @click="fn14">
-    <button class="link_button_top">🌐</button>
-    <progress max="4000" :value="progress_val" class="link_button_under"></progress>
-</div>
-<a :href="data11" class="link_text">{{data11}}</a>
-
 <div class="textarea-column-1">
     <textarea v-model="data2" rows="50"></textarea>
     <textarea v-model="data3" rows="50"></textarea>
@@ -380,7 +354,6 @@ let data7 = null;
 let data8 = null;
 let data9 = null;
 let data10 = null;
-let data11 = null;
 
 
 
@@ -404,10 +377,8 @@ data7:[],
 data8:[],
 data9:[],
 data10:[],
-data11:'',
 
 all_save: [],
-progress_val: 0,
 
 test_mode: true,
 
@@ -444,7 +415,6 @@ beforeMount(){
 mounted() {
 this.save_data_load();
 this.init();
-this.fn15();
 // this.for_debug();
 this.test_mode === true ? (this.sample1(), sleep(100, this.test_exe)) : null;
 },
@@ -513,7 +483,6 @@ for_debug(){
     data8 = this.to_ary(this.data8);
     data9 = this.to_ary(this.data9);
     data10 = this.to_ary(this.data10);
-    data11 = this.to_ary(this.data11);
     console.log('data5', this.data5);
 },
 
@@ -629,17 +598,6 @@ fn17(INDEX){
 // trueだったら⭕️、falseだったら❎を返す関数
 true_or_false_to_emoji(bool){
     return bool ? "⭕️" : "❎";
-},
-fn14(){
-    this.data11 = this.data11 === '' ? window.location.origin + window.location.pathname + "?Q=" + JSON.stringify(this.to_ary(this.data2).split("\n")) + "&A=" + JSON.stringify(this.to_ary(this.data3).split("\n")) : '';
-    this.progress_val = this.data11.length;
-    if(this.data11.length > 4000){this.data11 = ''};
-},
-fn15(){
-    if(new URL(window.location.href).searchParams.get("Q") && new URL(window.location.href).searchParams.get("A")){
-        this.data2 = JSON.parse(new URL(window.location.href).searchParams.get("Q")).join("\n");
-        this.data3 = JSON.parse(new URL(window.location.href).searchParams.get("A")).join("\n");
-    }
 },
 
 css_var_set(VAR_NAME, VAR){

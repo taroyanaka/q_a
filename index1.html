@@ -236,8 +236,8 @@ font-size: 2.5rem;
         <button @click="swap_q_a">🔁</button>
         <button @click="save_data_to_all_save">🗂️</button>
     </div>
-    <button @click="fn19" class="save_opener">📂</button>
-    <ul style='display: block;' ref="save_data_set_list_parent">
+    <button @click="fn19_0" class="save_opener">📂</button>
+    <ul style='display: block' ref="save_data_set_list_parent1">
     <li v-for="(DATAVAL, DATAIDX) in all_save" class="save_data_set_list">
         <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span>
         <button @click="save_data_set(DATAIDX)" class="save_data_set">📂</button>
@@ -269,8 +269,8 @@ font-size: 2.5rem;
 
 
 
-<button @click="fn19" class="save_opener">📂</button>
-<div style='display: block;' ref="save_data_set_list_parent">
+<button @click="fn19_1" class="save_opener">📂</button>
+<div style='display: none' ref="save_data_set_list_parent2">
     <div>
         show_user: <button v-if="show_user" @click="show_all_user">{{ show_user }}</button>
         show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
@@ -674,9 +674,13 @@ fn18(){
             RESULTS.map(ELM=>ELM.style.display = 'none') :
             RESULTS.map(ELM=>ELM.style.display = 'block');
 },
-fn19(){
-    const THE_STYLE_DISPLAY = this.$refs.save_data_set_list_parent.style.display;
-    this.$refs.save_data_set_list_parent.style.display = (THE_STYLE_DISPLAY === 'block' || THE_STYLE_DISPLAY === '') ? 'none' : 'block';
+fn19_0(){
+    const THE_STYLE_DISPLAY1 = this.$refs.save_data_set_list_parent1.style.display;
+    this.$refs.save_data_set_list_parent1.style.display = (THE_STYLE_DISPLAY1 === 'block' || THE_STYLE_DISPLAY1 === '') ? 'none' : 'block';
+},
+fn19_1(){
+    const THE_STYLE_DISPLAY2 = this.$refs.save_data_set_list_parent2.style.display;
+    this.$refs.save_data_set_list_parent2.style.display = (THE_STYLE_DISPLAY2 === 'block' || THE_STYLE_DISPLAY2 === '') ? 'none' : 'block';
 },
 fn20(INDEX){
 this.data5[INDEX] = null;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>q_a</title>
+    <title>service_index</title>
     <link rel="stylesheet" href="./lib/reset.css">
     <script src="./lib/vue@3.2.36.global.prod.js"></script>
   <style>
@@ -22,13 +22,12 @@
 const app = Vue.createApp({
 data() {
     return {
-urlList: [
+serviceList: [
   'q_a',
   'f_i_b',
   'i_t_n',
 ],
-      // currentIndex: 0,
-      // isTextareaOpen: true,
+urlList: [],
     }
 },
 // watch: {
@@ -53,11 +52,7 @@ methods: {
     },
     loadSites() {
       // getBaseURL()でurlListを更新する
-      this.urlList = this.to_ary([
-        'q_a',
-        'f_i_b',
-        'i_t_n',
-      ]).map(it => getBaseURL() + it + '.html');
+      this.urlList = this.to_ary(this.serviceList).map(it => getBaseURL() + '/' + it + '.html');
       return this.urlList;
     },
 
@@ -70,7 +65,7 @@ methods: {
 function getBaseURL() {
   const url = window.location.href;
   const baseURL = new URL(url).origin;
-  return baseURL + '/';
+  return baseURL;
 }
 
 </script>

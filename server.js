@@ -121,9 +121,6 @@ const collect_value_for_test = (Prop, Val) => {
                 case !is_include_WHITE_LIST_URL(link): return '許可されていないURLです'; break;
                 default: return 'OK'; break;
             }
-            // !is_url(link) ? (()=>{throw new Error('URLの形式が正しくありません')})() : null;
-            // console.log('link is' + link + '!!');
-            // return !is_url(link) ? 'URLの形式が正しくありません' : null;
         };
 
         const error_check_insert_data = (data_type, data_json_str) => {
@@ -140,9 +137,6 @@ const collect_value_for_test = (Prop, Val) => {
                 case !is_include_DATA_TYPE(data_type): return '許可されていないdata_typeです'; break;
                 default: return 'OK'; break;
             }
-            // !is_url(link) ? (()=>{throw new Error('URLの形式が正しくありません')})() : null;
-            // console.log('link is' + link + '!!');
-            // return !is_url(link) ? 'URLの形式が正しくありません' : null;
         };
         // all_validation_checking_client_server_bothにそれぞれの関数を入れる
         const all_validation_checking_client_server_both = {
@@ -386,15 +380,6 @@ app.get('/read_all', (req, res) => {
             const WHERE_USER = USER ? ' WHERE users.username = @user ' : null;
             const WHERE = WHERE_TAG_AND_USER || WHERE_TAG || WHERE_USER || null;
 
-//             console.log(
-// 'REQ_TAG', REQ_TAG,
-// 'WHERE_TAG_AND_USER', WHERE_TAG_AND_USER,
-// 'WHERE_TAG', WHERE_TAG,
-// 'WHERE_USER', WHERE_USER,
-// 'WHERE', WHERE,
-// 'req.query.tag', req.query.tag,
-//             );
-
             const ORDER_BY = req.query.order_by === 'ASC' ? 'ASC' : 'DESC';
             const ORDER_BY_COLUMN = req.query.order_by_column ? req.query.order_by_column : 'id';
             // 特定のソート項目が指定されていない場合は、links.idでソートする。ソート項目は['id', 'created_at', 'updated_at']のいずれか
@@ -489,9 +474,6 @@ app.get('/read_all', (req, res) => {
               };
             });
         
-        // res.json(QUERY_WITH_PARAM_OBJ);
-        // res.json('test');
-        // res.json(pre_result);
     res.status(200)
         .json({result: 'success'
             ,status: 200
@@ -612,7 +594,6 @@ app.post('/like_increment_or_decrement', (req, res) => {
     };
     const insert_tag_for_insert_tag = (REQ, TAG) => {
         try {
-// console.log('insert_tag_for_insert_tag 1');
         // linkに対して既に同じタグがついているかチェックし、ついていたらエラーを返す
         const TAG_RESULT = db.prepare(`
         SELECT
@@ -625,10 +606,6 @@ app.post('/like_increment_or_decrement', (req, res) => {
         TAG_RESULT
             ? (()=>{throw new Error('既に同じタグがついています')})()
             : null;
-// console.log('insert_tag_for_insert_tag 2');
-console.log(REQ.body.link_id, TAG.id, TAG, TAG_RESULT);
-
-// const TAG_ID = TAG_RESULT === null ? db.prepare(`SELECT id, tag FROM tags WHERE tag = ?`).get(TAG).id : null;
             
         const RESULT = db.prepare(`
             INSERT INTO links_tags (link_id, tag_id, created_at, updated_at)
@@ -646,9 +623,6 @@ console.log(REQ.body.link_id, TAG.id, TAG, TAG_RESULT);
                 })
                 ? 'OK'
                 : (()=>{throw new Error('links_tagsにレコードを挿入できませんでした')})();
-// console.log('insert_tag_for_insert_tag 3');
-        // console.log('RESULT is', RESULT);
-        // return RESULT;
         } catch (error) {
             // (()=>{throw new Error('既に同じタグがついているか、何かのタグの新規追加エラー')})()
             (()=>{throw new Error(error.message)})()
@@ -657,23 +631,6 @@ console.log(REQ.body.link_id, TAG.id, TAG, TAG_RESULT);
     };
     const make_tag_and_insert_tag_for_insert_tag = (TAG, LINK_ID) => {
         try {
-console.log(
-    'TAG', TAG,
-    'LINK_ID', LINK_ID
-)
-console.log('make_tag_and_insert_tag_for_insert_tag 1');
-    //     // linkに対して既に同じタグがついているかチェックし、ついていたらエラーを返す
-    //     db.prepare(`
-    //     SELECT
-    //     tags.id AS id, tags.tag AS tag
-    //     FROM tags
-    //     LEFT JOIN links_tags ON tags.id = links_tags.tag_id
-    //           links_tags.tag_id
-    //     WHERE links_tags.link_id = ?
-    //     AND tags.tag = ?
-    //     `).get(LINK_ID, TAG)
-    //             ? (()=>{throw new Error('既に同じタグがついています')})()
-    //             : null;
 // linkに対して既に同じタグがついているかチェックし、ついていたらエラーを返す
 const TAG_RESULT = db.prepare(`
 SELECT
@@ -703,7 +660,6 @@ console.log('make_tag_and_insert_tag_for_insert_tag 2');
             ? null
             // : (()=>{throw new Error({res: 'links_tagsにレコードを挿入できませんでした', status: 500})})();
             : (()=>{throw new Error('links_tagsにレコードを挿入できませんでした')})();
-// console.log('make_tag_and_insert_tag_for_insert_tag 3');
         return newTag;
         } catch (error) {
             // (()=>{throw new Error('既に同じタグがついているか、何かの既存タグ追加エラー')})()
@@ -717,19 +673,16 @@ app.post('/insert_tag', (req, res) => {
     collect_value_for_test('__/insert_tag__req.body.link_id', req.body.link_id);
 
 
-        // const error_check_result = error_check_insert_tag(req.body.new_tag);
-const error_check_result = all_validation_checking_client_server_both['validation_insert_tag'](req.body.new_tag);
-// console.log('error_check_result', error_check_result);
-error_check_result === 'OK' ? null : (()=>{throw new Error(error_check_result)})();
+    // const error_check_result = error_check_insert_tag(req.body.new_tag);
+    const error_check_result = all_validation_checking_client_server_both['validation_insert_tag'](req.body.new_tag);
+    error_check_result === 'OK' ? null : (()=>{throw new Error(error_check_result)})();
 
 
 
 
         const user = get_user_with_permission(req);
         user || user.writable ? null : (()=>{throw new Error('書き込み権限がありません')})();
-    // console.log('get_tag_id_by_tag_name_for_insert_tag');
         const tag_id = get_tag_id_by_tag_name_for_insert_tag(req.body.new_tag) ? req.body.new_tag : null;
-    // console.log('tag_id', tag_id);
     tag_id ? insert_tag_for_insert_tag(req, req.body.new_tag) : make_tag_and_insert_tag_for_insert_tag(req.body.new_tag, req.body.link_id);
 
     collect_value_for_test('__/insert_tag__tag_id', tag_id);
@@ -818,11 +771,6 @@ app.post('/delete_comment', (req, res) => {
         console.log(error.message);
         res.status(400).json({status: 400, result: 'fail', message: error.message});
     }
-    //     res.json({message: 'success'});
-    // } catch (error) {
-    //     console.log(error);
-    //     error_response(res, '原因不明のエラー' + error);
-    // }
 });
 
 // comment_repliesのデータを挿入する
@@ -844,9 +792,6 @@ app.post('/insert_comment_reply', (req, res) => {
         db.prepare(`SELECT COUNT(*) AS count FROM comment_replies WHERE user_id = ? AND comment_id = ?`).get(user.user_id, req.body.comment_id).count > 0
             ? (()=>{throw new Error('同じユーザーから同じcommentへのreplyが既に存在する場合はエラー')})()
             : null;
-
-
-
         const response =
             db.prepare(`INSERT INTO comment_replies (user_id, comment_id, reply, created_at, updated_at) VALUES (?, ?, ?, ?, ?)`)
                 .run(user.user_id, req.body.comment_id, req.body.comment_reply, now(), now());
@@ -863,13 +808,8 @@ app.post('/insert_comment_reply', (req, res) => {
 
 app.post('/delete_comment_reply', (req, res) => {
     try {
-
         const user = get_user_with_permission(req);
         user || user.commentable ? null : (()=>{throw new Error('権限がありません1')})();
-
-console.log(
-    req.body.comment_reply_id, user.user_id
-)
 
         db.prepare(`SELECT * FROM comment_replies WHERE id = ? AND user_id = ?`).get(req.body.comment_reply_id, user.user_id)
             ?
@@ -983,16 +923,15 @@ app.post('/insert_link', (req, res) => {
 // req.body.data_json_str　はクライアント側でJSON.stringify()されている
 // req.body.data_json_str　はクライアント側でJSONストリングとJSONオブジェクトの相互変換をしている
 
-const error_check_data = all_validation_checking_client_server_both['validation_insert_data'](req.body.data_type, req.body.data_json_str);
-console.log(error_check_data);
-error_check_data === 'OK' ? null : (()=>{throw new Error(error_check_data)})();
+    const error_check_data = all_validation_checking_client_server_both['validation_insert_data'](req.body.data_type, req.body.data_json_str);
+    console.log(error_check_data);
+    error_check_data === 'OK' ? null : (()=>{throw new Error(error_check_data)})();
 
         const user = get_user_with_permission(req);
         user || user.writable ? null : (()=>{throw new Error('権限がありません')})();
         // 同じlinkが存在するなら、エラーを返す
         // const link_exists = db.prepare(`SELECT * FROM links WHERE link = ?`).get(req.body.link);
         // link_exists ? (()=>{throw new Error('同じlinkが存在します')})() : null;
-
 
         const response = db.prepare(`
             INSERT INTO links (user_id, link, data_type, data_json_str, created_at, updated_at) VALUES (

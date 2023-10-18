@@ -4,84 +4,31 @@
     <title>q_a</title>
     <link rel="stylesheet" href="./lib/reset.css">
     <script src="./lib/vue@3.2.36.global.prod.js"></script>
-<!--taro yanaka
-iframeは非推奨?
-
-いいえ、<iframe>自体は非推奨ではありませんが、使用には注意が必要です。
-<iframe>は、他のウェブサイトやコンテンツを埋め込むために使用されます。しかし、この方法はセキュリティ上の問題があることが知られています。例えば、<iframe>を使用すると、サイトの外部からの悪意のあるコンテンツを埋め込むことができます。
-代わりに、<iframe>の代替手段として、<object>、<embed>、またはHTML5の新しい要素である<video>や<audio>を使用することができます。また、セキュリティ上の問題を回避するために、<iframe>を使用する場合は、信頼できるソースからのコンテンツのみを埋め込むようにする必要があります。
-つまり、<iframe>は非推奨ではなく、使用には注意が必要です。適切に使用される場合、依然として有用なウェブ開発のツールとして機能することができます。
--->
   <style>
-.container {
-width: 100%;
-height: 100%;
-margin: 0 auto;
-}
-/* .row::after {
-content: "";
-clear: both;
-display: table;
-} */
-textarea{
-width: 100%;
-height: 200px;
-resize: none;
-overflow-y: hidden;
-}
-.textarea-container textarea {
-display: block;
-}
-.parent {
-width: 100%;
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-}
-button{
-height: 2rem;
-}
-button.child {
-width: 100%;
-max-width: 100%;
-}
-/* toggleTextareaを右端に寄せる */
-.toggleTextarea {
-float: right;
-width: 50%;
-}
   </style>
 </head>
 <body>
 <div class="app">
-    <div class="textarea-container">
-        <button @click="toggleTextarea" class="toggleTextarea">Toggle Textarea</button>
-        <textarea v-model="urls" @input="onInput" ref="textarea" ></textarea>
-    </div>
+<!-- urlListをul liでリスト表示してhrefで飛べるようにする -->
+<ul>
+  <li v-for="url in urlList">
+    <a :href="url">{{url}}</a>
+  </li>
+</ul>
 
-    <div class="parent">
-        <button class="child" v-for="(url, index) in urlList" :key="index" @click="changeUrl(index)">
-          {{ getFilenameFromURL(url) }}
-        </button>
-    </div>
-
-    <div class="container">
-    <!-- <div class="row"> -->
-        <iframe :src="urlList[currentIndex]" ref="iframe" frameborder="0" width="100%" height="400"></iframe>
-    <!-- </div> -->
-    </div>
 </div>
 </body>
 <script>
 const app = Vue.createApp({
 data() {
     return {
-      urls: `index1.html
-index2.html
-index3.html
-portal.html`,
-      urlList: [],
-      currentIndex: 0,
-      isTextareaOpen: true,
+urlList: [
+  'q_a',
+  'f_i_b',
+  'i_t_n',
+],
+      // currentIndex: 0,
+      // isTextareaOpen: true,
     }
 },
 // watch: {
@@ -94,9 +41,7 @@ portal.html`,
 beforeMounte(){
 },
 mounted() {
-    this.loadSites();
-    this.onInput();
-    sleep(500, this.adjustIframeSize);
+  this.loadSites();
 },
 beforeUpdate() {
 },
@@ -107,60 +52,25 @@ methods: {
         return JSON.parse(JSON.stringify(it));
     },
     loadSites() {
-      this.urlList = this.to_ary(this.urls).split('\n').map(V=>getBaseURL() + V).filter(url => url.trim() !== '')
-    },
-    adjustIframeSize() {
-        const iframe = this.$refs.iframe;
-        const win = iframe.contentWindow;
-        const doc = win.document;
-        const height = doc.body.scrollHeight;
-        const width = doc.body.scrollWidth;
-        iframe.width = `${width}px`;
-        iframe.height = `${height}px`;
-    },
-    changeUrl(index) {
-      this.currentIndex = index;
-      this.adjustIframeSize();
-    },
-    onInput() {
-      const textarea = this.$refs.textarea;
-      textarea.style.height = "auto";
-      const height = textarea.scrollHeight + "px";
-      textarea.style.height = height;
-    },
-    toggleTextarea() {
-        this.isTextareaOpen = !this.isTextareaOpen;
-        this.$refs.textarea.style.display = this.isTextareaOpen ? "block" : "none";
-    },
-    // URLからファイル名だけを取り出す関数
-    getFilenameFromURL(url) {
-        const filename = url.substring(url.lastIndexOf('/') + 1);
-        return filename;
+      // getBaseURL()でurlListを更新する
+      this.urlList = this.to_ary([
+        'q_a',
+        'f_i_b',
+        'i_t_n',
+      ]).map(it => getBaseURL() + it + '.html');
+      return this.urlList;
     },
 
 },
 }).mount('.app');
 
-// ms後に任意の関数を実行する関数、第一引数にmsを入れる、第二引数に関数を入れる
-// srcにURLを入れるときに使う
-function sleep(ms, fn) {
-    return new Promise(resolve => setTimeout(resolve, ms)).then(fn);
-};
-function removeFilenameFromPathname() {
-  const pathname = window.location.pathname;
-  const filename = pathname.substring(pathname.lastIndexOf('/') + 1);
-  if (filename.includes('.')) {
-    return pathname.substring(0, pathname.lastIndexOf('/'));
-  } else {
-    return pathname;
-  }
-}
+
 // テスト環境でも本番環境でも動く
 // http://127.0.0.1:3000/ or https://taroyanaka.github.io/q_a/ を想定
 function getBaseURL() {
   const url = window.location.href;
   const baseURL = new URL(url).origin;
-  return baseURL + removeFilenameFromPathname() +'/';
+  return baseURL + '/';
 }
 
 </script>

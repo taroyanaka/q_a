@@ -5,17 +5,19 @@
     <link rel="stylesheet" href="./lib/reset.css">
     <script src="./lib/vue@3.2.36.global.prod.js"></script>
   <style>
+.service_list{
+  font-size: 3rem;
+}
   </style>
 </head>
 <body>
 <div class="app">
 <!-- urlListをul liでリスト表示してhrefで飛べるようにする -->
 <ul>
-  <li v-for="url in urlList">
-    <a :href="url">{{url}}</a>
+  <li v-for="url, idx in urlList" class="service_list">
+    <a :href="url">{{serviceList[idx]['name']}}: {{serviceList[idx]['desc']}}</a>
   </li>
 </ul>
-
 </div>
 </body>
 <script>
@@ -23,9 +25,12 @@ const app = Vue.createApp({
 data() {
     return {
 serviceList: [
-  'q_a',
-  'f_i_b',
-  'i_t_n',
+  {'name': 'q_a', 'desc': 'flash card: Question Answer'},
+  {'name': 'f_i_b', 'desc': 'fill in blank question: Fill In Blank'},
+  {'name': 'i_t_n', 'desc': 'flash card with image: Image To Name'},
+  // portal(portal.html)
+  {'name': 'portal', 'desc': 'portal page: Portal'},
+
 ],
 urlList: [],
     }
@@ -59,7 +64,6 @@ methods: {
 },
 }).mount('.app');
 
-
 // テスト環境でも本番環境でも動く
 // http://127.0.0.1:3000/ or https://taroyanaka.github.io/q_a/ を想定
 function getBaseURL() {
@@ -67,6 +71,23 @@ function getBaseURL() {
   const baseURL = new URL(url).origin;
   return baseURL;
 }
+let tapCount = 0;
+let lastTapTime = 0;
+document.addEventListener('touchend', function(event) {
+  const currentTime = new Date().getTime();
+  const tapTime = currentTime - lastTapTime;
+  if (tapTime < 500 && tapCount === 2) {
+    // トリプルタップ
+    console.log('トリプルタップ');
+    window.location.href = 'portal.html';
+    tapCount = 0;
+  } else if (tapTime < 500) {
+    tapCount++;
+  } else {
+    tapCount = 1;
+  }
+  lastTapTime = currentTime;
+});
 
 </script>
 </html>

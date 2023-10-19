@@ -198,8 +198,7 @@ font-size: 2.5rem;
 <body class="app">
 
 <div class="toggleDisplay_parent">
-<!-- <button @click="toggleDisplay" class="toggleDisplay">🔽</button> -->
-<button @click="" class="toggleDisplay">🔽</button>
+<button @click="go_to_portal_page" class="go_to_portal_page">🔽</button>
 </div>
 
 <div class="header_and_contents">
@@ -1005,6 +1004,9 @@ data2_connector(data2_param){
 },
 
 
+go_to_portal_page(){
+    window.location.href = 'portal.html';
+},
 
 
 

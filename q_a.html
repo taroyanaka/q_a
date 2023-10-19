@@ -218,8 +218,9 @@ font-size: 2.5rem;
 </head>
 <body class="app">
 
+
 <div class="toggleDisplay_parent">
-<button @click="toggleDisplay" class="toggleDisplay">🔽</button>
+<button @click="go_to_portal_page" class="go_to_portal_page">🔽</button>
 </div>
 
 <div class="header_and_contents">
@@ -911,17 +912,16 @@ data2_connector(data2_param){
     if(data2_param){this.data3 = data2_param};
     return this.data3;
 },
-
-
-toggleDisplay(){
-    
+go_to_portal_page(){
+    window.location.href = 'portal.html';
 },
-
-
-
 
 },
 }).mount('.app');
+
+
+
+
 </script>
 
 <script src="script_for_fill_in.js"></script>

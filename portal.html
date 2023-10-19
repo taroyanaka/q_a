@@ -9,6 +9,13 @@
 <script src="./lib/vue@3.2.36.global.prod.js"></script>
 <script src="./lib/ramda.@0.28.0.js"></script>
 <style>
+.service_list{
+  font-size: 3rem;
+}
+.display_none{
+    display: none;
+}
+
 .flex_parent{
   display: flex;
   place-content: flex-start;
@@ -22,7 +29,14 @@
 }
 </style>
 </head>
-<body class="app">    
+<body class="app">
+    <!-- service_listの表示非表示を切り替えられるボタン -->
+    <button @click="change_service_list_display">change_service_list_display</button>
+    <ul class="change_service_list_display_class" ref="change_service_list_display_class">
+        <li v-for="url, idx in urlList" class="service_list">
+          <a :href="url">{{serviceList[idx]['name']}}: {{serviceList[idx]['desc']}}</a>
+        </li>
+    </ul>
 
 <div>
     <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
@@ -373,6 +387,13 @@ show_user: '',
 show_tag: '',
 show_order_by: 'DESC',
 
+serviceList: [
+  {'name': 'q_a', 'desc': 'flash card: Question Answer'},
+  {'name': 'f_i_b', 'desc': 'fill in blank question: Fill In Blank'},
+  {'name': 'i_t_n', 'desc': 'flash card with image: Image To Name'},
+],
+urlList: [],
+
     }},
 watch: {
     // separate_each_listをdeep watchする
@@ -404,6 +425,7 @@ watch: {
 beforeMounte(){
 },
 mounted() {
+    this.loadSites();
     // this.fetch_hello_world();
     this.fetch_read_all();
     this.fetch_get_tags_for_autocomplete();
@@ -698,13 +720,46 @@ change_show_order_by(){
 
 
 
-
-
-
+to_ary(it){
+    return JSON.parse(JSON.stringify(it));
+},
+loadSites() {
+    // getBaseURL()でurlListを更新する
+    this.urlList = this.serviceList.map(it => getBaseURL() + '/' + it['name'] + '.html');
+    return this.urlList;
+},
+change_service_list_display(){
+    this.$refs.change_service_list_display_class.classList.toggle('display_none');
+},
 
 
 
 },
 }).mount('.app');
+
+// テスト環境でも本番環境でも動く
+// http://127.0.0.1:3000/ or https://taroyanaka.github.io/q_a/ を想定
+function getBaseURL() {
+  const url = window.location.href;
+  const baseURL = new URL(url).origin;
+  return baseURL;
+}
+let tapCount = 0;
+let lastTapTime = 0;
+document.addEventListener('touchend', function(event) {
+  const currentTime = new Date().getTime();
+  const tapTime = currentTime - lastTapTime;
+  if (tapTime < 500 && tapCount === 2) {
+    // トリプルタップ
+    console.log('トリプルタップ');
+    window.location.href = 'portal.html';
+    tapCount = 0;
+  } else if (tapTime < 500) {
+    tapCount++;
+  } else {
+    tapCount = 1;
+  }
+  lastTapTime = currentTime;
+});
 </script>
 </html>

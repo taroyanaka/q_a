@@ -52,12 +52,9 @@ beforeUpdate() {
 updated() {
 },
 methods: {
-    to_ary(it){
-        return JSON.parse(JSON.stringify(it));
-    },
     loadSites() {
       // getBaseURL()でurlListを更新する
-      this.urlList = this.to_ary(this.serviceList).map(it => getBaseURL() + '/' + it + '.html');
+      this.urlList = this.serviceList.map(it => getBaseURL() + '/' + it['name'] + '.html');
       return this.urlList;
     },
 
@@ -88,6 +85,9 @@ document.addEventListener('touchend', function(event) {
   }
   lastTapTime = currentTime;
 });
+function go_to_portal_page(){
+  window.location.href = 'portal.html';
+};
 
 </script>
 </html>

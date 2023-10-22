@@ -371,13 +371,24 @@ display: inline;
 <div class="column-2" :class="{'column-2-none': column_2_none}">
     <!-- <button @click="test_exe" class="test_exe" :style="{display: test_mode ? 'block' : 'none'}">test_exe</button> -->
 <ul class="centering">
+
+    <button @click="change_only_one_q_a_mode" class="check_button">📏</button>
+    <button @click="change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
+
     <li v-for="(item, IDX) in data5" :key="item" class="result_color" :style="{display: data5_result ? 'block' : 'none'}">
+        <div class="" v-if="only_one_q_a_mode ? IDX === current_index : true">
+
         <span class="OK_or_NG">{{ true_or_false_to_emoji(item[2]) }}</span>
         <span class="answer">{{ item[0] }}</span>
         <span class="any">
             <img :src="item2" :alt="item[0]" class="png_image png_image_back" @click="check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
         </span>
+        </div>
     </li>
+
+    <button @click="change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
+    <button @click="change_only_one_q_a_mode" class="check_button">📏</button>
+
     <div v-for="(item, IDX) in data9" :key="item" class="result_color result_color2" :style="{display: data9_result ? 'block' : 'none'}">
         <span class="OK_or_NG">{{ true_or_false_to_emoji(item[2]) }}</span>
         <img :src="item[0]" :alt="item[0]" class="png_image png_image_back" >
@@ -498,6 +509,10 @@ show_tag: '',
 show_order_by: 'DESC',
 data_type: 'i_t_n',
 link: '',
+
+current_index: 0,
+only_one_q_a_mode: false,
+
 }},
 watch: {
 data2: {
@@ -876,6 +891,13 @@ go_to_portal_page(){
 
 
 
+change_current_index(ONE_UP_OR_ONE_DOWN=1){
+    this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
+    this.current_index < 0 ? this.current_index = this.data5.length - 1 : null;
+},
+change_only_one_q_a_mode(){
+    this.only_one_q_a_mode = this.only_one_q_a_mode === true ? false : true;
+},
 
 
 

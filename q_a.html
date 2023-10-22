@@ -387,14 +387,20 @@ font-size: 2.5rem;
     <button @click="test_data0" class="test-fn-none-inline">test_data0</button>
     <button @click="test_data1" class="test-fn-none-inline">test_data1</button>
     </div>
+    
+    <button @click="change_only_one_q_a_mode" class="check_button">📏</button>
+    <button @click="change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
     <template v-for="(DATAVAL, DATAIDX) in data4">
-    <div class="q_and_a">
+    <div class="q_and_a" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
         <span class="text_right" @click="fn20(DATAIDX)">{{ data5[DATAIDX] }}</span>
         <button v-for="item in DATAVAL[1]" @click="fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
         <span class="text_center">{{ DATAVAL[2] }}</span>
     </div>
     </template>
+    <button @click="change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
     <button @click="fn4" class="check_button">🎮</button>
+    <button @click="change_only_one_q_a_mode" class="check_button">📏</button>
+    
     </div>
 
 
@@ -501,6 +507,9 @@ other_app_url_array: [
     'i_t_n',
 ],
 
+current_index: 0,
+only_one_q_a_mode: false,
+
 }},
 watch: {
 data3: {
@@ -594,6 +603,9 @@ this.for_debug();
 },
 fn3(correct, answer, INDEX){
 this.data5[INDEX] = answer === correct ? "⭕️" : "❎";
+// this.only_one_q_a_mode ? this.current_index++ : null;
+this.change_current_index(+1);
+this.current_index === this.data4.length ? this.current_index = 0 : null;
 },
 fn4_1(){
 a = R.zip(this.data4, this.data5);
@@ -914,6 +926,16 @@ data2_connector(data2_param){
 go_to_portal_page(){
     window.location.href = 'portal.html';
 },
+
+
+change_current_index(ONE_UP_OR_ONE_DOWN=1){
+    this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
+    this.current_index < 0 ? this.current_index = this.data4.length - 1 : null;
+},
+change_only_one_q_a_mode(){
+    this.only_one_q_a_mode = this.only_one_q_a_mode === true ? false : true;
+},
+
 
 },
 }).mount('.app');

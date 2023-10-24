@@ -928,9 +928,11 @@ go_to_portal_page(){
 },
 
 
+
 change_current_index(ONE_UP_OR_ONE_DOWN=1){
     this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
     this.current_index < 0 ? this.current_index = this.data4.length - 1 : null;
+    this.current_index > this.data4.length - 1 ? this.current_index = 0 : null;
 },
 change_only_one_q_a_mode(){
     this.only_one_q_a_mode = this.only_one_q_a_mode === true ? false : true;

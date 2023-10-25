@@ -8,6 +8,14 @@
 .service_list{
   font-size: 3rem;
 }
+.version_data{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  font-size: 1.5rem;
+}
   </style>
 </head>
 <body>
@@ -19,6 +27,10 @@
   </li>
 </ul>
 </div>
+
+<!-- 薄く透けた灰色でver1.0と表記する -->
+<div class="version_data">ver1.0</div>
+
 </body>
 <script>
 const app = Vue.createApp({

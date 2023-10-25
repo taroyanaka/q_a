@@ -65,7 +65,11 @@ methods: {
 // http://127.0.0.1:3000/ or https://taroyanaka.github.io/q_a/ を想定
 function getBaseURL() {
   const url = window.location.href;
-  const baseURL = new URL(url).origin;
+  let baseURL = new URL(url).origin;
+  // baseURLがlocalhostを含んでいない場合baseURLをhttps://taroyanaka.github.io/q_a/に書き換える
+  if (!baseURL.includes('localhost')) {
+    baseURL = 'https://taroyanaka.github.io/q_a/';
+  }
   return baseURL;
 }
 let tapCount = 0;

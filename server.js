@@ -157,7 +157,7 @@ function db_init2(DB) {
     console.log('db_init start');
 
     // DB.nameがportal_test.sqlite3ではない場合は終了する
-    const CHECK_DB_RES = DB.name === './portal_test.sqlite3' ? 'OK' : 'ERROR';
+    const CHECK_DB_RES = DB.name === './.data/portal_test.sqlite3' ? 'OK' : 'ERROR';
     console.log('CHECK_DB_RES', CHECK_DB_RES);
     if(CHECK_DB_RES === 'ERROR') {
         console.log(CHECK_DB_RES);
@@ -165,7 +165,6 @@ function db_init2(DB) {
     }
     const { exec } = require('child_process');
 
-    // const command = 'sqlite3 ./portal_test.sqlite3 < ./init.sql';
     const command = 'sqlite3 ' + DB.name +  ' < ./init.sql';
 
     exec(command, (error, stdout, stderr) => {

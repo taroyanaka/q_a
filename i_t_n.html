@@ -393,7 +393,7 @@ display: inline;
         </span>
     </div>
     <button @click="filter_image_and_name" class="check_button">🎮</button>
-    
+
 </ul>
 </div>
 
@@ -481,9 +481,6 @@ test_mode: true,
 data5_result: true,
 data9_result: false,
 
-HOST: 'http://localhost',
-PORT: '8000',
-
 column_1_none: false,
 column_2_none: false,
 column_3_none: false,
@@ -509,6 +506,9 @@ link: '',
 
 current_index: 0,
 only_one_q_a_mode: false,
+
+// endpoint: 'http://localhost:3000',
+endpoint: 'https://cotton-concrete-catsup.glitch.me',
 
 }},
 watch: {
@@ -789,7 +789,7 @@ async fetch_read_all(){
         tag: this.show_tag,
         order_by: this.show_order_by,
     };
-    const url = new URL('http://localhost:8000/read_all');
+    const url = new URL(this.endpoint  + '/' + 'read_all');
     url.search = new URLSearchParams(params_for_get).toString();
     const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
     this.web_data = await res.json(); console.log(this.web_data);
@@ -831,7 +831,7 @@ change_show_order_by(){
     this.show_order_by = this.show_order_by === 'DESC' ? 'ASC' : 'DESC';
 },
 async fetch_get_tags_for_autocomplete(){
-    const res = await fetch('http://localhost:8000' + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
+    const res = await fetch(this.endpoint + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, search_tag: this.search_tag }),
     });
     const data = await res.json();
@@ -859,7 +859,7 @@ try {
     const data_convert_jsonstr = (data1, data2) => JSON.stringify({'data1': data1, 'data2': data2});
     const data_json_str = data_convert_jsonstr(this.data1_connector(), this.data2_connector());
     error_check_insert_data(this.data_type, data_json_str) === 'OK' ? null : (()=>{throw new Error(error_check_insert_data(this.data_type, data_json_str))})();
-    const res = await fetch('http://localhost:8000' + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
+    const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, link: this.link,
             data_type: this.data_type,
             data_json_str: data_json_str,
@@ -891,6 +891,7 @@ go_to_portal_page(){
 change_current_index(ONE_UP_OR_ONE_DOWN=1){
     this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
     this.current_index < 0 ? this.current_index = this.data5.length - 1 : null;
+    this.current_index > this.data5.length - 1 ? this.current_index = 0 : null;
 },
 change_only_one_q_a_mode(){
     this.only_one_q_a_mode = this.only_one_q_a_mode === true ? false : true;

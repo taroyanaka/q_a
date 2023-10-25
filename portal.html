@@ -403,6 +403,8 @@ serviceList: [
 urlList: [],
 truncate_text_length: 100,
 untruncate_text_array: [],
+// endpoint: 'http://localhost:3000',
+endpoint: 'https://cotton-concrete-catsup.glitch.me',
 
     }},
 watch: {
@@ -448,7 +450,7 @@ methods: {
 
 
 async fetch_test_db_init(){
-    const res = await fetch('http://localhost:8000' + '/test_db_init', {method: 'POST',headers: {'Content-Type': 'application/json',},
+    const res = await fetch(this.endpoint + '/test_db_init', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, link: this.link, test_mode: 'TEST_MODE' }),
     });
     const data = await res.json(); console.log(data);
@@ -456,7 +458,7 @@ async fetch_test_db_init(){
 
 // read_allをfetchする関数
 async fetch_hello(){
-    const res = await fetch('http://localhost:8000' + '/', {method: 'GET', headers: {'Content-Type': 'application/json',},});
+    const res = await fetch(this.endpoint + '/', {method: 'GET', headers: {'Content-Type': 'application/json',},});
     const hello_data = await res.json();
     console.log(hello_data);
 },
@@ -468,7 +470,7 @@ async fetch_read_all(){
         tag: this.show_tag,
         order_by: this.show_order_by,
     };
-    const url = new URL('http://localhost:8000/read_all');
+    const url = new URL(this.endpoint + '/' + 'read_all');
     url.search = new URLSearchParams(params_for_get).toString();
     const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
     this.web_data = await res.json(); console.log(this.web_data);
@@ -503,7 +505,7 @@ try {
 
     error_check_insert_data(this.data_type, data_json_str) === 'OK' ? null : (()=>{throw new Error(error_check_insert_data(this.data_type, data_json_str))})();
 
-    const res = await fetch('http://localhost:8000' + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
+    const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, link: this.link,
             data_type: this.data_type,
             data_json_str: data_json_str,
@@ -515,7 +517,7 @@ try {
 }
 },
 // async fetch_insert_link(){
-//     const res = await fetch('http://localhost:8000' + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
+//     const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
 //         body: JSON.stringify({ name: this.name, password: this.password, link: this.link }),
 //     });
 //     const data = await res.json(); console.log(data);
@@ -524,58 +526,58 @@ try {
 
 
 // async fetch_insert_link(){
-//     const res = await fetch('http://localhost:8000' + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
+//     const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
 //         body: JSON.stringify({ name: this.name, password: this.password, link: this.link }),
 //     });
 //     const data = await res.json(); console.log(data);
 // },
 async fetch_delete_link(LINK_ID){
-    const res = await fetch('http://localhost:8000' + '/delete_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
+    const res = await fetch(this.endpoint + '/delete_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, id: LINK_ID }),
     });
     const data = await res.json(); console.log(data);
 },
 async fetch_like_increment_or_decrement(LINK_ID){
-    const res = await fetch('http://localhost:8000' + '/like_increment_or_decrement', {method: 'POST',headers: {'Content-Type': 'application/json',},
+    const res = await fetch(this.endpoint + '/like_increment_or_decrement', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID }),
     });
     const data = await res.json(); console.log(data);
 },
 async fetch_insert_comment(LINK_ID){
-    const res = await fetch('http://localhost:8000' + '/insert_comment', {method: 'POST',headers: {'Content-Type': 'application/json',},
+    const res = await fetch(this.endpoint + '/insert_comment', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, comment: this.comment }),
     });
     const data = await res.json(); console.log(data);
 },
 async fetch_delete_comment(COMMENT_ID){
     console.log(COMMENT_ID);
-    const res = await fetch('http://localhost:8000' + '/delete_comment', {method: 'POST',headers: {'Content-Type': 'application/json',},
+    const res = await fetch(this.endpoint + '/delete_comment', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, comment_id: COMMENT_ID }),
     });
     const data = await res.json(); console.log(data);
 },
 async fetch_insert_comment_reply(COMMENT_ID){
     console.log(COMMENT_ID);
-    const res = await fetch('http://localhost:8000' + '/insert_comment_reply', {method: 'POST',headers: {'Content-Type': 'application/json',},
+    const res = await fetch(this.endpoint + '/insert_comment_reply', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, comment_id: COMMENT_ID, comment_reply: this.comment_reply }),
     });
     const data = await res.json(); console.log(data);
 },
 async fetch_delete_comment_reply(COMMENT_REPLY_ID){
-    const res = await fetch('http://localhost:8000' + '/delete_comment_reply', {method: 'POST',headers: {'Content-Type': 'application/json',},
+    const res = await fetch(this.endpoint + '/delete_comment_reply', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, comment_reply_id: COMMENT_REPLY_ID }),
     });
     this.data = await res.json(); console.log(this.data);
 },
 async fetch_insert_tag(LINK_ID){
-    const res = await fetch('http://localhost:8000' + '/insert_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
+    const res = await fetch(this.endpoint + '/insert_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
         // body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, new_tag: this.new_tag }),
         body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, new_tag: this.search_tag }),
     });
     const data = await res.json(); console.log(data);
 },
 async fetch_get_tags_for_autocomplete(){
-    const res = await fetch('http://localhost:8000' + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
+    const res = await fetch(this.endpoint + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, search_tag: this.search_tag }),
     });
     const data = await res.json();
@@ -589,7 +591,7 @@ async fetch_get_tags_for_autocomplete(){
 
 },
 async fetch_delete_tag(LINK_ID, TAG_ID){
-    const res = await fetch('http://localhost:8000' + '/delete_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
+    const res = await fetch(this.endpoint + '/delete_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, id: TAG_ID, link_id: LINK_ID, }),
     });
     const data = await res.json(); console.log(data);

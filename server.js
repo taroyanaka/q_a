@@ -222,7 +222,8 @@ const sqlite = require('better-sqlite3');
 
 
 // test_modeがtrueの時は、テスト用のDBのportal_test.sqlite3を使う。falseの時はportal.sqlite3を使う
-const db = test_mode() === true ? new sqlite('./portal_test.sqlite3') : new sqlite('./portal.sqlite3');
+// const db = test_mode() === true ? new sqlite('./portal_test.sqlite3') : new sqlite('./portal.sqlite3');
+const db = test_mode() === true ? new sqlite('./.data/portal_test.sqlite3') : new sqlite('./.data/portal.sqlite3');
 
 
 // dbをexportする
@@ -234,7 +235,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 const cors = require('cors');
 app.use(cors());
-const port = 8000;
+const port = 3000;
 app.listen(port, "0.0.0.0", () => console.log(`App listening!! at http://localhost:${port}`) );
 
 const now = () => new Date().toISOString();

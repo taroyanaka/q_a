@@ -46,12 +46,12 @@
 </head>
 <body class="app">
     <!-- service_listの表示非表示を切り替えられるボタン -->
-    <button @click="change_service_list_display">change_service_list_display</button>
+    <!-- <button @click="change_service_list_display">change_service_list_display</button>
     <ul class="change_service_list_display_class" ref="change_service_list_display_class">
         <li v-for="url, idx in urlList" class="service_list">
           <a :href="url">{{serviceList[idx]['name']}}: {{serviceList[idx]['desc']}}</a>
         </li>
-    </ul>
+    </ul> -->
 
 <div>
     <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">

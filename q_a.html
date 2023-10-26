@@ -292,8 +292,12 @@ font-size: 2.5rem;
         <li v-for="(DATA_VAL, DATA_IDX) in q_a_web_data">
             <!-- <div>data_type: {{ DATA_VAL['data_type'] }}</div> -->
             <!-- <button @click="change_TOP_OF_TYPE_and_change_list_order(DATA_VAL['data_type'])">change_TOP_OF_TYPE_and_change_list_order</button> -->
-            <div>data_1: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'] }}</div>
-            <div>data_2: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'] }}</div>
+
+            <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
+            <div>data_1: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+            <div>data_2: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
+            <!-- <div>data_1: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'] }}</div> -->
+            <!-- <div>data_2: {{ data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'] }}</div> -->
             <button @click="download_data(DATA_VAL['id'])">download_data</button>
             <div>id: {{ DATA_VAL['id'] }}</div>
             <!-- <div>link: {{ DATA_VAL['link'] }}</div> -->
@@ -509,6 +513,9 @@ other_app_url_array: [
 
 current_index: 0,
 only_one_q_a_mode: false,
+
+truncate_text_length: 100,
+untruncate_text_array: [],
 
 // endpoint: 'http://localhost:3000',
 endpoint: 'https://cotton-concrete-catsup.glitch.me',
@@ -940,6 +947,24 @@ change_current_index(ONE_UP_OR_ONE_DOWN=1){
 change_only_one_q_a_mode(){
     this.only_one_q_a_mode = this.only_one_q_a_mode === true ? false : true;
 },
+
+
+
+
+truncateText(text, id) {
+    // this.truncate_text_array.push(id);
+    if (text.length > this.truncate_text_length && !this.untruncate_text_array.includes(id)) {
+        return text.substring(0, this.truncate_text_length) + '...';
+    } else {
+        return text;
+    }
+},
+short_or_long(id) {
+    // untruncate_text_arrayにidが含まれていない場合は追加する。含まれている場合は削除する
+    const is_include_id = this.untruncate_text_array.includes(id);
+    is_include_id ? this.untruncate_text_array.splice(this.untruncate_text_array.indexOf(id), 1) : this.untruncate_text_array.push(id);
+},
+
 
 
 },

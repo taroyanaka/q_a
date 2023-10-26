@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vue_3_starter</title>
+    <title>portal of q_a</title>
     <link rel="stylesheet" href="./lib/reset.css">
 <script src="./lib/vue@3.2.36.global.prod.js"></script>
 <script src="./lib/ramda.@0.28.0.js"></script>
@@ -749,7 +749,8 @@ loadSites() {
         const url = window.location.href;
         let baseURL = new URL(url).origin;
         // baseURLがlocalhostを含んでいない場合baseURLをhttps://taroyanaka.github.io/q_a/に書き換える
-        if (!baseURL.includes('localhost')) {
+        // if (baseURL.includes('localhost') || baseURL.includes('http://127.0.0.1/')) {}
+        if(baseURL.includes('taroyanaka.github.io')){
             baseURL = 'https://taroyanaka.github.io/q_a';
         }
         return baseURL;

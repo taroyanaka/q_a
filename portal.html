@@ -53,6 +53,21 @@
         </li>
     </ul> -->
 
+<!-- selectとoptionでdata_type('q_a', 'f_i_b', 'i_t_n',)を選択 -->
+<textarea name="data1" id="" cols="30" rows="10" v-model="data1"></textarea>
+<textarea name="data2" id="" cols="30" rows="10" v-model="data2"></textarea>
+
+<div class="insert_option">
+<select v-model="data_type">
+    <option value="q_a">q_a</option>
+    <option value="f_i_b">f_i_b</option>
+    <option value="i_t_n">i_t_n</option>
+</select>
+<!-- <input type="text" v-model="data_json" placeholder="data_json"> -->
+<input type="text" v-model="name" placeholder="name">
+<input type="password" v-model="password" placeholder="password">
+</div>
+
 <div>
     <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
     <datalist id="tag-options">
@@ -61,25 +76,6 @@
     <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
     <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
 </div>
-
-<button @click="fetch_read_all">fetch_read_all</button>
-
-<button @click="sample_data_insert">sample_data_insert</button>
-<!-- selectとoptionでdata_type('q_a', 'f_i_b', 'i_t_n',)を選択 -->
-<select v-model="data_type">
-    <option value="q_a">q_a</option>
-    <option value="f_i_b">f_i_b</option>
-    <option value="i_t_n">i_t_n</option>
-</select>
-<textarea name="data1" id="" cols="30" rows="10" v-model="data1"></textarea>
-<textarea name="data2" id="" cols="30" rows="10" v-model="data2"></textarea>
-
-
-<!-- <input type="text" v-model="data_json" placeholder="data_json"> -->
-
-
-<input type="text" v-model="name" placeholder="name">
-<input type="password" v-model="password" placeholder="password">
 
 <div>
 show_user: <button v-if="show_user" @click="show_all_user">{{ show_user }}</button>
@@ -372,11 +368,6 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
 const app = Vue.createApp({
 data() {
     return {
-sample_data: [`abc
-def
-FOOBAR`, `エービーシー
-ディーイーエフ
-フーバー`],
 name: 'user1',
 password: 'user_pass1',
 web_data: {},
@@ -392,7 +383,7 @@ data_json_str: '{"data1": "question1", "data2": "answer1"}',
 data1: '',
 data2: '',
 list_order: [],
-test_ary: [],
+// test_ary: [],
 
 only_q_a_list: [],
 only_f_i_b_list: [],
@@ -661,10 +652,6 @@ date_time_form(DATE_TIME){
 },
 
 
-sample_data_insert(){
-    this.data1 = this.sample_data[0];
-    this.data2 = this.sample_data[1];
-},
 data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
     return JSON.parse(JSON_STR_DATA1_DATA2);
 },
@@ -689,7 +676,7 @@ change_list_order(){
     this.TOP_OF_TYPE = this.TOP_OF_TYPE === '' ? 'q_a' : this.TOP_OF_TYPE;
     // TOP_OF_TYPEで指定したdata_typeを一番上に持ってくる
     let old_list = JSON.parse(JSON.stringify(R.clone(this.web_data['message'])));
-    this.test_ary[0] = old_list;
+    // this.test_ary[0] = old_list;
     // this.test_ary[0] = JSON.parse(JSON.stringify(old_list));
     // old_listからTOP_OF_TYPEを削除してnew_listに追加する
     const list1 = old_list.filter((DATA_VAL) => DATA_VAL['data_type'] === this.TOP_OF_TYPE); //.slice(0, 1);
@@ -697,10 +684,10 @@ change_list_order(){
     // undefinedを削除する
     const list3 = list1.concat(list2);
 
-    this.test_ary[1] = list1;
-    this.test_ary[2] = list2;
-    this.test_ary[3] = list3;
-    this.test_ary[4] = this.TOP_OF_TYPE;
+    // this.test_ary[1] = list1;
+    // this.test_ary[2] = list2;
+    // this.test_ary[3] = list3;
+    // this.test_ary[4] = this.TOP_OF_TYPE;
     this.web_data['message'] = list3;
 },
 change_TOP_OF_TYPE_and_change_list_order(DATA_TYPE){

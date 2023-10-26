@@ -80,7 +80,7 @@ function getBaseURL() {
   let baseURL = new URL(url).origin;
   // baseURLがlocalhostを含んでいない場合baseURLをhttps://taroyanaka.github.io/q_a/に書き換える
   if (!baseURL.includes('localhost')) {
-    baseURL = 'https://taroyanaka.github.io/q_a/';
+    baseURL = 'https://taroyanaka.github.io/q_a';
   }
   return baseURL;
 }

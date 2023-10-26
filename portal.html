@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./lib/reset.css">
 <script src="./lib/vue@3.2.36.global.prod.js"></script>
 <script src="./lib/ramda.@0.28.0.js"></script>
-<script src="./lib/my_global_function_for_q_a.js"></script>
+<script src="./lib/my_global_function_for_q_a.js" defer></script>
 <style>
 .service_list{
   font-size: 3rem;
@@ -27,6 +27,20 @@
   /* align-items:center; */
   /* width:100px; */
   /* height:100px; */
+}
+.go_to_any_service_page{
+    /* buttonタグ */
+    /* ボタンの枠線を細くする(0.01rem) */
+    border: 0.01rem solid #000000;
+    /* 色を無色透明にする。フォントは黒 */
+    color: transparent;
+    /* 背景を無色透明にする */
+    background-color: transparent;
+    /* マウスオーバー時のカーソルをポインターにする */
+    cursor: pointer;
+    /* フォントカラーは黒でフォントサイズは1rem */
+    font: 1rem sans-serif;
+    width: 1.5rem;
 }
 </style>
 </head>
@@ -146,6 +160,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
     </ul>
     </div>
 
+    <button @click="go_to_any_service_page('q_a')" class="go_to_any_service_page">q_a</button>
     <div v-if="temporary_list[0]" class="flex_child">
     <ul>
     <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[0]">
@@ -213,7 +228,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
     </div>
 
 
-
+    <button @click="go_to_any_service_page('f_i_b')" class="go_to_any_service_page">f_i_b</button>
     <div v-if="temporary_list[1]" class="flex_child">
         <ul>
         <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[1]">
@@ -280,6 +295,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
         </ul>
     </div>
 
+    <button @click="go_to_any_service_page('i_t_n')" class="go_to_any_service_page">i_t_n</button>
     <div v-if="temporary_list[2]" class="flex_child">
         <ul>
         <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[2]">
@@ -781,6 +797,17 @@ short_or_long(id) {
 },
 
 
+
+
+go_to_any_service_page(Service='portal'){
+    switch (Service) {
+        case 'portal': window.location.href = 'portal.html';break;
+        case 'q_a': window.location.href = 'q_a.html';break;
+        case 'f_i_b': window.location.href = 'f_i_b.html';break;
+        case 'i_t_n': window.location.href = 'i_t_n.html';break;
+        default: break;
+    }
+},
 
 
 

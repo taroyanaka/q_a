@@ -198,7 +198,7 @@ font-size: 2.5rem;
 <body class="app">
 
 <div class="toggleDisplay_parent">
-<button @click="go_to_portal_page" class="go_to_portal_page">🔽</button>
+<button @click="go_to_any_service_page" class="go_to_any_service_page">🔽</button>
 </div>
 
 <div class="header_and_contents">
@@ -1014,13 +1014,19 @@ data2_connector(data2_param){
 },
 
 
-go_to_portal_page(){
-    window.location.href = 'portal.html';
+go_to_any_service_page(Service='portal'){
+    switch (Service) {
+        case 'portal': window.location.href = 'portal.html';break;
+        case 'q_a': window.location.href = 'q_a.html';break;
+        case 'f_i_b': window.location.href = 'f_i_b.html';break;
+        case 'i_t_n': window.location.href = 'i_t_n.html';break;
+        default: break;
+    }
 },
 
 
+
 truncateText(text, id) {
-    // this.truncate_text_array.push(id);
     if (text.length > this.truncate_text_length && !this.untruncate_text_array.includes(id)) {
         return text.substring(0, this.truncate_text_length) + '...';
     } else {

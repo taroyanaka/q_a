@@ -64,46 +64,24 @@ beforeUpdate() {
 updated() {
 },
 methods: {
-    loadSites() {
-      // getBaseURL()でurlListを更新する
-      this.urlList = this.serviceList.map(it => getBaseURL() + '/' + it['name'] + '.html');
-      return this.urlList;
-    },
-
+  loadSites() {
+    // テスト環境でも本番環境でも動く
+    // http://127.0.0.1:3000/ or https://taroyanaka.github.io/q_a/ を想定
+    function getBaseURL() {
+        const url = window.location.href;
+        let baseURL = new URL(url).origin;
+        // baseURLがlocalhostを含んでいない場合baseURLをhttps://taroyanaka.github.io/q_a/に書き換える
+        // if (baseURL.includes('localhost') || baseURL.includes('http://127.0.0.1/')) {}
+        if(baseURL.includes('taroyanaka.github.io')){
+            baseURL = 'https://taroyanaka.github.io/q_a';
+        }
+        return baseURL;
+    }
+    // getBaseURL()でurlListを更新する
+    this.urlList = this.serviceList.map(it => getBaseURL() + '/' + it['name'] + '.html');
+    return this.urlList;
+  },
 },
 }).mount('.app');
-
-// テスト環境でも本番環境でも動く
-// http://127.0.0.1:3000/ or https://taroyanaka.github.io/q_a/ を想定
-function getBaseURL() {
-  const url = window.location.href;
-  let baseURL = new URL(url).origin;
-  // baseURLがlocalhostを含んでいない場合baseURLをhttps://taroyanaka.github.io/q_a/に書き換える
-  if (!baseURL.includes('localhost')) {
-    baseURL = 'https://taroyanaka.github.io/q_a';
-  }
-  return baseURL;
-}
-let tapCount = 0;
-let lastTapTime = 0;
-document.addEventListener('touchend', function(event) {
-  const currentTime = new Date().getTime();
-  const tapTime = currentTime - lastTapTime;
-  if (tapTime < 500 && tapCount === 2) {
-    // トリプルタップ
-    console.log('トリプルタップ');
-    window.location.href = 'portal.html';
-    tapCount = 0;
-  } else if (tapTime < 500) {
-    tapCount++;
-  } else {
-    tapCount = 1;
-  }
-  lastTapTime = currentTime;
-});
-function go_to_portal_page(){
-  window.location.href = 'portal.html';
-};
-
 </script>
 </html>

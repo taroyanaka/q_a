@@ -954,7 +954,6 @@ change_only_one_q_a_mode(){
 
 
 truncateText(text, id) {
-    // this.truncate_text_array.push(id);
     if (text.length > this.truncate_text_length && !this.untruncate_text_array.includes(id)) {
         return text.substring(0, this.truncate_text_length) + '...';
     } else {

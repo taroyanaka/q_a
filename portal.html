@@ -107,6 +107,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
         <div>data_2: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
         <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
         <button @click="download_data(DATA_VAL['id'])">download_data</button>
+        <button @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">go_to_any_service_page_with_id</button>
         <div>id: {{ DATA_VAL['id'] }}</div>
         <div>link: {{ DATA_VAL['link'] }}</div>
         <!-- <div>username: {{ DATA_VAL['username'] }}</div> -->
@@ -175,6 +176,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
         <div>data_2: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
         <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
         <button @click="download_data(DATA_VAL['id'])">download_data</button>
+        <button @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">go_to_any_service_page_with_id</button>
         <div>id: {{ DATA_VAL['id'] }}</div>
         <div>link: {{ DATA_VAL['link'] }}</div>
         <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
@@ -243,6 +245,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
             <div>data_2: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
             <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
             <button @click="download_data(DATA_VAL['id'])">download_data</button>
+            <button @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">go_to_any_service_page_with_id</button>
             <div>id: {{ DATA_VAL['id'] }}</div>
             <div>link: {{ DATA_VAL['link'] }}</div>
             <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
@@ -310,6 +313,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
             <div>data_2: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
             <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
             <button @click="download_data(DATA_VAL['id'])">download_data</button>
+            <button @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">go_to_any_service_page_with_id</button>
             <div>id: {{ DATA_VAL['id'] }}</div>
             <div>link: {{ DATA_VAL['link'] }}</div>
             <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
@@ -795,8 +799,16 @@ go_to_any_service_page(Service='portal'){
         default: break;
     }
 },
-
-
+go_to_any_service_page_with_id(Service='portal',Id=0){
+    const id = Id.toString();
+    switch (Service) {
+        case 'portal': window.location.href = ('portal.html' + '?id=' + id);break;
+        case 'q_a': window.location.href = ('q_a.html' + '?id=' + id);break;
+        case 'f_i_b': window.location.href = ('f_i_b.html' + '?id=' + id);break;
+        case 'i_t_n': window.location.href = ('i_t_n.html' + '?id=' + id);break;
+        default: break;
+    }
+},
 
 },
 }).mount('.app');

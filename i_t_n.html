@@ -795,6 +795,7 @@ async fetch_read_all(){
     const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
     this.web_data = await res.json(); console.log(this.web_data);
     this.only_service_data();
+    await this.download_data_from_web_data_id();
 },
 data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
     return JSON.parse(JSON_STR_DATA1_DATA2);
@@ -921,6 +922,15 @@ short_or_long(id) {
 },
 
 
+async download_data_from_web_data_id(){
+    const id = (new URL(window.location.href).searchParams.get("id")) ? Number(new URL(window.location.href).searchParams.get("id")) : null;
+    if(id === null){return};
+    const result = await this.web_data.message
+        .filter(V=> V['id'] === id && V['data_type'] === this.data_type)
+        [0];
+    if(result === undefined){return};
+    this.download_data(result['id']);
+},
 
 
 },

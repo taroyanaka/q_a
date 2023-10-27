@@ -16,7 +16,6 @@
 .display_none{
     display: none;
 }
-
 .flex_parent{
   display: flex;
   place-content: flex-start;
@@ -27,6 +26,17 @@
   /* align-items:center; */
   /* width:100px; */
   /* height:100px; */
+}
+.display_flex_child_or_not_parent{
+    display: flex;
+    place-content: flex-start;
+    font: 2rem sans-serif;
+}
+/* .display_flex_child_or_not > label, */
+.display_flex_child_or_not > input{
+   /* checkboxのinputを縦横1.5rem1.5remにする */
+    width: 1.5rem;
+    height: 1.5rem;
 }
 .go_to_any_service_page{
     /* buttonタグ */
@@ -83,12 +93,36 @@ show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
 change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}</button>
 </div>
 
-<!-- <input type="url" v-model="link" placeholder="link"> -->
-
 <button @click="fetch_insert_link">fetch_insert_link</button>
 <button @click="fetch_test_db_init">fetch_test_db_init</button>
+
+<!-- flex_child_displayをチェックボックスで管理する -->
+<!-- web_data, q_a_data, f_i_b_data, i_t_n_data それぞれのチェックボックスを作る -->
+<div class="display_flex_child_or_not_parent">
+    <span class="display_flex_child_or_not">
+        <input type="checkbox" id="web_data_id" v-model="web_data_id_isChecked" @change="flex_child_change_display" />
+        <label for="web_data_id">{{ web_data_id_isChecked ? 'web_data ' : ' web_data' }}</label>
+    </span>
+    <!-- q_a_data_id -->
+    <span class="display_flex_child_or_not">
+        <input type="checkbox" id="q_a_data_id" v-model="q_a_data_id_isChecked" @change="flex_child_change_display" />
+        <label for="q_a_data_id">{{ q_a_data_id_isChecked ? 'q_a' : ' q_a' }}</label>
+    </span>
+    <!-- f_i_b_data_id -->
+    <span class="display_flex_child_or_not">
+        <input type="checkbox" id="f_i_b_data_id" v-model="f_i_b_data_id_isChecked" @change="flex_child_change_display" />
+        <label for="f_i_b_data_id">{{ f_i_b_data_id_isChecked ? 'f_i_b' : ' f_i_b' }}</label>
+    </span>
+    <!-- i_t_n_data_id -->
+    <span class="display_flex_child_or_not">
+        <input type="checkbox" id="i_t_n_data_id" v-model="i_t_n_data_id_isChecked" @change="flex_child_change_display" />
+        <label for="i_t_n_data_id">{{ i_t_n_data_id_isChecked ? 'i_t_n' : ' i_t_n' }}</label>
+    </span>
+</div>
+
 <div class="flex_parent">
-    <div v-if="web_data['message']" class="flex_child">
+    <div v-if="web_data['message']">
+    <div class="flex_child web_data" ref="flex_child_display_web_data">
     <ul>
     <li v-for="(DATA_VAL, DATA_IDX) in web_data['message']">
         <ul>
@@ -155,9 +189,12 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
     </li>
     </ul>
     </div>
+    </div>
+
 
     <button @click="go_to_any_service_page('q_a')" class="go_to_any_service_page">q_a</button>
-    <div v-if="temporary_list[0]" class="flex_child">
+    <div v-if="temporary_list[0]">
+    <div class="flex_child q_a_data" ref="flex_child_display_q_a_data">
     <ul>
     <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[0]">
         <ul>
@@ -223,10 +260,11 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
     </li>
     </ul>
     </div>
-
+    </div>
 
     <button @click="go_to_any_service_page('f_i_b')" class="go_to_any_service_page">f_i_b</button>
-    <div v-if="temporary_list[1]" class="flex_child">
+    <div v-if="temporary_list[1]">
+    <div class="flex_child f_i_b_data" ref="flex_child_display_f_i_b_data">
         <ul>
         <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[1]">
             <ul>
@@ -292,9 +330,11 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
         </li>
         </ul>
     </div>
+    </div>
 
     <button @click="go_to_any_service_page('i_t_n')" class="go_to_any_service_page">i_t_n</button>
-    <div v-if="temporary_list[2]" class="flex_child">
+    <div v-if="temporary_list[2]">
+    <div class="flex_child i_t_n_data" ref="flex_child_display_i_t_n_data">
         <ul>
         <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[2]">
             <ul>
@@ -360,6 +400,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
         </li>
         </ul>
     </div>
+    </div>
 
 
 
@@ -387,6 +428,12 @@ data1: '',
 data2: '',
 // list_order: [],
 // test_ary: [],
+
+// 'Checked' or 'Unchecked'
+web_data_id_isChecked: true,
+q_a_data_id_isChecked: true,
+f_i_b_data_id_isChecked: true,
+i_t_n_data_id_isChecked: true,
 
 only_q_a_list: [],
 only_f_i_b_list: [],
@@ -728,9 +775,6 @@ loadSites() {
     this.urlList = this.serviceList.map(it => getBaseURL() + '/' + it['name'] + '.html');
     return this.urlList;
 },
-change_service_list_display(){
-    this.$refs.change_service_list_display_class.classList.toggle('display_none');
-},
 
 
 
@@ -770,6 +814,25 @@ go_to_any_service_page_with_id(Service='portal',Id=0){
         default: break;
     }
 },
+
+flex_child_change_display(){
+    this.web_data_id_isChecked === true ?
+    (this.$refs.flex_child_display_web_data.classList.add("flex_child"), this.$refs.flex_child_display_web_data.classList.remove("display_none")) : 
+    (this.$refs.flex_child_display_web_data.classList.add("display_none"), this.$refs.flex_child_display_web_data.classList.remove("flex_child")) ;
+
+    this.q_a_data_id_isChecked === true ?
+    (this.$refs.flex_child_display_q_a_data.classList.add("flex_child"), this.$refs.flex_child_display_q_a_data.classList.remove("display_none")) :
+    (this.$refs.flex_child_display_q_a_data.classList.add("display_none"), this.$refs.flex_child_display_q_a_data.classList.remove("flex_child")) ;
+
+    this.f_i_b_data_id_isChecked === true ?
+    (this.$refs.flex_child_display_f_i_b_data.classList.add("flex_child"), this.$refs.flex_child_display_f_i_b_data.classList.remove("display_none")) :
+    (this.$refs.flex_child_display_f_i_b_data.classList.add("display_none"), this.$refs.flex_child_display_f_i_b_data.classList.remove("flex_child")) ;
+
+    this.i_t_n_data_id_isChecked === true ?
+    (this.$refs.flex_child_display_i_t_n_data.classList.add("flex_child"), this.$refs.flex_child_display_i_t_n_data.classList.remove("display_none")) :
+    (this.$refs.flex_child_display_i_t_n_data.classList.add("display_none"), this.$refs.flex_child_display_i_t_n_data.classList.remove("flex_child")) ;
+},
+
 
 },
 }).mount('.app');

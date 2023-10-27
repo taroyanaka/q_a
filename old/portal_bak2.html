@@ -85,6 +85,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
 
 <!-- <input type="url" v-model="link" placeholder="link"> -->
 
+<button @click="change_list_order">change_list_order</button>
 <button @click="fetch_insert_link">fetch_insert_link</button>
 <button @click="fetch_test_db_init">fetch_test_db_init</button>
 <div class="flex_parent">
@@ -100,7 +101,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
             </li>
         </ul>
         <div>data_type: {{ DATA_VAL['data_type'] }}</div>
-
+        <button @click="change_TOP_OF_TYPE_and_change_list_order(DATA_VAL['data_type'])">change_TOP_OF_TYPE_and_change_list_order</button>
         <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
         <div>data_1: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
         <div>data_2: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
@@ -169,7 +170,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
             </li>
         </ul>
         <div>data_type: {{ DATA_VAL['data_type'] }}</div>
-
+        <button @click="change_TOP_OF_TYPE_and_change_list_order(DATA_VAL['data_type'])">change_TOP_OF_TYPE_and_change_list_order</button>
         <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
         <div>data_1: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
         <div>data_2: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
@@ -238,7 +239,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
                 </li>
             </ul>
             <div>data_type: {{ DATA_VAL['data_type'] }}</div>
-
+            <button @click="change_TOP_OF_TYPE_and_change_list_order(DATA_VAL['data_type'])">change_TOP_OF_TYPE_and_change_list_order</button>
             <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
             <div>data_1: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
             <div>data_2: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
@@ -306,7 +307,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
                 </li>
             </ul>
             <div>data_type: {{ DATA_VAL['data_type'] }}</div>
-
+            <button @click="change_TOP_OF_TYPE_and_change_list_order(DATA_VAL['data_type'])">change_TOP_OF_TYPE_and_change_list_order</button>
             <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
             <div>data_1: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
             <div>data_2: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
@@ -385,7 +386,7 @@ data_type: 'q_a',
 data_json_str: '{"data1": "question1", "data2": "answer1"}',
 data1: '',
 data2: '',
-// list_order: [],
+list_order: [],
 // test_ary: [],
 
 only_q_a_list: [],
@@ -670,6 +671,33 @@ this.data2 = JSON.parse(this.web_data.message.filter(V=>V['id'] === ID)[0].data_
 // this.data1 = JSON.parse(this.web_data.message[ID].data_json_str).data1;
 // this.data2 = JSON.parse(this.web_data.message[ID].data_json_str).data2;
 },
+
+// web_data['message']の表示順序をdata_typeによって変更する関数
+// change_list(){
+
+// },
+change_list_order(){
+    this.TOP_OF_TYPE = this.TOP_OF_TYPE === '' ? 'q_a' : this.TOP_OF_TYPE;
+    // TOP_OF_TYPEで指定したdata_typeを一番上に持ってくる
+    let old_list = JSON.parse(JSON.stringify(R.clone(this.web_data['message'])));
+    // this.test_ary[0] = old_list;
+    // this.test_ary[0] = JSON.parse(JSON.stringify(old_list));
+    // old_listからTOP_OF_TYPEを削除してnew_listに追加する
+    const list1 = old_list.filter((DATA_VAL) => DATA_VAL['data_type'] === this.TOP_OF_TYPE); //.slice(0, 1);
+    const list2 = old_list.filter((DATA_VAL) => DATA_VAL['data_type'] !== this.TOP_OF_TYPE); //.slice(1);
+    // undefinedを削除する
+    const list3 = list1.concat(list2);
+
+    // this.test_ary[1] = list1;
+    // this.test_ary[2] = list2;
+    // this.test_ary[3] = list3;
+    // this.test_ary[4] = this.TOP_OF_TYPE;
+    this.web_data['message'] = list3;
+},
+change_TOP_OF_TYPE_and_change_list_order(DATA_TYPE){
+    this.TOP_OF_TYPE = DATA_TYPE ? DATA_TYPE : 'q_a';
+    this.change_list_order();
+},
 separate_each_list(){
     this.only_q_a_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'q_a');
     this.only_f_i_b_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'f_i_b');
@@ -679,6 +707,17 @@ separate_each_list(){
             this.only_f_i_b_list,
             this.only_i_t_n_list,
         ];
+
+    // TOP_OF_TYPEに沿ってtemporary_listの順序を変更する
+    this.temporary_list = 
+        this.TOP_OF_TYPE === 'q_a' ? [this.only_q_a_list, 
+            // this.temporary_listからthis.only_q_a_listを削除して残りを追加する
+            ...this.temporary_list.filter((DATA_VAL) => DATA_VAL !== this.only_q_a_list)] :
+        this.TOP_OF_TYPE === 'f_i_b' ? [this.only_f_i_b_list,
+            ...this.temporary_list.filter((DATA_VAL) => DATA_VAL !== this.only_f_i_b_list)] :
+        this.TOP_OF_TYPE === 'i_t_n' ? [this.only_i_t_n_list,
+            ...this.temporary_list.filter((DATA_VAL) => DATA_VAL !== this.only_i_t_n_list)] :
+        this.temporary_list;
 },
 other_data_type(DATA_TYPE){
     return this.DATA_TYPE_ARRAY.filter(V=>V !== DATA_TYPE);

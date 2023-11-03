@@ -190,7 +190,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
             <div @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">G</div>
         </div>
 
-        <div v-if="isDialogVisible" class="dialog">
+        <div v-if="isDialogVisible" class="dialog" @click="hideDialog">
         <p>{{ dialogMessage }}</p>
         <!-- <button @click="synapse_f_i_b">synapse_f_i_b</button> -->
         <!-- <button @click="synapse_i_t_n">synapse_i_t_n</button> -->
@@ -233,11 +233,11 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
     <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
         <div>
             <input type="text" v-model="comment" placeholder="comment">
-            <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
+            <button @click="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
             <!-- <input type="text" name="" id="" v-model="foo_1"> -->
             <!-- <button>fetch_insert_comment</button> -->
             <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span>
-            <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>    
+            <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">❤️♡</button>    
             <!-- <button>fetch_like_increment_or_decrement</button> -->
             <!-- <input type="text" name="" id="" v-model="foo_2"> -->
             <!-- <button>fetch_insert_tag</button> -->
@@ -254,7 +254,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
                     <datalist id="tag-options">
                         <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
                     </datalist>
-                    <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+                    <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
                 </div>
                 
                 <div>

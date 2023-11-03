@@ -977,13 +977,13 @@ go_to_any_service_page(Service='portal'){
 
 
 async download_data_from_web_data_id(){
-        const id = (new URL(window.location.href).searchParams.get("id")) ? Number(new URL(window.location.href).searchParams.get("id")) : null;
-        if(id === null){return};
-        const result = await this.web_data.message
-            .filter(V=> V['id'] === id && V['data_type'] === this.data_type)
-            [0];
-        if(result === undefined){return};
-        this.download_data(result['id']);
+    const id = (new URL(window.location.href).searchParams.get("id")) ? Number(new URL(window.location.href).searchParams.get("id")) : null;
+    if(id === null){return};
+    const result = await this.web_data.message
+        .filter(V=> V['id'] === id && V['data_type'] === this.data_type)
+        [0];
+    if(result === undefined){return};
+    this.download_data(result['id']);
 },
 
 

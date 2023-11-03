@@ -86,6 +86,12 @@
     right: 0;
     font-size: 1.5rem;
 }
+.bottom_left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 1.2rem;
+}
 .data_type, .created_at, .username, .id {
     /* インライン要素に設定 */
     display: inline-block;
@@ -222,7 +228,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
     <!-- <button>short_or_long</button> -->
 
     <!-- <p class="created_at">2023/10/27 22:16:15</p> -->
-    <button @click="comment_and_tag_toggle">comment_and_tag</button>
+    <div class="bottom_left" @click="comment_and_tag_toggle">💬🏷️</div>
     <div class="comment_and_tag" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
         <div>
             <input type="text" v-model="comment" placeholder="comment">

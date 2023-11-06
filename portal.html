@@ -55,17 +55,6 @@
 
 
 
-.dialog {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border: 1px solid black;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  z-index: 9999;
-}
 
 /* .showDialogを.block_of_oneの右上端に表示する */
 .block_of_one {
@@ -103,6 +92,28 @@
   padding: 10px;
   border: 1px solid black;
 }
+
+.showDialog {
+    display: inline-block;
+}
+.dialog_ul {
+    display: inline-block;
+}
+
+.dialog_li {
+    display: inline-block;
+}
+
+.data_type, .download_data, .go_to_any_service_page_with_id {
+    display: inline-block;
+}
+.download_data, .go_to_any_service_page_with_id {
+    font-size: 1.5rem;
+}
+.synapse {
+    font-size: 2.5rem;
+}
+
 
 </style>
 </head>
@@ -178,32 +189,39 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
     <ul>
     <li v-for="(DATA_VAL, DATA_IDX) in web_data['message']"  class="block_of_one">
 
+        <div class="data_type" v-if="DATA_VAL['data_type']">{{ DATA_VAL['data_type'] }}</div>
+        <div class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div>
+        <div class="go_to_any_service_page_with_id" @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">📂</div>
+
+        <!-- <div v-if="DATA_VAL['data_type']"> -->
+        <!-- </div> -->
+
 <!-- <div class="block_of_one"> -->
     <!-- <div> -->
         <div class="top_right">
+            <ul class="dialog_ul">
+                <li  class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+                    <span class="synapse" @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+                    )" :style="{ display: synapse_visible ? 'block' : 'none' }">{{ choice_emoji(Other_Of_One) }}</span>
+                </li>
+            </ul>
             <div @click="showDialog" class="showDialog">⚙️</div>
             <!-- <div class="download_data">D</div> -->
             <!-- <div class="download_data" @click="download_data(DATA_VAL['id'])">download_data</div> -->
-            <div class="download_data" @click="download_data(DATA_VAL['id'])">D</div>
             <!-- <div class="go_to_any_service_page_with_id">G</div> -->
             <!-- <div @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">go_to_any_service_page_with_id</div> -->
-            <div @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">G</div>
         </div>
 
-        <div v-if="isDialogVisible" class="dialog" @click="hideDialog">
-        <p>{{ dialogMessage }}</p>
-        <!-- <button @click="synapse_f_i_b">synapse_f_i_b</button> -->
-        <!-- <button @click="synapse_i_t_n">synapse_i_t_n</button> -->
-        <ul>
-            <li v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
-                <button @click="synapse(DATA_VAL['data_type'], Other_Of_One,
-                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
-                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
-                )">synapse: {{ Other_Of_One }}</button>
-            </li>
-        </ul>
-        <button @click="hideDialog">❌❌❌</button>
-        </div>
+        <!-- <div v-if="isDialogVisible" class="dialog" @click="hideDialog"> -->
+        <!-- <p>{{ dialogMessage }}</p> -->
+
+        <!-- <button @click="hideDialog">❌❌❌</button> -->
+        <!-- </div> -->
+
+
+        
     <!-- </div> -->
         
     <!-- ja: 右下 -->
@@ -221,7 +239,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
     <!-- <div @click="short_or_long">data_1: {{ truncateText( 'NW_9_3-times_words_1 works wild bank system send approached paid impression cool catch seconds rose example cheek eventually truly imperfect deeply knowing besides leaves however meeting rules shared raising rising climb covered arranged seriously upset threw impressed struck society nah bathroom exercise noon nod shape added kizukis funeral smoked poor unable flowers stuck date effort grasp like? fix allowed office broke stream smoking tells leaning glow bringing plus notice awful tough handed wants mans invited peace deck stairs hips uruguay meal learn ami wide mental advice soaking teeth porch bandage fruit dance form seat earth bent october imagined clarity spot hurts existed laid level missing knows guard focused intensity vivid comfortable position quadrangle concrete dirty whispered folded quite plenty magazines dishes regular believed likes interested choose dressed towel eight jumping fourth bench carefully uh-huh expression here? order colour themselves state talent shell café rid nowhere follow cook chose using dream questions underwear lobby draw favourite fast nagasawas for? endless immediately cake finish bill lying removed honestly campus deal ears burning euripides plate kill ages silly spreading it! paying fallen nine metal rested land sell you shaved daffodils shutter sauce sipped bone grow yesterday drinks sang learned hopeless relief complete marlboro match blow shock complicated desire alive joined checked beauty basketball ourselves ours hostel brandy step bread poured practice drop itll feed lady gown not? lesbian panties raining spanish itoh 19 west john sold author bound ceiling beatles harder hanging check faint hills background turns view stone pockets pleasure lives according time? this? breast starving sharp meals hill surrounded facing sunlight courts concerned grey shelves calling novels clung bits throw cleaning studying changes shelf say? cleared anywhere manage weight know? crowded climbing thinks express cinema taste heads fairly known suicide exams prepared tables balls circles hint lines avoid picture corners tight and novel older studies cause ministry shocked obvious throat shower offered compared share midnight cheap verge ice towels warning march c response lifted slightly appeared undressed spread sink fill driver june nipples eggs answering result treatment jar sleepy intense trail crushed losing period control salad expensive chair god she munching serve cage pink notebook reasons nearly weather revolution rich apologized cars fed sexual boys shops ishida shopping movement fried teach egg suffering donkey him? higher pleasant wandered waiter smaller heavy happiness deformities river wheel occasional happening dress low instrument foot court letting dried performance mozart lies healthy experience you! subjunctive intravenous her? kichijoji asahikawa sukiyaki 10 born bird south professor literature pulling branches happened? self hollow stick then? closer forgotten upon broad entrance baseball political spirit public extremely assured correct quickly raise taxi unfair instant bags basis wank joke easier ways received except names huh? toothbrush communal callisthenics yotsuya cotton wondering remembered simply news worn ashtray again? request split parted expecting sixth-form studied dates finding professional bullet undo struggled becoming neat million place? holidays spirits troopers proud meaning assumed struggling pull boring trust waste join treated swamp honesty arseholes wooden stomach disgusting size handsome magic wander excuses demands part-time temperature fight packed b clock machine pressing slow stepped earlier personal forgive nerves perhaps tank old-fashioned present register helping cheese below beach animal go? resting tip sisters barely borrowed test sports fancy shake much? lap village plants atmosphere block yelled pot pouring treat expected fukushima among heres nose farm knocked fond gives leaned sing bass listened cried wow knees shadow apparently cast rang cafeteria carrying loving earrings loud depressed calm stars delicious repeated pee moments polished purpose decide rolling surprised presence bear caressing tapped recover emotions snap! taught kindergarten hospitals pillow stuffed hi sniffing skirt bored adult idiot brushed japan fantasy nori responsibility suitcase waves 13 21 30 1130 border underground subway gas japanese murakamis press published permission november gloomy plane melody straightened north dust swaying frozen ambled scenery chill trace pure smooth slight swallowed kick day? precisely hidden marked tweed within be? sooner spending continue drained relaxed deeper searching grateful save slope steps clutching faded pour onto page first-year buildings complex groups included flagpole graduate nakano leather placed neatly halfway pole fly railway setting transistor pots cans blew canal variety dreams explanation typical snap strictly noisy singing chuckled vanished satisfaction t-shirt handkerchief idiots res' ) }}</div> -->
     <!-- <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button> -->
     <div class="clickable_for_short_or_long" @click="short_or_long( DATA_VAL['id'] )">
-        <div class="data_type">{{ DATA_VAL['data_type'] }}</div>
+        <!-- <div class="data_type">{{ DATA_VAL['data_type'] }}</div> -->
         <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
         <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
     </div>
@@ -555,6 +573,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
 const app = Vue.createApp({
 data() {
     return {
+        synapse_visible: false,
 name: 'user1',
 password: 'user_pass1',
 web_data: {},
@@ -608,8 +627,6 @@ untruncate_text_array: [],
 endpoint: 'https://cotton-concrete-catsup.glitch.me',
 
 
-dialogMessage: 'This is a dialog message',
-isDialogVisible: false,
 comment_and_tag_visible: false,
 
     }},
@@ -886,10 +903,15 @@ other_data_type(DATA_TYPE){
     return this.DATA_TYPE_ARRAY.filter(V=>V !== DATA_TYPE);
 },
 async synapse(FROM_TYPE='q_a', TO_TYPE='i_t_n', DATA_1, DATA_2){
-    this.data1 = DATA_1;
-    this.data2 = DATA_2;
-    this.data_type = TO_TYPE;
-    await this.fetch_insert_link();
+    // confirmでOKを押したら、synapseを実行する
+    if (window.confirm('synapse?')) {
+        this.data1 = DATA_1;
+        this.data2 = DATA_2;
+        this.data_type = TO_TYPE;
+        await this.fetch_insert_link();
+    } else {
+        console.log('Synapse cancelled');
+    }
 },
 change_show_user(USER){
     this.show_user = USER;
@@ -989,15 +1011,17 @@ flex_child_change_display(){
 },
 
 
-showDialog() {
-    this.isDialogVisible = true;
-},
-hideDialog() {
-    this.isDialogVisible = false;
-},
 comment_and_tag_toggle() {
     this.comment_and_tag_visible = !this.comment_and_tag_visible;
 },
+choice_emoji(Service) {
+    return Service === 'q_a' ? '🟰' : Service === 'f_i_b' ? '🕳️' : Service === 'i_t_n' ? '🖼️' : '📝';
+},
+showDialog() {
+    // showDialogをクリックしたら.synapseを表示/非表示の切り替えをする
+    this.synapse_visible = !this.synapse_visible;
+
+}
 
 
 },

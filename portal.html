@@ -188,10 +188,19 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
     <div class="flex_child web_data" ref="flex_child_display_web_data">
     <ul>
     <li v-for="(DATA_VAL, DATA_IDX) in web_data['message']"  class="block_of_one">
-
         <div class="data_type" v-if="DATA_VAL['data_type']">{{ DATA_VAL['data_type'] }}</div>
         <div class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div>
         <div class="go_to_any_service_page_with_id" @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">📂</div>
+
+        <span v-if="DATA_VAL['likes'].length === 0"
+            @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
+            {{ '♡' }}</span>
+
+        <span
+            v-for="(like, like_i) in DATA_VAL['likes']"
+            @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
+            {{ '❤️' }}</span>
+        <!-- <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">❤️♡</button> -->
 
         <!-- <div v-if="DATA_VAL['data_type']"> -->
         <!-- </div> -->
@@ -254,8 +263,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
             <button @click="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
             <!-- <input type="text" name="" id="" v-model="foo_1"> -->
             <!-- <button>fetch_insert_comment</button> -->
-            <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span>
-            <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">❤️♡</button>    
+
             <!-- <button>fetch_like_increment_or_decrement</button> -->
             <!-- <input type="text" name="" id="" v-model="foo_2"> -->
             <!-- <button>fetch_insert_tag</button> -->

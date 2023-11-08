@@ -82,7 +82,7 @@
     font-size: 1.4rem;
 }
 
-.data_type, .created_at, .username, .id {
+.data_type, .created_at, .username, .id, .tags {
     /* インライン要素に設定 */
     display: inline-block;
     font-size: 0.7rem;
@@ -187,7 +187,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
     <div v-if="web_data['message']">
     <div class="flex_child web_data" ref="flex_child_display_web_data">
     <ul>
-    <li v-for="(DATA_VAL, DATA_IDX) in web_data['message']"  class="block_of_one">
+    <li v-for="(DATA_VAL, DATA_IDX) in web_data['message']" class="block_of_one">
         <div class="data_type" v-if="DATA_VAL['data_type']">{{ DATA_VAL['data_type'] }}</div>
         <div class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div>
         <div class="go_to_any_service_page_with_id" @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">📂</div>
@@ -200,6 +200,24 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
             v-for="(like, like_i) in DATA_VAL['likes']"
             @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
             {{ '❤️' }}</span>
+
+        
+        <ul>
+            <li v-for="(Tag, Tag_I) in DATA_VAL['tags']" class="tags">
+                <!-- <span>id: {{Tag['id']}}</span>         -->
+                <span><button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
+                <button v-if="DATA_VAL['tags'].length >0" @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">🗑️</button>
+
+            </li>
+        </ul>
+        <div>
+            <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+            <datalist id="tag-options" @click>
+                <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+            </datalist>
+            <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
+        </div>
+    
         <!-- <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">❤️♡</button> -->
 
         <!-- <div v-if="DATA_VAL['data_type']"> -->
@@ -258,35 +276,28 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
     <!-- <p class="created_at">2023/10/27 22:16:15</p> -->
     <div class="bottom_middle" @click="comment_and_tag_toggle">💬🏷️</div>
     <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
-        <div>
-            <input type="text" v-model="comment" placeholder="comment">
-            <button @click="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
-            <!-- <input type="text" name="" id="" v-model="foo_1"> -->
-            <!-- <button>fetch_insert_comment</button> -->
+            <input type="text" v-model="comment" placeholder="comment" @click.stop>
+            <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
 
-            <!-- <button>fetch_like_increment_or_decrement</button> -->
-            <!-- <input type="text" name="" id="" v-model="foo_2"> -->
-            <!-- <button>fetch_insert_tag</button> -->
-            <!-- <button>fetch_delete_link</button> -->
-                <ul>
+            <!-- <ul>
                 <li v-for="(Tag, Tag_I) in DATA_VAL['tags']">
                     <span>id: {{Tag['id']}}</span>        
-                    <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
-                    <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
+                    <span>Tag: <button @click.stop="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
+                    <button @click.stop="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
                 </li>
-                </ul>
-                <div>
-                    <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
-                    <datalist id="tag-options">
+                </ul> -->
+
+                <!-- <div>
+                    <input list="tag-options" v-model="search_tag" @input.stop="fetch_get_tags_for_autocomplete" @change.stop="fetch_get_tags_for_autocomplete">
+                    <datalist id="tag-options" @click.stop>
                         <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
                     </datalist>
-                    <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
-                </div>
+                    <button @click.stop="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
+                </div> -->
                 
                 <div>
-                    <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
+                    <button @click.stop="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
                 </div>
-        </div>
     </div>
 <!-- </div> -->
 

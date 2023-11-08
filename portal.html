@@ -254,17 +254,23 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
     <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
         <ul>
         <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
-            id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }}
-            comment: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
-            <button @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_delete_comment</button>
+            <!-- id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }} -->
+            <!-- {{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }} -->
+            <!-- created_at: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['created_at'] }} -->
+            {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+            <!-- comment: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }} -->
+            <button @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+            <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
             <input type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
-            <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_insert_comment_reply</button>
+            <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
             <ul>
                 <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
-                id: {{ REPLIES['id'] }}
-                reply: {{ REPLIES['reply'] }}
-                username: <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
-                <button @click.stop="fetch_delete_comment_reply(REPLIES['id'])">fetch_delete_comment_reply</button>
+                <!-- id: {{ REPLIES['id'] }} -->
+                {{ REPLIES['reply'] }}
+                <!-- reply: {{ REPLIES['reply'] }} -->
+                <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                <!-- username: <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button> -->
+                <button @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
                 </li>
             </ul>
         </li>

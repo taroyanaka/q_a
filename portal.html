@@ -109,7 +109,7 @@
     display: inline-block;
 }
 
-.data_type, .download_data, .go_to_any_service_page_with_id {
+.data_type, .download_data, .go_to_any_service_page_with_id, .all_tags {
     display: inline-block;
 }
 .download_data, .go_to_any_service_page_with_id {
@@ -118,7 +118,17 @@
 .synapse {
     font-size: 2.5rem;
 }
+.bigger_font{
+    font-size: 2rem;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    margin: 0;
+    padding: 0;
+    /* width: 3rem; */
+    /* height: 3rem; */
 
+}
 
 </style>
 </head>
@@ -144,43 +154,51 @@
 <!-- <input type="text" v-model="data_json" placeholder="data_json"> -->
 <input type="text" v-model="name" placeholder="name">
 <input type="password" v-model="password" placeholder="password">
+<button @click="fetch_insert_link">📲🚀📲🛫📲</button>
+<!-- <button @click="fetch_test_db_init">fetch_test_db_init</button> -->
 </div>
 
+
 <div>
-    <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+    <button @click="show_tag_more_button" class="show_tag_more_button">🏷️→</button>
+    <ul :style="{ display: tag_more_visible ? 'inline' : 'none' }">
+        <li v-for="(tag, tag_i) in tags" class="all_tags">
+            <button @click="change_show_tag(tag['tag'])">{{ tag['tag'] }}</button>
+        </li>
+    </ul>
+
+    <!-- <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
     <datalist id="tag-options">
         <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
-    </datalist>
-    <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
-    <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
+    </datalist> -->
+    <!-- <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button> -->
+    <!-- <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button> -->
 </div>
 
 <div>
-show_user: <button v-if="show_user" @click="show_all_user">{{ show_user }}</button>
-show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
-change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}</button>
+👥: <button v-if="show_user" @click="show_all_user">{{ show_user }}</button>
+🏷️: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
+⬆️⬇️: <button @click="change_show_order_by">{{ show_order_by }}</button>
 </div>
 
-<button @click="fetch_insert_link">fetch_insert_link</button>
-<button @click="fetch_test_db_init">fetch_test_db_init</button>
 
 <!-- flex_child_displayをチェックボックスで管理する -->
 <div class="display_flex_child_or_not_parent">
     <span class="display_flex_child_or_not">
         <input type="checkbox" id="web_data_id" v-model="web_data_id_isChecked" @change="flex_child_change_display" />
-        <label for="web_data_id">{{ web_data_id_isChecked ? 'web_data ' : ' web_data' }}</label>
+        <label for="web_data_id">{{ web_data_id_isChecked ? '📦 ' : ' 📦' }}</label>
     </span>
     <span class="display_flex_child_or_not">
         <input type="checkbox" id="q_a_data_id" v-model="q_a_data_id_isChecked" @change="flex_child_change_display" />
-        <label for="q_a_data_id">{{ q_a_data_id_isChecked ? 'q_a' : ' q_a' }}</label>
+        <label for="q_a_data_id">{{ q_a_data_id_isChecked ? '🟰' : ' 🟰' }}</label>
     </span>
     <span class="display_flex_child_or_not">
         <input type="checkbox" id="f_i_b_data_id" v-model="f_i_b_data_id_isChecked" @change="flex_child_change_display" />
-        <label for="f_i_b_data_id">{{ f_i_b_data_id_isChecked ? 'f_i_b' : ' f_i_b' }}</label>
+        <label for="f_i_b_data_id">{{ f_i_b_data_id_isChecked ? '🕳️' : ' 🕳️' }}</label>
     </span>
     <span class="display_flex_child_or_not">
         <input type="checkbox" id="i_t_n_data_id" v-model="i_t_n_data_id_isChecked" @change="flex_child_change_display" />
-        <label for="i_t_n_data_id">{{ i_t_n_data_id_isChecked ? 'i_t_n' : ' i_t_n' }}</label>
+        <label for="i_t_n_data_id">{{ i_t_n_data_id_isChecked ? '🖼️' : ' 🖼️' }}</label>
     </span>
 </div>
 
@@ -276,8 +294,8 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
             <input type="text" v-model="comment" placeholder="comment" @click.stop>
             <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
         </span>
-        <div>
-            <button @click.stop="fetch_delete_link(DATA_VAL['id'])">␡</button>
+        <div style="margin-top: 0.5rem" @click.stop>
+            <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
         </div>
     </div>
     </li>
@@ -506,6 +524,7 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
 const app = Vue.createApp({
 data() {
     return {
+
         tag_more_visible: false,
         comment_button_visible: false,
         synapse_visible: false,
@@ -591,6 +610,12 @@ watch: {
         },
         deep: true,
     },
+    // tags: {
+    //     async handler(newVal, oldVal) {
+    //         await this.filter_tags();
+    //     },
+    //     deep: true,
+    // },
 },
 beforeMounte(){
 },
@@ -601,6 +626,7 @@ mounted() {
     this.fetch_get_tags_for_autocomplete();
 
     // this.comment_and_tag_toggle();
+
 },
 beforeUpdate() {
 },
@@ -623,6 +649,7 @@ async fetch_hello(){
     console.log(hello_data);
 },
 async fetch_read_all(){
+    try {
     this.show_user = this.show_user === '' ? '' : this.show_user;
     this.show_tag = this.show_tag === '' ? '' : this.show_tag;
     const params_for_get = {
@@ -634,8 +661,10 @@ async fetch_read_all(){
     url.search = new URLSearchParams(params_for_get).toString();
     const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
     this.web_data = await res.json(); console.log(this.web_data);
+    } catch (error) {
+        console.log(error);
+    }
 },
-
 // req.body.data_type, req.body.data_json
 async fetch_insert_link(){
 try {
@@ -672,25 +701,11 @@ try {
         }),
     });
     const data = await res.json(); console.log(data);
+    await this.fetch_read_all();
 } catch (error) {
     console.log(error);
 }
 },
-// async fetch_insert_link(){
-//     const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
-//         body: JSON.stringify({ name: this.name, password: this.password, link: this.link }),
-//     });
-//     const data = await res.json(); console.log(data);
-// },
-
-
-
-// async fetch_insert_link(){
-//     const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
-//         body: JSON.stringify({ name: this.name, password: this.password, link: this.link }),
-//     });
-//     const data = await res.json(); console.log(data);
-// },
 async fetch_delete_link(LINK_ID){
     if (window.confirm('Are you sure you want to delete this link?')) {
         const res = await fetch(this.endpoint + '/delete_link', {
@@ -699,7 +714,7 @@ async fetch_delete_link(LINK_ID){
             body: JSON.stringify({ name: this.name, password: this.password, id: LINK_ID }),
         });
         const data = await res.json(); 
-        console.log(data);
+        await this.fetch_read_all();
     } else {
         console.log('Delete operation cancelled by the user.');
     }
@@ -709,12 +724,14 @@ async fetch_like_increment_or_decrement(LINK_ID){
         body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID }),
     });
     const data = await res.json(); console.log(data);
+    await this.fetch_read_all();
 },
 async fetch_insert_comment(LINK_ID){
     const res = await fetch(this.endpoint + '/insert_comment', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, comment: this.comment }),
     });
     const data = await res.json(); console.log(data);
+    await this.fetch_read_all();
 },
 async fetch_delete_comment(COMMENT_ID){
     console.log(COMMENT_ID);
@@ -722,6 +739,7 @@ async fetch_delete_comment(COMMENT_ID){
         body: JSON.stringify({ name: this.name, password: this.password, comment_id: COMMENT_ID }),
     });
     const data = await res.json(); console.log(data);
+    await this.fetch_read_all();
 },
 async fetch_insert_comment_reply(COMMENT_ID){
     console.log(COMMENT_ID);
@@ -729,12 +747,14 @@ async fetch_insert_comment_reply(COMMENT_ID){
         body: JSON.stringify({ name: this.name, password: this.password, comment_id: COMMENT_ID, comment_reply: this.comment_reply }),
     });
     const data = await res.json(); console.log(data);
+    await this.fetch_read_all();
 },
 async fetch_delete_comment_reply(COMMENT_REPLY_ID){
     const res = await fetch(this.endpoint + '/delete_comment_reply', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, comment_reply_id: COMMENT_REPLY_ID }),
     });
     this.data = await res.json(); console.log(this.data);
+    await this.fetch_read_all();
 },
 async fetch_insert_tag(LINK_ID){
     const res = await fetch(this.endpoint + '/insert_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
@@ -742,6 +762,7 @@ async fetch_insert_tag(LINK_ID){
         body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, new_tag: this.search_tag }),
     });
     const data = await res.json(); console.log(data);
+    await this.fetch_read_all();
 },
 async fetch_get_tags_for_autocomplete(){
     const res = await fetch(this.endpoint + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
@@ -749,19 +770,13 @@ async fetch_get_tags_for_autocomplete(){
     });
     const data = await res.json();
     this.tags = data['message'];
-    // this.new_tag = '';
-    // const is_include_search_tag = this.tags.some((TAG) => TAG['tag'] === this.search_tag);
-    // this.new_tag = is_include_search_tag ? '' : this.search_tag;
-    // console.log('this.new_tag',this.new_tag);
-    // console.log('is_include_search_tag',is_include_search_tag);
-    // console.log('this.search_tag',this.search_tag);
-
 },
 async fetch_delete_tag(LINK_ID, TAG_ID){
     const res = await fetch(this.endpoint + '/delete_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, id: TAG_ID, link_id: LINK_ID, }),
     });
     const data = await res.json(); console.log(data);
+    await this.fetch_read_all();
 },
 all_error_check(){
     const error_check_for_insert_comment = (comment, DATA_LIMIT) => {
@@ -803,28 +818,17 @@ all_error_check(){
     }
 },
 date_time_form(DATE_TIME){
-    // const date = new Date('2023-09-22T16:40:19.249Z');
     const date = new Date(DATE_TIME);
     const formattedDate = date.toLocaleString('ja-JP', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false});
-    // console.log(formattedDate);
     return formattedDate;
 },
-
-
 data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
     return JSON.parse(JSON_STR_DATA1_DATA2);
 },
 download_data(ID){
-x = ID;
-this.data_type = this.web_data.message.filter(V=>V['id'] === ID)[0].data_type;
-this.data1 = JSON.parse(this.web_data.message.filter(V=>V['id'] === ID)[0].data_json_str).data1;
-this.data2 = JSON.parse(this.web_data.message.filter(V=>V['id'] === ID)[0].data_json_str).data2;
-// console.log(x);
-// console.log(x, a,b,c);
-
-// this.data_type = this.web_data.message[ID].data_type;
-// this.data1 = JSON.parse(this.web_data.message[ID].data_json_str).data1;
-// this.data2 = JSON.parse(this.web_data.message[ID].data_json_str).data2;
+    this.data_type = this.web_data.message.filter(V=>V['id'] === ID)[0].data_type;
+    this.data1 = JSON.parse(this.web_data.message.filter(V=>V['id'] === ID)[0].data_json_str).data1;
+    this.data2 = JSON.parse(this.web_data.message.filter(V=>V['id'] === ID)[0].data_json_str).data2;
 },
 separate_each_list(){
     this.only_q_a_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'q_a');
@@ -964,6 +968,7 @@ show_comment_button() {
 show_tag_more_button() {
     this.tag_more_visible = !this.tag_more_visible;
 },
+
 
 },
 }).mount('.app');

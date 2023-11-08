@@ -82,14 +82,9 @@
     font-size: 1.4rem;
 }
 
-.data_type, .created_at, .username, .id {
+.data_type, .created_at, .username, .id, .tags {
     /* インライン要素に設定 */
     display: inline-block;
-    font-size: 0.7rem;
-}
-.tags_parent, .tags, .show_tag_more_button {
-    /* インライン要素に設定 */
-    display: inline;
     font-size: 0.7rem;
 }
 
@@ -165,19 +160,23 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
 <button @click="fetch_test_db_init">fetch_test_db_init</button>
 
 <!-- flex_child_displayをチェックボックスで管理する -->
+<!-- web_data, q_a_data, f_i_b_data, i_t_n_data それぞれのチェックボックスを作る -->
 <div class="display_flex_child_or_not_parent">
     <span class="display_flex_child_or_not">
         <input type="checkbox" id="web_data_id" v-model="web_data_id_isChecked" @change="flex_child_change_display" />
         <label for="web_data_id">{{ web_data_id_isChecked ? 'web_data ' : ' web_data' }}</label>
     </span>
+    <!-- q_a_data_id -->
     <span class="display_flex_child_or_not">
         <input type="checkbox" id="q_a_data_id" v-model="q_a_data_id_isChecked" @change="flex_child_change_display" />
         <label for="q_a_data_id">{{ q_a_data_id_isChecked ? 'q_a' : ' q_a' }}</label>
     </span>
+    <!-- f_i_b_data_id -->
     <span class="display_flex_child_or_not">
         <input type="checkbox" id="f_i_b_data_id" v-model="f_i_b_data_id_isChecked" @change="flex_child_change_display" />
         <label for="f_i_b_data_id">{{ f_i_b_data_id_isChecked ? 'f_i_b' : ' f_i_b' }}</label>
     </span>
+    <!-- i_t_n_data_id -->
     <span class="display_flex_child_or_not">
         <input type="checkbox" id="i_t_n_data_id" v-model="i_t_n_data_id_isChecked" @change="flex_child_change_display" />
         <label for="i_t_n_data_id">{{ i_t_n_data_id_isChecked ? 'i_t_n' : ' i_t_n' }}</label>
@@ -203,18 +202,15 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
             {{ '❤️' }}</span>
 
         
-        <ul class="tags_parent">
+        <ul>
             <li v-for="(Tag, Tag_I) in DATA_VAL['tags']" class="tags">
-                <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button>
-                <button
-                    v-if="DATA_VAL['tags'].length >0"
-                    @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])"
-                    :style="{ display: tag_more_visible ? 'inline' : 'none' }"
-                    >🗑️</button>
+                <!-- <span>id: {{Tag['id']}}</span>         -->
+                <span><button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
+                <button v-if="DATA_VAL['tags'].length >0" @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">🗑️</button>
+
             </li>
         </ul>
-        <button @click="show_tag_more_button" class="show_tag_more_button">🏷️→</button>
-        <div :style="{ display: tag_more_visible ? 'block' : 'none' }">
+        <div>
             <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
             <datalist id="tag-options" @click>
                 <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
@@ -222,11 +218,16 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
             <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
         </div>
     
+        <!-- <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">❤️♡</button> -->
+
+        <!-- <div v-if="DATA_VAL['data_type']"> -->
+        <!-- </div> -->
+
 <!-- <div class="block_of_one"> -->
     <!-- <div> -->
         <div class="top_right">
             <ul class="dialog_ul">
-                <li class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+                <li  class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
                     <span class="synapse" @click="synapse(DATA_VAL['data_type'], Other_Of_One,
                         data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
                         data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
@@ -249,35 +250,35 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
         <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
         <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
     </div>
-    <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
+    <div class="bottom_middle" @click="comment_and_tag_toggle">💬🗑️</div>
     <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
         <ul>
         <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+            <!-- id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }} -->
+            <!-- {{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }} -->
+            <!-- created_at: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['created_at'] }} -->
             {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
-            <button @click.stop="show_comment_button">💬→</button>
-            <span :style="{ display: comment_button_visible ? 'block' : 'none' }">
-                <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
-                <button @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
-                <input type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
-                <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
-            </span>
+            <!-- comment: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }} -->
+            <button @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+            <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
+            <input type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
+            <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
             <ul>
                 <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
-                <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
-                <span :style="{ display: comment_button_visible ? 'block' : 'none' }">
-                    <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
-                    <button @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
-                </span>
+                <!-- id: {{ REPLIES['id'] }} -->
+                {{ REPLIES['reply'] }}
+                <!-- reply: {{ REPLIES['reply'] }} -->
+                <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                <!-- username: <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button> -->
+                <button @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
                 </li>
             </ul>
         </li>
         </ul>
-        <span :style="{ display: comment_button_visible ? 'block' : 'none' }">
-            <input type="text" v-model="comment" placeholder="comment" @click.stop>
-            <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
-        </span>
+        <input type="text" v-model="comment" placeholder="comment" @click.stop>
+        <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>                
         <div>
-            <button @click.stop="fetch_delete_link(DATA_VAL['id'])">␡</button>
+            <button @click.stop="fetch_delete_link(DATA_VAL['id'])">🗑️</button>
         </div>
     </div>
     </li>
@@ -506,8 +507,6 @@ change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}<
 const app = Vue.createApp({
 data() {
     return {
-        tag_more_visible: false,
-        comment_button_visible: false,
         synapse_visible: false,
 name: 'user1',
 password: 'user_pass1',
@@ -599,8 +598,6 @@ mounted() {
     // this.fetch_hello_world();
     this.fetch_read_all();
     this.fetch_get_tags_for_autocomplete();
-
-    // this.comment_and_tag_toggle();
 },
 beforeUpdate() {
 },
@@ -957,13 +954,9 @@ choice_emoji(Service) {
 showDialog() {
     // showDialogをクリックしたら.synapseを表示/非表示の切り替えをする
     this.synapse_visible = !this.synapse_visible;
-},
-show_comment_button() {
-    this.comment_button_visible = !this.comment_button_visible;
-},
-show_tag_more_button() {
-    this.tag_more_visible = !this.tag_more_visible;
-},
+
+}
+
 
 },
 }).mount('.app');

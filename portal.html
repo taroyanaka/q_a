@@ -157,21 +157,27 @@ font-size: 1.5rem;
     /* width: 3rem; */
     /* height: 3rem; */
 }
-.sample {
+.sample1 {
     font-size: 10rem;
+}
+.sample2 {
+    display: block;
+}
+.sample3 {
+    display: none;
 }
 
 </style>
 </head>
 <body class="app">
 
-<div class="sample" :style="sample_fn()">learn fast</div>
+<div class=" sample1 sample2">learn fast</div>
+<!-- <div class=" sample1 sample2">learn fast</div> -->
 
-<!-- 🔓 🔒 🔑 🔐 -->
-<div class="fixed_element_top_right">🔓</div>
-<div class="fixed_element_top_left">🔒</div>
-<div class="fixed_element_bottom_right">🔑</div>
-<div class="fixed_element_bottom_left">🔐</div>
+<div @click="sample_fn" class="fixed_element_top_right">🔓</div>
+<div @click="sample_fn" class="fixed_element_top_left">🔒</div>
+<div @click="sample_fn" class="fixed_element_bottom_right">🔑</div>
+<div @click="sample_fn" class="fixed_element_bottom_left">🔐</div>
 
     <!-- service_listの表示非表示を切り替えられるボタン -->
     <!-- <button @click="change_service_list_display">change_service_list_display</button>
@@ -618,8 +624,8 @@ serviceList: [
 urlList: [],
 truncate_text_length: 100,
 untruncate_text_array: [],
-// endpoint: 'http://localhost:8000',
-endpoint: 'https://cotton-concrete-catsup.glitch.me',
+endpoint: 'http://localhost:8000',
+// endpoint: 'https://cotton-concrete-catsup.glitch.me',
 
 
 comment_and_tag_visible: false,
@@ -1010,8 +1016,20 @@ show_tag_more_button() {
     this.tag_more_visible = !this.tag_more_visible;
 },
 sample_fn() {
-    this.all_alt_elm_visible = !this.all_alt_elm_visible;
-    return this.all_alt_elm_visible ? 'display: none' : 'display: inline';
+    // this.all_alt_elm_visible = !this.all_alt_elm_visible;
+    // return this.all_alt_elm_visible ? 'display: none' : 'display: inline';
+    // sample_fnをクリックしたらCSSのsample2とsample3のdisplayを切り替える
+    // refs sample_elmに対して実行する
+    // this.$refs.sample_elm.forEach((elm) => {
+    document.querySelectorAll(".sample").forEach((elm) => {
+        // elm.classList.toggle('sample2');
+        // elm.classList.toggle('sample3');
+        // sample2があればsample2を削除し、sample3を追加する
+        // sample2がなければsample3を削除し、sample2を追加する
+        elm.classList.contains('sample2') ? (elm.classList.remove('sample2'), elm.classList.add('sample3')) : (elm.classList.remove('sample3'), elm.classList.add('sample2'));
+    });
+    console.log('sample_fn');
+
 },
 
 },

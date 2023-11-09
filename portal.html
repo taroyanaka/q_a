@@ -39,35 +39,35 @@ font-size: 1.5rem;
   font-size: 1.5rem;
 }
 
-.service_list{
+.service_list {
   font-size: 3rem;
 }
-.display_none{
+.display_none {
     display: none;
 }
-.flex_parent{
+.flex_parent {
   display: flex;
   place-content: flex-start;
 }
-.flex_child{
+.flex_child {
   display: flex;
   /* justify-content: center; */
   /* align-items:center; */
   /* width:100px; */
   /* height:100px; */
 }
-.display_flex_child_or_not_parent{
+.display_flex_child_or_not_parent {
     display: flex;
     place-content: flex-start;
     font: 2rem sans-serif;
 }
 /* .display_flex_child_or_not > label, */
-.display_flex_child_or_not > input{
+.display_flex_child_or_not > input {
    /* checkboxのinputを縦横1.5rem1.5remにする */
     width: 1.5rem;
     height: 1.5rem;
 }
-.go_to_any_service_page{
+.go_to_any_service_page {
     /* buttonタグ */
     /* ボタンの枠線を細くする(0.01rem) */
     border: 0.01rem solid #000000;
@@ -88,6 +88,7 @@ font-size: 1.5rem;
 /* .showDialogを.block_of_oneの右上端に表示する */
 .block_of_one {
     position: relative;
+    width: 100vw;
 }
 .top_right {
     position: absolute;
@@ -111,11 +112,17 @@ font-size: 1.5rem;
     font-size: 1.4rem;
 }
 
-.data_type, .created_at, .username, .id {
+.created_at, .username, .id {
     /* インライン要素に設定 */
     display: inline-block;
     font-size: 0.7rem;
 }
+.data_type {
+    /* インライン要素に設定 */
+    display: inline-block;
+    font-size: 1rem;
+}
+
 .tags_parent, .tags, .show_tag_more_button {
     /* インライン要素に設定 */
     display: inline;
@@ -229,7 +236,7 @@ font-size: 1.5rem;
 
 
 <!-- flex_child_displayをチェックボックスで管理する -->
-<div class="display_flex_child_or_not_parent">
+<!-- <div class="display_flex_child_or_not_parent">
     <span class="display_flex_child_or_not">
         <input type="checkbox" id="web_data_id" v-model="web_data_id_isChecked" @change="flex_child_change_display" />
         <label for="web_data_id">{{ web_data_id_isChecked ? '📦 ' : ' 📦' }}</label>
@@ -246,14 +253,34 @@ font-size: 1.5rem;
         <input type="checkbox" id="i_t_n_data_id" v-model="i_t_n_data_id_isChecked" @change="flex_child_change_display" />
         <label for="i_t_n_data_id">{{ i_t_n_data_id_isChecked ? '🖼️' : ' 🖼️' }}</label>
     </span>
+</div> -->
+<!-- flex_child_displayをradioで管理する -->
+<div class="display_flex_child_or_not_parent">
+    <span class="display_flex_child_or_not">
+        <input type="radio" id="web_data_id" name="radio" value="web_data_id_isChecked" @change="flex_child_change_display($event)" checked />
+        <label for="web_data_id"> 📦 </label>
+    </span>
+    <span class="display_flex_child_or_not">
+        <input type="radio" id="q_a_data_id" name="radio" value="q_a_data_id_isChecked" @change="flex_child_change_display($event)" />
+        <label for="q_a_data_id"> 🟰 </label>
+    </span>
+    <span class="display_flex_child_or_not">
+        <input type="radio" id="f_i_b_data_id" name="radio" value="f_i_b_data_id_isChecked" @change="flex_child_change_display($event)" />
+        <label for="f_i_b_data_id"> 🕳️ </label>
+    </span>
+    <span class="display_flex_child_or_not">
+        <input type="radio" id="i_t_n_data_id" name="radio" value="i_t_n_data_id_isChecked" @change="flex_child_change_display($event)" />
+        <label for="i_t_n_data_id"> 🖼️ </label>
+    </span>
 </div>
+
 
 <div class="flex_parent">
     <div v-if="web_data['message']">
     <div class="flex_child web_data" ref="flex_child_display_web_data">
     <ul>
     <li v-for="(DATA_VAL, DATA_IDX) in web_data['message']" class="block_of_one">
-        <div class="data_type" v-if="DATA_VAL['data_type']">{{ DATA_VAL['data_type'] }}</div>
+        <div class="data_type" v-if="DATA_VAL['data_type']" @click="go_to_any_service_page(DATA_VAL['data_type'])" >{{ DATA_VAL['data_type'] }}</div>
         <div class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div>
         <div class="go_to_any_service_page_with_id" @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">📂</div>
 
@@ -286,8 +313,6 @@ font-size: 1.5rem;
             <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
         </div>
     
-<!-- <div class="block_of_one"> -->
-    <!-- <div> -->
         <div class="top_right">
             <ul class="dialog_ul">
                 <li class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
@@ -624,8 +649,8 @@ serviceList: [
 urlList: [],
 truncate_text_length: 100,
 untruncate_text_array: [],
-// endpoint: 'http://localhost:8000',
-endpoint: 'https://cotton-concrete-catsup.glitch.me',
+endpoint: 'http://localhost:8000',
+// endpoint: 'https://cotton-concrete-catsup.glitch.me',
 
 comment_and_tag_visible: false,
 
@@ -665,13 +690,18 @@ watch: {
 },
 beforeMounte(){
 },
-mounted() {
-    this.loadSites();
+// mounted() {
+    // this.loadSites();
+    // this.fetch_read_all();
+    // this.fetch_get_tags_for_autocomplete();
+// },
+mounted: async function() {
+    await this.loadSites();
     // this.fetch_hello_world();
-    this.fetch_read_all();
-    this.fetch_get_tags_for_autocomplete();
-
+    await this.fetch_read_all();
+    await this.fetch_get_tags_for_autocomplete();
     // this.comment_and_tag_toggle();
+    await this.flex_child_change_display();
 
 },
 beforeUpdate() {
@@ -979,7 +1009,33 @@ go_to_any_service_page_with_id(Service='portal',Id=0){
     }
 },
 
-flex_child_change_display(){
+flex_child_change_display(event){
+    this.web_data_id_isChecked = false;
+    this.q_a_data_id_isChecked = false;
+    this.f_i_b_data_id_isChecked = false;
+    this.i_t_n_data_id_isChecked = false;
+
+    let foo = null;
+    if(event === undefined){
+        foo = 'web_data_id_isChecked';
+    }else{
+        foo = event.target.value;
+    }
+    // const param = event.target === undefined ? {value: 'web_data_id'} : event.target;
+    // const param_data = param.value;
+    console.log(foo);
+
+    // console.log(param_data);
+
+
+    switch (foo) {
+        case 'web_data_id_isChecked': this.web_data_id_isChecked = true; break;
+        case 'q_a_data_id_isChecked': this.q_a_data_id_isChecked = true; break;
+        case 'f_i_b_data_id_isChecked': this.f_i_b_data_id_isChecked = true; break;
+        case 'i_t_n_data_id_isChecked': this.i_t_n_data_id_isChecked = true; break;
+        default: break;
+    }
+
     this.web_data_id_isChecked === true ?
     (this.$refs.flex_child_display_web_data.classList.add("flex_child"), this.$refs.flex_child_display_web_data.classList.remove("display_none")) : 
     (this.$refs.flex_child_display_web_data.classList.add("display_none"), this.$refs.flex_child_display_web_data.classList.remove("flex_child")) ;
@@ -995,6 +1051,10 @@ flex_child_change_display(){
     this.i_t_n_data_id_isChecked === true ?
     (this.$refs.flex_child_display_i_t_n_data.classList.add("flex_child"), this.$refs.flex_child_display_i_t_n_data.classList.remove("display_none")) :
     (this.$refs.flex_child_display_i_t_n_data.classList.add("display_none"), this.$refs.flex_child_display_i_t_n_data.classList.remove("flex_child")) ;
+
+
+
+
 },
 
 

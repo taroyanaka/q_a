@@ -10,6 +10,35 @@
 <script src="./lib/ramda.@0.28.0.js"></script>
 <script src="./lib/my_global_function_for_q_a.js" defer></script>
 <style>
+.fixed_element_top_right {
+  position: fixed;
+top: 0;
+right: 0;
+font-size: 1.5rem;
+/* top: 50%; */
+/* transform: translateY(-50%); */
+}
+.fixed_element_top_left {
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-size: 1.5rem;
+/* top: 50%; */
+/* transform: translateY(-50%); */
+}
+.fixed_element_bottom_right {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  font-size: 1.5rem;
+}
+.fixed_element_bottom_left {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  font-size: 1.5rem;
+}
+
 .service_list{
   font-size: 3rem;
 }
@@ -118,7 +147,7 @@
 .synapse {
     font-size: 2.5rem;
 }
-.bigger_font{
+.bigger_font {
     font-size: 2rem;
     background-color: white;
     color: black;
@@ -127,12 +156,23 @@
     padding: 0;
     /* width: 3rem; */
     /* height: 3rem; */
-
+}
+.sample {
+    font-size: 10rem;
 }
 
 </style>
 </head>
 <body class="app">
+
+<div class="sample" :style="sample_fn()">learn fast</div>
+
+<!-- 🔓 🔒 🔑 🔐 -->
+<div class="fixed_element_top_right">🔓</div>
+<div class="fixed_element_top_left">🔒</div>
+<div class="fixed_element_bottom_right">🔑</div>
+<div class="fixed_element_bottom_left">🔐</div>
+
     <!-- service_listの表示非表示を切り替えられるボタン -->
     <!-- <button @click="change_service_list_display">change_service_list_display</button>
     <ul class="change_service_list_display_class" ref="change_service_list_display_class">
@@ -524,6 +564,7 @@
 const app = Vue.createApp({
 data() {
     return {
+        all_alt_elm_visible: false,
 
         tag_more_visible: false,
         comment_button_visible: false,
@@ -968,7 +1009,10 @@ show_comment_button() {
 show_tag_more_button() {
     this.tag_more_visible = !this.tag_more_visible;
 },
-
+sample_fn() {
+    this.all_alt_elm_visible = !this.all_alt_elm_visible;
+    return this.all_alt_elm_visible ? 'display: none' : 'display: inline';
+},
 
 },
 }).mount('.app');

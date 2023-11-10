@@ -46,26 +46,33 @@ font-size: 1.5rem;
     display: none;
 }
 .flex_parent {
-  display: flex;
-  place-content: flex-start;
 }
 .flex_child {
   display: flex;
-  /* justify-content: center; */
-  /* align-items:center; */
-  /* width:100px; */
-  /* height:100px; */
 }
 .display_flex_child_or_not_parent {
     display: flex;
     place-content: flex-start;
-    font: 2rem sans-serif;
+    /* font: 2rem sans-serif; */
+    width: 100vw;
+    /* align-items: stretch; */
 }
 /* .display_flex_child_or_not > label, */
-.display_flex_child_or_not > input {
+.display_flex_child_or_not_parent > input {
+    display: none;
    /* checkboxのinputを縦横1.5rem1.5remにする */
-    width: 1.5rem;
-    height: 1.5rem;
+    /* width: 1.5rem; */
+    /* height: 1.5rem; */
+}
+.label_for_display {
+    /* 右側にborderを入れる */
+    border-right: 0.1rem solid black;
+    width: 25vw;
+    font-size: 3rem;
+    /* fontを中央に配置する */
+    text-align: center;
+    /* background-color: red; */
+
 }
 .go_to_any_service_page {
     /* buttonタグ */
@@ -235,43 +242,24 @@ font-size: 1.5rem;
 </div>
 
 
-<!-- flex_child_displayをチェックボックスで管理する -->
-<!-- <div class="display_flex_child_or_not_parent">
-    <span class="display_flex_child_or_not">
-        <input type="checkbox" id="web_data_id" v-model="web_data_id_isChecked" @change="flex_child_change_display" />
-        <label for="web_data_id">{{ web_data_id_isChecked ? '📦 ' : ' 📦' }}</label>
-    </span>
-    <span class="display_flex_child_or_not">
-        <input type="checkbox" id="q_a_data_id" v-model="q_a_data_id_isChecked" @change="flex_child_change_display" />
-        <label for="q_a_data_id">{{ q_a_data_id_isChecked ? '🟰' : ' 🟰' }}</label>
-    </span>
-    <span class="display_flex_child_or_not">
-        <input type="checkbox" id="f_i_b_data_id" v-model="f_i_b_data_id_isChecked" @change="flex_child_change_display" />
-        <label for="f_i_b_data_id">{{ f_i_b_data_id_isChecked ? '🕳️' : ' 🕳️' }}</label>
-    </span>
-    <span class="display_flex_child_or_not">
-        <input type="checkbox" id="i_t_n_data_id" v-model="i_t_n_data_id_isChecked" @change="flex_child_change_display" />
-        <label for="i_t_n_data_id">{{ i_t_n_data_id_isChecked ? '🖼️' : ' 🖼️' }}</label>
-    </span>
-</div> -->
 <!-- flex_child_displayをradioで管理する -->
 <div class="display_flex_child_or_not_parent">
-    <span class="display_flex_child_or_not">
+    <!-- <div class="display_flex_child_or_not"> -->
         <input type="radio" id="web_data_id" name="radio" value="web_data_id_isChecked" @change="flex_child_change_display($event)" checked />
-        <label for="web_data_id"> 📦 </label>
-    </span>
-    <span class="display_flex_child_or_not">
+        <label class="label_for_display" for="web_data_id"> 📦 </label>
+    <!-- </div> -->
+    <!-- <div class="display_flex_child_or_not"> -->
         <input type="radio" id="q_a_data_id" name="radio" value="q_a_data_id_isChecked" @change="flex_child_change_display($event)" />
-        <label for="q_a_data_id"> 🟰 </label>
-    </span>
-    <span class="display_flex_child_or_not">
+        <label class="label_for_display" for="q_a_data_id"> 🟰 </label>
+    <!-- </div> -->
+    <!-- <div class="display_flex_child_or_not"> -->
         <input type="radio" id="f_i_b_data_id" name="radio" value="f_i_b_data_id_isChecked" @change="flex_child_change_display($event)" />
-        <label for="f_i_b_data_id"> 🕳️ </label>
-    </span>
-    <span class="display_flex_child_or_not">
+        <label class="label_for_display" for="f_i_b_data_id"> 🕳️ </label>
+    <!-- </div> -->
+    <!-- <div class="display_flex_child_or_not"> -->
         <input type="radio" id="i_t_n_data_id" name="radio" value="i_t_n_data_id_isChecked" @change="flex_child_change_display($event)" />
-        <label for="i_t_n_data_id"> 🖼️ </label>
-    </span>
+        <label class="label_for_display" for="i_t_n_data_id"> 🖼️ </label>
+    <!-- </div> -->
 </div>
 
 
@@ -343,17 +331,19 @@ font-size: 1.5rem;
         <ul>
         <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
             {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
-            <button @click.stop="show_comment_button">💬→</button>
-            <span :style="{ display: comment_button_visible ? 'block' : 'none' }">
+            <!-- <button @click.stop="show_comment_button">💬→</button> -->
+            <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+
                 <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
                 <button @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+            </span>
                 <input type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
                 <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
-            </span>
             <ul>
                 <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
                 <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
-                <span :style="{ display: comment_button_visible ? 'block' : 'none' }">
+                <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+                <!-- <span :style="{ display: comment_button_visible ? 'block' : 'none' }"> -->
                     <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
                     <button @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
                 </span>
@@ -361,12 +351,16 @@ font-size: 1.5rem;
             </ul>
         </li>
         </ul>
-        <span :style="{ display: comment_button_visible ? 'block' : 'none' }">
+        <!-- <span :style="{ display: comment_button_visible ? 'block' : 'none' }"> -->
             <input type="text" v-model="comment" placeholder="comment" @click.stop>
             <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
-        </span>
+        <!-- </span> -->
+<!-- <input type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop> -->
+<!-- <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button> -->
+
         <div style="margin-top: 0.5rem" @click.stop>
             <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
+            <button @click.stop="show_comment_button" class="bigger_font">💬→</button>
         </div>
     </div>
     </li>
@@ -649,9 +643,8 @@ serviceList: [
 urlList: [],
 truncate_text_length: 100,
 untruncate_text_array: [],
-// endpoint: 'http://localhost:8000',
-endpoint: 'https://cotton-concrete-catsup.glitch.me',
-
+endpoint: 'http://localhost:8000',
+// endpoint: 'https://cotton-concrete-catsup.glitch.me',
 comment_and_tag_visible: false,
 
     }},

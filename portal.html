@@ -166,10 +166,10 @@
 <div class=" sample1 sample2">learn fast</div>
 <!-- <div class=" sample1 sample2">learn fast</div> -->
 
-<div @click="sample_fn" class="fixed_element_top_right">🔓</div>
-<div @click="sample_fn" class="fixed_element_top_left">🔒</div>
-<div @click="sample_fn" class="fixed_element_bottom_right">🔑</div>
-<div @click="sample_fn" class="fixed_element_bottom_left">🔐</div>
+<div @click="sample_fn" class="fixed_element fixed_element_top_right sample2 ">🔓</div>
+<div @click="sample_fn" class="fixed_element fixed_element_top_left sample2 ">🔒</div>
+<div @click="sample_fn" class="fixed_element fixed_element_bottom_right sample2 ">🔑</div>
+<div @click="sample_fn" class="fixed_element fixed_element_bottom_left sample2 ">🔐</div>
 
     <!-- service_listの表示非表示を切り替えられるボタン -->
     <!-- <button @click="change_service_list_display">change_service_list_display</button>
@@ -295,9 +295,9 @@
         <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button>
         <div class="id">{{ DATA_VAL['id'] }}</div>
     </div>
-    <div class="clickable_for_short_or_long" @click="short_or_long( DATA_VAL['id'] )">
-        <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
-        <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
+    <div class="clickable_for_short_or_long sample2 " @click="short_or_long( DATA_VAL['id'] )" ref="exception">
+        <div class="sample2">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+        <div class="sample2">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
     </div>
     <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
     <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
@@ -562,6 +562,7 @@
 const app = Vue.createApp({
 data() {
     return {
+        only_show_flag: false,
         all_alt_elm_visible: false,
 
         tag_more_visible: false,
@@ -1040,20 +1041,7 @@ show_comment_button() {
 show_tag_more_button() {
     this.tag_more_visible = !this.tag_more_visible;
 },
-sample_fn() {
-    // this.all_alt_elm_visible = !this.all_alt_elm_visible;
-    // return this.all_alt_elm_visible ? 'display: none' : 'display: inline';
-    // sample_fnをクリックしたらCSSのsample2とsample3のdisplayを切り替える
-    // refs sample_elmに対して実行する
-    // this.$refs.sample_elm.forEach((elm) => {
-    document.querySelectorAll(".sample1").forEach((elm) => {
-        // elm.classList.toggle('sample2');
-        // elm.classList.toggle('sample3');
-        // sample2があればsample2を削除し、sample3を追加する
-        // sample2がなければsample3を削除し、sample2を追加する
-        elm.classList.contains('sample2') ? (elm.classList.remove('sample2'), elm.classList.add('sample3')) : (elm.classList.remove('sample3'), elm.classList.add('sample2'));
-    });
-    console.log('sample_fn');
+sample_fn(){
 
 },
 

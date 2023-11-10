@@ -11,36 +11,31 @@
 <script src="./lib/my_global_function_for_q_a.js" defer></script>
 <style>
 .fixed_element_top_right {
-  position: fixed;
-top: 0;
-right: 0;
-font-size: 1.5rem;
-/* top: 50%; */
-/* transform: translateY(-50%); */
+    position: fixed;
+    top: 0;
+    right: 0;
+    font-size: 1.5rem;
 }
 .fixed_element_top_left {
-  position: fixed;
-  top: 0;
-  left: 0;
-  font-size: 1.5rem;
-/* top: 50%; */
-/* transform: translateY(-50%); */
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 1.5rem;
 }
 .fixed_element_bottom_right {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  font-size: 1.5rem;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    font-size: 1.5rem;
 }
 .fixed_element_bottom_left {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  font-size: 1.5rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    font-size: 1.5rem;
 }
-
 .service_list {
-  font-size: 3rem;
+    font-size: 3rem;
 }
 .display_none {
     display: none;
@@ -48,51 +43,47 @@ font-size: 1.5rem;
 .flex_parent {
 }
 .flex_child {
-  display: flex;
+    display: flex;
+}
+.additional_parent {
+    display: flex;
+    place-content: flex-start;
+    width: 100vw;
+}
+.additional_child {
+    width: 32vw;
+    font-size: 2rem;
+    text-align: center;
+}
+.additional_child > button {
+    vertical-align: middle;
+  /* display: flex; */
+
+
+    border: 0.01rem solid #000000;
 }
 .display_flex_child_or_not_parent {
     display: flex;
     place-content: flex-start;
-    /* font: 2rem sans-serif; */
     width: 100vw;
-    /* align-items: stretch; */
 }
-/* .display_flex_child_or_not > label, */
 .display_flex_child_or_not_parent > input {
     display: none;
-   /* checkboxのinputを縦横1.5rem1.5remにする */
-    /* width: 1.5rem; */
-    /* height: 1.5rem; */
 }
 .label_for_display {
-    /* 右側にborderを入れる */
     border-right: 0.1rem solid black;
     width: 25vw;
     font-size: 3rem;
-    /* fontを中央に配置する */
     text-align: center;
-    /* background-color: red; */
-
 }
 .go_to_any_service_page {
-    /* buttonタグ */
-    /* ボタンの枠線を細くする(0.01rem) */
     border: 0.01rem solid #000000;
-    /* 色を無色透明にする。フォントは黒 */
     color: transparent;
-    /* 背景を無色透明にする */
     background-color: transparent;
-    /* マウスオーバー時のカーソルをポインターにする */
     cursor: pointer;
-    /* フォントカラーは黒でフォントサイズは1rem */
     font: 1rem sans-serif;
     width: 1.5rem;
 }
-
-
-
-
-/* .showDialogを.block_of_oneの右上端に表示する */
 .block_of_one {
     position: relative;
     width: 100vw;
@@ -104,8 +95,6 @@ font-size: 1.5rem;
     font-size: 1.5rem;
     cursor: pointer;
 }
-
-/* .data_typeを.block_of_oneの右下端に表示する */
 .bottom_right {
     position: absolute;
     bottom: 0;
@@ -118,36 +107,28 @@ font-size: 1.5rem;
     right: 50%;
     font-size: 1.4rem;
 }
-
 .created_at, .username, .id {
-    /* インライン要素に設定 */
     display: inline-block;
     font-size: 0.7rem;
 }
 .data_type {
-    /* インライン要素に設定 */
     display: inline-block;
     font-size: 1rem;
 }
-
 .tags_parent, .tags, .show_tag_more_button {
-    /* インライン要素に設定 */
     display: inline;
     font-size: 0.7rem;
 }
-
 .comment_and_tag {
-  padding: 10px;
-  border: 1px solid black;
+    padding: 10px;
+    border: 1px solid black;
 }
-
 .showDialog {
     display: inline-block;
 }
 .dialog_ul {
     display: inline-block;
 }
-
 .dialog_li {
     display: inline-block;
 }
@@ -168,8 +149,6 @@ font-size: 1.5rem;
     border: 1px solid black;
     margin: 0;
     padding: 0;
-    /* width: 3rem; */
-    /* height: 3rem; */
 }
 .sample1 {
     font-size: 10rem;
@@ -180,7 +159,6 @@ font-size: 1.5rem;
 .sample3 {
     display: none;
 }
-
 </style>
 </head>
 <body class="app">
@@ -235,31 +213,26 @@ font-size: 1.5rem;
     <!-- <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button> -->
 </div>
 
-<div>
-👥: <button v-if="show_user" @click="show_all_user">{{ show_user }}</button>
-🏷️: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
-⬆️⬇️: <button @click="change_show_order_by">{{ show_order_by }}</button>
+<div class="additional_parent">
+    <div class="additional_child">👥 <button v-if="show_user" @click="show_all_user">{{ show_user }}</button></div>
+    <div class="additional_child">🏷️ <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button></div>
+    <div class="additional_child">⬆️⬇️ <button @click="change_show_order_by">{{ show_order_by }}</button></div>
 </div>
 
 
 <!-- flex_child_displayをradioで管理する -->
 <div class="display_flex_child_or_not_parent">
-    <!-- <div class="display_flex_child_or_not"> -->
         <input type="radio" id="web_data_id" name="radio" value="web_data_id_isChecked" @change="flex_child_change_display($event)" checked />
         <label class="label_for_display" for="web_data_id"> 📦 </label>
-    <!-- </div> -->
-    <!-- <div class="display_flex_child_or_not"> -->
+
         <input type="radio" id="q_a_data_id" name="radio" value="q_a_data_id_isChecked" @change="flex_child_change_display($event)" />
         <label class="label_for_display" for="q_a_data_id"> 🟰 </label>
-    <!-- </div> -->
-    <!-- <div class="display_flex_child_or_not"> -->
+
         <input type="radio" id="f_i_b_data_id" name="radio" value="f_i_b_data_id_isChecked" @change="flex_child_change_display($event)" />
         <label class="label_for_display" for="f_i_b_data_id"> 🕳️ </label>
-    <!-- </div> -->
-    <!-- <div class="display_flex_child_or_not"> -->
+
         <input type="radio" id="i_t_n_data_id" name="radio" value="i_t_n_data_id_isChecked" @change="flex_child_change_display($event)" />
         <label class="label_for_display" for="i_t_n_data_id"> 🖼️ </label>
-    <!-- </div> -->
 </div>
 
 

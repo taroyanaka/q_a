@@ -187,12 +187,10 @@
 </head>
 <body class="app simple_mode">
 
-
 <div @click="simple_funtionable" class="fixed_element fixed_element_top_right simple_mode">◎</div>
 <div @click="simple_funtionable" class="fixed_element fixed_element_top_left simple_mode">◎</div>
 <div @click="simple_funtionable" class="fixed_element fixed_element_bottom_right simple_mode">◎</div>
 <div @click="simple_funtionable" class="fixed_element fixed_element_bottom_left simple_mode">◎</div>
-
 
 <button @click="data_text_area_toggle" class="data_text_area_toggle" :style="{ marginLeft: data_text_area_visible ? '40vw' : '' }">🎁📦🥡</button>
 <textarea name="data1" class="data_text_area data_text_area_1" v-model="data1" :style="{ display: data_text_area_visible ? 'block' : 'none' }"></textarea>
@@ -200,13 +198,13 @@
 <textarea name="data2" class="data_text_area data_text_area_2" v-model="data2" :style="{ display: data_text_area_visible ? 'block' : 'none' }"></textarea>
 <button @click="data_text_area_toggle" class="data_text_area_toggle" :style="{ marginLeft: data_text_area_visible ? '40vw' : '' }">🎁📦🥡</button>
 
-
 <div class="insert_option">
     <select v-model="data_type">
         <option value="q_a">🟰</option>
         <option value="f_i_b">🕳️</option>
         <option value="i_t_n">🖼️</option>
     </select>
+    <!-- <input type="text" v-model="data_json" placeholder="data_json"> -->
     <input type="text" v-model="name" placeholder="name">
     <input type="password" v-model="password" placeholder="password">
     <button @click="fetch_insert_link" class="fetch_insert_link">📲🛫📲🚀📲</button>
@@ -223,7 +221,6 @@
     </ul>
 </div>
 
-
 <div class="additional_parent">
     <div class="additional_child">👥 <button v-if="show_user" @click="show_all_user">{{ show_user }}</button></div>
     <div class="additional_child">🏷️ <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button></div>
@@ -233,19 +230,18 @@
 
 <!-- flex_child_displayをradioで管理する -->
 <div class="display_flex_child_or_not_parent">
-    <input type="radio" id="web_data_id" name="radio" value="web_data_id_isChecked" @change="flex_child_change_display($event)" checked />
-    <label class="label_for_display" for="web_data_id"> 📦 </label>
+        <input type="radio" id="web_data_id" name="radio" value="web_data_id_isChecked" @change="flex_child_change_display($event)" checked />
+        <label class="label_for_display" for="web_data_id"> 📦 </label>
 
-    <input type="radio" id="q_a_data_id" name="radio" value="q_a_data_id_isChecked" @change="flex_child_change_display($event)" />
-    <label class="label_for_display" for="q_a_data_id"> 🟰 </label>
+        <input type="radio" id="q_a_data_id" name="radio" value="q_a_data_id_isChecked" @change="flex_child_change_display($event)" />
+        <label class="label_for_display" for="q_a_data_id"> 🟰 </label>
 
-    <input type="radio" id="f_i_b_data_id" name="radio" value="f_i_b_data_id_isChecked" @change="flex_child_change_display($event)" />
-    <label class="label_for_display" for="f_i_b_data_id"> 🕳️ </label>
+        <input type="radio" id="f_i_b_data_id" name="radio" value="f_i_b_data_id_isChecked" @change="flex_child_change_display($event)" />
+        <label class="label_for_display" for="f_i_b_data_id"> 🕳️ </label>
 
-    <input type="radio" id="i_t_n_data_id" name="radio" value="i_t_n_data_id_isChecked" @change="flex_child_change_display($event)" />
-    <label class="label_for_display" for="i_t_n_data_id"> 🖼️ </label>
+        <input type="radio" id="i_t_n_data_id" name="radio" value="i_t_n_data_id_isChecked" @change="flex_child_change_display($event)" />
+        <label class="label_for_display" for="i_t_n_data_id"> 🖼️ </label>
 </div>
-
 
 <div class="flex_parent simple_mode">
 
@@ -592,8 +588,219 @@
     </ul>
     </div>
 </div>
+    <!-- <button @click="go_to_any_service_page('q_a')" class="go_to_any_service_page">q_a</button>
+    <div v-if="temporary_list[0]">
+    <div class="flex_child q_a_data" ref="flex_child_display_q_a_data">
+    <ul>
+    <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[0]">
+        <ul>
+            <li v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+                <button @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+                )">synapse: {{ Other_Of_One }}</button>
+            </li>
+        </ul>
+        <div>data_type: {{ DATA_VAL['data_type'] }}</div>
+        <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
+        <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+        <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
+        <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
+        <button @click="download_data(DATA_VAL['id'])">download_data</button>
+        <button @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">go_to_any_service_page_with_id</button>
+        <div>id: {{ DATA_VAL['id'] }}</div>
+        <div>link: {{ DATA_VAL['link'] }}</div>
+        <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
+        <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
+        <input type="text" v-model="comment" placeholder="comment">
+        <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
+        <ul>
+        <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+            id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }}
+            comment: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+            <button @click="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_delete_comment</button>
+            <input type="text" v-model="comment_reply" placeholder="comment_reply">
+            <button @click="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_insert_comment_reply</button>
+            <ul>
+                <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+                id: {{ REPLIES['id'] }}
+                reply: {{ REPLIES['reply'] }}
+                username: <button @click="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                <button @click="fetch_delete_comment_reply(REPLIES['id'])">fetch_delete_comment_reply</button>
+                </li>
+            </ul>
+        </li>
+        </ul>
+        <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span>
+        <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
+        <ul>
+        <li v-for="(Tag, Tag_I) in DATA_VAL['tags']">
+            <span>id: {{Tag['id']}}</span>        
+            <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
+            <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
+        </li>
+        </ul>
+        <div>
+            <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+            <datalist id="tag-options">
+                <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+            </datalist>
+            <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+        </div>
+        
+        <div>
+            <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
+        </div>
+    </li>
+    </ul>
+    </div>
+    </div> -->
+
+<!-- <button @click="go_to_any_service_page('f_i_b')" class="go_to_any_service_page">f_i_b</button>
+<div v-if="temporary_list[1]">
+<div class="flex_child f_i_b_data" ref="flex_child_display_f_i_b_data">
+    <ul>
+    <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[1]">
+        <ul>
+            <li v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+                <button @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+                )">synapse: {{ Other_Of_One }}</button>
+            </li>
+        </ul>
+        <div>data_type: {{ DATA_VAL['data_type'] }}</div>
+
+        <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
+        <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+        <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
+        <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
+        <button @click="download_data(DATA_VAL['id'])">download_data</button>
+        <button @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">go_to_any_service_page_with_id</button>
+        <div>id: {{ DATA_VAL['id'] }}</div>
+        <div>link: {{ DATA_VAL['link'] }}</div>
+        <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
+        <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
+        <input type="text" v-model="comment" placeholder="comment">
+        <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
+        <ul>
+        <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+            id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }}
+            comment: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+            <button @click="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_delete_comment</button>
+            <input type="text" v-model="comment_reply" placeholder="comment_reply">
+            <button @click="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_insert_comment_reply</button>
+            <ul>
+                <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+                id: {{ REPLIES['id'] }}
+                reply: {{ REPLIES['reply'] }}
+                username: <button @click="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                <button @click="fetch_delete_comment_reply(REPLIES['id'])">fetch_delete_comment_reply</button>
+                </li>
+            </ul>
+        </li>
+        </ul>
+        <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span>
+        <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
+
+        <ul>
+        <li v-for="(Tag, Tag_I) in DATA_VAL['tags']">
+            <span>id: {{Tag['id']}}</span>        
+            <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
+            <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
+        </li>
+        </ul>
+        <div>
+            <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+            <datalist id="tag-options">
+                <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+            </datalist>
+            <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+        </div>
+        
+        <div>
+            <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
+        </div>
+    </li>
+    </ul>
+</div>
+</div> -->
+
+<!-- <button @click="go_to_any_service_page('i_t_n')" class="go_to_any_service_page">i_t_n</button>
+<div v-if="temporary_list[2]">
+<div class="flex_child i_t_n_data" ref="flex_child_display_i_t_n_data">
+    <ul>
+    <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[2]">
+        <ul>
+            <li v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+                <button @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+                )">synapse: {{ Other_Of_One }}</button>
+            </li>
+        </ul>
+        <div>data_type: {{ DATA_VAL['data_type'] }}</div>
+
+        <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
+        <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+        <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
+        <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
+        <button @click="download_data(DATA_VAL['id'])">download_data</button>
+        <button @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">go_to_any_service_page_with_id</button>
+        <div>id: {{ DATA_VAL['id'] }}</div>
+        <div>link: {{ DATA_VAL['link'] }}</div>
+        <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
+        <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
+        <input type="text" v-model="comment" placeholder="comment">
+        <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
+        <ul>
+        <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+            id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }}
+            comment: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+            <button @click="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_delete_comment</button>
+            <input type="text" v-model="comment_reply" placeholder="comment_reply">
+            <button @click="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_insert_comment_reply</button>
+            <ul>
+                <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+                id: {{ REPLIES['id'] }}
+                reply: {{ REPLIES['reply'] }}
+                username: <button @click="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                <button @click="fetch_delete_comment_reply(REPLIES['id'])">fetch_delete_comment_reply</button>
+                </li>
+            </ul>
+        </li>
+        </ul>
+        <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span>
+        <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
+
+        <ul>
+        <li v-for="(Tag, Tag_I) in DATA_VAL['tags']">
+            <span>id: {{Tag['id']}}</span>        
+            <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
+            <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
+        </li>
+        </ul>
+        <div>
+            <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+            <datalist id="tag-options">
+                <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+            </datalist>
+            <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+        </div>
+        
+        <div>
+            <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
+        </div>
+    </li>
+    </ul>
+</div>
+</div> -->
+
+
+
 
 </div>
+
 </body>
 <script>
 const app = Vue.createApp({
@@ -657,8 +864,8 @@ serviceList: [
 urlList: [],
 truncate_text_length: 100,
 untruncate_text_array: [],
-// endpoint: 'http://localhost:8000',
-endpoint: 'https://cotton-concrete-catsup.glitch.me',
+endpoint: 'http://localhost:8000',
+// endpoint: 'https://cotton-concrete-catsup.glitch.me',
 comment_and_tag_visible: false,
 
     }},

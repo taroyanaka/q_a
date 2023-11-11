@@ -10,6 +10,37 @@
 <script src="./lib/ramda.@0.28.0.js"></script>
 <script src="./lib/my_global_function_for_q_a.js" defer></script>
 <style>
+.fetch_insert_link {
+    font-size: 1.6rem;
+    width: 100vw;
+    height: 2.1rem;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    margin: 0;
+    padding: 0;
+}
+.insert_option select {
+    width: 100vw;
+    height: 3rem;
+}
+.insert_option select option {
+    font-size: 3rem;
+}
+.insert_option input {
+    width: 100vw;
+    height: 1.5rem;
+}
+.data_text_area_toggle {
+    font-size: 1.3rem;
+}
+.data_text_area {
+    width: 90vw;
+    height: 30vh;
+    font-size: 1.2rem;
+    /* vwで中央に寄せる */
+    margin-left: 5vw;
+}
 .fixed_element {
     z-index: 10;
 }
@@ -164,28 +195,30 @@
 <div @click="simple_funtionable" class="fixed_element fixed_element_bottom_right simple_mode">◎</div>
 <div @click="simple_funtionable" class="fixed_element fixed_element_bottom_left simple_mode">◎</div>
 
-<!-- selectとoptionでdata_type('q_a', 'f_i_b', 'i_t_n',)を選択 -->
-<textarea name="data1" id="" cols="30" rows="10" v-model="data1"></textarea>
-<textarea name="data2" id="" cols="30" rows="10" v-model="data2"></textarea>
+<button @click="data_text_area_toggle" class="data_text_area_toggle" :style="{ marginLeft: data_text_area_visible ? '40vw' : '' }">🎁📦🥡</button>
+<textarea name="data1" class="data_text_area data_text_area_1" v-model="data1" :style="{ display: data_text_area_visible ? 'block' : 'none' }"></textarea>
+<button @click="data_text_area_toggle" class="data_text_area_toggle" :style="{ marginLeft: data_text_area_visible ? '40vw' : '' }">🎁📦🥡</button>
+<textarea name="data2" class="data_text_area data_text_area_2" v-model="data2" :style="{ display: data_text_area_visible ? 'block' : 'none' }"></textarea>
+<button @click="data_text_area_toggle" class="data_text_area_toggle" :style="{ marginLeft: data_text_area_visible ? '40vw' : '' }">🎁📦🥡</button>
 
 <div class="insert_option">
-<select v-model="data_type">
-    <option value="q_a">q_a</option>
-    <option value="f_i_b">f_i_b</option>
-    <option value="i_t_n">i_t_n</option>
-</select>
-<!-- <input type="text" v-model="data_json" placeholder="data_json"> -->
-<input type="text" v-model="name" placeholder="name">
-<input type="password" v-model="password" placeholder="password">
-<button @click="fetch_insert_link">📲🚀📲🛫📲</button>
-<!-- <button @click="fetch_test_db_init">fetch_test_db_init</button> -->
+    <select v-model="data_type">
+        <option value="q_a">🟰</option>
+        <option value="f_i_b">🕳️</option>
+        <option value="i_t_n">🖼️</option>
+    </select>
+    <!-- <input type="text" v-model="data_json" placeholder="data_json"> -->
+    <input type="text" v-model="name" placeholder="name">
+    <input type="password" v-model="password" placeholder="password">
+    <button @click="fetch_insert_link" class="fetch_insert_link">📲🛫📲🚀📲</button>
+    <!-- <button @click="fetch_test_db_init">fetch_test_db_init</button> -->
 </div>
 
 
 <div>
     <button @click="show_tag_more_button" class="show_tag_more_button">🏷️→</button>
     <ul :style="{ display: tag_more_visible ? 'inline' : 'none' }">
-        <li v-for="(tag, tag_i) in tags"  :style="apply_inline_block_styles_all_at_once(false)" class="all_tags">
+        <li v-for="(tag, tag_i) in tags" :style="apply_inline_block_styles_all_at_once(false)" class="all_tags">
             <button @click="change_show_tag(tag['tag'])">{{ tag['tag'] }}</button>
         </li>
     </ul>
@@ -550,6 +583,8 @@ data() {
         only_show_flag: false,
         all_alt_elm_visible: false,
 
+        data_text_area_visible: false,
+
         tag_more_visible: false,
         comment_button_visible: false,
         synapse_visible: false,
@@ -857,6 +892,7 @@ download_data(ID){
     this.data_type = this.web_data.message.filter(V=>V['id'] === ID)[0].data_type;
     this.data1 = JSON.parse(this.web_data.message.filter(V=>V['id'] === ID)[0].data_json_str).data1;
     this.data2 = JSON.parse(this.web_data.message.filter(V=>V['id'] === ID)[0].data_json_str).data2;
+    this.data_text_area_visible = true;
 },
 separate_each_list(){
     this.only_q_a_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'q_a');
@@ -1054,12 +1090,15 @@ simple_funtionable() {
 apply_inline_block_styles_all_at_once(Simple=false) {
     // simple_modeが本来のinline-block指定のCSS指定と競合するため、
     // インラインスタイルを優先適用させるための関数
-
     // .simple_mode配下の場合はdisplay: none;を適用する
     this.simple_funtionable_flag === true ? Simple = true : Simple = false;
     const style = Simple === true ? 'display: none;' : 'display: inline-block;' ;
     return style;
 },
+data_text_area_toggle() {
+    this.data_text_area_visible = !this.data_text_area_visible;
+},
+
 
 },
 }).mount('.app');

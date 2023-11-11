@@ -244,59 +244,50 @@
 </div>
 
 <div class="flex_parent simple_mode">
-    <div v-if="web_data['message']" class="simple_mode">
-    <div class="flex_child web_data simple_mode" ref="flex_child_display_web_data">
-    <ul class="simple_mode">
-    <li v-for="(DATA_VAL, DATA_IDX) in web_data['message']" class="block_of_one simple_mode">
-        <div class="data_type" v-if="DATA_VAL['data_type']" @click="go_to_any_service_page(DATA_VAL['data_type'])" >{{ DATA_VAL['data_type'] }}</div>
-        <div :style="apply_inline_block_styles_all_at_once(false)" class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div>
-        <div :style="apply_inline_block_styles_all_at_once(false)" class="go_to_any_service_page_with_id" @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">📂</div>
 
-        <span v-if="DATA_VAL['likes'].length === 0"
-            @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
-            {{ '♡' }}</span>
-
-        <span
-            v-for="(like, like_i) in DATA_VAL['likes']"
-            @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
-            {{ '❤️' }}</span>
-
-        
-        <ul class="tags_parent">
-            <li v-for="(Tag, Tag_I) in DATA_VAL['tags']" class="tags">
-                <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button>
-                <button
-                    v-if="DATA_VAL['tags'].length >0"
-                    @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])"
-                    :style="{ display: tag_more_visible ? 'inline' : 'none' }"
-                    >🗑️</button>
-            </li>
+<div v-if="web_data['message']" class="simple_mode">
+<div class="flex_child web_data simple_mode" ref="flex_child_display_web_data">
+<ul class="simple_mode">
+<li v-for="(DATA_VAL, DATA_IDX) in web_data['message']" class="block_of_one simple_mode">
+    <div class="data_type" v-if="DATA_VAL['data_type']" @click="go_to_any_service_page(DATA_VAL['data_type'])" >{{ DATA_VAL['data_type'] }}</div>
+    <div :style="apply_inline_block_styles_all_at_once(false)" class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div>
+    <div :style="apply_inline_block_styles_all_at_once(false)" class="go_to_any_service_page_with_id" @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">📂</div>
+    <span v-if="DATA_VAL['likes'].length === 0"
+        @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
+        {{ '♡' }}</span>
+    <span
+        v-for="(like, like_i) in DATA_VAL['likes']"
+        @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
+        {{ '❤️' }}</span>
+    <ul class="tags_parent">
+        <li v-for="(Tag, Tag_I) in DATA_VAL['tags']" class="tags">
+            <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button>
+            <button
+                v-if="DATA_VAL['tags'].length >0"
+                @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])"
+                :style="{ display: tag_more_visible ? 'inline' : 'none' }"
+                >🗑️</button>
+        </li>
+    </ul>
+    <button @click="show_tag_more_button" class="show_tag_more_button">🏷️→</button>
+    <div :style="{ display: tag_more_visible ? 'block' : 'none' }">
+        <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+        <datalist id="tag-options" @click>
+            <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+        </datalist>
+        <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
+    </div>
+    <div class="top_right">
+        <ul class="dialog_ul">
+        <li class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+            <span class="synapse" @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+            )" :style="{ display: synapse_visible ? 'block' : 'none' }">{{ choice_emoji(Other_Of_One) }}</span>
+        </li>
         </ul>
-        <button @click="show_tag_more_button" class="show_tag_more_button">🏷️→</button>
-        <div :style="{ display: tag_more_visible ? 'block' : 'none' }">
-            <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
-            <datalist id="tag-options" @click>
-                <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
-            </datalist>
-            <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
-        </div>
-    
-        <div class="top_right">
-            <ul class="dialog_ul">
-                <li class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
-                    <span class="synapse" @click="synapse(DATA_VAL['data_type'], Other_Of_One,
-                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
-                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
-                    )" :style="{ display: synapse_visible ? 'block' : 'none' }">{{ choice_emoji(Other_Of_One) }}</span>
-                </li>
-            </ul>
-            <div @click="showDialog" class="showDialog">⚙️</div>
-        </div>
-
-        
-    <!-- ja: 右下 -->
-    <!-- en: bottom_right -->
-
+        <div @click="showDialog" class="showDialog">⚙️</div>
+    </div>
     <div class="bottom_right">
         <div class="created_at">{{ date_time_form(DATA_VAL['created_at']) }}</div>
         <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button>
@@ -307,13 +298,11 @@
         <div class="simple_mode">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
     </div>
     <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
-    <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
+        <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
         <ul>
         <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
             {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
-            <!-- <button @click.stop="show_comment_button">💬→</button> -->
             <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
-
                 <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
                 <button @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
             </span>
@@ -323,7 +312,6 @@
                 <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
                 <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
                 <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
-                <!-- <span :style="{ display: comment_button_visible ? 'block' : 'none' }"> -->
                     <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
                     <button @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
                 </span>
@@ -331,13 +319,8 @@
             </ul>
         </li>
         </ul>
-        <!-- <span :style="{ display: comment_button_visible ? 'block' : 'none' }"> -->
-            <input type="text" v-model="comment" placeholder="comment" @click.stop>
-            <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
-        <!-- </span> -->
-<!-- <input type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop> -->
-<!-- <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button> -->
-
+        <input type="text" v-model="comment" placeholder="comment" @click.stop>
+        <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
         <div style="margin-top: 0.5rem" @click.stop>
             <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
             <button @click.stop="show_comment_button" class="bigger_font">💬→</button>
@@ -346,14 +329,338 @@
     </li>
     </ul>
     </div>
+</div>
+
+<div v-if="temporary_list[0]" class="simple_mode">
+<div class="flex_child q_a_data" ref="flex_child_display_q_a_data">
+<ul class="simple_mode">
+<li v-for="(DATA_VAL, DATA_IDX) in temporary_list[0]" class="block_of_one simple_mode">
+    <div class="data_type" v-if="DATA_VAL['data_type']" @click="go_to_any_service_page(DATA_VAL['data_type'])" >{{ DATA_VAL['data_type'] }}</div>
+    <div :style="apply_inline_block_styles_all_at_once(false)" class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div>
+    <div :style="apply_inline_block_styles_all_at_once(false)" class="go_to_any_service_page_with_id" @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">📂</div>
+    <span v-if="DATA_VAL['likes'].length === 0"
+        @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
+        {{ '♡' }}</span>
+    <span
+        v-for="(like, like_i) in DATA_VAL['likes']"
+        @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
+        {{ '❤️' }}</span>
+    <ul class="tags_parent">
+        <li v-for="(Tag, Tag_I) in DATA_VAL['tags']" class="tags">
+            <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button>
+            <button
+                v-if="DATA_VAL['tags'].length >0"
+                @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])"
+                :style="{ display: tag_more_visible ? 'inline' : 'none' }"
+                >🗑️</button>
+        </li>
+    </ul>
+    <button @click="show_tag_more_button" class="show_tag_more_button">🏷️→</button>
+    <div :style="{ display: tag_more_visible ? 'block' : 'none' }">
+        <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+        <datalist id="tag-options" @click>
+            <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+        </datalist>
+        <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
     </div>
+    <div class="top_right">
+        <ul class="dialog_ul">
+        <li class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+            <span class="synapse" @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+            )" :style="{ display: synapse_visible ? 'block' : 'none' }">{{ choice_emoji(Other_Of_One) }}</span>
+        </li>
+        </ul>
+        <div @click="showDialog" class="showDialog">⚙️</div>
+    </div>
+    <div class="bottom_right">
+        <div class="created_at">{{ date_time_form(DATA_VAL['created_at']) }}</div>
+        <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button>
+        <div class="id">{{ DATA_VAL['id'] }}</div>
+    </div>
+    <div class="clickable_for_short_or_long simple_mode " @click="short_or_long( DATA_VAL['id'] )" ref="exception">
+        <div class="simple_mode">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+        <div class="simple_mode">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
+    </div>
+    <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
+        <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
+        <ul>
+        <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+            {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+            <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+                <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
+                <button @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+            </span>
+                <input type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
+                <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
+            <ul>
+                <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+                <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
+                <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+                    <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                    <button @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
+                </span>
+                </li>
+            </ul>
+        </li>
+        </ul>
+        <input type="text" v-model="comment" placeholder="comment" @click.stop>
+        <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
+        <div style="margin-top: 0.5rem" @click.stop>
+            <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
+            <button @click.stop="show_comment_button" class="bigger_font">💬→</button>
+        </div>
+    </div>
+    </li>
+    </ul>
+    </div>
+</div>
 
+<div v-if="temporary_list[1]" class="simple_mode">
+<div class="flex_child f_i_b_data" ref="flex_child_display_f_i_b_data">
+<ul class="simple_mode">
+<li v-for="(DATA_VAL, DATA_IDX) in temporary_list[1]" class="block_of_one simple_mode">
+    <div class="data_type" v-if="DATA_VAL['data_type']" @click="go_to_any_service_page(DATA_VAL['data_type'])" >{{ DATA_VAL['data_type'] }}</div>
+    <div :style="apply_inline_block_styles_all_at_once(false)" class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div>
+    <div :style="apply_inline_block_styles_all_at_once(false)" class="go_to_any_service_page_with_id" @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">📂</div>
+    <span v-if="DATA_VAL['likes'].length === 0"
+        @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
+        {{ '♡' }}</span>
+    <span
+        v-for="(like, like_i) in DATA_VAL['likes']"
+        @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
+        {{ '❤️' }}</span>
+    <ul class="tags_parent">
+        <li v-for="(Tag, Tag_I) in DATA_VAL['tags']" class="tags">
+            <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button>
+            <button
+                v-if="DATA_VAL['tags'].length >0"
+                @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])"
+                :style="{ display: tag_more_visible ? 'inline' : 'none' }"
+                >🗑️</button>
+        </li>
+    </ul>
+    <button @click="show_tag_more_button" class="show_tag_more_button">🏷️→</button>
+    <div :style="{ display: tag_more_visible ? 'block' : 'none' }">
+        <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+        <datalist id="tag-options" @click>
+            <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+        </datalist>
+        <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
+    </div>
+    <div class="top_right">
+        <ul class="dialog_ul">
+        <li class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+            <span class="synapse" @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+            )" :style="{ display: synapse_visible ? 'block' : 'none' }">{{ choice_emoji(Other_Of_One) }}</span>
+        </li>
+        </ul>
+        <div @click="showDialog" class="showDialog">⚙️</div>
+    </div>
+    <div class="bottom_right">
+        <div class="created_at">{{ date_time_form(DATA_VAL['created_at']) }}</div>
+        <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button>
+        <div class="id">{{ DATA_VAL['id'] }}</div>
+    </div>
+    <div class="clickable_for_short_or_long simple_mode " @click="short_or_long( DATA_VAL['id'] )" ref="exception">
+        <div class="simple_mode">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+        <div class="simple_mode">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
+    </div>
+    <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
+        <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
+        <ul>
+        <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+            {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+            <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+                <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
+                <button @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+            </span>
+                <input type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
+                <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
+            <ul>
+                <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+                <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
+                <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+                    <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                    <button @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
+                </span>
+                </li>
+            </ul>
+        </li>
+        </ul>
+        <input type="text" v-model="comment" placeholder="comment" @click.stop>
+        <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
+        <div style="margin-top: 0.5rem" @click.stop>
+            <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
+            <button @click.stop="show_comment_button" class="bigger_font">💬→</button>
+        </div>
+    </div>
+    </li>
+    </ul>
+    </div>
+</div>
 
-    <button @click="go_to_any_service_page('q_a')" class="go_to_any_service_page">q_a</button>
+<div v-if="temporary_list[2]" class="simple_mode">
+<div class="flex_child i_t_n_data" ref="flex_child_display_i_t_n_data">
+<ul class="simple_mode">
+<li v-for="(DATA_VAL, DATA_IDX) in temporary_list[2]" class="block_of_one simple_mode">
+    <div class="data_type" v-if="DATA_VAL['data_type']" @click="go_to_any_service_page(DATA_VAL['data_type'])" >{{ DATA_VAL['data_type'] }}</div>
+    <div :style="apply_inline_block_styles_all_at_once(false)" class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div>
+    <div :style="apply_inline_block_styles_all_at_once(false)" class="go_to_any_service_page_with_id" @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">📂</div>
+    <span v-if="DATA_VAL['likes'].length === 0"
+        @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
+        {{ '♡' }}</span>
+    <span
+        v-for="(like, like_i) in DATA_VAL['likes']"
+        @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
+        {{ '❤️' }}</span>
+    <ul class="tags_parent">
+        <li v-for="(Tag, Tag_I) in DATA_VAL['tags']" class="tags">
+            <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button>
+            <button
+                v-if="DATA_VAL['tags'].length >0"
+                @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])"
+                :style="{ display: tag_more_visible ? 'inline' : 'none' }"
+                >🗑️</button>
+        </li>
+    </ul>
+    <button @click="show_tag_more_button" class="show_tag_more_button">🏷️→</button>
+    <div :style="{ display: tag_more_visible ? 'block' : 'none' }">
+        <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+        <datalist id="tag-options" @click>
+            <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+        </datalist>
+        <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
+    </div>
+    <div class="top_right">
+        <ul class="dialog_ul">
+        <li class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+            <span class="synapse" @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+            )" :style="{ display: synapse_visible ? 'block' : 'none' }">{{ choice_emoji(Other_Of_One) }}</span>
+        </li>
+        </ul>
+        <div @click="showDialog" class="showDialog">⚙️</div>
+    </div>
+    <div class="bottom_right">
+        <div class="created_at">{{ date_time_form(DATA_VAL['created_at']) }}</div>
+        <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button>
+        <div class="id">{{ DATA_VAL['id'] }}</div>
+    </div>
+    <div class="clickable_for_short_or_long simple_mode " @click="short_or_long( DATA_VAL['id'] )" ref="exception">
+        <div class="simple_mode">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+        <div class="simple_mode">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
+    </div>
+    <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
+        <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
+        <ul>
+        <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+            {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+            <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+                <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
+                <button @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+            </span>
+                <input type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
+                <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
+            <ul>
+                <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+                <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
+                <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+                    <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                    <button @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
+                </span>
+                </li>
+            </ul>
+        </li>
+        </ul>
+        <input type="text" v-model="comment" placeholder="comment" @click.stop>
+        <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
+        <div style="margin-top: 0.5rem" @click.stop>
+            <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
+            <button @click.stop="show_comment_button" class="bigger_font">💬→</button>
+        </div>
+    </div>
+    </li>
+    </ul>
+    </div>
+</div>
+    <!-- <button @click="go_to_any_service_page('q_a')" class="go_to_any_service_page">q_a</button>
     <div v-if="temporary_list[0]">
     <div class="flex_child q_a_data" ref="flex_child_display_q_a_data">
     <ul>
     <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[0]">
+        <ul>
+            <li v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+                <button @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+                )">synapse: {{ Other_Of_One }}</button>
+            </li>
+        </ul>
+        <div>data_type: {{ DATA_VAL['data_type'] }}</div>
+        <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
+        <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+        <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
+        <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
+        <button @click="download_data(DATA_VAL['id'])">download_data</button>
+        <button @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">go_to_any_service_page_with_id</button>
+        <div>id: {{ DATA_VAL['id'] }}</div>
+        <div>link: {{ DATA_VAL['link'] }}</div>
+        <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
+        <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
+        <input type="text" v-model="comment" placeholder="comment">
+        <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
+        <ul>
+        <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+            id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }}
+            comment: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+            <button @click="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_delete_comment</button>
+            <input type="text" v-model="comment_reply" placeholder="comment_reply">
+            <button @click="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_insert_comment_reply</button>
+            <ul>
+                <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+                id: {{ REPLIES['id'] }}
+                reply: {{ REPLIES['reply'] }}
+                username: <button @click="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                <button @click="fetch_delete_comment_reply(REPLIES['id'])">fetch_delete_comment_reply</button>
+                </li>
+            </ul>
+        </li>
+        </ul>
+        <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span>
+        <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
+        <ul>
+        <li v-for="(Tag, Tag_I) in DATA_VAL['tags']">
+            <span>id: {{Tag['id']}}</span>        
+            <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
+            <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
+        </li>
+        </ul>
+        <div>
+            <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+            <datalist id="tag-options">
+                <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+            </datalist>
+            <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+        </div>
+        
+        <div>
+            <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
+        </div>
+    </li>
+    </ul>
+    </div>
+    </div> -->
+
+<!-- <button @click="go_to_any_service_page('f_i_b')" class="go_to_any_service_page">f_i_b</button>
+<div v-if="temporary_list[1]">
+<div class="flex_child f_i_b_data" ref="flex_child_display_f_i_b_data">
+    <ul>
+    <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[1]">
         <ul>
             <li v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
                 <button @click="synapse(DATA_VAL['data_type'], Other_Of_One,
@@ -416,148 +723,78 @@
         </div>
     </li>
     </ul>
-    </div>
-    </div>
+</div>
+</div> -->
 
-    <button @click="go_to_any_service_page('f_i_b')" class="go_to_any_service_page">f_i_b</button>
-    <div v-if="temporary_list[1]">
-    <div class="flex_child f_i_b_data" ref="flex_child_display_f_i_b_data">
+<!-- <button @click="go_to_any_service_page('i_t_n')" class="go_to_any_service_page">i_t_n</button>
+<div v-if="temporary_list[2]">
+<div class="flex_child i_t_n_data" ref="flex_child_display_i_t_n_data">
+    <ul>
+    <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[2]">
         <ul>
-        <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[1]">
+            <li v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+                <button @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                    data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+                )">synapse: {{ Other_Of_One }}</button>
+            </li>
+        </ul>
+        <div>data_type: {{ DATA_VAL['data_type'] }}</div>
+
+        <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
+        <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+        <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
+        <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
+        <button @click="download_data(DATA_VAL['id'])">download_data</button>
+        <button @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">go_to_any_service_page_with_id</button>
+        <div>id: {{ DATA_VAL['id'] }}</div>
+        <div>link: {{ DATA_VAL['link'] }}</div>
+        <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
+        <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
+        <input type="text" v-model="comment" placeholder="comment">
+        <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
+        <ul>
+        <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+            id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }}
+            comment: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+            <button @click="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_delete_comment</button>
+            <input type="text" v-model="comment_reply" placeholder="comment_reply">
+            <button @click="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_insert_comment_reply</button>
             <ul>
-                <li v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
-                    <button @click="synapse(DATA_VAL['data_type'], Other_Of_One,
-                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
-                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
-                    )">synapse: {{ Other_Of_One }}</button>
+                <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+                id: {{ REPLIES['id'] }}
+                reply: {{ REPLIES['reply'] }}
+                username: <button @click="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                <button @click="fetch_delete_comment_reply(REPLIES['id'])">fetch_delete_comment_reply</button>
                 </li>
             </ul>
-            <div>data_type: {{ DATA_VAL['data_type'] }}</div>
-
-            <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
-            <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
-            <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
-            <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
-            <button @click="download_data(DATA_VAL['id'])">download_data</button>
-            <button @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">go_to_any_service_page_with_id</button>
-            <div>id: {{ DATA_VAL['id'] }}</div>
-            <div>link: {{ DATA_VAL['link'] }}</div>
-            <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
-            <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
-            <input type="text" v-model="comment" placeholder="comment">
-            <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
-            <ul>
-            <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
-                id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }}
-                comment: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
-                <button @click="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_delete_comment</button>
-                <input type="text" v-model="comment_reply" placeholder="comment_reply">
-                <button @click="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_insert_comment_reply</button>
-                <ul>
-                    <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
-                    id: {{ REPLIES['id'] }}
-                    reply: {{ REPLIES['reply'] }}
-                    username: <button @click="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
-                    <button @click="fetch_delete_comment_reply(REPLIES['id'])">fetch_delete_comment_reply</button>
-                    </li>
-                </ul>
-            </li>
-            </ul>
-            <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span>
-            <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
-    
-            <ul>
-            <li v-for="(Tag, Tag_I) in DATA_VAL['tags']">
-                <span>id: {{Tag['id']}}</span>        
-                <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
-                <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
-            </li>
-            </ul>
-            <div>
-                <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
-                <datalist id="tag-options">
-                    <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
-                </datalist>
-                <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
-            </div>
-            
-            <div>
-                <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
-            </div>
         </li>
         </ul>
-    </div>
-    </div>
+        <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span>
+        <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
 
-    <button @click="go_to_any_service_page('i_t_n')" class="go_to_any_service_page">i_t_n</button>
-    <div v-if="temporary_list[2]">
-    <div class="flex_child i_t_n_data" ref="flex_child_display_i_t_n_data">
         <ul>
-        <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[2]">
-            <ul>
-                <li v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
-                    <button @click="synapse(DATA_VAL['data_type'], Other_Of_One,
-                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
-                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
-                    )">synapse: {{ Other_Of_One }}</button>
-                </li>
-            </ul>
-            <div>data_type: {{ DATA_VAL['data_type'] }}</div>
-
-            <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
-            <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
-            <div>{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
-            <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
-            <button @click="download_data(DATA_VAL['id'])">download_data</button>
-            <button @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">go_to_any_service_page_with_id</button>
-            <div>id: {{ DATA_VAL['id'] }}</div>
-            <div>link: {{ DATA_VAL['link'] }}</div>
-            <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
-            <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
-            <input type="text" v-model="comment" placeholder="comment">
-            <button @click="fetch_insert_comment(DATA_VAL['id'])">fetch_insert_comment</button>
-            <ul>
-            <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
-                id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }}
-                comment: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
-                <button @click="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_delete_comment</button>
-                <input type="text" v-model="comment_reply" placeholder="comment_reply">
-                <button @click="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">fetch_insert_comment_reply</button>
-                <ul>
-                    <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
-                    id: {{ REPLIES['id'] }}
-                    reply: {{ REPLIES['reply'] }}
-                    username: <button @click="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
-                    <button @click="fetch_delete_comment_reply(REPLIES['id'])">fetch_delete_comment_reply</button>
-                    </li>
-                </ul>
-            </li>
-            </ul>
-            <span v-for="(like, like_i) in DATA_VAL['likes']">{{ '❤️' }}</span>
-            <button @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">fetch_like_increment_or_decrement</button>
-    
-            <ul>
-            <li v-for="(Tag, Tag_I) in DATA_VAL['tags']">
-                <span>id: {{Tag['id']}}</span>        
-                <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
-                <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
-            </li>
-            </ul>
-            <div>
-                <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
-                <datalist id="tag-options">
-                    <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
-                </datalist>
-                <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
-            </div>
-            
-            <div>
-                <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
-            </div>
+        <li v-for="(Tag, Tag_I) in DATA_VAL['tags']">
+            <span>id: {{Tag['id']}}</span>        
+            <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
+            <button @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])">fetch_delete_tag</button>
         </li>
         </ul>
-    </div>
-    </div>
+        <div>
+            <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+            <datalist id="tag-options">
+                <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+            </datalist>
+            <button @click="fetch_insert_tag(DATA_VAL['id'])">fetch_insert_tag</button>
+        </div>
+        
+        <div>
+            <button @click="fetch_delete_link(DATA_VAL['id'])">fetch_delete_link</button>
+        </div>
+    </li>
+    </ul>
+</div>
+</div> -->
 
 
 
@@ -627,8 +864,8 @@ serviceList: [
 urlList: [],
 truncate_text_length: 100,
 untruncate_text_array: [],
-// endpoint: 'http://localhost:8000',
-endpoint: 'https://cotton-concrete-catsup.glitch.me',
+endpoint: 'http://localhost:8000',
+// endpoint: 'https://cotton-concrete-catsup.glitch.me',
 comment_and_tag_visible: false,
 
     }},

@@ -1058,9 +1058,9 @@ simple_funtionable() {
     this.simple_funtionable_flag === true ? simple() : funtionable();
 },
 apply_inline_block_styles_all_at_once(Simple=false) {
-    const style = Simple === false ? 'display: inline-block;' : 'display: none;';
     // simple_modeが本来のinline-block指定のCSS指定と競合するため、
     // インラインスタイル(HTMLタグ内style指定)を優先適用させるための関数
+    const style = Simple === false ? 'display: inline-block;' : 'display: none;';
     return style;
 },
 

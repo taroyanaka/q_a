@@ -156,17 +156,27 @@
 .sample1 {
     font-size: 10rem;
 }
-.simple_mode {
+.sample2 {
     /* simple_funtionable用の空のclass */
 }
 </style>
 </head>
 <body class="app sample2">
+<!-- <div class=" sample1 sample2">learn fast</div> -->
+<!-- <div class=" sample1 sample2">learn fast</div> -->
 
-<div @click="simple_funtionable" class="fixed_element fixed_element_top_right simple_mode">◎</div>
-<div @click="simple_funtionable" class="fixed_element fixed_element_top_left simple_mode">◎</div>
-<div @click="simple_funtionable" class="fixed_element fixed_element_bottom_right simple_mode">◎</div>
-<div @click="simple_funtionable" class="fixed_element fixed_element_bottom_left simple_mode">◎</div>
+<div @click="simple_funtionable" class="fixed_element fixed_element_top_right sample2 ">◎</div>
+<div @click="simple_funtionable" class="fixed_element fixed_element_top_left sample2 ">◎</div>
+<div @click="simple_funtionable" class="fixed_element fixed_element_bottom_right sample2 ">◎</div>
+<div @click="simple_funtionable" class="fixed_element fixed_element_bottom_left sample2 ">◎</div>
+
+    <!-- service_listの表示非表示を切り替えられるボタン -->
+    <!-- <button @click="change_service_list_display">change_service_list_display</button>
+    <ul class="change_service_list_display_class" ref="change_service_list_display_class">
+        <li v-for="url, idx in urlList" class="service_list">
+          <a :href="url">{{serviceList[idx]['name']}}: {{serviceList[idx]['desc']}}</a>
+        </li>
+    </ul> -->
 
 <!-- selectとoptionでdata_type('q_a', 'f_i_b', 'i_t_n',)を選択 -->
 <textarea name="data1" id="" cols="30" rows="10" v-model="data1"></textarea>
@@ -224,11 +234,11 @@
         <label class="label_for_display" for="i_t_n_data_id"> 🖼️ </label>
 </div>
 
-<div class="flex_parent simple_mode">
-    <div v-if="web_data['message']" class="simple_mode">
-    <div class="flex_child web_data simple_mode" ref="flex_child_display_web_data">
-    <ul class="simple_mode">
-    <li v-for="(DATA_VAL, DATA_IDX) in web_data['message']" class="block_of_one simple_mode">
+<div class="flex_parent sample2">
+    <div v-if="web_data['message']" class="sample2">
+    <div class="flex_child web_data sample2" ref="flex_child_display_web_data">
+    <ul class="sample2">
+    <li v-for="(DATA_VAL, DATA_IDX) in web_data['message']" class="block_of_one sample2">
         <div class="data_type" v-if="DATA_VAL['data_type']" @click="go_to_any_service_page(DATA_VAL['data_type'])" >{{ DATA_VAL['data_type'] }}</div>
         <div :style="apply_inline_block_styles_all_at_once()" class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div>
         <div :style="apply_inline_block_styles_all_at_once()" class="go_to_any_service_page_with_id" @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">📂</div>
@@ -283,9 +293,9 @@
         <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button>
         <div class="id">{{ DATA_VAL['id'] }}</div>
     </div>
-    <div class="clickable_for_short_or_long simple_mode " @click="short_or_long( DATA_VAL['id'] )" ref="exception">
-        <div class="simple_mode">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
-        <div class="simple_mode">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
+    <div class="clickable_for_short_or_long sample2 " @click="short_or_long( DATA_VAL['id'] )" ref="exception">
+        <div class="sample2">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+        <div class="sample2">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
     </div>
     <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
     <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
@@ -606,8 +616,8 @@ serviceList: [
 urlList: [],
 truncate_text_length: 100,
 untruncate_text_array: [],
-// endpoint: 'http://localhost:8000',
-endpoint: 'https://cotton-concrete-catsup.glitch.me',
+endpoint: 'http://localhost:8000',
+// endpoint: 'https://cotton-concrete-catsup.glitch.me',
 comment_and_tag_visible: false,
 
     }},
@@ -1038,19 +1048,19 @@ show_tag_more_button() {
 simple_funtionable() {
     this.simple_funtionable_flag = !this.simple_funtionable_flag;
     function simple(){
-        // cssのsimple_modeクラスを含む要素以外を全て非表示にする
-        const simple_mode_ary_not = document.querySelectorAll('body :not(.simple_mode)');
-        const simple_mode_ary_not_ary = Array.from(simple_mode_ary_not);
-        simple_mode_ary_not_ary.forEach((V) => {
+        // cssのsample2クラスを含む要素以外を全て非表示にする
+        const sample2_ary_not = document.querySelectorAll('body :not(.sample2)');
+        const sample2_ary_not_ary = Array.from(sample2_ary_not);
+        sample2_ary_not_ary.forEach((V) => {
             V.classList.add('display_none');
         });
         apply_inline_block_styles_all_at_once(true);
     }
     function funtionable(){
-        // cssのsimple_modeクラスを含む要素以外を全て表示にする
-        const simple_mode_ary_not = document.querySelectorAll('body :not(.simple_mode)');
-        const simple_mode_ary_not_ary = Array.from(simple_mode_ary_not);
-        simple_mode_ary_not_ary.forEach((V) => {
+        // cssのsample2クラスを含む要素以外を全て表示にする
+        const sample2_ary_not = document.querySelectorAll('body :not(.sample2)');
+        const sample2_ary_not_ary = Array.from(sample2_ary_not);
+        sample2_ary_not_ary.forEach((V) => {
             V.classList.remove('display_none');
         });
         apply_inline_block_styles_all_at_once(false);
@@ -1058,9 +1068,9 @@ simple_funtionable() {
     this.simple_funtionable_flag === true ? simple() : funtionable();
 },
 apply_inline_block_styles_all_at_once(Simple=false) {
-    // simple_modeが本来のinline-block指定のCSS指定と競合するため、
-    // インラインスタイル(HTMLタグ内style指定)を優先適用させるための関数
-    const style = Simple === false ? 'display: inline-block;' : 'display: none;';
+    const style = Simple === null ? 'display: inline-block;' : 'display: none;';
+    // sample2が本来のinline-block指定のCSS指定と競合するため、
+    // インラインスタイルを優先適用させるための関数
     return style;
 },
 

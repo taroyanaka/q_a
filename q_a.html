@@ -288,25 +288,61 @@ font-size: 2.5rem;
     padding: 0;
 }
 /* for_online_function */
+.fixed_element {
+    z-index: 10;
+}
+.fixed_element_top_right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    font-size: 1.5rem;
+}
+.fixed_element_top_left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 1.5rem;
+}
+.fixed_element_bottom_right {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    font-size: 1.5rem;
+}
+.fixed_element_bottom_left {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    font-size: 1.5rem;
+}
+.display_none {
+    display: none;
+}
+
 </style>
 
 
 </head>
 <body class="app">
 
+<div @click="simple_funtionable" class="fixed_element fixed_element_top_right simple_mode2">◎</div>
+<div @click="simple_funtionable" class="fixed_element fixed_element_top_left simple_mode2">◎</div>
+<div @click="simple_funtionable" class="fixed_element fixed_element_bottom_right simple_mode2">◎</div>
+<div @click="simple_funtionable" class="fixed_element fixed_element_bottom_left simple_mode2">◎</div>    
+
 
 <div class="toggleDisplay_parent">
 <button @click="go_to_any_service_page()" class="go_to_any_service_page">🔽</button>
 </div>
 
-<div class="header_and_contents">
+<div class="header_and_contents simple_mode2">
     <header class="header">
     <button @click="column_1_none_fn" class="column_none">💾</button>
     <button @click="column_2_none_fn" class="column_none">⌨️</button>
     <button @click="column_3_none_fn" class="column_none">🖥️</button>
     </header>
 
-    <div class="contents">
+    <div class="contents simple_mode2">
     <div class="column-1" :class="{'column-1-none': column_1_none}">
     <div class="optional_function">
         <button @click="reverse_q_a">🔃</button>
@@ -523,8 +559,9 @@ font-size: 2.5rem;
     <button @click="fn21" class="font_sizing">◎</button>
     </div>
 
-
-    <div class="column-2" :class="{'column-2-none': column_2_none}">
+    <div class="column-2 simple_mode2" :class="{'column-2-none': column_2_none}">
+    <!-- <div class="column-2" :class="{'simple_mode2': true, 'column-2-none': column_2_none}"></div> -->
+    <!-- <div class="column-2 simple_mode2" :class="{'column-2-none': column_2_none}"></div> -->
     <div>
     <!-- <button @click="test0" class="test-fn-none-inline">test0</button> -->
     <!-- <button @click="test1" class="test-fn-none-inline">test1</button> -->
@@ -535,11 +572,12 @@ font-size: 2.5rem;
     
     <button @click="change_only_one_q_a_mode" class="check_button">📏</button>
     <button @click="change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
-    <template v-for="(DATAVAL, DATAIDX) in data4">
-    <div class="q_and_a" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
-        <span class="text_right" @click="fn20(DATAIDX)">{{ data5[DATAIDX] }}</span>
-        <button v-for="item in DATAVAL[1]" @click="fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
-        <span class="text_center">{{ DATAVAL[2] }}</span>
+    <template v-for="(DATAVAL, DATAIDX) in data4" class="simple_mode2">
+    <div class="q_and_a simple_mode2" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
+        <span class="text_right simple_mode2" @click="fn20(DATAIDX)">{{ data5[DATAIDX] }}</span>
+        <button class="simple_mode2" v-for="item in DATAVAL[1]" @click="fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
+        <span class="text_center simple_mode2">{{ DATAVAL[2] }}</span>
+
     </div>
     </template>
     <button @click="change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
@@ -655,13 +693,12 @@ other_app_url_array: [
 current_index: 0,
 only_one_q_a_mode: false,
 
-truncate_text_length: 100,
-untruncate_text_array: [],
-
-// endpoint: 'http://localhost:8000',
-endpoint: 'https://cotton-concrete-catsup.glitch.me',
 
 // for_online_function
+truncate_text_length: 100,
+untruncate_text_array: [],
+// endpoint: 'http://localhost:8000',
+endpoint: 'https://cotton-concrete-catsup.glitch.me',
 only_q_a_list: [],
 only_f_i_b_list: [],
 only_i_t_n_list: [],
@@ -1250,6 +1287,40 @@ try {
     console.log(error);
 }
 },
+async fetch_insert_link(){
+try {
+    const error_check_data1_data2 = (data1, data2) => {
+        switch (true) {
+            case data1 === undefined || data1 === null || data1.length === 0: return 'data1が空です'; break;
+            case data2 === undefined || data2 === null || data2.length === 0: return 'data2が空です'; break;
+            default: return 'OK'; break;
+        }
+    };
+    const error_check_insert_data = (data_type, data_json_str) => {
+        const is_include_DATA_TYPE = (target_data_type_str) => this.DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
+        switch (true) {
+            case data_json_str === undefined: return 'dataが空です'; break;
+            case data_json_str.length > 10000: return 'dataが長すぎます'; break;
+            case !is_include_DATA_TYPE(data_type): return '許可されていないdata_typeです'; break;
+            default: return 'OK'; break;
+        }
+    };
+    error_check_data1_data2(this.data1_connector(), this.data2_connector()) === 'OK' ? null : (()=>{throw new Error(error_check_data1_data2(this.data1, this.data2))})();
+    const data_convert_jsonstr = (data1, data2) => JSON.stringify({'data1': data1, 'data2': data2});
+    const data_json_str = data_convert_jsonstr(this.data1_connector(), this.data2_connector());
+    error_check_insert_data(this.data_type, data_json_str) === 'OK' ? null : (()=>{throw new Error(error_check_insert_data(this.data_type, data_json_str))})();
+    const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify({ name: this.name, password: this.password, link: this.link,
+            data_type: this.data_type,
+            data_json_str: data_json_str,
+        }),
+    });
+    const data = await res.json(); console.log(data);
+} catch (error) {
+    console.log(error);
+}
+},
+
 async fetch_delete_link(LINK_ID){
     if (window.confirm('Are you sure you want to delete this link?')) {
         const res = await fetch(this.endpoint + '/delete_link', {
@@ -1323,6 +1394,36 @@ async fetch_delete_tag(LINK_ID, TAG_ID){
 },
 
 // for_online_function
+
+simple_funtionable() {
+    console.log("simple_funtionable");
+    this.simple_funtionable_flag = !this.simple_funtionable_flag;
+    function simple(){
+        // cssのsimple_modeクラスを含む要素以外を全て非表示にする
+        const simple_mode_ary_not = document.querySelectorAll('body :not(.simple_mode2)');
+        const simple_mode_ary_not_ary = Array.from(simple_mode_ary_not);
+        simple_mode_ary_not_ary.forEach((V) => {
+            V.classList.add('display_none');
+        });
+    }
+    function funtionable(){
+        // cssのsimple_modeクラスを含む要素以外を全て表示にする
+        const simple_mode_ary_not = document.querySelectorAll('body :not(.simple_mode2)');
+        const simple_mode_ary_not_ary = Array.from(simple_mode_ary_not);
+        simple_mode_ary_not_ary.forEach((V) => {
+            V.classList.remove('display_none');
+        });
+    }
+    this.simple_funtionable_flag === true ? simple() : funtionable();
+},
+apply_inline_block_styles_all_at_once(Simple=false) {
+    // simple_modeが本来のinline-block指定のCSS指定と競合するため、
+    // インラインスタイルを優先適用させるための関数
+    // .simple_mode配下の場合はdisplay: none;を適用する
+    this.simple_funtionable_flag === true ? Simple = true : Simple = false;
+    const style = Simple === true ? 'display: none;' : 'display: inline-block;' ;
+    return style;
+},
 
 },
 }).mount('.app');

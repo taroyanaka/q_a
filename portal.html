@@ -38,7 +38,6 @@
     width: 90vw;
     height: 30vh;
     font-size: 1.2rem;
-    /* vwで中央に寄せる */
     margin-left: 5vw;
 }
 .fixed_element {
@@ -601,7 +600,6 @@ data() {
     return {
         simple_funtionable_flag: false,
         only_show_flag: false,
-        all_alt_elm_visible: false,
 
         data_text_area_visible: false,
 
@@ -660,7 +658,6 @@ untruncate_text_array: [],
 // endpoint: 'http://localhost:8000',
 endpoint: 'https://cotton-concrete-catsup.glitch.me',
 comment_and_tag_visible: false,
-
     }},
 watch: {
     // separate_each_listをdeep watchする
@@ -841,7 +838,6 @@ async fetch_delete_comment_reply(COMMENT_REPLY_ID){
 },
 async fetch_insert_tag(LINK_ID){
     const res = await fetch(this.endpoint + '/insert_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        // body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, new_tag: this.new_tag }),
         body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, new_tag: this.search_tag }),
     });
     const data = await res.json(); console.log(data);

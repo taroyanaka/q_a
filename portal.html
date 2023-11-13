@@ -303,32 +303,32 @@
         <div class="simple_mode">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
     </div>
     <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
-        <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
+    <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
+    <ul>
+    <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+        {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+        <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+            <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
+            <button class="advanced" @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+        </span>
+            <input class="advanced" type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
+            <button class="advanced" @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
         <ul>
-        <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
-            {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+            <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+            <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
             <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
-                <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
-                <button @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+                <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                <button class="advanced" @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
             </span>
-                <input type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
-                <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
-            <ul>
-                <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
-                <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
-                <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
-                    <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
-                    <button @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
-                </span>
-                </li>
-            </ul>
-        </li>
+            </li>
         </ul>
-        <input type="text" v-model="comment" placeholder="comment" @click.stop>
-        <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
+    </li>
+    </ul>
+    <input class="advanced" type="text" v-model="comment" placeholder="comment" @click.stop>
+    <button class="advanced" @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
         <div style="margin-top: 0.5rem" @click.stop>
             <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
-            <button @click.stop="show_comment_button" class="bigger_font">💬→</button>
+            <button @click.stop="show_comment_button" class="bigger_font advanced">💬→</button>
         </div>
     </div>
     </li>
@@ -389,32 +389,32 @@
         <div class="simple_mode">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
     </div>
     <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
-        <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
+    <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
+    <ul>
+    <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+        {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+        <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+            <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
+            <button class="advanced" @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+        </span>
+            <input class="advanced" type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
+            <button class="advanced" @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
         <ul>
-        <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
-            {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+            <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+            <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
             <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
-                <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
-                <button @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+                <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                <button class="advanced" @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
             </span>
-                <input type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
-                <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
-            <ul>
-                <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
-                <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
-                <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
-                    <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
-                    <button @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
-                </span>
-                </li>
-            </ul>
-        </li>
+            </li>
         </ul>
-        <input type="text" v-model="comment" placeholder="comment" @click.stop>
-        <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
+    </li>
+    </ul>
+    <input class="advanced" type="text" v-model="comment" placeholder="comment" @click.stop>
+    <button class="advanced" @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
         <div style="margin-top: 0.5rem" @click.stop>
             <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
-            <button @click.stop="show_comment_button" class="bigger_font">💬→</button>
+            <button @click.stop="show_comment_button" class="bigger_font advanced">💬→</button>
         </div>
     </div>
     </li>
@@ -475,32 +475,32 @@
         <div class="simple_mode">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
     </div>
     <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
-        <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
+    <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
+    <ul>
+    <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+        {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+        <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+            <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
+            <button class="advanced" @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+        </span>
+            <input class="advanced" type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
+            <button class="advanced" @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
         <ul>
-        <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
-            {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+            <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+            <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
             <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
-                <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
-                <button @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+                <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                <button class="advanced" @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
             </span>
-                <input type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
-                <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
-            <ul>
-                <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
-                <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
-                <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
-                    <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
-                    <button @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
-                </span>
-                </li>
-            </ul>
-        </li>
+            </li>
         </ul>
-        <input type="text" v-model="comment" placeholder="comment" @click.stop>
-        <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
+    </li>
+    </ul>
+    <input class="advanced" type="text" v-model="comment" placeholder="comment" @click.stop>
+    <button class="advanced" @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
         <div style="margin-top: 0.5rem" @click.stop>
             <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
-            <button @click.stop="show_comment_button" class="bigger_font">💬→</button>
+            <button @click.stop="show_comment_button" class="bigger_font advanced">💬→</button>
         </div>
     </div>
     </li>
@@ -561,32 +561,32 @@
         <div class="simple_mode">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
     </div>
     <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
-        <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
+    <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
+    <ul>
+    <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+        {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+        <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+            <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
+            <button class="advanced" @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+        </span>
+            <input class="advanced" type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
+            <button class="advanced" @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
         <ul>
-        <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
-            {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+            <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+            <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
             <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
-                <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
-                <button @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+                <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                <button class="advanced" @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
             </span>
-                <input type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
-                <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
-            <ul>
-                <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
-                <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
-                <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
-                    <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
-                    <button @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
-                </span>
-                </li>
-            </ul>
-        </li>
+            </li>
         </ul>
-        <input type="text" v-model="comment" placeholder="comment" @click.stop>
-        <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
+    </li>
+    </ul>
+    <input class="advanced" type="text" v-model="comment" placeholder="comment" @click.stop>
+    <button class="advanced" @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
         <div style="margin-top: 0.5rem" @click.stop>
             <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
-            <button @click.stop="show_comment_button" class="bigger_font">💬→</button>
+            <button @click.stop="show_comment_button" class="bigger_font advanced">💬→</button>
         </div>
     </div>
     </li>
@@ -611,9 +611,9 @@ data() {
 name: 'user1',
 password: 'user_pass1',
 web_data: {},
-link: 'https://yanaka.dev/',
-comment: 'comment1',
-comment_reply: 'comRep',
+link: '',
+comment: '',
+comment_reply: '',
 data: null,
 new_tag: '',
 search_tag: '',

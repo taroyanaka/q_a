@@ -35,6 +35,7 @@ font-size: var(--css-var-root-font-size);
 --css-var-color-3: ;
 --test: 'blue';
 
+--advanced-display-var: none;
 }
 button{
 border: none;
@@ -275,9 +276,15 @@ font-size: 2.5rem;
     width: 100vw;
 }
 .additional_child {
-    width: 32vw;
+    width: 31vw;
     font-size: 2rem;
     text-align: center;
+}
+.additional_child_small {
+    width: 2vw;
+}
+.additional_child_small > * {
+    display: inline-block;
 }
 .additional_child button {
     vertical-align: middle;
@@ -324,6 +331,10 @@ font-size: 2.5rem;
 }
 .download_data {
     font-size: 3rem;
+}
+.advanced {
+    display: var(--advanced-display-var);
+    /* display: inline-block; */
 }
 </style>
 
@@ -373,6 +384,12 @@ font-size: 2.5rem;
             <div class="additional_child">👥 <button v-if="show_user" @click="show_all_user">{{ show_user }}</button></div>
             <div class="additional_child">🏷️ <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button></div>
             <div class="additional_child">⬆️⬇️ <button @click="change_show_order_by">{{ show_order_by }}</button></div>
+            <div class="additional_child_small">
+                <input type="radio" id="option1" value="advanced" v-model="advanced_visible">
+                <label for="option1"></label>
+                <input type="radio" id="option2" value="not_advanced" v-model="advanced_visible">
+                <label for="option2"></label>
+            </div>
         </div>
         
         <div class="flex_child q_a_data" ref="flex_child_display_q_a_data">
@@ -435,26 +452,26 @@ font-size: 2.5rem;
                     {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
                     <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
                         <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
-                        <!-- <button @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button> -->
+                        <button class="advanced" @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
                     </span>
-                        <!-- <input type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop> -->
-                        <!-- <button @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button> -->
+                        <input class="advanced" type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
+                        <button class="advanced" @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
                     <ul>
                         <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
                         <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
                         <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
                             <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
-                            <!-- <button @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button> -->
+                            <button class="advanced" @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
                         </span>
                         </li>
                     </ul>
                 </li>
                 </ul>
-                <!-- <input type="text" v-model="comment" placeholder="comment" @click.stop> -->
-                <!-- <button @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button> -->
+                <input class="advanced" type="text" v-model="comment" placeholder="comment" @click.stop>
+                <button class="advanced" @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
                 <div style="margin-top: 0.5rem" @click.stop>
                     <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
-                    <!-- <button @click.stop="show_comment_button" class="bigger_font">💬→</button> -->
+                    <button class="advanced" @click.stop="show_comment_button" class="bigger_font">💬→</button>
                 </div>
             </div>
         </li>
@@ -526,30 +543,6 @@ font-size: 2.5rem;
     </div>
 </div>
 
-
-
-
-
-
-<!-- Fill-in will be mounted here. -->
-<!-- <div class="fill_in">
-    <ul class="ul">
-    <li class="li-1"><button class="collapseChanger" @click="collapseChanger">👐</button></li>
-    <li class="li-2"><button class="sample" onclick="sample()">📝</button></li>
-    </ul>
-
-    <div class="collapse">
-        <textarea name="question" class="question" @input="changer();checker();"></textarea>
-        <textarea name="changer" class="changer" oninput="changer();checker();"></textarea>
-    </div>
-    <div class="answer"></div>
-    <button class="retry" onclick="retry()">🔁</button>
-</div> -->
-
-
-
-
-<!-- More image_name apps(index_3_with_vue is it) will be added here in the future. -->
 
 
 
@@ -632,6 +625,7 @@ textarea_visible: false,
 show_user: '',
 show_tag: '',
 show_order_by: 'DESC',
+advanced_visible: 'not_advanced',
 // for_online_function
 
 }},
@@ -677,7 +671,12 @@ web_data: {
     },
     deep: true,
 },
-
+advanced_visible: {
+    handler: function (newVal, oldVal) {
+        this.advanced_visible === 'advanced' ? this.css_var_set('--advanced-display-var', 'inline-block') : this.css_var_set('--advanced-display-var', 'none');
+    },
+    deep: true,
+},
 },
 beforeCreate(){
 },
@@ -694,6 +693,7 @@ this.processing();
 this.save_data_load();
 // this.fn15();
 // this.toggleDisplay();
+this.advanced_visible_init();
 this.test_mode === false ? this.test_exe() : null;
 },
 beforeUpdate() {
@@ -1313,12 +1313,15 @@ textarea_opener() {
     this.textarea_visible = !this.textarea_visible;
 },
 scrollToTarget(For='local') {
-    For ==='local' ? this.$refs.save_data_set_list_parent1.style.display = 'none' : null;
-    For ==='web' ? this.$refs.save_data_set_list_parent2.style.display = 'none' : null;
     this.textarea_visible = true;
     document.getElementById('target').scrollIntoView(
-        {behavior: 'smooth', block: 'end', inline: 'nearest'}
+        {behavior: 'instant', block: 'end', inline: 'nearest'}
     );
+    For ==='local' ? this.$refs.save_data_set_list_parent1.style.display = 'none' : null;
+    For ==='web' ? this.$refs.save_data_set_list_parent2.style.display = 'none' : null;
+},
+advanced_visible_init() {
+    this.advanced_visible === 'advanced' ? this.css_var_set('--advanced-display-var', 'inline-block') : this.css_var_set('--advanced-display-var', 'none');
 },
 },
 }).mount('.app');

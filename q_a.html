@@ -207,7 +207,6 @@ font-size: 2.5rem;
 .block_of_one {
     position: relative;
     margin-bottom: 1rem;
-    /* width: 100vw; */
 }
 .data_type {
     display: inline-block;
@@ -270,10 +269,12 @@ font-size: 2.5rem;
     margin: 0;
     padding: 0;
 }
+.vw_full {
+    width: 100vw;
+}
 .additional_parent {
     display: flex;
     place-content: flex-start;
-    width: 100vw;
 }
 .additional_child {
     width: 31vw;
@@ -378,7 +379,7 @@ font-size: 2.5rem;
 
 
 <button @click="fn19_1" class="save_opener">🌐</button>
-<div style='display: none' ref="save_data_set_list_parent2">
+<div style='display: none' ref="save_data_set_list_parent2" class="vw_full">
     <div v-if="temporary_list[0]" class="simple_mode1">
         <div class="additional_parent">
             <div class="additional_child">👥 <button v-if="show_user" @click="show_all_user">{{ show_user }}</button></div>

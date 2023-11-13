@@ -269,34 +269,44 @@ font-size: 2.5rem;
     margin: 0;
     padding: 0;
 }
-
+.additional_parent {
+    display: flex;
+    place-content: flex-start;
+    width: 100vw;
+}
+.additional_child {
+    width: 32vw;
+    font-size: 2rem;
+    text-align: center;
+}
+.additional_child button {
+    vertical-align: middle;
+    border: 0.01rem solid #000000;
+}
 /* for_online_function */
 .fixed_element {
     z-index: 10;
+    font-size: 2.5rem;
 }
 .fixed_element_top_right {
     position: fixed;
     top: 0;
     right: 0;
-    font-size: 1.5rem;
 }
 .fixed_element_top_left {
     position: fixed;
     top: 0;
     left: 0;
-    font-size: 1.5rem;
 }
 .fixed_element_bottom_right {
     position: fixed;
     bottom: 0;
     right: 0;
-    font-size: 1.5rem;
 }
 .fixed_element_bottom_left {
     position: fixed;
     bottom: 0;
     left: 0;
-    font-size: 1.5rem;
 }
 .display_none {
     display: none;
@@ -356,6 +366,12 @@ font-size: 2.5rem;
 <button @click="fn19_1" class="save_opener">🌐</button>
 <div style='display: none' ref="save_data_set_list_parent2">
     <div v-if="temporary_list[0]" class="simple_mode1">
+        <div class="additional_parent">
+            <div class="additional_child">👥 <button v-if="show_user" @click="show_all_user">{{ show_user }}</button></div>
+            <div class="additional_child">🏷️ <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button></div>
+            <div class="additional_child">⬆️⬇️ <button @click="change_show_order_by">{{ show_order_by }}</button></div>
+        </div>
+        
         <div class="flex_child q_a_data" ref="flex_child_display_q_a_data">
         <ul class="simple_mode1">
         <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[0]" class="block_of_one simple_mode1">
@@ -609,6 +625,10 @@ comment_button_visible: false,
 synapse_visible: false,
 comment_and_tag_visible: false,
 textarea_visible: false,
+
+show_user: '',
+show_tag: '',
+show_order_by: 'DESC',
 // for_online_function
 
 }},
@@ -1239,6 +1259,16 @@ async fetch_delete_tag(LINK_ID, TAG_ID){
     });
     const data = await res.json(); console.log(data);
     await this.fetch_read_all();
+},
+
+show_all_user(){
+    this.show_user = '';
+},
+show_all_tag(){
+    this.show_tag = '';
+},
+change_show_order_by(){
+    this.show_order_by = this.show_order_by === 'DESC' ? 'ASC' : 'DESC';
 },
 // for_online_function
 simple_funtionable() {

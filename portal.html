@@ -10,7 +10,7 @@
 <script src="./lib/ramda.@0.28.0.js"></script>
 <script src="./lib/my_global_function_for_q_a.js" defer></script>
 <style>
-    
+
 .fetch_insert_link {
     font-size: 1.6rem;
     width: 100vw;
@@ -28,7 +28,7 @@
 .insert_option select option {
     font-size: 3rem;
 }
-.insert_option input {
+.name, .placeholder {
     width: 100vw;
     height: 1.5rem;
 }
@@ -208,8 +208,8 @@
         <option value="f_i_b">🕳️</option>
         <option value="i_t_n">🖼️</option>
     </select>
-    <input type="text" v-model="name" placeholder="name">
-    <input type="password" v-model="password" placeholder="password">
+    <input type="text" v-model="name" placeholder="name" class="name">
+    <input type="password" v-model="password" placeholder="password" class="placeholder">
     <button @click="fetch_insert_link" class="fetch_insert_link">📲🛫📲🚀📲</button>
     <!-- <button @click="fetch_test_db_init">fetch_test_db_init</button> -->
 </div>

@@ -322,6 +322,9 @@ font-size: 2.5rem;
 .name, .placeholder {
     height: 1.5rem;
 }
+.download_data {
+    font-size: 3rem;
+}
 </style>
 
 
@@ -461,7 +464,7 @@ font-size: 2.5rem;
 </div>
 
 <button @click="textarea_opener" class="textarea_opener">📝</button>
-    <div class="textarea-column-1">
+    <div class="textarea-column-1" id="target">
     <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data6" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
     <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data3" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
     </div>
@@ -708,6 +711,7 @@ async save_data_load() {
 this.all_save = JSON.parse(await localforage.getItem('f_c')) || [];
 },
 save_data_set(INDEX){
+this.scrollToTarget('local');
 this.data6 = this.all_save[INDEX][0];
 this.data3 = this.all_save[INDEX][1];
 },
@@ -963,8 +967,6 @@ data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
     return JSON.parse(JSON_STR_DATA1_DATA2);
 },
 download_data(Data_Id){
-    console.log(Data_Id);
-
     const pre_data1_2 = this.temporary_list[0].filter(V=>V.data_type === 'q_a').filter(V=> V.id === Data_Id )[0];
     const pre_data1 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data1'];
     const pre_data2 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data2'];
@@ -974,6 +976,8 @@ download_data(Data_Id){
     this.data2_connector(pre_data2);
     this.all_error_check();
     this.processing();
+
+    this.scrollToTarget('web');
 },
 date_time_form(DATE_TIME){
     // const date = new Date('2023-09-22T16:40:19.249Z');
@@ -1307,6 +1311,14 @@ apply_inline_block_styles_all_at_once(Simple=false) {
 },
 textarea_opener() {
     this.textarea_visible = !this.textarea_visible;
+},
+scrollToTarget(For='local') {
+    For ==='local' ? this.$refs.save_data_set_list_parent1.style.display = 'none' : null;
+    For ==='web' ? this.$refs.save_data_set_list_parent2.style.display = 'none' : null;
+    this.textarea_visible = true;
+    document.getElementById('target').scrollIntoView(
+        {behavior: 'smooth', block: 'end', inline: 'nearest'}
+    );
 },
 },
 }).mount('.app');

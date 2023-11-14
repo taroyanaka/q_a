@@ -33,8 +33,6 @@ font-size: var(--css-var-root-font-size);
 --css-var-color-2: ;
 --css-var-color-3: ;
 --test: 'blue';
-
---advanced-display-var: none;
 }
 button{
 border: none;
@@ -370,7 +368,7 @@ font-size: 2.5rem;
             <button @click="swap_q_a">🔁</button>
             <button @click="save_data_to_all_save">🗂️</button>
         </div>
-        <button @click="fn19_0" class="save_opener">📂</button>
+        <button @click="" class="save_opener">📂</button>
         <ul class="save_data_set_list_parent1" style='display: block;'>
         <li v-for="(DATAVAL, DATAIDX) in f_i_b_all_save" class="save_data_set_list">
             <span @click="save_data_set(DATAIDX)">{{ DATAVAL[0] ? [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] : '' }}</span>
@@ -680,24 +678,27 @@ column_2_none: false,
 column_3_none: false,
 
 
+name: 'user1',
+password: 'user_pass1',
+tags: [],
+search_tag: '',
+web_data: {},
 // f_i_b_web_data: {},
 DATA_TYPE_ARRAY: [
     'q_a',
     'f_i_b',
     'i_t_n',
 ],
+// show_user: '',
+// show_tag: '',
+// show_order_by: 'DESC',
+data_type: 'f_i_b',
+link: '',
 
 truncate_text_length: 100,
 untruncate_text_array: [],
 
 // for_online_function
-data_type: 'f_i_b',
-link: '',
-name: 'user1',
-password: 'user_pass1',
-tags: [],
-search_tag: '',
-web_data: {},
 truncate_text_length: 100,
 untruncate_text_array: [],
 // endpoint: 'http://localhost:8000',
@@ -758,7 +759,9 @@ show_order_by: {
     },
     deep: true,
 },
-    // separate_each_listをdeep watchする
+
+
+// separate_each_listをdeep watchする
 web_data: {
     handler: function (newVal, oldVal) {
         this.separate_each_list();
@@ -1157,6 +1160,20 @@ fn9(IDX){
 fn16(INDEX){
     this.f_i_b_data_X_1.splice(INDEX, 1);
 },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
     return JSON.parse(JSON_STR_DATA1_DATA2);
 },
@@ -1166,6 +1183,66 @@ date_time_form(DATE_TIME){
     const formattedDate = date.toLocaleString('ja-JP', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false});
     return formattedDate;
 },
+
+
+
+
+// async fetch_read_all(){
+//     this.show_user = this.show_user === '' ? '' : this.show_user;
+//     this.show_tag = this.show_tag === '' ? '' : this.show_tag;
+//     const params_for_get = {
+//         user: this.show_user,
+//         tag: this.show_tag,
+//         order_by: this.show_order_by,
+//     };
+//     const url = new URL(this.endpoint + '/' + 'read_all');
+//     url.search = new URLSearchParams(params_for_get).toString();
+//     const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
+//     this.web_data = await res.json(); console.log(this.web_data);
+//     this.only_service_data();
+//     await this.download_data_from_web_data_id();
+// },
+// async fetch_get_tags_for_autocomplete(){
+//     const res = await fetch(this.endpoint + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
+//         body: JSON.stringify({ name: this.name, password: this.password, search_tag: this.search_tag }),
+//     });
+//     const data = await res.json();
+//     this.tags = data['message'];
+// },
+// async fetch_insert_link(){
+// try {
+//     const error_check_data1_data2 = (data1, data2) => {
+//         switch (true) {
+//             case data1 === undefined || data1 === null || data1.length === 0: return 'data1が空です'; break;
+//             case data2 === undefined || data2 === null || data2.length === 0: return 'data2が空です'; break;
+//             default: return 'OK'; break;
+//         }
+//     };
+//     const error_check_insert_data = (data_type, data_json_str) => {
+//         const is_include_DATA_TYPE = (target_data_type_str) => this.DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
+//         switch (true) {
+//             case data_json_str === undefined: return 'dataが空です'; break;
+//             case data_json_str.length > 10000: return 'dataが長すぎます'; break;
+//             case !is_include_DATA_TYPE(data_type): return '許可されていないdata_typeです'; break;
+//             default: return 'OK'; break;
+//         }
+//     };
+//     error_check_data1_data2(this.data1_connector(), this.data2_connector()) === 'OK' ? null : (()=>{throw new Error(error_check_data1_data2(this.data1, this.data2))})();
+//     const data_convert_jsonstr = (data1, data2) => JSON.stringify({'data1': data1, 'data2': data2});
+//     const data_json_str = data_convert_jsonstr(this.data1_connector(), this.data2_connector());
+//     error_check_insert_data(this.data_type, data_json_str) === 'OK' ? null : (()=>{throw new Error(error_check_insert_data(this.data_type, data_json_str))})();
+//     const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
+//         body: JSON.stringify({ name: this.name, password: this.password, link: this.link,
+//             data_type: this.data_type,
+//             data_json_str: data_json_str,
+//         }),
+//     });
+//     const data = await res.json(); console.log(data);
+// } catch (error) {
+//     console.log(error);
+// }
+// },
+// this.data1_connector()とthis.data2_connector()によって、webのdata1とdata2は変換される。
 data1_connector(data1_param){
     if(data1_param){this.f_i_b_data1 = data1_param};
     return this.f_i_b_data1;
@@ -1174,6 +1251,11 @@ data2_connector(data2_param){
     if(data2_param){this.f_i_b_data2 = data2_param};
     return this.f_i_b_data2;
 },
+
+
+
+
+
 
 
 // for_online_function
@@ -1203,6 +1285,10 @@ processing(){
     this.data4_5_setup();
     this.exe();
     // this.save_data_set();
+},
+
+only_service_data(){
+    this.temporary_list[1] = this.web_data.message.filter(V=> V.data_type === this.data_type);
 },
 data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
     return JSON.parse(JSON_STR_DATA1_DATA2);
@@ -1321,7 +1407,7 @@ async download_data_from_web_data_id(){
 
 
 
-// for_online_function
+
 separate_each_list(){
     this.only_q_a_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'q_a');
     this.only_f_i_b_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'f_i_b');
@@ -1369,6 +1455,24 @@ async fetch_read_all(){
         console.log(error);
     }
 },
+// async fetch_read_all(){
+//     this.show_user = this.show_user === '' ? '' : this.show_user;
+//     this.show_tag = this.show_tag === '' ? '' : this.show_tag;
+//     const params_for_get = {
+//         user: this.show_user,
+//         tag: this.show_tag,
+//         order_by: this.show_order_by,
+//     };
+//     const url = new URL(this.endpoint + '/' + 'read_all');
+//     url.search = new URLSearchParams(params_for_get).toString();
+//     const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
+//     this.web_data = await res.json(); console.log(this.web_data);
+//     this.only_service_data();
+//     await this.download_data_from_web_data_id();
+// },
+
+
+// req.body.data_type, req.body.data_json
 async fetch_insert_link(){
 try {
     const error_check_data1_data2 = (data1, data2) => {

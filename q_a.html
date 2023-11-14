@@ -579,23 +579,12 @@ column_2_none: false,
 column_3_none: false,
 // progress_val: 0,
 
-name: 'user1',
-password: 'user_pass1',
-tags: [],
-search_tag: '',
-web_data: {},
 
 DATA_TYPE_ARRAY: [
     'q_a',
     'f_i_b',
     'i_t_n',
 ],
-show_user: '',
-show_tag: '',
-show_order_by: 'DESC',
-data_type: 'q_a',
-link: '',
-
 
 other_app_url_array: [
     'q_a',
@@ -608,6 +597,16 @@ only_one_q_a_mode: false,
 
 
 // for_online_function
+name: 'user1',
+password: 'user_pass1',
+tags: [],
+search_tag: '',
+web_data: {},
+show_user: '',
+show_tag: '',
+show_order_by: 'DESC',
+data_type: 'q_a',
+link: '',
 truncate_text_length: 100,
 untruncate_text_array: [],
 // endpoint: 'http://localhost:8000',
@@ -624,9 +623,6 @@ synapse_visible: false,
 comment_and_tag_visible: false,
 textarea_visible: false,
 
-show_user: '',
-show_tag: '',
-show_order_by: 'DESC',
 advanced_visible: 'not_advanced',
 // for_online_function
 
@@ -1245,7 +1241,7 @@ show_all_tag(){
 change_show_order_by(){
     this.show_order_by = this.show_order_by === 'DESC' ? 'ASC' : 'DESC';
 },
-// for_online_function
+
 simple_funtionable() {
     this.simple_funtionable_flag = !this.simple_funtionable_flag;
     function simple(){

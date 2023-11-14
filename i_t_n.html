@@ -243,7 +243,30 @@ display: inline;
 
 
 
-
+.fixed_element {
+    z-index: 10;
+    font-size: 2.5rem;
+}
+.fixed_element_top_right {
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+.fixed_element_top_left {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.fixed_element_bottom_right {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+.fixed_element_bottom_left {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
 /* for_online_function */
 .simple_mode2 {
     /* simple_funtionable用の空のclass */
@@ -394,16 +417,21 @@ display: inline;
 </style>
 </head>
 <body class="app">
+    <div @click="simple_funtionable" class="fixed_element fixed_element_top_right simple_mode2">◎</div>
+    <div @click="simple_funtionable" class="fixed_element fixed_element_top_left simple_mode2">◎</div>
+    <div @click="simple_funtionable" class="fixed_element fixed_element_bottom_right simple_mode2">◎</div>
+    <div @click="simple_funtionable" class="fixed_element fixed_element_bottom_left simple_mode2">◎</div>    
+
     <div class="toggleDisplay_parent">
         <button @click="go_to_any_service_page()" class="go_to_any_service_page">🔽</button>
     </div>
-<div class="content_parent">
+<div class="content_parent simple_mode2">
 <header class="header">
 <button @click="column_1_none_fn" class="column_none">💾</button>
 <button @click="column_2_none_fn" class="column_none">⌨️</button>
 <button @click="column_3_none_fn" class="column_none">🖥️</button>
 </header>
-<div class="contents">
+<div class="contents simple_mode2">
 
 <div class="column-1" :class="{'column-1-none': column_1_none}">
 <div class="optional_function">
@@ -612,20 +640,20 @@ display: inline;
     </div>
 
 
-<div class="column-2" :class="{'column-2-none': column_2_none}">
+<div class="column-2 simple_mode2" :class="{'column-2-none': column_2_none}">
     <!-- <button @click="test_exe" class="test_exe" :style="{display: test_mode ? 'block' : 'none'}">test_exe</button> -->
-<ul class="centering">
+<ul class="centering simple_mode2 minimum">
 
     <button @click="change_only_one_q_a_mode" class="check_button">📏</button>
     <button @click="change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
 
-    <li v-for="(item, IDX) in data5" :key="item" class="result_color" :style="{display: data5_result ? 'block' : 'none'}">
-        <div class="" v-if="only_one_q_a_mode ? IDX === current_index : true">
+    <li v-for="(item, IDX) in data5" :key="item" class="result_color simple_mode2" :style="{display: data5_result ? 'block' : 'none'}">
+        <div class="simple_mode2" v-if="only_one_q_a_mode ? IDX === current_index : true">
 
-        <span class="OK_or_NG">{{ true_or_false_to_emoji(item[2]) }}</span>
-        <span class="answer">{{ item[0] }}</span>
-        <span class="any">
-            <img :src="item2" :alt="item[0]" class="png_image png_image_back" @click="check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
+        <span class="OK_or_NG simple_mode2">{{ true_or_false_to_emoji(item[2]) }}</span>
+        <span class="answer simple_mode2">{{ item[0] }}</span>
+        <span class="any simple_mode2">
+            <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
         </span>
         </div>
     </li>
@@ -1534,10 +1562,7 @@ change_show_order_by(){
 simple_funtionable() {
     this.simple_funtionable_flag = !this.simple_funtionable_flag;
     function simple(){
-        // cssのsimple_mode1クラスを含む要素以外を全て非表示にする
-        const simple_mode1_ary_not = document.querySelectorAll('body :not(.simple_mode2)');
-        const simple_mode1_ary_not_ary = Array.from(simple_mode1_ary_not);
-        simple_mode1_ary_not_ary.forEach((V) => {
+        document.querySelectorAll('body :not(.simple_mode2)').forEach((V) => {
             V.classList.add('display_none');
         });
         document.querySelectorAll('.minimum, .column-2').forEach((V) => {
@@ -1545,10 +1570,7 @@ simple_funtionable() {
         });
     }
     function funtionable(){
-        // cssのsimple_mode1クラスを含む要素以外を全て表示にする
-        const simple_mode1_ary_not = document.querySelectorAll('body :not(.simple_mode2)');
-        const simple_mode1_ary_not_ary = Array.from(simple_mode1_ary_not);
-        simple_mode1_ary_not_ary.forEach((V) => {
+        document.querySelectorAll('body :not(.simple_mode2)').forEach((V) => {
             V.classList.remove('display_none');
         });
         document.querySelectorAll('.minimum, .column-2').forEach((V) => {

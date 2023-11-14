@@ -383,14 +383,14 @@ font-size: 2.5rem;
 <button @click="go_to_any_service_page()" class="go_to_any_service_page">🔽</button>
 </div>
 
-<div class="header_and_contents simple_mode2">
+<div class="header_and_contents">
     <header class="header">
     <button @click="column_1_none_fn" class="column_none">💾</button>
     <button @click="column_2_none_fn" class="column_none">⌨️</button>
     <button @click="column_3_none_fn" class="column_none">🖥️</button>
     </header>
 
-    <div class="contents simple_mode2">
+    <div class="contents">
     <div class="column-1" :class="{'column-1-none': column_1_none}">
         <div class="optional_function">
             <button @click="reverse_q_a">🔃</button>
@@ -596,7 +596,7 @@ font-size: 2.5rem;
         <button @click="fn21" class="font_sizing">◎</button>
         </div>
 
-    <div class="column-2 simple_mode2" :class="{'column-2-none': column_2_none}">
+    <div class="column-2" :class="{'column-2-none': column_2_none}">
 
         <div>
             <button @click="test0" class="test-fn-none-inline">test0</button>
@@ -606,11 +606,11 @@ font-size: 2.5rem;
             <button @click="test_data1" class="test-fn-none-inline">test_data1</button>
         </div>
 
-    <span v-for="(DATAVAL, DATAIDX) in f_i_b_data9" class="simple_mode2 minimum">
-        <span @click="" v-if="typeof DATAVAL === 'string'" ref="core" class="simple_mode2">{{ DATAVAL }}</span>
-        <template v-if="typeof DATAVAL === 'object'" class="simple_mode2">
-        <select name="" id="A" @change="check_option(DATAIDX)" style="background-color: ''" ref="core" class="simple_mode2">
-            <option v-for="(FOO, BAR) in DATAVAL[1]" :value="FOO" class="simple_mode2">
+    <span v-for="(DATAVAL, DATAIDX) in f_i_b_data9">
+        <span @click="" v-if="typeof DATAVAL === 'string'" ref="core" >{{ DATAVAL }}</span>
+        <template v-if="typeof DATAVAL === 'object'">
+        <select name="" id="A" @change="check_option(DATAIDX)" style="background-color: ''" ref="core">
+            <option v-for="(FOO, BAR) in DATAVAL[1]" :value="FOO">
                 {{ FOO }}
             </option>
         </select>
@@ -1505,7 +1505,10 @@ async fetch_delete_tag(LINK_ID, TAG_ID){
 simple_funtionable() {
     this.simple_funtionable_flag = !this.simple_funtionable_flag;
     function simple(){
-        document.querySelectorAll('body :not(.simple_mode2)').forEach((V) => {
+        // cssのsimple_mode1クラスを含む要素以外を全て非表示にする
+        const simple_mode1_ary_not = document.querySelectorAll('body :not(.simple_mode2)');
+        const simple_mode1_ary_not_ary = Array.from(simple_mode1_ary_not);
+        simple_mode1_ary_not_ary.forEach((V) => {
             V.classList.add('display_none');
         });
         document.querySelectorAll('.minimum, .column-2').forEach((V) => {
@@ -1513,7 +1516,10 @@ simple_funtionable() {
         });
     }
     function funtionable(){
-        document.querySelectorAll('body :not(.simple_mode2)').forEach((V) => {
+        // cssのsimple_mode1クラスを含む要素以外を全て表示にする
+        const simple_mode1_ary_not = document.querySelectorAll('body :not(.simple_mode2)');
+        const simple_mode1_ary_not_ary = Array.from(simple_mode1_ary_not);
+        simple_mode1_ary_not_ary.forEach((V) => {
             V.classList.remove('display_none');
         });
         document.querySelectorAll('.minimum, .column-2').forEach((V) => {

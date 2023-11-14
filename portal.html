@@ -103,6 +103,14 @@
     width: 25vw;
     font-size: 3rem;
     text-align: center;
+    position: relative;
+}
+.service_name {
+    font-size: 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
 .go_to_any_service_page {
     border: 0.01rem solid #000000;
@@ -184,6 +192,7 @@
 .download_data {
     font-size: 3rem;
 }
+
 </style>
 </head>
 <body class="app simple_mode">
@@ -235,16 +244,22 @@
 <!-- flex_child_displayをradioで管理する -->
 <div class="display_flex_child_or_not_parent">
     <input type="radio" id="web_data_id" name="radio" value="web_data_id_isChecked" @change="flex_child_change_display($event)" checked />
-    <label class="label_for_display" for="web_data_id"> 📦 </label>
+    <label class="label_for_display" for="web_data_id">📦</label>
 
     <input type="radio" id="q_a_data_id" name="radio" value="q_a_data_id_isChecked" @change="flex_child_change_display($event)" />
-    <label class="label_for_display" for="q_a_data_id"> 🟰 </label>
+    <label class="label_for_display" for="q_a_data_id">
+        <span class="service_name" @click="go_to_any_service_page('q_a')">q_a</span>
+        🟰</label>
 
     <input type="radio" id="f_i_b_data_id" name="radio" value="f_i_b_data_id_isChecked" @change="flex_child_change_display($event)" />
-    <label class="label_for_display" for="f_i_b_data_id"> 🕳️ </label>
+    <label class="label_for_display" for="f_i_b_data_id">
+        <span class="service_name" @click="go_to_any_service_page('f_i_b')">f_i_b</span>
+        🕳️</label>
 
     <input type="radio" id="i_t_n_data_id" name="radio" value="i_t_n_data_id_isChecked" @change="flex_child_change_display($event)" />
-    <label class="label_for_display" for="i_t_n_data_id"> 🖼️ </label>
+    <label class="label_for_display" for="i_t_n_data_id">
+        <span class="service_name" @click="go_to_any_service_page('i_t_n')">i_t_n</span>
+        🖼️</label>
 </div>
 
 

@@ -360,6 +360,18 @@ app.get('/', (req, res) => {
     res.json({message: 'Hello World, this is the TEST mode!!!!'});
 });
 
+app.get('/p2', (req, res) => {
+    const uid = req.query.uid;
+    const text = req.query.text;
+    // console.log('Hello World, this is the TEST mode!!!!');
+    // res.json({message: 'Hello World, this is the TEST mode!!!!'});
+    res.json({
+        message: 'uid is ' + uid + ' ' + 'text is ' +  text + ' ' + 'Hello World, this is the TEST mode!!!!',
+        uid: uid,
+        text: "FROM Web " + text,
+        });
+});
+
 app.get('/read_all', (req, res) => {
     try {
     const read_query = (req) => {

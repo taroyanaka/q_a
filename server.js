@@ -363,13 +363,131 @@ app.get('/', (req, res) => {
 app.get('/p2', (req, res) => {
     const uid = req.query.uid;
     const text = req.query.text;
-    // console.log('Hello World, this is the TEST mode!!!!');
-    // res.json({message: 'Hello World, this is the TEST mode!!!!'});
     res.json({
         message: 'uid is ' + uid + ' ' + 'text is ' +  text + ' ' + 'Hello World, this is the TEST mode!!!!',
         uid: uid,
         text: "FROM Web " + text,
         });
+});
+
+app.get('/p2_login', (req, res) => {
+    try {
+// 1.ログイン(サインイン)してIDをテーブルに保存する
+// 2.自動でPASSが生成される
+// 3.PASSが生成されたらテーブルに保存する
+// 4.ユーザーにID/PASSを表示する
+// 0_1.再度ID/PASS生成画面でID/PASSを生成すると1_4が実行される(別のPASSが生成される)
+    // =>(テーブルのPASSは上書きされる)
+// (user_permission_idは2('user')としてusersテーブルに保存する)
+// (PASSの仕様を決めた方がいい(長さと利用文字種)というかパスワード生成のコードを作る際に一旦決める)
+// (usersテーブルは別のDBとして保存するべきかもしれない)
+    // uidは28文字の小文字大文字英数字
+    // =>IDはuidの先頭8文字(アルファベットと数字の組み合わせで、8文字で設定は、約218兆通り)
+    //   =>uidの先頭8文字を小文字にして設定する(2兆8211億990万7456通り)
+    // =>アルファベット小文字26文字、数字は10文字で6文字は何通り、2176782336通り
+    //   =>5文字は60466176通り
+    //   =>4文字は1679616通り
+    // =>PASSはuidを小文字化してシャッフルして末尾に_サービス名を付ける(_googleや_facebookなど)
+
+    // req.body.uidをチェックする関数。uidが28文字の小文字大文字英数字であるかチェックする
+    function uid_check(uid) {
+        const uid_check = uid.match(/^[a-zA-Z0-9]{28}$/);
+        return uid_check ? true : false;
+    }
+    // req.body.uidをcrypto-jsのsha256でencodeして返す関数
+    function uid_to_id(uid) {
+        const CryptoJS = require("crypto-js");
+        const id = CryptoJS.SHA256(uid).toString(CryptoJS.enc.Hex).substring(0, 8);
+        return id;
+    }
+    // idがusersテーブルに存在するかチェックする関数
+    function id_check(id) {
+        try {
+            const id_check = db.prepare(`SELECT * FROM users WHERE username = ?`).get(id);
+            return id_check ? true : false;
+        } catch (error) {
+            (()=>{throw new Error('id_checkでエラー')})();
+        }
+
+    }
+    // PASSはuidを小文字化してシャッフルして末尾に_サービス名を付ける(_googleや_facebookなど)
+    function make_new_password(uid) {
+        try {
+            const shuffle = (array) => {
+                for (let i = array.length - 1; i >= 0; i--) {
+                    const rand = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[rand]] = [array[rand], array[i]]
+                }
+                return array;
+            }
+            const shuffle_uid = shuffle(uid.split('')).join('');
+            // const password = shuffle_uid + '_' + req.body.service_name;
+            const password = shuffle_uid + '_' + 'google';
+            return password;
+        } catch (error) {
+            (()=>{throw new Error('make_passwordでエラー')})();
+        }
+    }
+    function insert_users(id, uid) {
+        try {
+        const RESULT = db.prepare(`
+        INSERT INTO users (user_permission_id, username, userpassword, created_at, updated_at)
+            VALUES (
+                2,
+                @username,
+                @userpassword,
+                @created_at,
+                @updated_at
+            )
+            `).run({
+                username: id,
+                userpassword: password,
+                created_at: now(),
+                updated_at: now(),
+            })
+            ? 'OK'
+            : (()=>{throw new Error('usersにレコードを挿入できませんでした')})();
+        return RESULT;
+        } catch (error) {
+        (()=>{throw new Error('insert_usersでエラー')})();
+        }
+    }
+    function update_password(id, uid) {
+        try {
+        const RESULT = db.prepare(`
+        UPDATE users
+        SET userpassword = @userpassword
+        WHERE username = @username
+        `).run({
+            username: id,
+            userpassword: password,
+        })
+        ? 'OK'
+        : (()=>{throw new Error('usersのレコードを更新できませんでした')})();
+        return RESULT;
+        } catch (error) {
+        (()=>{throw new Error('update_passwordでエラー')})();
+        }
+    }
+    const uid = uid_check(req.query.uid) ? req.query.uid : (()=>{throw new Error('uidが不正です')})();
+    const password = make_new_password(uid);
+    const id = uid_to_id(uid);
+    // idがusersテーブルに存在しない場合は、passwordは自動生成され、idとpasswordをusersテーブルに保存する
+    // idがusersテーブルに存在する場合は、idをusersテーブルに保存しない、しかし、passwordは更新する
+    id_check(id) ? update_password(id, uid) : insert_users(id, uid);
+    // console.log('p2_login ok')
+    res.status(200)
+        .json({result: 'success'
+            ,status: 200
+            ,message: {
+                id: id,
+                password: password,
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        error_response(res, '原因不明のエラー' + error);
+    }
 });
 
 app.get('/read_all', (req, res) => {

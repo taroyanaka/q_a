@@ -302,11 +302,11 @@ const get_user_with_permission = (REQ) => {
 
     // 無効な認証情報をエラーで返す
     if (REQ.body.name === '' || REQ.body.password === '' || REQ.body.name === undefined || REQ.body.password === undefined || REQ.body.name === null || REQ.body.password === null
-        || REQ.body.name.length > 20 || REQ.body.password.length > 20 || REQ.body.name.length < 4 || REQ.body.password.length < 4
+        || REQ.body.name.length > 36 || REQ.body.password.length > 36 || REQ.body.name.length < 4 || REQ.body.password.length < 4
         || REQ.body.name.includes(' ') || REQ.body.password.includes(' ')
         || REQ.body.name.includes('　') || REQ.body.password.includes('　')
     ) {
-        (()=>{throw new Error('無効な認証')})();
+        (()=>{throw new Error('無効な認証1')})();
     }
     //  存在しないユーザー名も無効な認証で返す
     if (db.prepare(`
@@ -320,7 +320,7 @@ const get_user_with_permission = (REQ) => {
     LEFT JOIN user_permission ON users.user_permission_id = user_permission.id
     WHERE users.username = ? AND users.userpassword = ?
     `).get(REQ.body.name, REQ.body.password) === undefined) {
-        (()=>{throw new Error('無効な認証')})();
+        (()=>{throw new Error('無効な認証2')})();
     }
 
     return db.prepare(`
@@ -345,7 +345,7 @@ const get_user_with_permission = (REQ) => {
          LEFT JOIN user_permission ON users.user_permission_id = user_permission.id
          WHERE users.username = ? AND users.userpassword = ?
          `).get(REQ.body.name, REQ.body.password)
-         : (()=>{throw new Error('無効な認証')})();
+         : (()=>{throw new Error('無効な認証3')})();
     } catch (error) {
         console.log(error.message);
         res.status(400).json({status: 400, result: 'fail', message: error.message});

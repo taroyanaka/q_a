@@ -609,8 +609,8 @@ data_type: 'q_a',
 link: '',
 truncate_text_length: 100,
 untruncate_text_array: [],
-// endpoint: 'http://localhost:8000',
-endpoint: 'https://cotton-concrete-catsup.glitch.me',
+endpoint: 'http://localhost:8000',
+// endpoint: 'https://cotton-concrete-catsup.glitch.me',
 only_q_a_list: [],
 only_f_i_b_list: [],
 only_i_t_n_list: [],
@@ -725,22 +725,17 @@ if (window.confirm("Do you really want to delete??🦖\n本当に削除する？
     await localforage.setItem('f_c', JSON.stringify(this.all_save));
 };
 },
-
-
-
-
-// core of q_a data2 data3 data4 data5 data6 data10
-fn2_1(){
-return this.data2.map((V, IDX)=>{
-    return shuffle(shuffle(R.without(this.data2[IDX], this.data2)).slice(0, 2).concat(this.data2[IDX]));
-});
-},
-fn2_2(){
-return R.zip(this.data2, this.fn2_1()).map((V,IDX)=>[V[0], V[1], this.data6.split("\n")[IDX]]);
-},
 processing(){
 this.data2 = this.data3.split("\n");
-this.data4 = this.fn2_2();
+    function fn2_1(){
+        return this.data2.map((V, IDX)=>{
+            return shuffle(shuffle(R.without(this.data2[IDX], this.data2)).slice(0, 2).concat(this.data2[IDX]));
+        });
+    };
+    function fn2_2(){
+        return R.zip(this.data2, fn2_1()).map((V,IDX)=>[V[0], V[1], this.data6.split("\n")[IDX]]);
+    };
+this.data4 = fn2_2();
 this.data5 = R.repeat(undefined, this.data4.length);
 this.for_debug();
 },
@@ -780,10 +775,6 @@ this.fn4_1();
 this.fn4_2();
 this.fn4_3();
 },
-// core of q_a
-
-
-
 fn9(IDX){
 this.data6 = this.data10[IDX][0];
 this.data3 = this.data10[IDX][1];
@@ -1302,12 +1293,12 @@ advanced_visible_init() {
 // for_online_function
 
 
-
 // コア部分の関数と変数をまとめる
 // local save周りの関数と変数をまとめる
 // コア部分以外の命名と処理内容を共通化する
 // <style>の中身をまとめる
     // => q_a, f_i_b, i_t_nの3つのページを1つのHTMLにまとめる
+
 
 },
 }).mount('.app');

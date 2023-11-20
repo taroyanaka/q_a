@@ -882,6 +882,133 @@ test_exe(){
     this.data5 = this.data5.map((V,IDX)=>[V[0], V[1], is_even(IDX)])
     this.filter_image_and_name();
 },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sample1(){
+    this.data2 = `cat
+dog
+halr
+grf
+eleph
+sushi
+cake
+pink_pixel
+paint`;
+    this.data3 = `https://taroyanaka.github.io/q_a/asset/cat.png
+https://taroyanaka.github.io/q_a/asset/dog.png
+https://taroyanaka.github.io/q_a/asset/halr.png
+https://taroyanaka.github.io/q_a/asset/grf.png
+https://taroyanaka.github.io/q_a/asset/eleph.png
+https://pbs.twimg.com/media/FpfSgHdaEAE-Ts6?format=jpg
+https://pbs.twimg.com/media/FpfRSXQacAARY-a?format=jpg
+https://pbs.twimg.com/media/FoaB5b9aUAAXgAU?format=jpg
+https://pbs.twimg.com/media/FjuxRy-agAAgAFJ?format=jpg`;
+},
+// data2とdata3を逆ソートする関数
+reverse_q_a(){
+    this.data2 = this.data2.split("\n").reverse().join("\n");
+    this.data3 = this.data3.split("\n").reverse().join("\n");
+},
+shuffle_q_a(){
+    const ary1 = R.zip(this.data2.split("\n"), this.data3.split("\n"));
+    const ary2 = shuffle(ary1);
+    [this.data2, this.data3] = R.pipe(R.transpose, R.map(R.join("\n")))(ary2);
+},
+
+
+
+
+
+
+
+
+
+async save_data_to_all_save(){
+    this.all_save.push(this.to_ary([this.data2, this.data3]));
+    await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
+},
+async save_data_load() {
+    this.all_save = JSON.parse(await localforage.getItem('i_t_n')) || [];
+},
+save_data_set(INDEX){
+    this.data2 = this.all_save[INDEX][0];
+    this.data3 = this.all_save[INDEX][1];
+},
+async save_data_delete(INDEX){
+    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
+        this.all_save.splice(INDEX, 1);
+        await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
+    };
+},
+
+
+
+
+
+
+
+
+for_debug(){
+    data1 = this.to_ary(this.data1);
+    data2 = this.to_ary(this.data2);
+    data3 = this.to_ary(this.data3);
+    data4 = this.to_ary(this.data4);
+    ary_data2 = this.to_ary(this.ary_data2);
+    ary_data3 = this.to_ary(this.ary_data3);
+    data5 = this.to_ary(this.data5);
+    data6 = this.to_ary(this.data6);
+    data7 = this.to_ary(this.data7);
+    data8 = this.to_ary(this.data8);
+    data9 = this.to_ary(this.data9);
+    data10 = this.to_ary(this.data10);
+    console.log('data5', this.data5);
+},
+
+
+
+
+
+
+// core of i_t_n
+
+// this.data10 = [];
+// this.data10_f_i_b = [];
+
+// ary_data2 i_t_n_ary_data2
+// ary_data3 i_t_n_ary_data3
+// ary_data6 i_t_n_ary_data6
+// ary_data7 i_t_n_ary_data7
+// data2 i_t_n_data2
+// data3 i_t_n_data3
+// data4 i_t_n_data4
+// data5 i_t_n_data5
+// data8 i_t_n_data8
+// data9 i_t_n_data9
+// data5_result i_t_n_data5_result
+// data9_result i_t_n_data9_result
+
+// data2_data3_string_to_array i_t_n_data2_data3_string_to_array
+// data6_data7_string_to_array i_t_n_data6_data7_string_to_array
+// change_result i_t_n_change_result
+// take2 i_t_n_take2
+// swap_data6_data7 i_t_n_swap_data6_data7
+// make_image_to_name_Q_A_array i_t_n_make_image_to_name_Q_A_array
+// remove i_t_n_remove
+
+
 remove(item, ary){
     // 指定した要素を配列から削除するramda.jsを使った1行の関数
     const remove = R.curry((item, ary) => R.filter(R.complement(R.equals(item)), ary));
@@ -917,68 +1044,19 @@ check_image_to_name(correct_URL, URL, IDX){
 check_name_to_image(correct_URL, URL, IDX){
     this.data9[IDX][2] = correct_URL === URL ? true : false;
 },
-
 to_ary(it){
     return JSON.parse(JSON.stringify(it));
 },
-for_debug(){
-    data1 = this.to_ary(this.data1);
-    data2 = this.to_ary(this.data2);
-    data3 = this.to_ary(this.data3);
-    data4 = this.to_ary(this.data4);
-    ary_data2 = this.to_ary(this.ary_data2);
-    ary_data3 = this.to_ary(this.ary_data3);
-    data5 = this.to_ary(this.data5);
-    data6 = this.to_ary(this.data6);
-    data7 = this.to_ary(this.data7);
-    data8 = this.to_ary(this.data8);
-    data9 = this.to_ary(this.data9);
-    data10 = this.to_ary(this.data10);
-    console.log('data5', this.data5);
-},
-
-
-sample1(){
-    this.data2 = `cat
-dog
-halr
-grf
-eleph
-sushi
-cake
-pink_pixel
-paint`;
-    this.data3 = `https://taroyanaka.github.io/q_a/asset/cat.png
-https://taroyanaka.github.io/q_a/asset/dog.png
-https://taroyanaka.github.io/q_a/asset/halr.png
-https://taroyanaka.github.io/q_a/asset/grf.png
-https://taroyanaka.github.io/q_a/asset/eleph.png
-https://pbs.twimg.com/media/FpfSgHdaEAE-Ts6?format=jpg
-https://pbs.twimg.com/media/FpfRSXQacAARY-a?format=jpg
-https://pbs.twimg.com/media/FoaB5b9aUAAXgAU?format=jpg
-https://pbs.twimg.com/media/FjuxRy-agAAgAFJ?format=jpg`;
-},
-// data2とdata3を逆ソートする関数
-reverse_q_a(){
-    this.data2 = this.data2.split("\n").reverse().join("\n");
-    this.data3 = this.data3.split("\n").reverse().join("\n");
-},
-shuffle_q_a(){
-    const ary1 = R.zip(this.data2.split("\n"), this.data3.split("\n"));
-    const ary2 = shuffle(ary1);
-    [this.data2, this.data3] = R.pipe(R.transpose, R.map(R.join("\n")))(ary2);
-},
-
 data6_data7_string_to_array(){
     this.ary_data6 = this.data2.split("\n")
     this.ary_data7 = this.data3.split("\n")
 },
-// swap_:ary_data6とary_data7を入れ替える関数
 swap_data6_data7(){
+    // swap_:ary_data6とary_data7を入れ替える関数
     [this.ary_data6, this.ary_data7] = [this.ary_data7, this.ary_data6];
 },
-// data5_resultとdata9_resultのtrue/falseの切り替え
 change_result(){
+    // data5_resultとdata9_resultのtrue/falseの切り替え
     this.data5_result = !this.data5_result;
     this.data9_result = !this.data9_result;
 },
@@ -995,27 +1073,6 @@ swap_q_a(){
     this.data9 = R.map(R.insert(2, false), this.data9);
     this.for_debug();
 },
-
-async save_data_to_all_save(){
-    this.all_save.push(this.to_ary([this.data2, this.data3]));
-    await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
-},
-async save_data_load() {
-    this.all_save = JSON.parse(await localforage.getItem('i_t_n')) || [];
-},
-save_data_set(INDEX){
-    this.data2 = this.all_save[INDEX][0];
-    this.data3 = this.all_save[INDEX][1];
-},
-async save_data_delete(INDEX){
-    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
-        this.all_save.splice(INDEX, 1);
-        await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
-    };
-},
-
-
-
 filter_image_and_name(){
     if(this.data5.map(V=>V[2]).every(V=>V === true)){
         this.data5 = [];
@@ -1029,6 +1086,21 @@ filter_image_and_name(){
     this.data10.push([res2[0].join("\n"), res2[1].join("\n")]);
     this.for_debug();
 },
+true_or_false_to_emoji(bool){
+    // trueだったら⭕️、falseだったら❎を返す関数
+    return bool ? "⭕️" : "❎";
+},
+// core of i_t_n
+
+
+
+
+
+
+
+
+
+
 
 fn9(IDX){
     this.data2 = this.data10[IDX][0];
@@ -1046,10 +1118,6 @@ fn17(INDEX){
         ||
         this.$refs.results[TARGET_INDEX_FIRST].style.display === '' ? "none" : "block";
 },
-// trueだったら⭕️、falseだったら❎を返す関数
-true_or_false_to_emoji(bool){
-    return bool ? "⭕️" : "❎";
-},
 
 css_var_set(VAR_NAME, VAR){
 document.documentElement.style.setProperty(VAR_NAME, VAR);
@@ -1063,6 +1131,11 @@ this.column_2_none === true ? (this.css_var_set('--css-var-column-2-none', '1fr'
 column_3_none_fn(){
 this.column_3_none === true ? (this.css_var_set('--css-var-column-3-none', '1fr'), this.column_3_none = false) : (this.css_var_set('--css-var-column-3-none', '0px'), this.column_3_none = true);
 },
+
+
+
+
+
 
 fn18(){
     const RESULTS = this.$refs.results;
@@ -1093,91 +1166,6 @@ date_time_form(DATE_TIME){
     const formattedDate = date.toLocaleString('ja-JP', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false});
     return formattedDate;
 },
-
-
-
-
-// only_service_data(){
-//     this.i_t_n_web_data = this.web_data.message.filter(V=> V.data_type === this.data_type);
-// },
-// async fetch_read_all(){
-//     this.show_user = this.show_user === '' ? '' : this.show_user;
-//     this.show_tag = this.show_tag === '' ? '' : this.show_tag;
-//     const params_for_get = {
-//         user: this.show_user,
-//         tag: this.show_tag,
-//         order_by: this.show_order_by,
-//     };
-//     const url = new URL(this.endpoint  + '/' + 'read_all');
-//     url.search = new URLSearchParams(params_for_get).toString();
-//     const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
-//     this.web_data = await res.json(); console.log(this.web_data);
-//     this.only_service_data();
-//     await this.download_data_from_web_data_id();
-// },
-// download_data(Data_Id){
-//     const pre_data1_2 = this.i_t_n_web_data.filter(V=>V.data_type === this.data_type).filter(V=> V.id === Data_Id )[0];
-//     const pre_data1 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data1'];
-//     const pre_data2 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data2'];
-//     this.data1_connector(pre_data1);
-//     this.data2_connector(pre_data2);
-// },
-// change_show_user(USER){
-//     this.show_user = USER;
-// },
-// show_all_user(){
-//     this.show_user = '';
-// },
-// change_show_tag(TAG){
-//     this.show_tag = TAG;
-// },
-// show_all_tag(){
-//     this.show_tag = '';
-// },
-// change_show_order_by(){
-//     this.show_order_by = this.show_order_by === 'DESC' ? 'ASC' : 'DESC';
-// },
-// async fetch_get_tags_for_autocomplete(){
-//     const res = await fetch(this.endpoint + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
-//         body: JSON.stringify({ name: this.name, password: this.password, search_tag: this.search_tag }),
-//     });
-//     const data = await res.json();
-//     this.tags = data['message'];
-// },
-// async fetch_insert_link(){
-// try {
-//     const error_check_data1_data2 = (data1, data2) => {
-//         switch (true) {
-//             case data1 === undefined || data1 === null || data1.length === 0: return 'data1が空です'; break;
-//             case data2 === undefined || data2 === null || data2.length === 0: return 'data2が空です'; break;
-//             default: return 'OK'; break;
-//         }
-//     };
-//     const error_check_insert_data = (data_type, data_json_str) => {
-//         const is_include_DATA_TYPE = (target_data_type_str) => this.DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
-//         switch (true) {
-//             case data_json_str === undefined: return 'dataが空です'; break;
-//             case data_json_str.length > 10000: return 'dataが長すぎます'; break;
-//             case !is_include_DATA_TYPE(data_type): return '許可されていないdata_typeです'; break;
-//             default: return 'OK'; break;
-//         }
-//     };
-//     error_check_data1_data2(this.data1_connector(), this.data2_connector()) === 'OK' ? null : (()=>{throw new Error(error_check_data1_data2(this.data1, this.data2))})();
-//     const data_convert_jsonstr = (data1, data2) => JSON.stringify({'data1': data1, 'data2': data2});
-//     const data_json_str = data_convert_jsonstr(this.data1_connector(), this.data2_connector());
-//     error_check_insert_data(this.data_type, data_json_str) === 'OK' ? null : (()=>{throw new Error(error_check_insert_data(this.data_type, data_json_str))})();
-//     const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
-//         body: JSON.stringify({ name: this.name, password: this.password, link: this.link,
-//             data_type: this.data_type,
-//             data_json_str: data_json_str,
-//         }),
-//     });
-//     const data = await res.json(); console.log(data);
-// } catch (error) {
-//     console.log(error);
-// }
-// },
-
 
 
 

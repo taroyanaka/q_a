@@ -408,76 +408,6 @@ font-size: 2.5rem;
         </ul>
 
 
-<!-- <button @click="fn19_1" class="save_opener">🌐</button>
-<div style='display: none' ref="save_data_set_list_parent2">
-    <div>
-        show_user: <button v-if="show_user" @click="show_all_user">{{ show_user }}</button>
-        show_tag: <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button>
-        change_show_order_by: <button @click="change_show_order_by">{{ show_order_by }}</button>
-    </div>
-    all_tag:
-    <div class="all_tags" v-if="tags && show_tag === ''">
-        <ul>
-            <li v-for="(tag, tag_i) in tags">
-                <button @click="change_show_tag(tag['tag'])">{{ tag['tag'] }}</button>
-            </li>
-        </ul>
-    </div>
-
-    <div v-if="f_i_b_web_data" class="flex_child">
-        <ul>
-        <li v-for="(DATA_VAL, DATA_IDX) in f_i_b_web_data">
-            <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
-            <div>data_1: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
-            <div>data_2: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
-            <button @click="download_data(DATA_VAL['id'])">download_data</button>
-            <div>id: {{ DATA_VAL['id'] }}</div>
-            <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
-            <div>created_at: {{ date_time_form(DATA_VAL['created_at']) }}</div>
-            <ul>
-            <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
-                id: {{ COMMENT_AND_REPLIES[COMMENT_IDX]['id'] }}
-                <ul>
-                    <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
-                    id: {{ REPLIES['id'] }}
-                    reply: {{ REPLIES['reply'] }}
-                    username: <button @click="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
-                    </li>
-                </ul>
-            </li>
-            </ul>
-            <ul>
-            <li v-for="(Tag, Tag_I) in DATA_VAL['tags']">
-                <span>id: {{Tag['id']}}</span>        
-                <span>Tag: <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button></span>
-            </li>
-            </ul>
-            <div>
-                <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
-                <datalist id="tag-options">
-                    <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
-                </datalist>
-            </div>
-        </li>
-        </ul>
-    </div>
-</div>
-
-        <div class="textarea-column-1">
-        <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="f_i_b_data1"></textarea>
-        <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="f_i_b_data2"></textarea>
-        <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="f_i_b_data5"></textarea>
-        </div>
-
-        <div>
-            <button @click="fetch_insert_link">fetch_insert_link</button>
-            <input type="text" v-model="name" placeholder="name">
-            <input type="password" v-model="password" placeholder="password">
-        </div>
-        <button @click="fn21(1)" class="font_sizing">◉</button>
-        <button @click="fn21(-1)" class="font_sizing">⦿</button>
-        <button @click="fn21" class="font_sizing">◎</button>
-    </div> -->
 
     <button @click="fn19_1" class="save_opener">🌐</button>
     <div style='display: none' ref="save_data_set_list_parent2" class="vw_full">
@@ -667,8 +597,8 @@ font-size: 2.5rem;
 let data1 = null;
 let data2 = null;
 let data3 = null;
-let data4 = null;
-let data5 = null;
+let f_i_b_data4 = null;
+let f_i_b_data5 = null;
 let data6 = null;
 let data7 = null;
 let data8 = null;
@@ -814,7 +744,6 @@ mounted() {
     this.fetch_get_tags_for_autocomplete();
 
     this.save_data_load();
-// this.toggleDisplay();
         this.data3_setup();
         this.data4_5_setup();
         this.exe();
@@ -917,11 +846,6 @@ this.blank_check("#textarea-column-1-2");
 this.check_if_same_length();
 },
 
-
-
-css_var_set(VAR_NAME, VAR){
-document.documentElement.style.setProperty(VAR_NAME, VAR);
-},
 column_1_none_fn(){
 this.column_1_none === true ? (this.css_var_set('--css-var-column-1-none', '1fr'), this.column_1_none = false) : (this.css_var_set('--css-var-column-1-none', '0px'), this.column_1_none = true);
 },
@@ -931,55 +855,7 @@ this.column_2_none === true ? (this.css_var_set('--css-var-column-2-none', '1fr'
 column_3_none_fn(){
 this.column_3_none === true ? (this.css_var_set('--css-var-column-3-none', '1fr'), this.column_3_none = false) : (this.css_var_set('--css-var-column-3-none', '0px'), this.column_3_none = true);
 },
-test_exe(){
-this.css_var_set('--css-var-test-inline', 'inlilne');
-this.css_var_set('--css-var-color-1', 'LightGray');
-this.css_var_set('--css-var-color-2', 'SlateGray');
-this.css_var_set('--css-var-color-3', 'DimGray');
-},
 
-
-
-to_ary(it){
-return JSON.parse(JSON.stringify(it));
-},
-
-for_debug(){
-data1 = this.to_ary(this.f_i_b_data1);
-data2 = this.to_ary(this.f_i_b_data2);
-data3 = this.to_ary(this.f_i_b_data3);
-data4 = this.to_ary(this.f_i_b_data4);
-data5 = this.to_ary(this.f_i_b_data5);
-data6 = this.to_ary(this.f_i_b_data6);
-data7 = this.to_ary(this.f_i_b_data7);
-data8 = this.to_ary(this.f_i_b_data8);
-data9 = this.to_ary(this.f_i_b_data9);
-data_X_1 = this.to_ary(this.f_i_b_data_X_1);
-data_X_2 = this.to_ary(this.f_i_b_data_X_2);
-data_X_3 = this.to_ary(this.f_i_b_data_X_3);
-data_X_4 = this.to_ary(this.f_i_b_data_X_4);
-data_X_5 = this.to_ary(this.f_i_b_data_X_5);
-console.log(
-'f_i_b_data1:' , data1, '\n',
-'f_i_b_data2:' , data2, '\n',
-'f_i_b_data3:' , data3, '\n',
-'f_i_b_data4:' , data4, '\n',
-'f_i_b_data5:' , data5, '\n',
-'f_i_b_data6:' , data6, '\n',
-'f_i_b_data7:' , data7, '\n',
-'f_i_b_data8:' , data8, '\n',
-'f_i_b_data9:' , data9, '\n',
-'f_i_b_data_X_1' , data_X_1, '\n',
-'f_i_b_data_X_2' , data_X_2, '\n',
-'f_i_b_data_X_3' , data_X_3, '\n',
-'f_i_b_data_X_4' , data_X_4, '\n',
-'f_i_b_data_X_5' , data_X_5, '\n',
-
-
-
-
-);
-},
 
 test_index(TEST_INDEX){
 // this.data4.forEach((V,IDX)=>this.fn3(V[0], V[1][TEST_INDEX], IDX));
@@ -1002,9 +878,9 @@ bowbow`;
     this.f_i_b_data2 = `foo bar baz
 or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3
 日本語は自然言語のうちの一つで主に日本国内で使われています`;
-this.data3_setup();
-        this.data4_5_setup();
-        this.exe();
+    this.data3_setup();
+    this.data4_5_setup();
+    this.exe();
 },
 test_data1(){
     this.f_i_b_data1 = `FO
@@ -1042,19 +918,49 @@ OR FOO2BARQUXQUX42BA😄ABC😄Z3ISFOO2BAR2BAZ3
 
 
 
-// header_and_contentsとfill_inの表示非表示のトグル
-toggleDisplay(){
-},
 
 
 
 
+// core of f_i_b
+
+// this.data10 = [];
+// this.data10_f_i_b = [];
+
+// f_i_b_data1
+// f_i_b_data2
+// f_i_b_data3
+// f_i_b_data4
+// f_i_b_data5
+// f_i_b_data6
+// f_i_b_data7
+// f_i_b_data8
+// f_i_b_data9
+// f_i_b_data_X_1
+// f_i_b_data_X_2
+// f_i_b_data_X_3
+// f_i_b_data_X_4
+
+// test_mode f_i_b_test_mode
+
+// f_i_b_composer
+// filter_and_DESC_sort_and_remove_short_str f_i_b_filter_and_DESC_sort_and_remove_short_str
+// fn2_1 f_i_b_fn2_1
+// fn3 f_i_b_fn3
+// fn4 f_i_b_fn4
+// fn4_3 f_i_b_fn4_3
+// fn4_4 f_i_b_fn4_4
+// for_debug f_i_b_for_debug
+// get_shuffled_array f_i_b_get_shuffled_array
+// remove_empty_str_from_ary f_i_b_remove_empty_str_from_ary
+// remove_index_0 f_i_b_remove_index_0
+// test_exe f_i_b_test_exe
 
 data3_setup(){
     this.f_i_b_data3 = this.f_i_b_data1.split("\n");
 },
-// フィルタリングして長さで降順ソートし、重複した短い要素を除外する。strに含まれない要素は除外される
 filter_and_DESC_sort_and_remove_short_str(){
+    // フィルタリングして長さで降順ソートし、重複した短い要素を除外する。strに含まれない要素は除外される
     // ['fo', 'foo', '日', 'qux', 'qx', '日本', 'blabla', 'brabra', 'bowbow']のような要素のその要素が含む文字列がある場合に、長い文字列の要素を残して短い文字列を削除する関数
     // この場合'fo'と'日'は削除される
     const remove_short_str = (ary) => ary.filter(V => !ary.some(VAL => VAL !== V && VAL.includes(V)));
@@ -1065,17 +971,34 @@ data4_5_setup(){
     this.filter_and_DESC_sort_and_remove_short_str();
     this.f_i_b_data5 = this.f_i_b_data4.join("\n");
 },
-// 配列の最初の要素を削除する
 remove_index_0(ary) {
+    // 配列の最初の要素を削除する
     return R.remove(0, 1, ary);
 },
-// 正規表現による分割と区切り文字の挿入を組み合わせる
 fn2_1(target_str, replacer_str) {
+    // 正規表現による分割と区切り文字の挿入を組み合わせる
     // JSの正規表現で使う記号を全てサニタイズするJSの関数escape_reg_expをconst形式の1行関数で
     const escape_reg_exp = string => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const escaped_result = escape_reg_exp(replacer_str);
     const RESULT = R.intersperse([escaped_result], target_str.split(new RegExp(escaped_result)))
     return RESULT;
+},
+get_shuffled_array(ARG_ARY, VAL){
+    // ARG_ARYからVALを除外し、シャッフルした配列から先頭2つの要素を取得し、VALと結合し、シャッフルした配列を返す
+    // 与えられた配列 ary から要素 val を取り除いた新しい配列を返すアロー関数
+    const remove_any_elelemnt_from_ary_one_liner = (ary, val) => ary.filter(V=> V !== val);
+    return shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(ARG_ARY, VAL)).slice(0, 2).concat(VAL));
+},
+f_i_b_composer() {
+    // [
+    //     [VAL, ['', VAL, BAR, BAZ],
+    //     [BAR, ['', BAR, VAL, BAZ],
+    //     [BAZ, ['', VAL, BAR, BAZ],
+    // ]
+    // 上記のように[正解, [空文字, シャッフルされた正解を含む3つの要素]]の配列を作成する
+    this.f_i_b_data7 = this.f_i_b_data4.map(VAL => {
+        return [VAL, R.insert(0, '', this.get_shuffled_array(this.f_i_b_data4, VAL)), false];
+    });
 },
 fn3() {
     let RESULT_ARRAY = [];
@@ -1094,34 +1017,62 @@ fn3() {
     fn2(this.f_i_b_data2, this.f_i_b_data4);
     this.f_i_b_data8 = RESULT_ARRAY;
 },
-// ARG_ARYからVALを除外し、シャッフルした配列から先頭2つの要素を取得し、VALと結合し、シャッフルした配列を返す
-get_shuffled_array(ARG_ARY, VAL){
-    // 与えられた配列 ary から要素 val を取り除いた新しい配列を返すアロー関数
-    const remove_any_elelemnt_from_ary_one_liner = (ary, val) => ary.filter(V=> V !== val);
-    return shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(ARG_ARY, VAL)).slice(0, 2).concat(VAL));
-},
-// [
-//     [VAL, ['', VAL, BAR, BAZ],
-//     [BAR, ['', BAR, VAL, BAZ],
-//     [BAZ, ['', VAL, BAR, BAZ],
-// ]
-// 上記のように[正解, [空文字, シャッフルされた正解を含む3つの要素]]の配列を作成する
-f_i_b_composer() {
-    this.f_i_b_data7 = this.f_i_b_data4.map(VAL => {
-        return [VAL, R.insert(0, '', this.get_shuffled_array(this.f_i_b_data4, VAL)), false];
-    });
-},
-// 2次元配列を1次元配列に変換し、各要素に対して別の配列に含まれるかをチェックし、一致する要素を別の配列から取得して、最終的な1次元配列を生成する処理
 fn4() {
+    // 2次元配列を1次元配列に変換し、各要素に対して別の配列に含まれるかをチェックし、一致する要素を別の配列から取得して、最終的な1次元配列を生成する処理
     this.f_i_b_data6 = R.flatten(this.f_i_b_data8).map(V=>{
         return this.f_i_b_data4.includes(V) ?
                     this.f_i_b_data7.filter(VAL=>VAL[0]===V)[0] :
                     V
     });
 },
-// 配列から''を除外する
 remove_empty_str_from_ary() {
+    // 配列から''を除外する
     this.f_i_b_data9 = this.f_i_b_data6.filter(V => V !== '');
+},
+css_var_set(VAR_NAME, VAR){
+document.documentElement.style.setProperty(VAR_NAME, VAR);
+},
+test_exe(){
+this.css_var_set('--css-var-test-inline', 'inlilne');
+this.css_var_set('--css-var-color-1', 'LightGray');
+this.css_var_set('--css-var-color-2', 'SlateGray');
+this.css_var_set('--css-var-color-3', 'DimGray');
+},
+
+to_ary(it){
+return JSON.parse(JSON.stringify(it));
+},
+for_debug(){
+data1 = this.to_ary(this.f_i_b_data1);
+data2 = this.to_ary(this.f_i_b_data2);
+data3 = this.to_ary(this.f_i_b_data3);
+f_i_b_data4 = this.to_ary(this.f_i_b_data4);
+f_i_b_data5 = this.to_ary(this.f_i_b_data5);
+data6 = this.to_ary(this.f_i_b_data6);
+data7 = this.to_ary(this.f_i_b_data7);
+data8 = this.to_ary(this.f_i_b_data8);
+data9 = this.to_ary(this.f_i_b_data9);
+data_X_1 = this.to_ary(this.f_i_b_data_X_1);
+data_X_2 = this.to_ary(this.f_i_b_data_X_2);
+data_X_3 = this.to_ary(this.f_i_b_data_X_3);
+data_X_4 = this.to_ary(this.f_i_b_data_X_4);
+data_X_5 = this.to_ary(this.f_i_b_data_X_5);
+console.log(
+'f_i_b_data1:' , data1, '\n',
+'f_i_b_data2:' , data2, '\n',
+'f_i_b_data3:' , data3, '\n',
+'f_i_b_data4:' , f_i_b_data4, '\n',
+'f_i_b_data5:' , f_i_b_data5, '\n',
+'f_i_b_data6:' , data6, '\n',
+'f_i_b_data7:' , data7, '\n',
+'f_i_b_data8:' , data8, '\n',
+'f_i_b_data9:' , data9, '\n',
+'f_i_b_data_X_1' , data_X_1, '\n',
+'f_i_b_data_X_2' , data_X_2, '\n',
+'f_i_b_data_X_3' , data_X_3, '\n',
+'f_i_b_data_X_4' , data_X_4, '\n',
+'f_i_b_data_X_5' , data_X_5, '\n',
+);
 },
 exe(){
     this.f_i_b_composer();
@@ -1131,7 +1082,6 @@ exe(){
     this.test_mode === true ? this.test_exe() : null;
     this.test_mode === true ? this.for_debug() : null;
 },
-
 check_option(INDEX){
     // this.f_i_b_data9からarrayの要素だけを取り出す一行コード
     this.f_i_b_data9[INDEX][2] =
@@ -1156,10 +1106,6 @@ check_option(INDEX){
     this.f_i_b_data_X_4 = this.f_i_b_data_X_3.join("\n");
     this.for_debug();
 },
-
-fn4_2(){
-// this.data5 = [];
-},
 fn4_3(){
     this.f_i_b_data_X_1.push([
         this.f_i_b_data_X_4,
@@ -1171,13 +1117,24 @@ fn4_4(){
 },
 fn5(){
 if(this.fn4_4()){
-    // this.data4 = this.data5 = [];
     window.alert("正解です！");
     return;
 };
-    // this.fn4_2();
     this.fn4_3();
 },
+// core of f_i_b
+
+
+
+
+
+
+
+
+
+
+
+
 fn9(IDX){
     this.f_i_b_data1 = this.f_i_b_data_X_1[IDX][0];
     this.f_i_b_data2 = this.f_i_b_data_X_1[IDX][1];
@@ -1211,27 +1168,6 @@ only_service_data(){
 // only_service_data(){
 //     this.f_i_b_web_data = this.web_data.message.filter(V=> V.data_type === this.data_type);
 // },
-processing(){
-//     this.f_i_b_data1 = `fo
-// foo
-// 日
-// qux
-// qx
-// 日本
-// blabla
-// brabra
-// bowbow`;
-//     this.f_i_b_data2 = `foo bar baz
-// or foo2barQUXqux42ba😄abc😄z3isfoo2bar2baz3
-// 日本語は自然言語のうちの一つで主に日本国内で使われています`;
-// this.data3_setup();
-//         this.data4_5_setup();
-//         this.exe();
-    this.data3_setup();
-    this.data4_5_setup();
-    this.exe();
-    // this.save_data_set();
-},
 data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
     return JSON.parse(JSON_STR_DATA1_DATA2);
 },
@@ -1298,11 +1234,6 @@ data2_connector(data2_param){
 
 
 
-change_current_index(ONE_UP_OR_ONE_DOWN=1){
-    this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
-    this.current_index < 0 ? this.current_index = this.data4.length - 1 : null;
-    this.current_index > this.data4.length - 1 ? this.current_index = 0 : null;
-},
 change_only_one_q_a_mode(){
     this.only_one_q_a_mode = this.only_one_q_a_mode === true ? false : true;
 },

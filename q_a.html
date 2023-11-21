@@ -158,7 +158,7 @@ grid-template-columns: repeat(4, 1fr);
 height: 4rem;
 font-size: 1.5rem;
 }
-.processing{
+.q_a_processing{
 width: 100%;
 height: 4rem;
 font-size: 3rem;
@@ -431,8 +431,8 @@ position: relative;
                 <ul class="dialog_ul">
                 <li class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
                     <span class="synapse" @click="synapse(DATA_VAL['data_type'], Other_Of_One,
-                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
-                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
+                        data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['online_data_A'],
+                        data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['online_data_B'],
                     )" :style="{ display: synapse_visible ? 'block' : 'none' }">{{ choice_emoji(Other_Of_One) }}</span>
                 </li>
                 </ul>
@@ -444,8 +444,8 @@ position: relative;
                 <div class="id">{{ DATA_VAL['id'] }}</div>
             </div>
             <div class="clickable_for_short_or_long simple_mode1 " @click="short_or_long( DATA_VAL['id'] )" ref="exception">
-                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
-                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
+                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['online_data_A'], DATA_VAL['id'] ) }}</div>
+                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['online_data_B'], DATA_VAL['id'] ) }}</div>
             </div>
             <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
                 <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
@@ -484,8 +484,8 @@ position: relative;
 
 <button @click="textarea_opener" class="textarea_opener">📝</button>
     <div class="textarea-column-1" id="target">
-    <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data6" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
-    <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data3" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
+    <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data_a" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
+    <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data_b" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
     </div>
     <div>
         <button @click="fetch_insert_link" class="fetch_insert_link">📲🛫📲🚀📲</button>
@@ -505,21 +505,21 @@ position: relative;
     <!-- <button @click="test1" class="test-fn-none-inline">test1</button> -->
     <!-- <button @click="test2" class="test-fn-none-inline">test2</button> -->
     <button @click="test_data0" class="test-fn-none-inline">test_data0</button>
-    <button @click="test_data1" class="test-fn-none-inline">test_data1</button>
+    <button @click="test_online_data_A" class="test-fn-none-inline">test_online_data_A</button>
     </div>
     
-    <button @click="change_only_one_q_a_mode" class="check_button">📏</button>
-    <button @click="change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
-    <template v-for="(DATAVAL, DATAIDX) in data4" class="simple_mode2">
+    <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
+    <button @click="q_a_change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
+    <template v-for="(DATAVAL, DATAIDX) in q_a_data4" class="simple_mode2">
     <div class="q_and_a simple_mode2 minimum" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
-        <span class="text_right simple_mode2" @click="fn20(DATAIDX)">{{ data5[DATAIDX] }}</span>
-        <button class="simple_mode2" v-for="item in DATAVAL[1]" @click="fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
+        <span class="text_right simple_mode2" @click="fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span>
+        <button class="simple_mode2" v-for="item in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
         <span class="text_center simple_mode2">{{ DATAVAL[2] }}</span>
     </div>
     </template>
-    <button @click="change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
+    <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
     <button @click="fn4" class="check_button">🎮</button>
-    <button @click="change_only_one_q_a_mode" class="check_button">📏</button>
+    <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
     
     </div>
 
@@ -529,7 +529,7 @@ position: relative;
     <button @click="fn18" class="result_opener">📖</button>
 
     </div>
-    <template v-for="(DATAVAL, DATAIDX) in data10">
+    <template v-for="(DATAVAL, DATAIDX) in online_data_A0">
         <div class="textarea-column-2">
         <div class="a">
             <button @click="fn9(DATAIDX)" class="a-1">↩️</button>
@@ -555,24 +555,24 @@ position: relative;
 
 
 <script>
-// let data2 = null;
-// let data3 = null;
-// let data4 = null;
-// let data5 = null;
-// let data6 = null;
-// let data10 = null;
+// let online_data_B = null;
+// let data_b = null;
+// let q_a_data4 = null;
+// let q_a_data5 = null;
+// let data_a = null;
+// let online_data_A0 = null;
 
 const app = Vue.createApp({
 data() {
 return {
 all_save: [],
-data2: [],
-data3: '',
-data4: [],
-data5: [],
-data6: '',
-data10: [],
-// data11: '',
+online_data_B: [],
+data_b: '',
+q_a_data4: [],
+q_a_data5: [],
+data_a: '',
+online_data_A0: [],
+// online_data_A1: '',
 test_mode: true,
 column_1_none: false,
 column_2_none: false,
@@ -628,17 +628,17 @@ advanced_visible: 'not_advanced',
 
 }},
 watch: {
-data3: {
+data_b: {
     handler() {
     this.all_error_check();
-    this.processing();
+    this.q_a_processing();
     },
     deep: true
 },
-data6: {
+data_a: {
     handler() {
     this.all_error_check();
-    this.processing();
+    this.q_a_processing();
     },
     deep: true
 },
@@ -693,7 +693,7 @@ mounted() {
 this.fetch_read_all();
 this.fetch_get_tags_for_autocomplete();
 
-this.processing();
+this.q_a_processing();
 this.save_data_load();
 // this.fn15();
 // this.toggleDisplay();
@@ -708,7 +708,7 @@ async updated() {
 methods: {
 
 async save_data_to_all_save(){
-this.all_save.push(this.to_ary([this.data6, this.data3]));
+this.all_save.push(this.to_ary([this.data_a, this.data_b]));
 await localforage.setItem('f_c', JSON.stringify(this.all_save));
 },
 async save_data_load() {
@@ -716,8 +716,8 @@ this.all_save = JSON.parse(await localforage.getItem('f_c')) || [];
 },
 save_data_set(INDEX){
 this.scrollToTarget('local');
-this.data6 = this.all_save[INDEX][0];
-this.data3 = this.all_save[INDEX][1];
+this.data_a = this.all_save[INDEX][0];
+this.data_b = this.all_save[INDEX][1];
 },
 async save_data_delete(INDEX){
 if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
@@ -732,27 +732,27 @@ if (window.confirm("Do you really want to delete??🦖\n本当に削除する？
 
 
 fn9(IDX){
-this.data6 = this.data10[IDX][0];
-this.data3 = this.data10[IDX][1];
+this.data_a = this.online_data_A0[IDX][0];
+this.data_b = this.online_data_A0[IDX][1];
 },
 reverse_q_a(){
-this.data6 = this.data6.split("\n").reverse().join("\n");
-this.data3 = this.data3.split("\n").reverse().join("\n");
+this.data_a = this.data_a.split("\n").reverse().join("\n");
+this.data_b = this.data_b.split("\n").reverse().join("\n");
 },
 shuffle_q_a(){
 shuffled_data = R.transpose(shuffle(R.zip(
-    this.data6.split("\n"),
-    this.data3.split("\n")
+    this.data_a.split("\n"),
+    this.data_b.split("\n")
 )));
-this.data6 = shuffled_data[0].join("\n");
-this.data3 = shuffled_data[1].join("\n");
+this.data_a = shuffled_data[0].join("\n");
+this.data_b = shuffled_data[1].join("\n");
 },
 swap_q_a(){
-[tmp0, tmp1] = [this.data6, this.data3];
-[this.data6, this.data3] = [tmp1, tmp0];
+[tmp0, tmp1] = [this.data_a, this.data_b];
+[this.data_a, this.data_b] = [tmp1, tmp0];
 },
 fn16(INDEX){
-this.data10.splice(INDEX, 1);
+this.online_data_A0.splice(INDEX, 1);
 },
 fn17(INDEX){
 const TARGET_INDEX_FIRST = INDEX * 2;
@@ -778,7 +778,7 @@ fn19_1(){
     this.$refs.save_data_set_list_parent2.style.display = (THE_STYLE_DISPLAY2 === 'block' || THE_STYLE_DISPLAY2 === '') ? 'none' : 'block';
 },
 fn20(INDEX){
-this.data5[INDEX] = null;
+this.q_a_data5[INDEX] = null;
 },
 fn21(ONE_UP_OR_ONE_DOWN_OR_12px){
 ONE_UP_OR_ONE_DOWN_OR_12px = ONE_UP_OR_ONE_DOWN_OR_12px ? ONE_UP_OR_ONE_DOWN_OR_12px : '12px';
@@ -840,19 +840,19 @@ to_ary(it){
 return JSON.parse(JSON.stringify(it));
 },
 for_debug(){
-data2 = this.to_ary(this.data2);
-data3 = this.to_ary(this.data3);
-// data4 = this.to_ary(this.data4);
-data5 = this.to_ary(this.data5);
-data6 = this.to_ary(this.data6);
-data10 = this.to_ary(this.data10);
-// data11 = this.to_ary(this.data11);
+online_data_B = this.to_ary(this.online_data_B);
+data_b = this.to_ary(this.data_b);
+// q_a_data4 = this.to_ary(this.q_a_data4);
+q_a_data5 = this.to_ary(this.q_a_data5);
+data_a = this.to_ary(this.data_a);
+online_data_A0 = this.to_ary(this.online_data_A0);
+// online_data_A1 = this.to_ary(this.online_data_A1);
 },
-test0(){this.test_index(0)},
-test1(){this.test_index(1)},
-test2(){this.test_index(2)},
+test0(){this.q_a_test_index(0)},
+test1(){this.q_a_test_index(1)},
+test2(){this.q_a_test_index(2)},
 test_data0(){
-    this.data6 = `Hello
+    this.data_a = `Hello
 Thank you
 Goodbye
 Yes
@@ -862,7 +862,7 @@ Sorry
 Excuse me
 Good
 Bad`;
-    this.data3 = `こんにちは
+    this.data_b = `こんにちは
 ありがとう
 さようなら
 はい
@@ -873,8 +873,8 @@ Bad`;
 良い
 悪い`;
 },
-test_data1(){
-    this.data6 = `ぁ
+test_online_data_A(){
+    this.data_a = `ぁ
 あぃい
 ぅうぇ
 えぉお
@@ -884,7 +884,7 @@ test_data1(){
 ごさざ
 しじす
 ず`;
-    this.data3 = `ァ
+    this.data_b = `ァ
 アィイ
 ゥウェ
 エォオ
@@ -908,19 +908,19 @@ test_data1(){
 only_service_data(){
     this.temporary_list[0] = this.web_data.message.filter(V=> V.data_type === this.data_type);
 },
-data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
-    return JSON.parse(JSON_STR_DATA1_DATA2);
+data_json_parse_online_data_A_online_data_B(JSON_STR_online_data_A_online_data_B){
+    return JSON.parse(JSON_STR_online_data_A_online_data_B);
 },
 download_data(Data_Id){
-    const pre_data1_2 = this.temporary_list[0].filter(V=>V.data_type === this.data_type).filter(V=> V.id === Data_Id )[0];
-    const pre_data1 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data1'];
-    const pre_data2 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data2'];
-    // this.data6 = pre_data1;
-    this.data1_connector(pre_data1);
-    // this.data3 = pre_data2;
-    this.data2_connector(pre_data2);
+    const pre_online_data_A_2 = this.temporary_list[0].filter(V=>V.data_type === this.data_type).filter(V=> V.id === Data_Id )[0];
+    const pre_online_data_A = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['online_data_A'];
+    const pre_online_data_B = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['online_data_B'];
+    // this.data_a = pre_online_data_A;
+    this.online_data_A_connector(pre_online_data_A);
+    // this.data_b = pre_online_data_B;
+    this.online_data_B_connector(pre_online_data_B);
     this.all_error_check();
-    this.processing();
+    this.q_a_processing();
     this.scrollToTarget('web');
 },
 date_time_form(DATE_TIME){
@@ -952,14 +952,14 @@ async fetch_get_tags_for_autocomplete(){
     this.tags = data['message'];
 },
 
-// this.data1_connector()とthis.data2_connector()によって、webのdata1とdata2は変換される。
-data1_connector(data1_param){
-    if(data1_param){this.data6 = data1_param};
-    return this.data6;
+// this.online_data_A_connector()とthis.online_data_B_connector()によって、webのonline_data_Aとonline_data_Bは変換される。
+online_data_A_connector(online_data_A_param){
+    if(online_data_A_param){this.data_a = online_data_A_param};
+    return this.data_a;
 },
-data2_connector(data2_param){
-    if(data2_param){this.data3 = data2_param};
-    return this.data3;
+online_data_B_connector(online_data_B_param){
+    if(online_data_B_param){this.data_b = online_data_B_param};
+    return this.data_b;
 },
 
 
@@ -969,6 +969,7 @@ data2_connector(data2_param){
 
 
 truncateText(text, id) {
+    if (text === undefined) { return };
     if (text.length > this.truncate_text_length && !this.untruncate_text_array.includes(id)) {
         return text.substring(0, this.truncate_text_length) + '...';
     } else {
@@ -1072,10 +1073,10 @@ async fetch_read_all(){
 // req.body.data_type, req.body.data_json
 async fetch_insert_link(){
 try {
-    const error_check_data1_data2 = (data1, data2) => {
+    const error_check_online_data_A_online_data_B = (online_data_A, online_data_B) => {
         switch (true) {
-            case data1 === undefined || data1 === null || data1.length === 0: return 'data1が空です'; break;
-            case data2 === undefined || data2 === null || data2.length === 0: return 'data2が空です'; break;
+            case online_data_A === undefined || online_data_A === null || online_data_A.length === 0: return 'online_data_Aが空です'; break;
+            case online_data_B === undefined || online_data_B === null || online_data_B.length === 0: return 'online_data_Bが空です'; break;
             default: return 'OK'; break;
         }
     };
@@ -1088,9 +1089,9 @@ try {
             default: return 'OK'; break;
         }
     };
-    error_check_data1_data2(this.data1_connector(), this.data2_connector()) === 'OK' ? null : (()=>{throw new Error(error_check_data1_data2(this.data1, this.data2))})();
-    const data_convert_jsonstr = (data1, data2) => JSON.stringify({'data1': data1, 'data2': data2});
-    const data_json_str = data_convert_jsonstr(this.data1_connector(), this.data2_connector());
+    error_check_online_data_A_online_data_B(this.online_data_A_connector(), this.online_data_B_connector()) === 'OK' ? null : (()=>{throw new Error(error_check_online_data_A_online_data_B(this.online_data_A, this.online_data_B))})();
+    const data_convert_jsonstr = (online_data_A, online_data_B) => JSON.stringify({'online_data_A': online_data_A, 'online_data_B': online_data_B});
+    const data_json_str = data_convert_jsonstr(this.online_data_A_connector(), this.online_data_B_connector());
     error_check_insert_data(this.data_type, data_json_str) === 'OK' ? null : (()=>{throw new Error(error_check_insert_data(this.data_type, data_json_str))})();
     const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, link: this.link,
@@ -1251,90 +1252,90 @@ advanced_visible_init() {
 
 
 
-// this.data10 = [];
-// this.data10_q_a = [];
+// this.online_data_A0 = [];
+// this.online_data_A0_q_a = [];
 
 // core of q_a
-// data10 q_a_data_x_1
-// data1 online_data_A
-// data2 online_data_B
-// data3 data_b
-// data4 q_a_data4
-// data5 q_a_data5
-// data6 data_a
-// go to outside from core of q_a: data10
+// online_data_A0 q_a_data_x_1
+// online_data_A online_data_A
+// online_data_B online_data_B
+// data_b data_b
+// q_a_data4 q_a_q_a_data4
+// q_a_data5 q_a_q_a_data5
+// data_a data_a
+// go to outside from core of q_a: online_data_A0
 
 
-// fn2_1 q_a_fn2_1
-// fn2_2 q_a_fn2_2
-// processing q_a_processing
-// fn3 q_a_fn3
-// fn4_1 q_a_fn4_1
-// fn4_2 q_a_fn4_2
-// fn4_3 q_a_fn4_3
-// fn4_4 q_a_fn4_4
-// fn4 q_a_fn4
+// q_a_fn2_1 q_a_q_a_fn2_1
+// q_a_fn2_2 q_a_q_a_fn2_2
+// q_a_processing q_a_q_a_processing
+// q_a_fn3 q_a_q_a_fn3
+// q_a_fn4_1 q_a_q_a_fn4_1
+// q_a_fn4_2 q_a_q_a_fn4_2
+// q_a_fn4_3 q_a_q_a_fn4_3
+// q_a_fn4_4 q_a_q_a_fn4_4
+// q_a_fn4 q_a_fn4
 // test_index q_a_test_index
-// change_current_index q_a_change_current_index
-// change_only_one_q_a_mode q_a_change_only_one_q_a_mode
+// q_a_change_current_index q_a_q_a_change_current_index
+// q_a_change_only_one_q_a_mode q_a_q_a_change_only_one_q_a_mode
 
-fn2_1() {
-return this.data2.map((V, IDX)=>{
-    return shuffle(shuffle(R.without(this.data2[IDX], this.data2)).slice(0, 2).concat(this.data2[IDX]));
+q_a_fn2_1() {
+return this.online_data_B.map((V, IDX)=>{
+    return shuffle(shuffle(R.without(this.online_data_B[IDX], this.online_data_B)).slice(0, 2).concat(this.online_data_B[IDX]));
 });
 },
-fn2_2() {
-return R.zip(this.data2, this.fn2_1()).map((V,IDX)=>[V[0], V[1], this.data6.split("\n")[IDX]]);
+q_a_fn2_2() {
+return R.zip(this.online_data_B, this.q_a_fn2_1()).map((V,IDX)=>[V[0], V[1], this.data_a.split("\n")[IDX]]);
 },
-processing() {
-this.data2 = this.data3.split("\n");
-this.data4 = this.fn2_2();
-this.data5 = R.repeat(undefined, this.data4.length);
+q_a_processing() {
+this.online_data_B = this.data_b.split("\n");
+this.q_a_data4 = this.q_a_fn2_2();
+this.q_a_data5 = R.repeat(undefined, this.q_a_data4.length);
 this.for_debug();
 },
-fn3(correct, answer, INDEX) {
-this.data5[INDEX] = answer === correct ? "⭕️" : "❎";
-this.change_current_index(+1);
-this.current_index === this.data4.length ? this.current_index = 0 : null;
+q_a_fn3(correct, answer, INDEX) {
+this.q_a_data5[INDEX] = answer === correct ? "⭕️" : "❎";
+this.q_a_change_current_index(+1);
+this.current_index === this.q_a_data4.length ? this.current_index = 0 : null;
 },
-fn4_1() {
-a = R.zip(this.data4, this.data5);
+q_a_fn4_1() {
+a = R.zip(this.q_a_data4, this.q_a_data5);
 b = R.collectBy(
         (V)=> ( V[1] === '❎' || V[1] === undefined ) ,
         a
     );
 c = b[0][0][1] === '⭕️' ? b[1] : b[0];
-this.data4 = c.map(V=>V[0]);
+this.q_a_data4 = c.map(V=>V[0]);
 },
-fn4_2() {
-this.data5 = [];
+q_a_fn4_2() {
+this.q_a_data5 = [];
 },
-fn4_3() {
-this.data10.push([
-    R.transpose(this.data4)[2].join("\n"),
-    R.transpose(this.data4)[0].join("\n"),
+q_a_fn4_3() {
+this.online_data_A0.push([
+    R.transpose(this.q_a_data4)[2].join("\n"),
+    R.transpose(this.q_a_data4)[0].join("\n"),
 ]);
 },
-fn4_4() {
-return this.to_ary(this.data5).every(V=>V === '⭕️')
+q_a_fn4_4() {
+return this.to_ary(this.q_a_data5).every(V=>V === '⭕️')
 },
-fn4() {
-if(this.fn4_4()){
-    this.data4 = this.data5 = [];
+q_a_fn4() {
+if(this.q_a_fn4_4()){
+    this.q_a_data4 = this.q_a_data5 = [];
     return;
 };
-this.fn4_1();
-this.fn4_2();
-this.fn4_3();
+this.q_a_fn4_1();
+this.q_a_fn4_2();
+this.q_a_fn4_3();
 },
-test_index(test_index) {
-this.data4.forEach((V,IDX)=>this.fn3(V[0], V[1][test_index], IDX));
-this.fn4();
+q_a_test_index(Test_index) {
+this.q_a_data4.forEach((V,IDX)=>this.q_a_fn3(V[0], V[1][Test_index], IDX));
+this.q_a_fn4();
 },
-change_current_index(ONE_UP_OR_ONE_DOWN=1) {
+q_a_change_current_index(ONE_UP_OR_ONE_DOWN=1) {
     this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
-    this.current_index < 0 ? this.current_index = this.data4.length - 1 : null;
-    this.current_index > this.data4.length - 1 ? this.current_index = 0 : null;
+    this.current_index < 0 ? this.current_index = this.q_a_data4.length - 1 : null;
+    this.current_index > this.q_a_data4.length - 1 ? this.current_index = 0 : null;
 },
 change_only_one_mode() {
     this.only_one_mode = this.only_one_mode === true ? false : true;
@@ -1344,8 +1345,8 @@ change_only_one_mode() {
 
 
 // コア部分の関数と変数をまとめる
-    // それぞれのプロダクトのコア部分のアウトプットはfn9とdata10が接続部分
-    // そのため、fn9とdata10をそれぞれのプロダクト用のconverter関数で接続する
+    // それぞれのプロダクトのコア部分のアウトプットはfn9とonline_data_A0が接続部分
+    // そのため、fn9とonline_data_A0をそれぞれのプロダクト用のconverter関数で接続する
 // local save周りの関数と変数をまとめる
 // コア部分以外の命名と処理内容を共通化する
 // <style>の中身をまとめる

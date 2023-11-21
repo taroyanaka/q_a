@@ -1029,7 +1029,7 @@ i_t_n_data2_data3_string_to_array(){
     this.ary_i_t_n_data3 = this.i_t_n_data3.split("\n")
 },
 i_t_n_make_image_to_name_Q_A_array(){
-    this.i_t_n_data4 = this.to_ary(this.ary_i_t_n_data3).map(V=> [V, this.i_t_n_take2(shuffle(this.remove(V, this.ary_i_t_n_data3)))]
+    this.i_t_n_data4 = this.to_ary(this.ary_i_t_n_data3).map(V=> [V, this.i_t_n_take2(shuffle(this.i_t_n_erase(V, this.ary_i_t_n_data3)))]
     )
     this.i_t_n_data4 = this.to_ary(this.i_t_n_data4).map(V=> [V[0], shuffle(R.flatten(V))]
     );
@@ -1216,10 +1216,12 @@ truncateText(text, id) {
         return text;
     }
 },
-// short_or_long(id) {
-//     const is_include_id = this.untruncate_text_array.includes(id);
-//     is_include_id ? this.untruncate_text_array.splice(this.untruncate_text_array.indexOf(id), 1) : this.untruncate_text_array.push(id);
-// },
+
+short_or_long(id) {
+    // untruncate_text_arrayにidが含まれていない場合は追加する。含まれている場合は削除する
+    const is_include_id = this.untruncate_text_array.includes(id);
+    is_include_id ? this.untruncate_text_array.splice(this.untruncate_text_array.indexOf(id), 1) : this.untruncate_text_array.push(id);
+},
 
 
 async download_data_from_web_data_id(){
@@ -1333,20 +1335,6 @@ change_only_one_q_a_mode(){
 },
 
 
-
-
-truncateText(text, id) {
-    if (text.length > this.truncate_text_length && !this.untruncate_text_array.includes(id)) {
-        return text.substring(0, this.truncate_text_length) + '...';
-    } else {
-        return text;
-    }
-},
-short_or_long(id) {
-    // untruncate_text_arrayにidが含まれていない場合は追加する。含まれている場合は削除する
-    const is_include_id = this.untruncate_text_array.includes(id);
-    is_include_id ? this.untruncate_text_array.splice(this.untruncate_text_array.indexOf(id), 1) : this.untruncate_text_array.push(id);
-},
 
 go_to_any_service_page(Service='portal'){
     switch (Service) {

@@ -512,13 +512,13 @@ position: relative;
     <button @click="q_a_change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
     <template v-for="(DATAVAL, DATAIDX) in q_a_data4" class="simple_mode2">
     <div class="q_and_a simple_mode2 minimum" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
-        <span class="text_right simple_mode2" @click="fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span>
+        <span class="text_right simple_mode2" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span>
         <button class="simple_mode2" v-for="item in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
         <span class="text_center simple_mode2">{{ DATAVAL[2] }}</span>
     </div>
     </template>
     <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
-    <button @click="fn4" class="check_button">🎮</button>
+    <button @click="q_a_fn4" class="check_button">🎮</button>
     <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
     
     </div>
@@ -529,7 +529,7 @@ position: relative;
     <button @click="fn18" class="result_opener">📖</button>
 
     </div>
-    <template v-for="(DATAVAL, DATAIDX) in online_data_A0">
+    <template v-for="(DATAVAL, DATAIDX) in online_data_A">
         <div class="textarea-column-2">
         <div class="a">
             <button @click="fn9(DATAIDX)" class="a-1">↩️</button>
@@ -560,18 +560,62 @@ position: relative;
 // let q_a_data4 = null;
 // let q_a_data5 = null;
 // let data_a = null;
-// let online_data_A0 = null;
+// let online_data_A = null;
 
 const app = Vue.createApp({
 data() {
 return {
+ABCDEF: "q_a",
+
+
+// for f_i_b
+f_i_b_all_save: [],
+f_i_b_data1: '',
+f_i_b_data2: '',
+f_i_b_data3: [],
+f_i_b_data4: [],
+f_i_b_data5: '',
+f_i_b_data6: [],
+f_i_b_data7: [],
+f_i_b_data8: [],
+f_i_b_data9: [],
+// Xはリファクタリング時に他のナンバリングの変数と被らないようにするためのもの
+f_i_b_data_X_1: [],
+f_i_b_data_X_2: [],
+f_i_b_data_X_3: [],
+f_i_b_data_X_4: [],
+f_i_b_data_X_5: [],
+// f_i_b_test_mode: true,
+f_i_b_test_mode: false,
+// for f_i_b
+
+
+// for i_t_n
+i_t_n_all_save: [],
+
+i_t_n_data2:'',
+i_t_n_ary_data2: [],
+i_t_n_data3:'',
+i_t_n_ary_data3: [],
+i_t_n_data4:[],
+i_t_n_data5:[],
+i_t_n_data8:[],
+i_t_n_data9:[],
+
+i_t_n_data5_result: true,
+i_t_n_data9_result: false,
+
+i_t_n_test_mode: false,
+// for i_t_n
+
+
 all_save: [],
 online_data_B: [],
 data_b: '',
 q_a_data4: [],
 q_a_data5: [],
 data_a: '',
-online_data_A0: [],
+online_data_A: [],
 // online_data_A1: '',
 test_mode: true,
 column_1_none: false,
@@ -628,6 +672,36 @@ advanced_visible: 'not_advanced',
 
 }},
 watch: {
+i_t_n_data2: {
+    handler() {
+        this.i_t_n_init();
+    },
+    deep: true
+},
+i_t_n_data3: {
+    handler() {
+        this.i_t_n_init();
+    },
+    deep: true
+},
+
+f_i_b_data1: {
+    handler() {
+        this.f_i_b_data3_setup();
+        this.f_i_b_data4_5_setup();
+        this.f_i_b_exe();
+    },
+    deep: true
+},
+f_i_b_data2: {
+    handler() {
+        this.f_i_b_data3_setup();
+        this.f_i_b_data4_5_setup();
+        this.f_i_b_exe();
+    },
+    deep: true
+},
+
 data_b: {
     handler() {
     this.all_error_check();
@@ -697,8 +771,24 @@ this.q_a_processing();
 this.save_data_load();
 // this.fn15();
 // this.toggleDisplay();
-this.advanced_visible_init();
+this.advanced_visible_fn();
 this.test_mode === false ? this.test_exe() : null;
+
+if(this.ABCDEF === "f_i_b"){
+    // this.f_i_b_save_data_load();
+    this.f_i_b_data3_setup();
+    this.f_i_b_data4_5_setup();
+    this.f_i_b_exe();
+    this.f_i_b_test_mode === true ? this.f_i_b_test_exe() : null;
+};
+if(this.ABCDEF === "i_t_n"){
+    // this.i_t_n_save_data_load();
+    this.i_t_n_init();
+    this.test_mode === true ? (this.sample1(), sleep(100, this.test_exe)) : null;
+};
+
+
+
 },
 beforeUpdate() {
 },
@@ -706,6 +796,315 @@ async updated() {
     // await this.download_data_from_web_data_id();
 },
 methods: {
+
+
+// core of i_t_n
+
+// this.data10 = [];
+// this.data10_f_i_b = [];
+
+// i_t_n_data2 i_t_n_i_t_n_data2
+// i_t_n_data3 i_t_n_i_t_n_data3
+// i_t_n_data4 i_t_n_i_t_n_data4
+// i_t_n_data5 i_t_n_i_t_n_data5
+// i_t_n_data8 i_t_n_i_t_n_data8
+// i_t_n_data9 i_t_n_i_t_n_data9
+
+// i_t_n_ary_data2 i_t_n_i_t_n_ary_data2
+// i_t_n_ary_data3 i_t_n_i_t_n_ary_data3
+// i_t_n_ary_data6 i_t_n_i_t_n_ary_data6
+// i_t_n_ary_data7 i_t_n_i_t_n_ary_data7
+
+// i_t_n_data5_result i_t_n_data5_result
+// i_t_n_data9_result i_t_n_data9_result
+
+// i_t_n_data2_data3_string_to_array i_t_n_i_t_n_data2_i_t_n_data3_string_to_array
+// i_t_n_data6_data7_string_to_array i_t_n_i_t_n_data6_data7_string_to_array
+// i_t_n_change_result i_t_n_i_t_n_change_result
+// i_t_n_take2 i_t_n_i_t_n_take2
+// i_t_n_swap_data6_data7 i_t_n_i_t_n_swap_data6_data7
+// i_t_n_make_image_to_name_Q_A_array i_t_n_i_t_n_make_image_to_name_Q_A_array
+// i_t_n_erase i_t_n_i_t_n_erase
+// check_image_to_name
+// check_name_to_image
+
+
+i_t_n_erase(item, ary){
+    // 指定した要素を配列から削除するramda.jsを使った1行の関数
+    const ers = R.curry((item, ary) => R.filter(R.complement(R.equals(item)), ary));
+    return ers(item, ary);
+},
+i_t_n_take2(ary){
+    // 指定した要素から先頭から2つの要素を取り出すramda.jsを使った1行の関数
+    const i_t_n_take2 = R.compose(R.take(2), R.drop(1));
+    return i_t_n_take2(ary);
+},
+i_t_n_data2_data3_string_to_array(){
+    this.i_t_n_ary_data2 = this.i_t_n_data2.split("\n")
+    this.i_t_n_ary_data3 = this.i_t_n_data3.split("\n")
+},
+i_t_n_make_image_to_name_Q_A_array(){
+    this.i_t_n_data4 = this.to_ary(this.i_t_n_ary_data3).map(V=> [V, this.i_t_n_take2(shuffle(this.i_t_n_erase(V, this.i_t_n_ary_data3)))]
+    )
+    this.i_t_n_data4 = this.to_ary(this.i_t_n_data4).map(V=> [V[0], shuffle(R.flatten(V))]
+    );
+    this.i_t_n_data5 = R.zip(this.i_t_n_ary_data2, this.i_t_n_data4);
+    // i_t_n_data5のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
+    this.i_t_n_data5 = R.map(R.insert(2, false), this.i_t_n_data5);
+    // this.for_debug();
+},
+i_t_n_init(){
+    this.i_t_n_data2_data3_string_to_array();
+    this.i_t_n_make_image_to_name_Q_A_array();
+},
+i_t_n_check_image_to_name(correct_URL, URL, IDX){
+    this.i_t_n_data5[IDX][2] = correct_URL === URL ? true : false;
+    // this.for_debug();
+},
+i_t_n_check_name_to_image(correct_URL, URL, IDX){
+    this.i_t_n_data9[IDX][2] = correct_URL === URL ? true : false;
+},
+i_t_n_data6_data7_string_to_array(){
+    this.i_t_n_ary_data6 = this.i_t_n_data2.split("\n")
+    this.i_t_n_ary_data7 = this.i_t_n_data3.split("\n")
+},
+i_t_n_swap_data6_data7(){
+    // swap_:i_t_n_ary_data6とi_t_n_ary_data7を入れ替える関数
+    [this.i_t_n_ary_data6, this.i_t_n_ary_data7] = [this.i_t_n_ary_data7, this.i_t_n_ary_data6];
+},
+i_t_n_change_result(){
+    // i_t_n_data5_resultとi_t_n_data9_resultのtrue/falseの切り替え
+    this.i_t_n_data5_result = !this.i_t_n_data5_result;
+    this.i_t_n_data9_result = !this.i_t_n_data9_result;
+},
+i_t_n_swap_q_a(){
+    this.i_t_n_data6_data7_string_to_array();
+    this.i_t_n_swap_data6_data7();
+    this.i_t_n_change_result();
+    this.i_t_n_data8 = this.to_ary(this.i_t_n_ary_data7).map(V=> [V, this.i_t_n_take2(shuffle(this.remove(V, this.i_t_n_ary_data7)))]
+    )
+    this.i_t_n_data8 = this.to_ary(this.i_t_n_data8).map(V=> [V[0], shuffle(R.flatten(V))]
+    );
+    this.i_t_n_data9 = R.zip(this.i_t_n_ary_data6, this.i_t_n_data8);
+    // i_t_n_data9のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
+    this.i_t_n_data9 = R.map(R.insert(2, false), this.i_t_n_data9);
+    this.for_debug();
+},
+i_t_n_filter_image_and_name(){
+    if(this.i_t_n_data5.map(V=>V[2]).every(V=>V === true)){
+        this.i_t_n_data5 = [];
+        alert("すべての問題が正解しました。🦖\nすべての問題が正解しました。🦕");
+        return;
+    }
+    const res1 = this.i_t_n_data5.filter(V=>V[2] === false);
+    const res2 = R.transpose(
+        res1.map(V=> [V[0], V[1][0]])
+    );
+    this.data10.push([res2[0].join("\n"), res2[1].join("\n")]);
+    this.for_debug();
+},
+i_t_n_true_or_false_to_emoji(bool){
+    // trueだったら⭕️、falseだったら❎を返す関数
+    return bool ? "⭕️" : "❎";
+},
+// core of i_t_n
+
+
+
+
+// core of f_i_b
+
+// this.data10 = [];
+// this.data10_f_i_b = [];
+
+// data3_setup f_i_b_data3_setup
+// data4_5_setup f_i_b_data4_5_setup
+// f_i_b_composer
+// f_i_b_filter_and_DESC_sort_and_remove_short_str f_i_b_f_i_b_filter_and_DESC_sort_and_remove_short_str
+// f_i_b_fn2_1 f_i_b_f_i_b_fn2_1
+// f_i_b_fn3 f_i_b_f_i_b_fn3
+// f_i_b_fn4_4 f_i_b_f_i_b_fn4_4
+// f_i_b_fn4_3 f_i_b_f_i_b_fn4_3
+// f_i_b_fn4( f_i_b_f_i_b_fn4()
+// exe f_i_b_exe
+// check_option f_i_b_check_option
+
+// f_i_b_for_debug f_i_b_f_i_b_for_debug
+// f_i_b_get_shuffled_array f_i_b_f_i_b_get_shuffled_array
+// f_i_b_remove_empty_str_from_ary f_i_b_f_i_b_remove_empty_str_from_ary
+// f_i_b_remove_index_0 f_i_b_f_i_b_remove_index_0
+// f_i_b_test_exe f_i_b_f_i_b_test_exe
+// fn5 f_i_b_fn5
+
+
+f_i_b_data3_setup(){
+    this.f_i_b_data3 = this.f_i_b_data1.split("\n");
+},
+f_i_b_filter_and_DESC_sort_and_remove_short_str(){
+    // フィルタリングして長さで降順ソートし、重複した短い要素を除外する。strに含まれない要素は除外される
+    // ['fo', 'foo', '日', 'qux', 'qx', '日本', 'blabla', 'brabra', 'bowbow']のような要素のその要素が含む文字列がある場合に、長い文字列の要素を残して短い文字列を削除する関数
+    // この場合'fo'と'日'は削除される
+    const remove_short_str = (ary) => ary.filter(V => !ary.some(VAL => VAL !== V && VAL.includes(V)));
+    this.f_i_b_data4 = remove_short_str(
+        this.f_i_b_data3.filter(v => this.f_i_b_data2.includes(v)).sort((a, b) => b.length - a.length));
+},
+f_i_b_data4_5_setup(){
+    this.f_i_b_filter_and_DESC_sort_and_remove_short_str();
+    this.f_i_b_data5 = this.f_i_b_data4.join("\n");
+},
+f_i_b_remove_index_0(ary) {
+    // 配列の最初の要素を削除する
+    return R.remove(0, 1, ary);
+},
+f_i_b_fn2_1(target_str, replacer_str) {
+    // 正規表現による分割と区切り文字の挿入を組み合わせる
+    // JSの正規表現で使う記号を全てサニタイズするJSの関数escape_reg_expをconst形式の1行関数で
+    const escape_reg_exp = string => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const escaped_result = escape_reg_exp(replacer_str);
+    const RESULT = R.intersperse([escaped_result], target_str.split(new RegExp(escaped_result)))
+    return RESULT;
+},
+f_i_b_get_shuffled_array(ARG_ARY, VAL){
+    // ARG_ARYからVALを除外し、シャッフルした配列から先頭2つの要素を取得し、VALと結合し、シャッフルした配列を返す
+    // 与えられた配列 ary から要素 val を取り除いた新しい配列を返すアロー関数
+    const remove_any_elelemnt_from_ary_one_liner = (ary, val) => ary.filter(V=> V !== val);
+    return shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(ARG_ARY, VAL)).slice(0, 2).concat(VAL));
+},
+f_i_b_composer() {
+    // [
+    //     [VAL, ['', VAL, BAR, BAZ],
+    //     [BAR, ['', BAR, VAL, BAZ],
+    //     [BAZ, ['', VAL, BAR, BAZ],
+    // ]
+    // 上記のように[正解, [空文字, シャッフルされた正解を含む3つの要素]]の配列を作成する
+    this.f_i_b_data7 = this.f_i_b_data4.map(VAL => {
+        return [VAL, R.insert(0, '', this.f_i_b_get_shuffled_array(this.f_i_b_data4, VAL)), false];
+    });
+},
+f_i_b_fn3() {
+    let RESULT_ARRAY = [];
+    const fn2 = (target_str, replacer_str_ary) => {
+        if (replacer_str_ary.length <= 0) {
+            return target_str;
+        } else {
+            // 文字列の場合にのみ関数を適用し、文字列でなければそのまま返す
+            const result = (typeof target_str === 'string') ? this.f_i_b_fn2_1(target_str, replacer_str_ary[0]) : target_str;
+            replacer_str_ary = this.f_i_b_remove_index_0(replacer_str_ary);
+            // 再帰
+            let res = result.map(V=>fn2(V, replacer_str_ary));
+            res.includes(undefined) === false ? RESULT_ARRAY.push(res) : null;
+        }
+    };
+    fn2(this.f_i_b_data2, this.f_i_b_data4);
+    this.f_i_b_data8 = RESULT_ARRAY;
+},
+f_i_b_fn4() {
+    // 2次元配列を1次元配列に変換し、各要素に対して別の配列に含まれるかをチェックし、一致する要素を別の配列から取得して、最終的な1次元配列を生成する処理
+    this.f_i_b_data6 = R.flatten(this.f_i_b_data8).map(V=>{
+        return this.f_i_b_data4.includes(V) ?
+                    this.f_i_b_data7.filter(VAL=>VAL[0]===V)[0] :
+                    V
+    });
+},
+f_i_b_remove_empty_str_from_ary() {
+    // 配列から''を除外する
+    this.f_i_b_data9 = this.f_i_b_data6.filter(V => V !== '');
+},
+// css_var_set(VAR_NAME, VAR){
+// document.documentElement.style.setProperty(VAR_NAME, VAR);
+// },
+f_i_b_test_exe(){
+this.css_var_set('--css-var-test-inline', 'inlilne');
+this.css_var_set('--css-var-color-1', 'LightGray');
+this.css_var_set('--css-var-color-2', 'SlateGray');
+this.css_var_set('--css-var-color-3', 'DimGray');
+},
+f_i_b_for_debug(){
+data1 = this.to_ary(this.f_i_b_data1);
+data2 = this.to_ary(this.f_i_b_data2);
+data3 = this.to_ary(this.f_i_b_data3);
+f_i_b_data4 = this.to_ary(this.f_i_b_data4);
+f_i_b_data5 = this.to_ary(this.f_i_b_data5);
+data6 = this.to_ary(this.f_i_b_data6);
+data7 = this.to_ary(this.f_i_b_data7);
+data8 = this.to_ary(this.f_i_b_data8);
+data9 = this.to_ary(this.f_i_b_data9);
+data_X_1 = this.to_ary(this.f_i_b_data_X_1);
+data_X_2 = this.to_ary(this.f_i_b_data_X_2);
+data_X_3 = this.to_ary(this.f_i_b_data_X_3);
+data_X_4 = this.to_ary(this.f_i_b_data_X_4);
+data_X_5 = this.to_ary(this.f_i_b_data_X_5);
+console.log(
+'f_i_b_data1:' , data1, '\n',
+'f_i_b_data2:' , data2, '\n',
+'f_i_b_data3:' , data3, '\n',
+'f_i_b_data4:' , f_i_b_data4, '\n',
+'f_i_b_data5:' , f_i_b_data5, '\n',
+'f_i_b_data6:' , data6, '\n',
+'f_i_b_data7:' , data7, '\n',
+'f_i_b_data8:' , data8, '\n',
+'f_i_b_data9:' , data9, '\n',
+'f_i_b_data_X_1' , data_X_1, '\n',
+'f_i_b_data_X_2' , data_X_2, '\n',
+'f_i_b_data_X_3' , data_X_3, '\n',
+'f_i_b_data_X_4' , data_X_4, '\n',
+'f_i_b_data_X_5' , data_X_5, '\n',
+);
+},
+f_i_b_exe(){
+    this.f_i_b_composer();
+    this.f_i_b_fn3();
+    this.f_i_b_fn4();
+    this.f_i_b_remove_empty_str_from_ary();
+    this.data1 = this.f_i_b_data1;
+    this.data2 = this.f_i_b_data2;
+    this.f_i_b_test_mode === true ? this.f_i_b_test_exe() : null;
+    this.f_i_b_test_mode === true ? this.f_i_b_for_debug() : null;
+},
+f_i_b_check_option(INDEX){
+    // this.f_i_b_data9からarrayの要素だけを取り出す一行コード
+    this.f_i_b_data9[INDEX][2] =
+        this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value ? true : false;
+    this.$refs.core[INDEX].style.backgroundColor =
+        this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value
+            ? '' :
+            '#F9E4C6'; //ミルレージュ（Mille Feuille）
+            // '#D6A5A5'; //ダスティローズ（Dusty Rose）
+            // '#8A9A5B'; //モスグリーン（Moss Green）
+            // '#B0E0E6'; //パウダーブルー（Powder Blue）
+            // '#E2725B'; //テラコッタ（Terracotta）
+            // '#36454F'; //チャコールグレー（Charcoal Gray）
+            // '#6699CC'; //ブルーグレイ（Blue Gray）
+            // '#98FF98'; //ミントグリーン（Mint Green）
+            // '#B76E79'; //ローズゴールド（Rose Gold）
+            // '#800000'; //マルーン（Maroon）
+    this.f_i_b_data_X_2 = this.f_i_b_data9
+        .filter(V=>Array.isArray(V)).filter(V=>V[2]===false);
+    this.f_i_b_data_X_3 = this.f_i_b_data4
+        .filter(V=>R.pluck(0, this.f_i_b_data_X_2).includes(V));
+    this.f_i_b_data_X_4 = this.f_i_b_data_X_3.join("\n");
+    this.f_i_b_for_debug();
+},
+f_i_b_fn4_3(){
+    this.f_i_b_data_X_1.push([
+        this.f_i_b_data_X_4,
+        this.f_i_b_data2,
+    ]);
+},
+f_i_b_fn4_4(){
+    return this.f_i_b_data9.filter(V=>Array.isArray(V)).every(V=>V[2]===true);
+},
+f_i_b_fn5(){
+if(this.f_i_b_fn4_4()){
+    window.alert("正解です！");
+    return;
+};
+    this.f_i_b_fn4_3();
+},
+// core of f_i_b
+
+
+
 
 async save_data_to_all_save(){
 this.all_save.push(this.to_ary([this.data_a, this.data_b]));
@@ -732,8 +1131,8 @@ if (window.confirm("Do you really want to delete??🦖\n本当に削除する？
 
 
 fn9(IDX){
-this.data_a = this.online_data_A0[IDX][0];
-this.data_b = this.online_data_A0[IDX][1];
+this.data_a = this.online_data_A[IDX][0];
+this.data_b = this.online_data_A[IDX][1];
 },
 reverse_q_a(){
 this.data_a = this.data_a.split("\n").reverse().join("\n");
@@ -752,7 +1151,7 @@ swap_q_a(){
 [this.data_a, this.data_b] = [tmp1, tmp0];
 },
 fn16(INDEX){
-this.online_data_A0.splice(INDEX, 1);
+this.online_data_A.splice(INDEX, 1);
 },
 fn17(INDEX){
 const TARGET_INDEX_FIRST = INDEX * 2;
@@ -776,9 +1175,6 @@ fn19_0(){
 fn19_1(){
     const THE_STYLE_DISPLAY2 = this.$refs.save_data_set_list_parent2.style.display;
     this.$refs.save_data_set_list_parent2.style.display = (THE_STYLE_DISPLAY2 === 'block' || THE_STYLE_DISPLAY2 === '') ? 'none' : 'block';
-},
-fn20(INDEX){
-this.q_a_data5[INDEX] = null;
 },
 fn21(ONE_UP_OR_ONE_DOWN_OR_12px){
 ONE_UP_OR_ONE_DOWN_OR_12px = ONE_UP_OR_ONE_DOWN_OR_12px ? ONE_UP_OR_ONE_DOWN_OR_12px : '12px';
@@ -845,7 +1241,7 @@ data_b = this.to_ary(this.data_b);
 // q_a_data4 = this.to_ary(this.q_a_data4);
 q_a_data5 = this.to_ary(this.q_a_data5);
 data_a = this.to_ary(this.data_a);
-online_data_A0 = this.to_ary(this.online_data_A0);
+online_data_A = this.to_ary(this.online_data_A);
 // online_data_A1 = this.to_ary(this.online_data_A1);
 },
 test0(){this.q_a_test_index(0)},
@@ -1232,7 +1628,7 @@ scrollToTarget(For='local') {
     For ==='local' ? this.$refs.save_data_set_list_parent1.style.display = 'none' : null;
     For ==='web' ? this.$refs.save_data_set_list_parent2.style.display = 'none' : null;
 },
-advanced_visible_init() {
+advanced_visible_fn() {
     this.advanced_visible === 'advanced' ? this.css_var_set('--advanced-display-var', 'inline-block') : this.css_var_set('--advanced-display-var', 'none');
 },
 // for_online_function
@@ -1252,18 +1648,18 @@ advanced_visible_init() {
 
 
 
-// this.online_data_A0 = [];
+// this.online_data_A = [];
 // this.online_data_A0_q_a = [];
 
 // core of q_a
-// online_data_A0 q_a_data_x_1
+// online_data_A q_a_data_x_1
 // online_data_A online_data_A
 // online_data_B online_data_B
 // data_b data_b
 // q_a_data4 q_a_q_a_data4
 // q_a_data5 q_a_q_a_data5
 // data_a data_a
-// go to outside from core of q_a: online_data_A0
+// go to outside from core of q_a: online_data_A
 
 
 // q_a_fn2_1 q_a_q_a_fn2_1
@@ -1279,25 +1675,30 @@ advanced_visible_init() {
 // q_a_change_current_index q_a_q_a_change_current_index
 // q_a_change_only_one_q_a_mode q_a_q_a_change_only_one_q_a_mode
 
+// fn2_1() {
 q_a_fn2_1() {
 return this.online_data_B.map((V, IDX)=>{
     return shuffle(shuffle(R.without(this.online_data_B[IDX], this.online_data_B)).slice(0, 2).concat(this.online_data_B[IDX]));
 });
 },
+// fn2_2() {
 q_a_fn2_2() {
 return R.zip(this.online_data_B, this.q_a_fn2_1()).map((V,IDX)=>[V[0], V[1], this.data_a.split("\n")[IDX]]);
 },
+// processing() {
 q_a_processing() {
 this.online_data_B = this.data_b.split("\n");
 this.q_a_data4 = this.q_a_fn2_2();
 this.q_a_data5 = R.repeat(undefined, this.q_a_data4.length);
 this.for_debug();
 },
+// fn3(correct, answer, INDEX) {
 q_a_fn3(correct, answer, INDEX) {
 this.q_a_data5[INDEX] = answer === correct ? "⭕️" : "❎";
 this.q_a_change_current_index(+1);
 this.current_index === this.q_a_data4.length ? this.current_index = 0 : null;
 },
+// fn4_1() {
 q_a_fn4_1() {
 a = R.zip(this.q_a_data4, this.q_a_data5);
 b = R.collectBy(
@@ -1307,18 +1708,22 @@ b = R.collectBy(
 c = b[0][0][1] === '⭕️' ? b[1] : b[0];
 this.q_a_data4 = c.map(V=>V[0]);
 },
+// fn4_2() {
 q_a_fn4_2() {
 this.q_a_data5 = [];
 },
+// fn4_3() {
 q_a_fn4_3() {
-this.online_data_A0.push([
+this.online_data_A.push([
     R.transpose(this.q_a_data4)[2].join("\n"),
     R.transpose(this.q_a_data4)[0].join("\n"),
 ]);
 },
+// fn4_4() {
 q_a_fn4_4() {
 return this.to_ary(this.q_a_data5).every(V=>V === '⭕️')
 },
+// fn4() {
 q_a_fn4() {
 if(this.q_a_fn4_4()){
     this.q_a_data4 = this.q_a_data5 = [];
@@ -1328,18 +1733,22 @@ this.q_a_fn4_1();
 this.q_a_fn4_2();
 this.q_a_fn4_3();
 },
+// test_index(Test_index) {
 q_a_test_index(Test_index) {
 this.q_a_data4.forEach((V,IDX)=>this.q_a_fn3(V[0], V[1][Test_index], IDX));
 this.q_a_fn4();
 },
+// change_current_index(ONE_UP_OR_ONE_DOWN=1) {
 q_a_change_current_index(ONE_UP_OR_ONE_DOWN=1) {
     this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
     this.current_index < 0 ? this.current_index = this.q_a_data4.length - 1 : null;
     this.current_index > this.q_a_data4.length - 1 ? this.current_index = 0 : null;
 },
-change_only_one_mode() {
-    this.only_one_mode = this.only_one_mode === true ? false : true;
+// ge_only_one_mode() {
+q_a_fn20(INDEX){
+this.q_a_data5[INDEX] = null;
 },
+
 
 // core of q_a
 
@@ -1347,6 +1756,9 @@ change_only_one_mode() {
 // コア部分の関数と変数をまとめる
     // それぞれのプロダクトのコア部分のアウトプットはfn9とonline_data_A0が接続部分
     // そのため、fn9とonline_data_A0をそれぞれのプロダクト用のconverter関数で接続する
+
+    // all_save周り移行
+    // mounted周り移行
 // local save周りの関数と変数をまとめる
 // コア部分以外の命名と処理内容を共通化する
 // <style>の中身をまとめる

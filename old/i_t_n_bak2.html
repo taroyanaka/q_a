@@ -437,7 +437,7 @@ display: inline;
 <div class="optional_function">
     <button @click="reverse_q_a">🔃</button>
     <button @click="shuffle_q_a">🌪️</button>
-    <button @click="i_t_n_swap_q_a">🔁</button>
+    <button @click="swap_q_a">🔁</button>
     <button @click="save_data_to_all_save">🗂️</button>
 </div>
 
@@ -647,13 +647,13 @@ display: inline;
     <button @click="change_only_one_q_a_mode" class="check_button">📏</button>
     <button @click="change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
 
-    <li v-for="(item, IDX) in i_t_n_data5" :key="item" class="result_color simple_mode2" :style="{display: i_t_n_data5_result ? 'block' : 'none'}">
+    <li v-for="(item, IDX) in i_t_n_data5" :key="item" class="result_color simple_mode2" :style="{display: i_t_n_i_t_n_data5_result ? 'block' : 'none'}">
         <div class="simple_mode2" v-if="only_one_q_a_mode ? IDX === current_index : true">
 
-        <span class="OK_or_NG simple_mode2">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>
+        <span class="OK_or_NG simple_mode2">{{ true_or_false_to_emoji(item[2]) }}</span>
         <span class="answer simple_mode2">{{ item[0] }}</span>
         <span class="any simple_mode2">
-            <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="i_t_n_check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
+            <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
         </span>
         </div>
     </li>
@@ -661,14 +661,14 @@ display: inline;
     <button @click="change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
     <button @click="change_only_one_q_a_mode" class="check_button">📏</button>
 
-    <div v-for="(item, IDX) in i_t_n_data9" :key="item" class="result_color result_color2" :style="{display: i_t_n_data9_result ? 'block' : 'none'}">
-        <span class="OK_or_NG">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>
+    <div v-for="(item, IDX) in i_t_n_data9" :key="item" class="result_color result_color2" :style="{display: i_t_n_i_t_n_data9_result ? 'block' : 'none'}">
+        <span class="OK_or_NG">{{ true_or_false_to_emoji(item[2]) }}</span>
         <img :src="item[0]" :alt="item[0]" class="png_image png_image_back" >
         <span v-for="item2 in item[1][1]">
-            <button @click="i_t_n_check_name_to_image(item[1][0], item2, IDX)">{{ item2 }}</button>
+            <button @click="check_name_to_image(item[1][0], item2, IDX)">{{ item2 }}</button>
         </span>
     </div>
-    <button @click="i_t_n_filter_image_and_name" class="check_button">🎮</button>
+    <button @click="filter_image_and_name" class="check_button">🎮</button>
 
 </ul>
 </div>
@@ -717,8 +717,8 @@ display: inline;
 let data1 = null;
 let i_t_n_data2 = null;
 let i_t_n_data3 = null;
-let i_t_n_ary_data2 = null;
-let i_t_n_ary_data3 = null;
+let ary_i_t_n_data2 = null;
+let ary_i_t_n_data3 = null;
 let i_t_n_data4 = null;
 let i_t_n_data5 = null;
 let data6 = null;
@@ -738,28 +738,10 @@ data1:[
     // ['dog','https://taroyanaka.github.io/q_a/asset/dog.png'],
     // ['halr','https://taroyanaka.github.io/q_a/asset/halr.png'],
 ],
-// this.data10 = [];
-// this.data10_f_i_b = [];
-
-// i_t_n_data2 i_t_n_i_t_n_data2
-// i_t_n_data3 i_t_n_i_t_n_data3
-// i_t_n_data4 i_t_n_i_t_n_data4
-// i_t_n_data5 i_t_n_i_t_n_data5
-// i_t_n_data8 i_t_n_i_t_n_data8
-// i_t_n_data9 i_t_n_i_t_n_data9
-
-// i_t_n_ary_data2 i_t_n_i_t_n_ary_data2
-// i_t_n_ary_data3 i_t_n_i_t_n_ary_data3
-// i_t_n_ary_data6 i_t_n_i_t_n_ary_data6
-// i_t_n_ary_data7 i_t_n_i_t_n_ary_data7
-
-// i_t_n_data5_result i_t_n_data5_result
-// i_t_n_data9_result i_t_n_data9_result
-
 i_t_n_data2:'',
-i_t_n_ary_data2: [],
+ary_i_t_n_data2: [],
 i_t_n_data3:'',
-i_t_n_ary_data3: [],
+ary_i_t_n_data3: [],
 i_t_n_data4:[],
 i_t_n_data5:[],
 data6:[],
@@ -772,11 +754,8 @@ all_save: [],
 
 test_mode: false,
 
-i_t_n_data5_result: true,
-i_t_n_data9_result: false,
-
-
-
+i_t_n_i_t_n_data5_result: true,
+i_t_n_i_t_n_data9_result: false,
 
 column_1_none: false,
 column_2_none: false,
@@ -805,8 +784,8 @@ search_tag: '',
 web_data: {},
 truncate_text_length: 100,
 untruncate_text_array: [],
-// endpoint: 'http://localhost:8000',
-endpoint: 'https://cotton-concrete-catsup.glitch.me',
+endpoint: 'http://localhost:8000',
+// endpoint: 'https://cotton-concrete-catsup.glitch.me',
 only_q_a_list: [],
 only_f_i_b_list: [],
 only_i_t_n_list: [],
@@ -829,13 +808,13 @@ advanced_visible: 'not_advanced',
 watch: {
 i_t_n_data2: {
     handler() {
-        this.i_t_n_init();
+        this.init();
     },
     deep: true
 },
 i_t_n_data3: {
     handler() {
-        this.i_t_n_init();
+        this.init();
     },
     deep: true
 },
@@ -886,7 +865,7 @@ this.fetch_read_all();
 this.fetch_get_tags_for_autocomplete();
 
 this.save_data_load();
-this.i_t_n_init();
+this.init();
 // this.for_debug();
 this.test_mode === true ? (this.sample1(), sleep(100, this.test_exe)) : null;
 },
@@ -901,7 +880,7 @@ test_exe(){
     // 偶数か奇数かを判定して偶数ならtrue、奇数ならfalseを返す1行の関数
     const is_even = num => num % 2 === 0;
     this.i_t_n_data5 = this.i_t_n_data5.map((V,IDX)=>[V[0], V[1], is_even(IDX)])
-    this.i_t_n_filter_image_and_name();
+    this.filter_image_and_name();
 },
 
 
@@ -990,8 +969,8 @@ for_debug(){
     i_t_n_data2 = this.to_ary(this.i_t_n_data2);
     i_t_n_data3 = this.to_ary(this.i_t_n_data3);
     i_t_n_data4 = this.to_ary(this.i_t_n_data4);
-    i_t_n_ary_data2 = this.to_ary(this.i_t_n_ary_data2);
-    i_t_n_ary_data3 = this.to_ary(this.i_t_n_ary_data3);
+    ary_i_t_n_data2 = this.to_ary(this.ary_i_t_n_data2);
+    ary_i_t_n_data3 = this.to_ary(this.ary_i_t_n_data3);
     i_t_n_data5 = this.to_ary(this.i_t_n_data5);
     data6 = this.to_ary(this.data6);
     data7 = this.to_ary(this.data7);
@@ -1025,8 +1004,8 @@ to_ary(it){
 // i_t_n_ary_data6 i_t_n_i_t_n_ary_data6
 // i_t_n_ary_data7 i_t_n_i_t_n_ary_data7
 
-// i_t_n_data5_result i_t_n_data5_result
-// i_t_n_data9_result i_t_n_data9_result
+// i_t_n_data5_result i_t_n_i_t_n_data5_result
+// i_t_n_data9_result i_t_n_i_t_n_data9_result
 
 // i_t_n_data2_data3_string_to_array i_t_n_i_t_n_data2_i_t_n_data3_string_to_array
 // i_t_n_data6_data7_string_to_array i_t_n_i_t_n_data6_data7_string_to_array
@@ -1035,8 +1014,6 @@ to_ary(it){
 // i_t_n_swap_data6_data7 i_t_n_i_t_n_swap_data6_data7
 // i_t_n_make_image_to_name_Q_A_array i_t_n_i_t_n_make_image_to_name_Q_A_array
 // i_t_n_erase i_t_n_i_t_n_erase
-// check_image_to_name
-// check_name_to_image
 
 
 i_t_n_erase(item, ary){
@@ -1050,28 +1027,28 @@ i_t_n_take2(ary){
     return i_t_n_take2(ary);
 },
 i_t_n_data2_data3_string_to_array(){
-    this.i_t_n_ary_data2 = this.i_t_n_data2.split("\n")
-    this.i_t_n_ary_data3 = this.i_t_n_data3.split("\n")
+    this.ary_i_t_n_data2 = this.i_t_n_data2.split("\n")
+    this.ary_i_t_n_data3 = this.i_t_n_data3.split("\n")
 },
 i_t_n_make_image_to_name_Q_A_array(){
-    this.i_t_n_data4 = this.to_ary(this.i_t_n_ary_data3).map(V=> [V, this.i_t_n_take2(shuffle(this.i_t_n_erase(V, this.i_t_n_ary_data3)))]
+    this.i_t_n_data4 = this.to_ary(this.ary_i_t_n_data3).map(V=> [V, this.i_t_n_take2(shuffle(this.i_t_n_erase(V, this.ary_i_t_n_data3)))]
     )
     this.i_t_n_data4 = this.to_ary(this.i_t_n_data4).map(V=> [V[0], shuffle(R.flatten(V))]
     );
-    this.i_t_n_data5 = R.zip(this.i_t_n_ary_data2, this.i_t_n_data4);
+    this.i_t_n_data5 = R.zip(this.ary_i_t_n_data2, this.i_t_n_data4);
     // i_t_n_data5のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
     this.i_t_n_data5 = R.map(R.insert(2, false), this.i_t_n_data5);
     // this.for_debug();
 },
-i_t_n_init(){
+init(){
     this.i_t_n_data2_data3_string_to_array();
     this.i_t_n_make_image_to_name_Q_A_array();
 },
-i_t_n_check_image_to_name(correct_URL, URL, IDX){
+check_image_to_name(correct_URL, URL, IDX){
     this.i_t_n_data5[IDX][2] = correct_URL === URL ? true : false;
     // this.for_debug();
 },
-i_t_n_check_name_to_image(correct_URL, URL, IDX){
+check_name_to_image(correct_URL, URL, IDX){
     this.i_t_n_data9[IDX][2] = correct_URL === URL ? true : false;
 },
 i_t_n_data6_data7_string_to_array(){
@@ -1083,11 +1060,11 @@ i_t_n_swap_data6_data7(){
     [this.i_t_n_ary_data6, this.i_t_n_ary_data7] = [this.i_t_n_ary_data7, this.i_t_n_ary_data6];
 },
 i_t_n_change_result(){
-    // i_t_n_data5_resultとi_t_n_data9_resultのtrue/falseの切り替え
-    this.i_t_n_data5_result = !this.i_t_n_data5_result;
-    this.i_t_n_data9_result = !this.i_t_n_data9_result;
+    // i_t_n_i_t_n_data5_resultとi_t_n_i_t_n_data9_resultのtrue/falseの切り替え
+    this.i_t_n_i_t_n_data5_result = !this.i_t_n_i_t_n_data5_result;
+    this.i_t_n_i_t_n_data9_result = !this.i_t_n_i_t_n_data9_result;
 },
-i_t_n_swap_q_a(){
+swap_q_a(){
     this.i_t_n_data6_data7_string_to_array();
     this.i_t_n_swap_data6_data7();
     this.i_t_n_change_result();
@@ -1100,7 +1077,7 @@ i_t_n_swap_q_a(){
     this.i_t_n_data9 = R.map(R.insert(2, false), this.i_t_n_data9);
     this.for_debug();
 },
-i_t_n_filter_image_and_name(){
+filter_image_and_name(){
     if(this.i_t_n_data5.map(V=>V[2]).every(V=>V === true)){
         this.i_t_n_data5 = [];
         alert("すべての問題が正解しました。🦖\nすべての問題が正解しました。🦕");
@@ -1113,7 +1090,7 @@ i_t_n_filter_image_and_name(){
     this.data10.push([res2[0].join("\n"), res2[1].join("\n")]);
     this.for_debug();
 },
-i_t_n_true_or_false_to_emoji(bool){
+true_or_false_to_emoji(bool){
     // trueだったら⭕️、falseだったら❎を返す関数
     return bool ? "⭕️" : "❎";
 },
@@ -1602,7 +1579,7 @@ scrollToTarget(For='local') {
     For ==='local' ? this.$refs.save_data_set_list_parent1.style.display = 'none' : null;
     For ==='web' ? this.$refs.save_data_set_list_parent2.style.display = 'none' : null;
 },
-advanced_visible() {
+advanced_visible_init() {
     this.advanced_visible === 'advanced' ? this.css_var_set('--advanced-display-var', 'inline-block') : this.css_var_set('--advanced-display-var', 'none');
 },
 // for_online_function
@@ -1610,6 +1587,28 @@ advanced_visible() {
 },
 }).mount('.app');
 
+
+// 正規表現だけでURLかどうかを判定する関数
+function isURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    if(!pattern.test(str)) {
+    // alert("URLではありません");
+    return false;
+    } else {
+    return true;
+    }
+};
+
+// 1秒後に任意の関数を実行する関数、第一引数にmsを入れる、第二引数に関数を入れる
+// imgタグのsrcにURLを入れるときに使う
+function sleep(ms, fn) {
+    return new Promise(resolve => setTimeout(resolve, ms)).then(fn);
+};
 
 
 

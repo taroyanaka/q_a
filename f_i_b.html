@@ -613,6 +613,24 @@ let data_X_5 = null;
 const app = Vue.createApp({
 data() {
 return {
+
+// f_i_b_data1
+// f_i_b_data2
+// f_i_b_data3
+// f_i_b_data4
+// f_i_b_data5
+// f_i_b_data6
+// f_i_b_data7
+// f_i_b_data8
+// f_i_b_data9
+// f_i_b_data_X_1
+// f_i_b_data_X_2
+// f_i_b_data_X_3
+// f_i_b_data_X_4
+
+// f_i_b_test_mode f_i_b_f_i_b_test_mode
+
+
 f_i_b_all_save: [],
 f_i_b_data1: '',
 f_i_b_data2: '',
@@ -682,19 +700,17 @@ advanced_visible: 'not_advanced',
 watch: {
 f_i_b_data1: {
     handler() {
-        this.data3_setup();
-        this.data4_5_setup();
-        this.exe();
-        this.data1 = this.f_i_b_data1;
+        this.f_i_b_data3_setup();
+        this.f_i_b_data4_5_setup();
+        this.f_i_b_exe();
     },
     deep: true
 },
 f_i_b_data2: {
     handler() {
-        this.data3_setup();
-        this.data4_5_setup();
-        this.exe();
-        this.data2 = this.f_i_b_data2;
+        this.f_i_b_data3_setup();
+        this.f_i_b_data4_5_setup();
+        this.f_i_b_exe();
     },
     deep: true
 },
@@ -746,9 +762,9 @@ mounted() {
     this.fetch_get_tags_for_autocomplete();
 
     this.save_data_load();
-        this.data3_setup();
-        this.data4_5_setup();
-        this.exe();
+    this.f_i_b_data3_setup();
+    this.f_i_b_data4_5_setup();
+    this.f_i_b_exe();
 
     this.f_i_b_test_mode === true ? this.f_i_b_test_exe() : null;
 },
@@ -849,6 +865,9 @@ this.blank_check("#textarea-column-1-2");
 this.check_if_same_length();
 },
 
+css_var_set(VAR_NAME, VAR){
+document.documentElement.style.setProperty(VAR_NAME, VAR);
+},
 column_1_none_fn(){
 this.column_1_none === true ? (this.css_var_set('--css-var-column-1-none', '1fr'), this.column_1_none = false) : (this.css_var_set('--css-var-column-1-none', '0px'), this.column_1_none = true);
 },
@@ -902,6 +921,9 @@ OR FOO2BARQUXQUX42BA😄ABC😄Z3ISFOO2BAR2BAZ3
 
 
 
+to_ary(it){
+return JSON.parse(JSON.stringify(it));
+},
 
 
 
@@ -930,22 +952,8 @@ OR FOO2BARQUXQUX42BA😄ABC😄Z3ISFOO2BAR2BAZ3
 // this.data10 = [];
 // this.data10_f_i_b = [];
 
-// f_i_b_data1
-// f_i_b_data2
-// f_i_b_data3
-// f_i_b_data4
-// f_i_b_data5
-// f_i_b_data6
-// f_i_b_data7
-// f_i_b_data8
-// f_i_b_data9
-// f_i_b_data_X_1
-// f_i_b_data_X_2
-// f_i_b_data_X_3
-// f_i_b_data_X_4
-
-// f_i_b_test_mode f_i_b_f_i_b_test_mode
-
+// data3_setup f_i_b_data3_setup
+// data4_5_setup f_i_b_data4_5_setup
 // f_i_b_composer
 // f_i_b_filter_and_DESC_sort_and_remove_short_str f_i_b_f_i_b_filter_and_DESC_sort_and_remove_short_str
 // f_i_b_fn2_1 f_i_b_f_i_b_fn2_1
@@ -953,14 +961,18 @@ OR FOO2BARQUXQUX42BA😄ABC😄Z3ISFOO2BAR2BAZ3
 // f_i_b_fn4_4 f_i_b_f_i_b_fn4_4
 // f_i_b_fn4_3 f_i_b_f_i_b_fn4_3
 // f_i_b_fn4( f_i_b_f_i_b_fn4()
+// exe f_i_b_exe
+// check_option f_i_b_check_option
 
 // f_i_b_for_debug f_i_b_f_i_b_for_debug
 // f_i_b_get_shuffled_array f_i_b_f_i_b_get_shuffled_array
 // f_i_b_remove_empty_str_from_ary f_i_b_f_i_b_remove_empty_str_from_ary
 // f_i_b_remove_index_0 f_i_b_f_i_b_remove_index_0
 // f_i_b_test_exe f_i_b_f_i_b_test_exe
+// fn5 f_i_b_fn5
 
-data3_setup(){
+
+f_i_b_data3_setup(){
     this.f_i_b_data3 = this.f_i_b_data1.split("\n");
 },
 f_i_b_filter_and_DESC_sort_and_remove_short_str(){
@@ -971,7 +983,7 @@ f_i_b_filter_and_DESC_sort_and_remove_short_str(){
     this.f_i_b_data4 = remove_short_str(
         this.f_i_b_data3.filter(v => this.f_i_b_data2.includes(v)).sort((a, b) => b.length - a.length));
 },
-data4_5_setup(){
+f_i_b_data4_5_setup(){
     this.f_i_b_filter_and_DESC_sort_and_remove_short_str();
     this.f_i_b_data5 = this.f_i_b_data4.join("\n");
 },
@@ -1033,18 +1045,14 @@ f_i_b_remove_empty_str_from_ary() {
     // 配列から''を除外する
     this.f_i_b_data9 = this.f_i_b_data6.filter(V => V !== '');
 },
-css_var_set(VAR_NAME, VAR){
-document.documentElement.style.setProperty(VAR_NAME, VAR);
-},
+// css_var_set(VAR_NAME, VAR){
+// document.documentElement.style.setProperty(VAR_NAME, VAR);
+// },
 f_i_b_test_exe(){
 this.css_var_set('--css-var-test-inline', 'inlilne');
 this.css_var_set('--css-var-color-1', 'LightGray');
 this.css_var_set('--css-var-color-2', 'SlateGray');
 this.css_var_set('--css-var-color-3', 'DimGray');
-},
-
-to_ary(it){
-return JSON.parse(JSON.stringify(it));
 },
 f_i_b_for_debug(){
 data1 = this.to_ary(this.f_i_b_data1);
@@ -1078,17 +1086,15 @@ console.log(
 'f_i_b_data_X_5' , data_X_5, '\n',
 );
 },
-exe(){
+f_i_b_exe(){
     this.f_i_b_composer();
     this.f_i_b_fn3();
     this.f_i_b_fn4();
     this.f_i_b_remove_empty_str_from_ary();
-    this.data1 = this.f_i_b_data1;
-    this.data2 = this.f_i_b_data2;
     this.f_i_b_test_mode === true ? this.f_i_b_test_exe() : null;
     this.f_i_b_test_mode === true ? this.f_i_b_for_debug() : null;
 },
-check_option(INDEX){
+f_i_b_check_option(INDEX){
     // this.f_i_b_data9からarrayの要素だけを取り出す一行コード
     this.f_i_b_data9[INDEX][2] =
         this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value ? true : false;
@@ -1121,7 +1127,7 @@ f_i_b_fn4_3(){
 f_i_b_fn4_4(){
     return this.f_i_b_data9.filter(V=>Array.isArray(V)).every(V=>V[2]===true);
 },
-fn5(){
+f_i_b_fn5(){
 if(this.f_i_b_fn4_4()){
     window.alert("正解です！");
     return;
@@ -1457,7 +1463,7 @@ scrollToTarget(For='local') {
     For ==='local' ? this.$refs.save_data_set_list_parent1.style.display = 'none' : null;
     For ==='web' ? this.$refs.save_data_set_list_parent2.style.display = 'none' : null;
 },
-advanced_visible_init() {
+advanced_visible_fn() {
     this.advanced_visible === 'advanced' ? this.css_var_set('--advanced-display-var', 'inline-block') : this.css_var_set('--advanced-display-var', 'none');
 },
 // for_online_function

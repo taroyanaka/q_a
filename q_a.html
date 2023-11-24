@@ -532,7 +532,6 @@ position: relative;
 
 
 <div v-if="data_type=== 'f_i_b'">
-    <!-- f_i_b_data5とf_i_b_data9で切り替わる -->
     <span v-for="(DATAVAL, DATAIDX) in f_i_b_data9" class="simple_mode2 minimum">
         <span @click="" v-if="typeof DATAVAL === 'string'" ref="core" class="simple_mode2">{{ DATAVAL }}</span>
         <template v-if="typeof DATAVAL === 'object'" class="simple_mode2">
@@ -545,6 +544,44 @@ position: relative;
     </span>
     <button @click="f_i_b_fn5" class="check_button">🎮</button>
 </div>
+
+
+            <div v-if="data_type=== 'i_t_n'">
+                <ul class="centering simple_mode2 minimum">
+                    <!-- <button @click="change_only_one_q_a_mode" class="check_button">📏</button> -->
+                    <!-- <button @click="change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button> -->
+
+                    <!-- <li v-for="(item, IDX) in data5" :key="item" class="result_color simple_mode2" :style="{display: data5_result ? 'block' : 'none'}"> -->
+                    <li v-for="(item, IDX) in i_t_n_data5" :key="item" class="result_color simple_mode2" :style="{display: i_t_n_data5_result ? 'block' : 'none'}">
+                        <div class="simple_mode2" v-if="only_one_q_a_mode ? IDX === current_index : true">
+                            <!-- i_t_n_true_or_false_to_emoji -->
+                        <!-- <span class="OK_or_NG simple_mode2">{{ true_or_false_to_emoji(item[2]) }}</span> -->
+                        <span class="OK_or_NG simple_mode2">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>
+                        <span class="answer simple_mode2">{{ item[0] }}</span>
+                        <span class="any simple_mode2">
+                            <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="i_t_n_check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
+                            <!-- <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" > -->
+                        </span>
+                        </div>
+                    </li>
+
+                    <!-- <button @click="change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button> -->
+                    <!-- <button @click="change_only_one_q_a_mode" class="check_button">📏</button> -->
+
+                    <!-- <div v-for="(item, IDX) in data9" :key="item" class="result_color result_color2" :style="{display: data9_result ? 'block' : 'none'}"> -->
+                    <div v-for="(item, IDX) in i_t_n_data9" :key="item" class="result_color result_color2" :style="{display: i_t_n_data9_result ? 'block' : 'none'}">
+                        <!-- <span class="OK_or_NG">{{ true_or_false_to_emoji(item[2]) }}</span> -->
+                        <span class="OK_or_NG">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>
+                        <img :src="item[0]" :alt="item[0]" class="png_image png_image_back" >
+                        <span v-for="item2 in item[1][1]">
+                            <!-- <button @click="check_name_to_image(item[1][0], item2, IDX)">{{ item2 }}</button> -->
+                            <button @click="i_t_n_check_name_to_image(item[1][0], item2, IDX)">{{ item2 }}</button>
+                        </span>
+                    </div>
+                    <!-- <button @click="filter_image_and_name" class="check_button">🎮</button> -->
+                    <button @click="i_t_n_filter_image_and_name" class="check_button">🎮</button>
+                </ul>
+            </div>
 
 
 
@@ -887,7 +924,8 @@ i_t_n_make_image_to_name_Q_A_array(){
     // this.for_debug();
 },
 i_t_n_init(){
-    console.log(this.i_t_n_data5);
+    this.data_a_b_converter_for('i_t_n');
+    // console.log(this.i_t_n_data5);
     this.i_t_n_data2_data3_string_to_array();
     this.i_t_n_make_image_to_name_Q_A_array();
 },
@@ -1859,6 +1897,10 @@ data_a_b_converter_for(Service) {
         // this.i_t_n_data3 = this.data_b;
         this.f_i_b_data1 = this.data_a;
         this.f_i_b_data2 = this.data_b;
+    };
+    if(Service === 'i_t_n'){
+        this.i_t_n_data2 = this.data_a;
+        this.i_t_n_data3 = this.data_b;
     };
 
 },

@@ -530,7 +530,9 @@ position: relative;
     <button @click="q_a_fn4" class="check_button">🎮</button>
 </div>
 
+
 <div v-if="data_type=== 'f_i_b'">
+    <!-- f_i_b_data5とf_i_b_data9で切り替わる -->
     <span v-for="(DATAVAL, DATAIDX) in f_i_b_data9" class="simple_mode2 minimum">
         <span @click="" v-if="typeof DATAVAL === 'string'" ref="core" class="simple_mode2">{{ DATAVAL }}</span>
         <template v-if="typeof DATAVAL === 'object'" class="simple_mode2">
@@ -543,6 +545,10 @@ position: relative;
     </span>
     <button @click="f_i_b_fn5" class="check_button">🎮</button>
 </div>
+
+
+
+
 
 <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
 
@@ -604,6 +610,7 @@ f_i_b_data6: [],
 f_i_b_data7: [],
 f_i_b_data8: [],
 f_i_b_data9: [],
+
 // Xはリファクタリング時に他のナンバリングの変数と被らないようにするためのもの
 f_i_b_data_X_1: [],
 f_i_b_data_X_2: [],
@@ -801,6 +808,7 @@ this.test_mode === false ? this.test_exe() : null;
 
 if(this.ABCDEF === "f_i_b"){
     // this.f_i_b_save_data_load();
+    this.data_a_b_converter_for('f_i_b');
     this.f_i_b_data3_setup();
     this.f_i_b_data4_5_setup();
     this.f_i_b_exe();
@@ -879,6 +887,7 @@ i_t_n_make_image_to_name_Q_A_array(){
     // this.for_debug();
 },
 i_t_n_init(){
+    console.log(this.i_t_n_data5);
     this.i_t_n_data2_data3_string_to_array();
     this.i_t_n_make_image_to_name_Q_A_array();
 },
@@ -1081,10 +1090,10 @@ f_i_b_exe(){
     this.f_i_b_fn3();
     this.f_i_b_fn4();
     this.f_i_b_remove_empty_str_from_ary();
-    this.data1 = this.f_i_b_data1;
-    this.data2 = this.f_i_b_data2;
-    this.f_i_b_test_mode === true ? this.f_i_b_test_exe() : null;
-    this.f_i_b_test_mode === true ? this.f_i_b_for_debug() : null;
+    // this.data1 = this.f_i_b_data1;
+    // this.data2 = this.f_i_b_data2;
+    // this.f_i_b_test_mode === true ? this.f_i_b_test_exe() : null;
+    // this.f_i_b_test_mode === true ? this.f_i_b_for_debug() : null;
 },
 f_i_b_check_option(INDEX){
     // this.f_i_b_data9からarrayの要素だけを取り出す一行コード
@@ -1843,6 +1852,15 @@ return_current_temporary_list() {
     }
     // this.temporary_list[Index_of_list];
     return this.temporary_list[Index_of_list];
+},
+data_a_b_converter_for(Service) {
+    if(Service === 'f_i_b'){
+        // this.i_t_n_data2 = this.data_a;
+        // this.i_t_n_data3 = this.data_b;
+        this.f_i_b_data1 = this.data_a;
+        this.f_i_b_data2 = this.data_b;
+    };
+
 },
 
 // コア部分の関数と変数をまとめる

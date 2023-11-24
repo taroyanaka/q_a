@@ -381,7 +381,8 @@ position: relative;
 
 <button @click="fn19_1" class="save_opener">🌐</button>
 <div style='display: none' ref="save_data_set_list_parent2" class="vw_full">
-    <div v-if="temporary_list[0]" class="simple_mode1">
+    <!-- <div v-if="temporary_list[0]" class="simple_mode1"> -->
+    <div v-if="return_current_temporary_list()" class="simple_mode1">
         <div class="additional_parent">
             <div class="additional_child">👥 <button v-if="show_user" @click="show_all_user">{{ show_user }}</button></div>
             <div class="additional_child">🏷️ <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button></div>
@@ -396,7 +397,7 @@ position: relative;
         
         <div class="flex_child q_a_data" ref="flex_child_display_q_a_data">
         <ul class="simple_mode1">
-        <li v-for="(DATA_VAL, DATA_IDX) in temporary_list[0]" class="block_of_one simple_mode1">
+        <li v-for="(DATA_VAL, DATA_IDX) in return_current_temporary_list()" class="block_of_one simple_mode1">
 
             <!-- <div class="data_type" v-if="DATA_VAL['data_type']" @click="go_to_any_service_page(DATA_VAL['data_type'])" >{{ DATA_VAL['data_type'] }}</div> -->
             <div class="data_type" v-if="DATA_VAL['data_type']">{{ DATA_VAL['data_type'] }}</div>
@@ -431,8 +432,8 @@ position: relative;
                 <ul class="dialog_ul">
                 <li class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
                     <span class="synapse" @click="synapse(DATA_VAL['data_type'], Other_Of_One,
-                        data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['online_data_A'],
-                        data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['online_data_B'],
+                        data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data1'],
+                        data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data2'],
                     )" :style="{ display: synapse_visible ? 'block' : 'none' }">{{ choice_emoji(Other_Of_One) }}</span>
                 </li>
                 </ul>
@@ -444,8 +445,8 @@ position: relative;
                 <div class="id">{{ DATA_VAL['id'] }}</div>
             </div>
             <div class="clickable_for_short_or_long simple_mode1 " @click="short_or_long( DATA_VAL['id'] )" ref="exception">
-                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['online_data_A'], DATA_VAL['id'] ) }}</div>
-                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['online_data_B'], DATA_VAL['id'] ) }}</div>
+                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
             </div>
             <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
                 <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
@@ -495,6 +496,11 @@ position: relative;
     <button @click="fn21(1)" class="font_sizing">◉</button>
     <button @click="fn21(-1)" class="font_sizing">⦿</button>
     <button @click="fn21" class="font_sizing">◎</button>
+
+    <button @click="change_to_q_a" class="font_sizing">change_to_q_a</button>
+    <button @click="change_to_f_i_b" class="font_sizing">change_to_f_i_b</button>
+    <button @click="change_to_i_t_n" class="font_sizing">change_to_i_t_n</button>
+    
     </div>
 
     <div class="column-2 simple_mode2" :class="{'column-2-none': column_2_none}">
@@ -510,6 +516,9 @@ position: relative;
     
     <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
     <button @click="q_a_change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
+
+    <!-- v-if -->
+<div v-if="data_type=== 'q_a'">
     <template v-for="(DATAVAL, DATAIDX) in q_a_data4" class="simple_mode2">
     <div class="q_and_a simple_mode2 minimum" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
         <span class="text_right simple_mode2" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span>
@@ -519,9 +528,25 @@ position: relative;
     </template>
     <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
     <button @click="q_a_fn4" class="check_button">🎮</button>
-    <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
-    
-    </div>
+</div>
+
+<div v-if="data_type=== 'f_i_b'">
+    <span v-for="(DATAVAL, DATAIDX) in f_i_b_data9" class="simple_mode2 minimum">
+        <span @click="" v-if="typeof DATAVAL === 'string'" ref="core" class="simple_mode2">{{ DATAVAL }}</span>
+        <template v-if="typeof DATAVAL === 'object'" class="simple_mode2">
+        <select name="" id="A" @change="f_i_b_check_option(DATAIDX)" style="background-color: ''" ref="core" class="simple_mode2">
+            <option v-for="(FOO, BAR) in DATAVAL[1]" :value="FOO" class="simple_mode2">
+                {{ FOO }}
+            </option>
+        </select>
+        </template>
+    </span>
+    <button @click="f_i_b_fn5" class="check_button">🎮</button>
+</div>
+
+<button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
+
+</div>
 
 
     <div class="column-3" :class="{'column-3-none': column_3_none}">
@@ -1105,24 +1130,51 @@ if(this.f_i_b_fn4_4()){
 
 
 
-
+async throw_error_for_local_save_data() {
+    // this.data_typeが空か、
+    // DATA_TYPE_ARRAYに含まれていない場合は処理を中断する
+    if(this.data_type === '' || this.data_type === null || this.data_type === undefined
+        || !this.DATA_TYPE_ARRAY.includes(this.data_type)){
+            // エラーをreturnで返す
+            return (new Error('en: this.data_type is not correct, ja: this.data_typeが正しくありません'));
+    };
+},
 async save_data_to_all_save(){
-this.all_save.push(this.to_ary([this.data_a, this.data_b]));
-await localforage.setItem('f_c', JSON.stringify(this.all_save));
+    try {
+    await this.throw_error_for_local_save_data();
+    const item_key = this.data_type;
+    this.all_save.push(this.to_ary([this.data_a, this.data_b]));
+    await localforage.setItem(item_key, JSON.stringify(this.all_save));
+    } catch (error) {
+        console.log(error);
+    };
 },
 async save_data_load() {
-this.all_save = JSON.parse(await localforage.getItem('f_c')) || [];
-},
-save_data_set(INDEX){
-this.scrollToTarget('local');
-this.data_a = this.all_save[INDEX][0];
-this.data_b = this.all_save[INDEX][1];
+    try {
+    await this.throw_error_for_local_save_data();
+    const item_key = this.data_type;
+    this.all_save = JSON.parse(await localforage.getItem(item_key)) || [];
+    } catch (error) {
+        console.log(error);
+    }
 },
 async save_data_delete(INDEX){
-if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
-    this.all_save.splice(INDEX, 1);
-    await localforage.setItem('f_c', JSON.stringify(this.all_save));
-};
+    try {
+    await this.throw_error_for_local_save_data();
+    const item_key = this.data_type;
+    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
+        this.all_save.splice(INDEX, 1);
+        await localforage.setItem(item_key, JSON.stringify(this.all_save));
+    };
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+save_data_set(INDEX){
+    this.scrollToTarget('local');
+    this.data_a = this.all_save[INDEX][0];
+    this.data_b = this.all_save[INDEX][1];
 },
 
 
@@ -1301,17 +1353,23 @@ test_online_data_A(){
 
 
 // for_online_function
-only_service_data(){
-    this.temporary_list[0] = this.web_data.message.filter(V=> V.data_type === this.data_type);
-},
+// only_service_data(){
+//     this.temporary_list[0] = this.web_data.message.filter(V=> V.data_type === this.data_type);
+// },
 data_json_parse_online_data_A_online_data_B(JSON_STR_online_data_A_online_data_B){
     return JSON.parse(JSON_STR_online_data_A_online_data_B);
 },
 download_data(Data_Id){
-    const pre_online_data_A_2 = this.temporary_list[0].filter(V=>V.data_type === this.data_type).filter(V=> V.id === Data_Id )[0];
-    const pre_online_data_A = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['online_data_A'];
-    const pre_online_data_B = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['online_data_B'];
+    console.log(Data_Id);
+    // const pre_online_data_A_2 = this.temporary_list[0].filter(V=>V.data_type === this.data_type).filter(V=> V.id === Data_Id )[0];
+    const pre_online_data_A_2 = this.return_current_temporary_list().filter(V=>V.data_type === this.data_type).filter(V=> V.id === Data_Id )[0];
+    // console.log(pre_online_data_A_2);
+    const pre_online_data_A = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['data1'];
+    const pre_online_data_B = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['data2'];
+    // const pre_online_data_A = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['online_data_A'];
+    // const pre_online_data_B = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['online_data_B'];
     // this.data_a = pre_online_data_A;
+    // console.log(pre_online_data_A);
     this.online_data_A_connector(pre_online_data_A);
     // this.data_b = pre_online_data_B;
     this.online_data_B_connector(pre_online_data_B);
@@ -1486,7 +1544,7 @@ try {
         }
     };
     error_check_online_data_A_online_data_B(this.online_data_A_connector(), this.online_data_B_connector()) === 'OK' ? null : (()=>{throw new Error(error_check_online_data_A_online_data_B(this.online_data_A, this.online_data_B))})();
-    const data_convert_jsonstr = (online_data_A, online_data_B) => JSON.stringify({'online_data_A': online_data_A, 'online_data_B': online_data_B});
+    const data_convert_jsonstr = (online_data_A, online_data_B) => JSON.stringify({'data1': online_data_A, 'data2': online_data_B});
     const data_json_str = data_convert_jsonstr(this.online_data_A_connector(), this.online_data_B_connector());
     error_check_insert_data(this.data_type, data_json_str) === 'OK' ? null : (()=>{throw new Error(error_check_insert_data(this.data_type, data_json_str))})();
     const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
@@ -1753,11 +1811,43 @@ this.q_a_data5[INDEX] = null;
 // core of q_a
 
 
+
+change_to_q_a() {
+    this.data_type = 'q_a';
+},
+change_to_f_i_b() {
+    this.data_type = 'f_i_b';
+    console.log('f_i_b');
+},
+change_to_i_t_n() {
+    this.data_type = 'i_t_n';
+},
+return_current_temporary_list() {
+    let Index_of_list = 0;
+    // q_aは0
+    // f_i_bは1
+    // i_t_nは2
+    // this.data_typeがq_aの時は0
+    // this.data_typeがf_i_bの時は1
+    // this.data_typeがi_t_nの時は2
+    switch (this.data_type) {
+        case "q_a":
+            Index_of_list = 0;
+            break;
+        case "f_i_b":
+            Index_of_list = 1;
+            break;
+        case "i_t_n":
+            Index_of_list = 2;
+            break;
+    }
+    // this.temporary_list[Index_of_list];
+    return this.temporary_list[Index_of_list];
+},
+
 // コア部分の関数と変数をまとめる
     // それぞれのプロダクトのコア部分のアウトプットはfn9とonline_data_A0が接続部分
     // そのため、fn9とonline_data_A0をそれぞれのプロダクト用のconverter関数で接続する
-
-    // all_save周り移行
 
 // コア部分以外の命名と処理内容を共通化する
 // <style>の中身をまとめる

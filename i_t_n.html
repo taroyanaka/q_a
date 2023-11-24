@@ -437,7 +437,7 @@ display: inline;
 <div class="optional_function">
     <button @click="reverse_q_a">🔃</button>
     <button @click="shuffle_q_a">🌪️</button>
-    <button @click="i_t_n_swap_q_a">🔁</button>
+    <button @click="swap_q_a">🔁</button>
     <button @click="save_data_to_all_save">🗂️</button>
 </div>
 
@@ -470,8 +470,8 @@ display: inline;
         <ul>
         <li v-for="(DATA_VAL, DATA_IDX) in i_t_n_web_data">
             <button @click="short_or_long( DATA_VAL['id'] )">short_or_long</button>
-            <div>data_1: {{ truncateText( data_json_parse_data1_i_t_n_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
-            <div>data_2: {{ truncateText( data_json_parse_data1_i_t_n_data2(DATA_VAL['data_json_str'])['i_t_n_data2'], DATA_VAL['id'] ) }}</div>
+            <div>data_1: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+            <div>data_2: {{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
             <button @click="download_data(DATA_VAL['id'])">download_data</button>
             <div>id: {{ DATA_VAL['id'] }}</div>
             <div>username: <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button></div>
@@ -507,8 +507,8 @@ display: inline;
 </div>
 
 <div class="textarea-column-1">
-    <textarea v-model="i_t_n_data2" rows="50"></textarea>
-    <textarea v-model="i_t_n_data3" rows="50"></textarea>
+    <textarea v-model="data2" rows="50"></textarea>
+    <textarea v-model="data3" rows="50"></textarea>
 </div>
 <div>
     <button @click="fetch_insert_link">fetch_insert_link</button>
@@ -571,8 +571,8 @@ display: inline;
                 <ul class="dialog_ul">
                 <li class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
                     <span class="synapse" @click="synapse(DATA_VAL['data_type'], Other_Of_One,
-                        data_json_parse_data1_i_t_n_data2(DATA_VAL['data_json_str'])['data1'],
-                        data_json_parse_data1_i_t_n_data2(DATA_VAL['data_json_str'])['i_t_n_data2'],
+                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'],
+                        data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'],
                     )" :style="{ display: synapse_visible ? 'block' : 'none' }">{{ choice_emoji(Other_Of_One) }}</span>
                 </li>
                 </ul>
@@ -584,8 +584,8 @@ display: inline;
                 <div class="id">{{ DATA_VAL['id'] }}</div>
             </div>
             <div class="clickable_for_short_or_long simple_mode1 " @click="short_or_long( DATA_VAL['id'] )" ref="exception">
-                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_data1_i_t_n_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
-                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_data1_i_t_n_data2(DATA_VAL['data_json_str'])['i_t_n_data2'], DATA_VAL['id'] ) }}</div>
+                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_data1_data2(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
             </div>
             <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
                 <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
@@ -625,9 +625,9 @@ display: inline;
 <button @click="textarea_opener" class="textarea_opener">📝</button>
     <div class="textarea-column-1" id="target">
     <!-- <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data6" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea> -->
-    <!-- <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="i_t_n_data3" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea> -->
-    <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="f_i_b_data1" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
-    <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="f_i_b_i_t_n_data2" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
+    <!-- <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data3" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea> -->
+    <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data2" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
+    <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data3" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
     </div>
     <div>
         <button @click="fetch_insert_link" class="fetch_insert_link">📲🛫📲🚀📲</button>
@@ -647,13 +647,13 @@ display: inline;
     <button @click="change_only_one_q_a_mode" class="check_button">📏</button>
     <button @click="change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
 
-    <li v-for="(item, IDX) in i_t_n_data5" :key="item" class="result_color simple_mode2" :style="{display: i_t_n_data5_result ? 'block' : 'none'}">
+    <li v-for="(item, IDX) in data5" :key="item" class="result_color simple_mode2" :style="{display: data5_result ? 'block' : 'none'}">
         <div class="simple_mode2" v-if="only_one_q_a_mode ? IDX === current_index : true">
 
-        <span class="OK_or_NG simple_mode2">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>
+        <span class="OK_or_NG simple_mode2">{{ true_or_false_to_emoji(item[2]) }}</span>
         <span class="answer simple_mode2">{{ item[0] }}</span>
         <span class="any simple_mode2">
-            <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="i_t_n_check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
+            <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
         </span>
         </div>
     </li>
@@ -661,14 +661,14 @@ display: inline;
     <button @click="change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
     <button @click="change_only_one_q_a_mode" class="check_button">📏</button>
 
-    <div v-for="(item, IDX) in i_t_n_data9" :key="item" class="result_color result_color2" :style="{display: i_t_n_data9_result ? 'block' : 'none'}">
-        <span class="OK_or_NG">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>
+    <div v-for="(item, IDX) in data9" :key="item" class="result_color result_color2" :style="{display: data9_result ? 'block' : 'none'}">
+        <span class="OK_or_NG">{{ true_or_false_to_emoji(item[2]) }}</span>
         <img :src="item[0]" :alt="item[0]" class="png_image png_image_back" >
         <span v-for="item2 in item[1][1]">
-            <button @click="i_t_n_check_name_to_image(item[1][0], item2, IDX)">{{ item2 }}</button>
+            <button @click="check_name_to_image(item[1][0], item2, IDX)">{{ item2 }}</button>
         </span>
     </div>
-    <button @click="i_t_n_filter_image_and_name" class="check_button">🎮</button>
+    <button @click="filter_image_and_name" class="check_button">🎮</button>
 
 </ul>
 </div>
@@ -705,8 +705,8 @@ display: inline;
         <button @click="sample2">sample2</button>
     </div>
     <div class="textarea_parent">
-        <textarea v-model="i_t_n_data2"></textarea>
-        <textarea v-model="i_t_n_data3"></textarea>
+        <textarea v-model="data2"></textarea>
+        <textarea v-model="data3"></textarea>
     </div>
 </div> -->
 
@@ -715,16 +715,16 @@ display: inline;
 </body>
 <script>
 let data1 = null;
-let i_t_n_data2 = null;
-let i_t_n_data3 = null;
-let i_t_n_ary_data2 = null;
-let i_t_n_ary_data3 = null;
-let i_t_n_data4 = null;
-let i_t_n_data5 = null;
+let data2 = null;
+let data3 = null;
+let ary_data2 = null;
+let ary_data3 = null;
+let data4 = null;
+let data5 = null;
 let data6 = null;
 let data7 = null;
-let i_t_n_data8 = null;
-let i_t_n_data9 = null;
+let data8 = null;
+let data9 = null;
 let data10 = null;
 
 
@@ -738,45 +738,24 @@ data1:[
     // ['dog','https://taroyanaka.github.io/q_a/asset/dog.png'],
     // ['halr','https://taroyanaka.github.io/q_a/asset/halr.png'],
 ],
-// this.data10 = [];
-// this.data10_f_i_b = [];
-
-// i_t_n_data2 i_t_n_i_t_n_data2
-// i_t_n_data3 i_t_n_i_t_n_data3
-// i_t_n_data4 i_t_n_i_t_n_data4
-// i_t_n_data5 i_t_n_i_t_n_data5
-// i_t_n_data8 i_t_n_i_t_n_data8
-// i_t_n_data9 i_t_n_i_t_n_data9
-
-// i_t_n_ary_data2 i_t_n_i_t_n_ary_data2
-// i_t_n_ary_data3 i_t_n_i_t_n_ary_data3
-// i_t_n_ary_data6 i_t_n_i_t_n_ary_data6
-// i_t_n_ary_data7 i_t_n_i_t_n_ary_data7
-
-// i_t_n_data5_result i_t_n_data5_result
-// i_t_n_data9_result i_t_n_data9_result
-
-i_t_n_data2:'',
-i_t_n_ary_data2: [],
-i_t_n_data3:'',
-i_t_n_ary_data3: [],
-i_t_n_data4:[],
-i_t_n_data5:[],
+data2:'',
+ary_data2: [],
+data3:'',
+ary_data3: [],
+data4:[],
+data5:[],
 data6:[],
 data7:[],
-i_t_n_data8:[],
-i_t_n_data9:[],
+data8:[],
+data9:[],
 data10:[],
 
 all_save: [],
 
 test_mode: false,
 
-i_t_n_data5_result: true,
-i_t_n_data9_result: false,
-
-
-
+data5_result: true,
+data9_result: false,
 
 column_1_none: false,
 column_2_none: false,
@@ -827,15 +806,15 @@ advanced_visible: 'not_advanced',
 
 }},
 watch: {
-i_t_n_data2: {
+data2: {
     handler() {
-        this.i_t_n_init();
+        this.init();
     },
     deep: true
 },
-i_t_n_data3: {
+data3: {
     handler() {
-        this.i_t_n_init();
+        this.init();
     },
     deep: true
 },
@@ -886,7 +865,7 @@ this.fetch_read_all();
 this.fetch_get_tags_for_autocomplete();
 
 this.save_data_load();
-this.i_t_n_init();
+this.init();
 // this.for_debug();
 this.test_mode === true ? (this.sample1(), sleep(100, this.test_exe)) : null;
 },
@@ -900,26 +879,67 @@ fn1(){
 test_exe(){
     // 偶数か奇数かを判定して偶数ならtrue、奇数ならfalseを返す1行の関数
     const is_even = num => num % 2 === 0;
-    this.i_t_n_data5 = this.i_t_n_data5.map((V,IDX)=>[V[0], V[1], is_even(IDX)])
-    this.i_t_n_filter_image_and_name();
+    this.data5 = this.data5.map((V,IDX)=>[V[0], V[1], is_even(IDX)])
+    this.filter_image_and_name();
+},
+remove(item, ary){
+    // 指定した要素を配列から削除するramda.jsを使った1行の関数
+    const remove = R.curry((item, ary) => R.filter(R.complement(R.equals(item)), ary));
+    return remove(item, ary);
+},
+take2(ary){
+    // 指定した要素から先頭から2つの要素を取り出すramda.jsを使った1行の関数
+    const take2 = R.compose(R.take(2), R.drop(1));
+    return take2(ary);
+},
+data2_data3_string_to_array(){
+    this.ary_data2 = this.data2.split("\n")
+    this.ary_data3 = this.data3.split("\n")
+},
+make_image_to_name_Q_A_array(){
+    this.data4 = this.to_ary(this.ary_data3).map(V=> [V, this.take2(shuffle(this.remove(V, this.ary_data3)))]
+    )
+    this.data4 = this.to_ary(this.data4).map(V=> [V[0], shuffle(R.flatten(V))]
+    );
+    this.data5 = R.zip(this.ary_data2, this.data4);
+    // data5のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
+    this.data5 = R.map(R.insert(2, false), this.data5);
+    // this.for_debug();
+},
+init(){
+    this.data2_data3_string_to_array();
+    this.make_image_to_name_Q_A_array();
+},
+check_image_to_name(correct_URL, URL, IDX){
+    this.data5[IDX][2] = correct_URL === URL ? true : false;
+    // this.for_debug();
+},
+check_name_to_image(correct_URL, URL, IDX){
+    this.data9[IDX][2] = correct_URL === URL ? true : false;
+},
+
+to_ary(it){
+    return JSON.parse(JSON.stringify(it));
+},
+for_debug(){
+    data1 = this.to_ary(this.data1);
+    data2 = this.to_ary(this.data2);
+    data3 = this.to_ary(this.data3);
+    data4 = this.to_ary(this.data4);
+    ary_data2 = this.to_ary(this.ary_data2);
+    ary_data3 = this.to_ary(this.ary_data3);
+    data5 = this.to_ary(this.data5);
+    data6 = this.to_ary(this.data6);
+    data7 = this.to_ary(this.data7);
+    data8 = this.to_ary(this.data8);
+    data9 = this.to_ary(this.data9);
+    data10 = this.to_ary(this.data10);
+    console.log('data5', this.data5);
 },
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 sample1(){
-    this.i_t_n_data2 = `cat
+    this.data2 = `cat
 dog
 halr
 grf
@@ -928,7 +948,7 @@ sushi
 cake
 pink_pixel
 paint`;
-    this.i_t_n_data3 = `https://taroyanaka.github.io/q_a/asset/cat.png
+    this.data3 = `https://taroyanaka.github.io/q_a/asset/cat.png
 https://taroyanaka.github.io/q_a/asset/dog.png
 https://taroyanaka.github.io/q_a/asset/halr.png
 https://taroyanaka.github.io/q_a/asset/grf.png
@@ -938,38 +958,54 @@ https://pbs.twimg.com/media/FpfRSXQacAARY-a?format=jpg
 https://pbs.twimg.com/media/FoaB5b9aUAAXgAU?format=jpg
 https://pbs.twimg.com/media/FjuxRy-agAAgAFJ?format=jpg`;
 },
-// i_t_n_data2とi_t_n_data3を逆ソートする関数
+// data2とdata3を逆ソートする関数
 reverse_q_a(){
-    this.i_t_n_data2 = this.i_t_n_data2.split("\n").reverse().join("\n");
-    this.i_t_n_data3 = this.i_t_n_data3.split("\n").reverse().join("\n");
+    this.data2 = this.data2.split("\n").reverse().join("\n");
+    this.data3 = this.data3.split("\n").reverse().join("\n");
 },
 shuffle_q_a(){
-    const ary1 = R.zip(this.i_t_n_data2.split("\n"), this.i_t_n_data3.split("\n"));
+    const ary1 = R.zip(this.data2.split("\n"), this.data3.split("\n"));
     const ary2 = shuffle(ary1);
-    [this.i_t_n_data2, this.i_t_n_data3] = R.pipe(R.transpose, R.map(R.join("\n")))(ary2);
+    [this.data2, this.data3] = R.pipe(R.transpose, R.map(R.join("\n")))(ary2);
 },
 
-
-
-
-
-
-
-
+data6_data7_string_to_array(){
+    this.ary_data6 = this.data2.split("\n")
+    this.ary_data7 = this.data3.split("\n")
+},
+// swap_:ary_data6とary_data7を入れ替える関数
+swap_data6_data7(){
+    [this.ary_data6, this.ary_data7] = [this.ary_data7, this.ary_data6];
+},
+// data5_resultとdata9_resultのtrue/falseの切り替え
+change_result(){
+    this.data5_result = !this.data5_result;
+    this.data9_result = !this.data9_result;
+},
+swap_q_a(){
+    this.data6_data7_string_to_array();
+    this.swap_data6_data7();
+    this.change_result();
+    this.data8 = this.to_ary(this.ary_data7).map(V=> [V, this.take2(shuffle(this.remove(V, this.ary_data7)))]
+    )
+    this.data8 = this.to_ary(this.data8).map(V=> [V[0], shuffle(R.flatten(V))]
+    );
+    this.data9 = R.zip(this.ary_data6, this.data8);
+    // data9のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
+    this.data9 = R.map(R.insert(2, false), this.data9);
+    this.for_debug();
+},
 
 async save_data_to_all_save(){
-    this.all_save.push(this.to_ary([this.i_t_n_data2, this.i_t_n_data3]));
+    this.all_save.push(this.to_ary([this.data2, this.data3]));
     await localforage.setItem('i_t_n', JSON.stringify(this.all_save));
 },
 async save_data_load() {
     this.all_save = JSON.parse(await localforage.getItem('i_t_n')) || [];
 },
 save_data_set(INDEX){
-    console.log("save_data_set");
-    this.i_t_n_data2 = this.all_save[INDEX][0];
-    this.data1_connector(this.i_t_n_data2);
-    this.i_t_n_data3 = this.all_save[INDEX][1];
-    this.i_t_n_data2_connector(this.i_t_n_data3);
+    this.data2 = this.all_save[INDEX][0];
+    this.data3 = this.all_save[INDEX][1];
 },
 async save_data_delete(INDEX){
     if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
@@ -980,158 +1016,23 @@ async save_data_delete(INDEX){
 
 
 
-
-
-
-
-
-for_debug(){
-    data1 = this.to_ary(this.data1);
-    i_t_n_data2 = this.to_ary(this.i_t_n_data2);
-    i_t_n_data3 = this.to_ary(this.i_t_n_data3);
-    i_t_n_data4 = this.to_ary(this.i_t_n_data4);
-    i_t_n_ary_data2 = this.to_ary(this.i_t_n_ary_data2);
-    i_t_n_ary_data3 = this.to_ary(this.i_t_n_ary_data3);
-    i_t_n_data5 = this.to_ary(this.i_t_n_data5);
-    data6 = this.to_ary(this.data6);
-    data7 = this.to_ary(this.data7);
-    i_t_n_data8 = this.to_ary(this.i_t_n_data8);
-    i_t_n_data9 = this.to_ary(this.i_t_n_data9);
-    data10 = this.to_ary(this.data10);
-    console.log('i_t_n_data5', this.i_t_n_data5);
-},
-
-
-
-to_ary(it){
-    return JSON.parse(JSON.stringify(it));
-},
-
-
-// core of i_t_n
-
-// this.data10 = [];
-// this.data10_f_i_b = [];
-
-// i_t_n_data2 i_t_n_i_t_n_data2
-// i_t_n_data3 i_t_n_i_t_n_data3
-// i_t_n_data4 i_t_n_i_t_n_data4
-// i_t_n_data5 i_t_n_i_t_n_data5
-// i_t_n_data8 i_t_n_i_t_n_data8
-// i_t_n_data9 i_t_n_i_t_n_data9
-
-// i_t_n_ary_data2 i_t_n_i_t_n_ary_data2
-// i_t_n_ary_data3 i_t_n_i_t_n_ary_data3
-// i_t_n_ary_data6 i_t_n_i_t_n_ary_data6
-// i_t_n_ary_data7 i_t_n_i_t_n_ary_data7
-
-// i_t_n_data5_result i_t_n_data5_result
-// i_t_n_data9_result i_t_n_data9_result
-
-// i_t_n_data2_data3_string_to_array i_t_n_i_t_n_data2_i_t_n_data3_string_to_array
-// i_t_n_data6_data7_string_to_array i_t_n_i_t_n_data6_data7_string_to_array
-// i_t_n_change_result i_t_n_i_t_n_change_result
-// i_t_n_take2 i_t_n_i_t_n_take2
-// i_t_n_swap_data6_data7 i_t_n_i_t_n_swap_data6_data7
-// i_t_n_make_image_to_name_Q_A_array i_t_n_i_t_n_make_image_to_name_Q_A_array
-// i_t_n_erase i_t_n_i_t_n_erase
-// check_image_to_name
-// check_name_to_image
-
-
-i_t_n_erase(item, ary){
-    // 指定した要素を配列から削除するramda.jsを使った1行の関数
-    const ers = R.curry((item, ary) => R.filter(R.complement(R.equals(item)), ary));
-    return ers(item, ary);
-},
-i_t_n_take2(ary){
-    // 指定した要素から先頭から2つの要素を取り出すramda.jsを使った1行の関数
-    const i_t_n_take2 = R.compose(R.take(2), R.drop(1));
-    return i_t_n_take2(ary);
-},
-i_t_n_data2_data3_string_to_array(){
-    this.i_t_n_ary_data2 = this.i_t_n_data2.split("\n")
-    this.i_t_n_ary_data3 = this.i_t_n_data3.split("\n")
-},
-i_t_n_make_image_to_name_Q_A_array(){
-    this.i_t_n_data4 = this.to_ary(this.i_t_n_ary_data3).map(V=> [V, this.i_t_n_take2(shuffle(this.i_t_n_erase(V, this.i_t_n_ary_data3)))]
-    )
-    this.i_t_n_data4 = this.to_ary(this.i_t_n_data4).map(V=> [V[0], shuffle(R.flatten(V))]
-    );
-    this.i_t_n_data5 = R.zip(this.i_t_n_ary_data2, this.i_t_n_data4);
-    // i_t_n_data5のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
-    this.i_t_n_data5 = R.map(R.insert(2, false), this.i_t_n_data5);
-    // this.for_debug();
-},
-i_t_n_init(){
-    this.i_t_n_data2_data3_string_to_array();
-    this.i_t_n_make_image_to_name_Q_A_array();
-},
-i_t_n_check_image_to_name(correct_URL, URL, IDX){
-    this.i_t_n_data5[IDX][2] = correct_URL === URL ? true : false;
-    // this.for_debug();
-},
-i_t_n_check_name_to_image(correct_URL, URL, IDX){
-    this.i_t_n_data9[IDX][2] = correct_URL === URL ? true : false;
-},
-i_t_n_data6_data7_string_to_array(){
-    this.i_t_n_ary_data6 = this.i_t_n_data2.split("\n")
-    this.i_t_n_ary_data7 = this.i_t_n_data3.split("\n")
-},
-i_t_n_swap_data6_data7(){
-    // swap_:i_t_n_ary_data6とi_t_n_ary_data7を入れ替える関数
-    [this.i_t_n_ary_data6, this.i_t_n_ary_data7] = [this.i_t_n_ary_data7, this.i_t_n_ary_data6];
-},
-i_t_n_change_result(){
-    // i_t_n_data5_resultとi_t_n_data9_resultのtrue/falseの切り替え
-    this.i_t_n_data5_result = !this.i_t_n_data5_result;
-    this.i_t_n_data9_result = !this.i_t_n_data9_result;
-},
-i_t_n_swap_q_a(){
-    this.i_t_n_data6_data7_string_to_array();
-    this.i_t_n_swap_data6_data7();
-    this.i_t_n_change_result();
-    this.i_t_n_data8 = this.to_ary(this.i_t_n_ary_data7).map(V=> [V, this.i_t_n_take2(shuffle(this.remove(V, this.i_t_n_ary_data7)))]
-    )
-    this.i_t_n_data8 = this.to_ary(this.i_t_n_data8).map(V=> [V[0], shuffle(R.flatten(V))]
-    );
-    this.i_t_n_data9 = R.zip(this.i_t_n_ary_data6, this.i_t_n_data8);
-    // i_t_n_data9のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
-    this.i_t_n_data9 = R.map(R.insert(2, false), this.i_t_n_data9);
-    this.for_debug();
-},
-i_t_n_filter_image_and_name(){
-    if(this.i_t_n_data5.map(V=>V[2]).every(V=>V === true)){
-        this.i_t_n_data5 = [];
+filter_image_and_name(){
+    if(this.data5.map(V=>V[2]).every(V=>V === true)){
+        this.data5 = [];
         alert("すべての問題が正解しました。🦖\nすべての問題が正解しました。🦕");
         return;
     }
-    const res1 = this.i_t_n_data5.filter(V=>V[2] === false);
+    const res1 = this.data5.filter(V=>V[2] === false);
     const res2 = R.transpose(
         res1.map(V=> [V[0], V[1][0]])
     );
     this.data10.push([res2[0].join("\n"), res2[1].join("\n")]);
     this.for_debug();
 },
-i_t_n_true_or_false_to_emoji(bool){
-    // trueだったら⭕️、falseだったら❎を返す関数
-    return bool ? "⭕️" : "❎";
-},
-// core of i_t_n
-
-
-
-
-
-
-
-
-
-
 
 fn9(IDX){
-    this.i_t_n_data2 = this.data10[IDX][0];
-    this.i_t_n_data3 = this.data10[IDX][1];
+    this.data2 = this.data10[IDX][0];
+    this.data3 = this.data10[IDX][1];
 },
 fn16(INDEX){
     this.data10.splice(INDEX, 1);
@@ -1144,6 +1045,10 @@ fn17(INDEX){
         this.$refs.results[TARGET_INDEX_FIRST].style.display === "block"
         ||
         this.$refs.results[TARGET_INDEX_FIRST].style.display === '' ? "none" : "block";
+},
+// trueだったら⭕️、falseだったら❎を返す関数
+true_or_false_to_emoji(bool){
+    return bool ? "⭕️" : "❎";
 },
 
 css_var_set(VAR_NAME, VAR){
@@ -1158,11 +1063,6 @@ this.column_2_none === true ? (this.css_var_set('--css-var-column-2-none', '1fr'
 column_3_none_fn(){
 this.column_3_none === true ? (this.css_var_set('--css-var-column-3-none', '1fr'), this.column_3_none = false) : (this.css_var_set('--css-var-column-3-none', '0px'), this.column_3_none = true);
 },
-
-
-
-
-
 
 fn18(){
     const RESULTS = this.$refs.results;
@@ -1184,8 +1084,8 @@ fn19_1(){
 
 
 
-data_json_parse_data1_i_t_n_data2(JSON_STR_DATA1_i_t_n_data2){
-    return JSON.parse(JSON_STR_DATA1_i_t_n_data2);
+data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
+    return JSON.parse(JSON_STR_DATA1_DATA2);
 },
 date_time_form(DATE_TIME){
     // const date = new Date('2023-09-22T16:40:19.249Z');
@@ -1196,15 +1096,91 @@ date_time_form(DATE_TIME){
 
 
 
-// this.data1_connector()とthis.i_t_n_data2_connector()によって、webのdata1とi_t_n_data2は変換される。
-data1_connector(data1_param){
-    if(data1_param){this.data1 = data1_param};
-    return this.i_t_n_data2;
-},
-i_t_n_data2_connector(i_t_n_data2_param){
-    if(i_t_n_data2_param){this.i_t_n_data2 = i_t_n_data2_param};
-    return this.i_t_n_data3;
-},
+
+// only_service_data(){
+//     this.i_t_n_web_data = this.web_data.message.filter(V=> V.data_type === this.data_type);
+// },
+// async fetch_read_all(){
+//     this.show_user = this.show_user === '' ? '' : this.show_user;
+//     this.show_tag = this.show_tag === '' ? '' : this.show_tag;
+//     const params_for_get = {
+//         user: this.show_user,
+//         tag: this.show_tag,
+//         order_by: this.show_order_by,
+//     };
+//     const url = new URL(this.endpoint  + '/' + 'read_all');
+//     url.search = new URLSearchParams(params_for_get).toString();
+//     const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
+//     this.web_data = await res.json(); console.log(this.web_data);
+//     this.only_service_data();
+//     await this.download_data_from_web_data_id();
+// },
+// download_data(Data_Id){
+//     const pre_data1_2 = this.i_t_n_web_data.filter(V=>V.data_type === this.data_type).filter(V=> V.id === Data_Id )[0];
+//     const pre_data1 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data1'];
+//     const pre_data2 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data2'];
+//     this.data1_connector(pre_data1);
+//     this.data2_connector(pre_data2);
+// },
+// change_show_user(USER){
+//     this.show_user = USER;
+// },
+// show_all_user(){
+//     this.show_user = '';
+// },
+// change_show_tag(TAG){
+//     this.show_tag = TAG;
+// },
+// show_all_tag(){
+//     this.show_tag = '';
+// },
+// change_show_order_by(){
+//     this.show_order_by = this.show_order_by === 'DESC' ? 'ASC' : 'DESC';
+// },
+// async fetch_get_tags_for_autocomplete(){
+//     const res = await fetch(this.endpoint + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
+//         body: JSON.stringify({ name: this.name, password: this.password, search_tag: this.search_tag }),
+//     });
+//     const data = await res.json();
+//     this.tags = data['message'];
+// },
+// async fetch_insert_link(){
+// try {
+//     const error_check_data1_data2 = (data1, data2) => {
+//         switch (true) {
+//             case data1 === undefined || data1 === null || data1.length === 0: return 'data1が空です'; break;
+//             case data2 === undefined || data2 === null || data2.length === 0: return 'data2が空です'; break;
+//             default: return 'OK'; break;
+//         }
+//     };
+//     const error_check_insert_data = (data_type, data_json_str) => {
+//         const is_include_DATA_TYPE = (target_data_type_str) => this.DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
+//         switch (true) {
+//             case data_json_str === undefined: return 'dataが空です'; break;
+//             case data_json_str.length > 10000: return 'dataが長すぎます'; break;
+//             case !is_include_DATA_TYPE(data_type): return '許可されていないdata_typeです'; break;
+//             default: return 'OK'; break;
+//         }
+//     };
+//     error_check_data1_data2(this.data1_connector(), this.data2_connector()) === 'OK' ? null : (()=>{throw new Error(error_check_data1_data2(this.data1, this.data2))})();
+//     const data_convert_jsonstr = (data1, data2) => JSON.stringify({'data1': data1, 'data2': data2});
+//     const data_json_str = data_convert_jsonstr(this.data1_connector(), this.data2_connector());
+//     error_check_insert_data(this.data_type, data_json_str) === 'OK' ? null : (()=>{throw new Error(error_check_insert_data(this.data_type, data_json_str))})();
+//     const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
+//         body: JSON.stringify({ name: this.name, password: this.password, link: this.link,
+//             data_type: this.data_type,
+//             data_json_str: data_json_str,
+//         }),
+//     });
+//     const data = await res.json(); console.log(data);
+// } catch (error) {
+//     console.log(error);
+// }
+// },
+
+
+
+
 
 
 
@@ -1223,38 +1199,25 @@ go_to_any_service_page(Service='portal'){
 
 change_current_index(ONE_UP_OR_ONE_DOWN=1){
     this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
-    this.current_index < 0 ? this.current_index = this.i_t_n_data5.length - 1 : null;
-    this.current_index > this.i_t_n_data5.length - 1 ? this.current_index = 0 : null;
+    this.current_index < 0 ? this.current_index = this.data5.length - 1 : null;
+    this.current_index > this.data5.length - 1 ? this.current_index = 0 : null;
 },
 change_only_one_q_a_mode(){
     this.only_one_q_a_mode = this.only_one_q_a_mode === true ? false : true;
 },
 
 truncateText(text, id) {
-    if(text === undefined){return};
     if (text.length > this.truncate_text_length && !this.untruncate_text_array.includes(id)) {
         return text.substring(0, this.truncate_text_length) + '...';
     } else {
         return text;
     }
 },
+// short_or_long(id) {
+//     const is_include_id = this.untruncate_text_array.includes(id);
+//     is_include_id ? this.untruncate_text_array.splice(this.untruncate_text_array.indexOf(id), 1) : this.untruncate_text_array.push(id);
+// },
 
-short_or_long(id) {
-    // untruncate_text_arrayにidが含まれていない場合は追加する。含まれている場合は削除する
-    const is_include_id = this.untruncate_text_array.includes(id);
-    is_include_id ? this.untruncate_text_array.splice(this.untruncate_text_array.indexOf(id), 1) : this.untruncate_text_array.push(id);
-},
-
-
-async download_data_from_web_data_id(){
-    const id = (new URL(window.location.href).searchParams.get("id")) ? Number(new URL(window.location.href).searchParams.get("id")) : null;
-    if(id === null){return};
-    const result = await this.web_data.message
-        .filter(V=> V['id'] === id && V['data_type'] === this.data_type)
-        [0];
-    if(result === undefined){return};
-    this.download_data(result['id']);
-},
 
 
 
@@ -1291,19 +1254,35 @@ async download_data_from_web_data_id(){
 only_service_data(){
     this.temporary_list[2] = this.web_data.message.filter(V=> V.data_type === this.data_type);
 },
-data_json_parse_data1_i_t_n_data2(JSON_STR_DATA1_i_t_n_data2){
-    return JSON.parse(JSON_STR_DATA1_i_t_n_data2);
+data_json_parse_data1_data2(JSON_STR_DATA1_DATA2){
+    return JSON.parse(JSON_STR_DATA1_DATA2);
 },
+
+// this.data1_connector()とthis.data2_connector()によって、webのdata1とdata2は変換される。
+data1_connector(data1_param){
+    // console.log("data1_connector");
+    if(data1_param){this.data2 = data1_param};
+    return this.data2;
+    // return this.data2;
+},
+data2_connector(data2_param){
+    // console.log("data2_connector");
+    if(data2_param){this.data3 = data2_param};
+    return this.data3;
+    // return this.data3;
+},
+
 download_data(Data_Id){
+    console.log("download_data");
     const pre_data1_2 = this.temporary_list[2].filter(V=>V.data_type === this.data_type).filter(V=> V.id === Data_Id )[0];
-    const pre_data1 = this.data_json_parse_data1_i_t_n_data2(pre_data1_2.data_json_str)['data1'];
-    const pre_i_t_n_data2 = this.data_json_parse_data1_i_t_n_data2(pre_data1_2.data_json_str)['i_t_n_data2'];
+    const pre_data1 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data1'];
+    const pre_data2 = this.data_json_parse_data1_data2(pre_data1_2.data_json_str)['data2'];
     // this.data6 = pre_data1;
     this.data1_connector(pre_data1);
-    // this.i_t_n_data3 = pre_i_t_n_data2;
-    this.i_t_n_data2_connector(pre_i_t_n_data2);
-    this.all_error_check();
-    this.processing();
+    // this.data3 = pre_data2;
+    this.data2_connector(pre_data2);
+    // this.all_error_check();
+    // this.processing();
     this.scrollToTarget('web');
 },
 date_time_form(DATE_TIME){
@@ -1335,28 +1314,33 @@ async fetch_get_tags_for_autocomplete(){
     this.tags = data['message'];
 },
 
-// this.data1_connector()とthis.i_t_n_data2_connector()によって、webのdata1とi_t_n_data2は変換される。
-data1_connector(data1_param){
-    if(data1_param){this.data6 = data1_param};
-    return this.data6;
-},
-i_t_n_data2_connector(i_t_n_data2_param){
-    if(i_t_n_data2_param){this.i_t_n_data3 = i_t_n_data2_param};
-    return this.i_t_n_data3;
-},
 
 
 
 change_current_index(ONE_UP_OR_ONE_DOWN=1){
     this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
-    this.current_index < 0 ? this.current_index = this.i_t_n_data4.length - 1 : null;
-    this.current_index > this.i_t_n_data4.length - 1 ? this.current_index = 0 : null;
+    this.current_index < 0 ? this.current_index = this.data4.length - 1 : null;
+    this.current_index > this.data4.length - 1 ? this.current_index = 0 : null;
 },
 change_only_one_q_a_mode(){
     this.only_one_q_a_mode = this.only_one_q_a_mode === true ? false : true;
 },
 
 
+
+
+truncateText(text, id) {
+    if (text.length > this.truncate_text_length && !this.untruncate_text_array.includes(id)) {
+        return text.substring(0, this.truncate_text_length) + '...';
+    } else {
+        return text;
+    }
+},
+short_or_long(id) {
+    // untruncate_text_arrayにidが含まれていない場合は追加する。含まれている場合は削除する
+    const is_include_id = this.untruncate_text_array.includes(id);
+    is_include_id ? this.untruncate_text_array.splice(this.untruncate_text_array.indexOf(id), 1) : this.untruncate_text_array.push(id);
+},
 
 go_to_any_service_page(Service='portal'){
     switch (Service) {
@@ -1370,6 +1354,7 @@ go_to_any_service_page(Service='portal'){
 
 
 async download_data_from_web_data_id(){
+    console.log('download_data_from_web_data_id');
     const id = (new URL(window.location.href).searchParams.get("id")) ? Number(new URL(window.location.href).searchParams.get("id")) : null;
     if(id === null){return};
     const result = await this.web_data.message
@@ -1449,10 +1434,10 @@ async fetch_read_all(){
 // req.body.data_type, req.body.data_json
 async fetch_insert_link(){
 try {
-    const error_check_data1_i_t_n_data2 = (data1, i_t_n_data2) => {
+    const error_check_data1_data2 = (data1, data2) => {
         switch (true) {
             case data1 === undefined || data1 === null || data1.length === 0: return 'data1が空です'; break;
-            case i_t_n_data2 === undefined || i_t_n_data2 === null || i_t_n_data2.length === 0: return 'i_t_n_data2が空です'; break;
+            case data2 === undefined || data2 === null || data2.length === 0: return 'data2が空です'; break;
             default: return 'OK'; break;
         }
     };
@@ -1465,9 +1450,9 @@ try {
             default: return 'OK'; break;
         }
     };
-    error_check_data1_i_t_n_data2(this.data1_connector(), this.i_t_n_data2_connector()) === 'OK' ? null : (()=>{throw new Error(error_check_data1_i_t_n_data2(this.data1, this.i_t_n_data2))})();
-    const data_convert_jsonstr = (data1, i_t_n_data2) => JSON.stringify({'data1': data1, 'i_t_n_data2': i_t_n_data2});
-    const data_json_str = data_convert_jsonstr(this.data1_connector(), this.i_t_n_data2_connector());
+    error_check_data1_data2(this.data1_connector(), this.data2_connector()) === 'OK' ? null : (()=>{throw new Error(error_check_data1_data2(this.data1, this.data2))})();
+    const data_convert_jsonstr = (data1, data2) => JSON.stringify({'data1': data1, 'data2': data2});
+    const data_json_str = data_convert_jsonstr(this.data1_connector(), this.data2_connector());
     error_check_insert_data(this.data_type, data_json_str) === 'OK' ? null : (()=>{throw new Error(error_check_insert_data(this.data_type, data_json_str))})();
     const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
         body: JSON.stringify({ name: this.name, password: this.password, link: this.link,
@@ -1602,7 +1587,7 @@ scrollToTarget(For='local') {
     For ==='local' ? this.$refs.save_data_set_list_parent1.style.display = 'none' : null;
     For ==='web' ? this.$refs.save_data_set_list_parent2.style.display = 'none' : null;
 },
-advanced_visible() {
+advanced_visible_init() {
     this.advanced_visible === 'advanced' ? this.css_var_set('--advanced-display-var', 'inline-block') : this.css_var_set('--advanced-display-var', 'none');
 },
 // for_online_function
@@ -1610,6 +1595,28 @@ advanced_visible() {
 },
 }).mount('.app');
 
+
+// 正規表現だけでURLかどうかを判定する関数
+function isURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    if(!pattern.test(str)) {
+    // alert("URLではありません");
+    return false;
+    } else {
+    return true;
+    }
+};
+
+// 1秒後に任意の関数を実行する関数、第一引数にmsを入れる、第二引数に関数を入れる
+// imgタグのsrcにURLを入れるときに使う
+function sleep(ms, fn) {
+    return new Promise(resolve => setTimeout(resolve, ms)).then(fn);
+};
 
 
 

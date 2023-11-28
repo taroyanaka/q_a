@@ -338,6 +338,46 @@ position: relative;
 }
 /* for_online_function */
 
+
+
+
+/* i_t_n用CSS ↓ */
+.centering{
+}
+.centering *{
+    word-wrap: break-word;
+    overflow: hidden;
+  text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+}
+.OK_or_NG{
+  font-size: 2rem;
+}
+.answer{
+  font-size: 2rem;
+}
+.any{
+  display: block;
+}
+.any > *{
+  width: 6rem;
+display: inline;
+}
+.png_image{
+    
+}
+/* 以下は未使用のため、削除予定
+.result_color
+.result_color2
+.png_image
+.png_image_back */
+
+/* i_t_n用CSS ↑ */
+
+
+
 </style>
 
 
@@ -552,33 +592,38 @@ position: relative;
                     <!-- <button @click="change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button> -->
 
                     <!-- <li v-for="(item, IDX) in data5" :key="item" class="result_color simple_mode2" :style="{display: data5_result ? 'block' : 'none'}"> -->
-                    <li v-for="(item, IDX) in i_t_n_data5" :key="item" class="result_color simple_mode2" :style="{display: i_t_n_data5_result ? 'block' : 'none'}">
-                        <div class="simple_mode2" v-if="only_one_q_a_mode ? IDX === current_index : true">
-                            <!-- i_t_n_true_or_false_to_emoji -->
-                        <!-- <span class="OK_or_NG simple_mode2">{{ true_or_false_to_emoji(item[2]) }}</span> -->
-                        <span class="OK_or_NG simple_mode2">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>
-                        <span class="answer simple_mode2">{{ item[0] }}</span>
-                        <span class="any simple_mode2">
-                            <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="i_t_n_check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
-                            <!-- <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" > -->
-                        </span>
-                        </div>
-                    </li>
+<li v-for="(item, IDX) in i_t_n_data5" :key="item" class="result_color simple_mode2" :style="{display: i_t_n_data5_result ? 'block' : 'none'}">
+<div class="simple_mode2" v-if="only_one_q_a_mode ? IDX === current_index : true">
+<!-- i_t_n_true_or_false_to_emoji -->
+<!-- <span class="OK_or_NG simple_mode2">{{ true_or_false_to_emoji(item[2]) }}</span> -->
+<span class="OK_or_NG simple_mode2">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>    
+<span class="answer simple_mode2">{{ item[0] }}</span>
+<span class="any simple_mode2">
+<img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="i_t_n_check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
+<!-- <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" > -->
+</span>
+</div>
+</li>
 
                     <!-- <button @click="change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button> -->
                     <!-- <button @click="change_only_one_q_a_mode" class="check_button">📏</button> -->
 
-                    <!-- <div v-for="(item, IDX) in data9" :key="item" class="result_color result_color2" :style="{display: data9_result ? 'block' : 'none'}"> -->
-                    <div v-for="(item, IDX) in i_t_n_data9" :key="item" class="result_color result_color2" :style="{display: i_t_n_data9_result ? 'block' : 'none'}">
-                        <!-- <span class="OK_or_NG">{{ true_or_false_to_emoji(item[2]) }}</span> -->
-                        <span class="OK_or_NG">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>
-                        <img :src="item[0]" :alt="item[0]" class="png_image png_image_back" >
-                        <span v-for="item2 in item[1][1]">
-                            <!-- <button @click="check_name_to_image(item[1][0], item2, IDX)">{{ item2 }}</button> -->
-                            <button @click="i_t_n_check_name_to_image(item[1][0], item2, IDX)">{{ item2 }}</button>
-                        </span>
-                    </div>
-                    <!-- <button @click="filter_image_and_name" class="check_button">🎮</button> -->
+
+<div v-for="(item, IDX) in i_t_n_data9" :key="item" class="result_color result_color2" :style="{display: i_t_n_data9_result ? 'block' : 'none'}">
+    <span class="OK_or_NG">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>
+    <img :src="item[0]" :alt="item[0]" class="png_image png_image_back" >
+    <span v-for="item2 in item[1][1]">
+        <button @click="i_t_n_check_name_to_image(item[1][0], item2, IDX)">{{ item2 }}</button>
+    </span>
+</div>
+<button @click="i_t_n_filter_image_and_name" class="check_button">🎮</button>
+                
+
+
+
+
+
+
                     <button @click="i_t_n_filter_image_and_name" class="check_button">🎮</button>
                 </ul>
             </div>
@@ -741,18 +786,18 @@ advanced_visible: 'not_advanced',
 
 }},
 watch: {
-i_t_n_data2: {
-    handler() {
-        this.i_t_n_init();
-    },
-    deep: true
-},
-i_t_n_data3: {
-    handler() {
-        this.i_t_n_init();
-    },
-    deep: true
-},
+// i_t_n_data2: {
+//     handler() {
+//         this.i_t_n_init();
+//     },
+//     deep: true
+// },
+// i_t_n_data3: {
+//     handler() {
+//         this.i_t_n_init();
+//     },
+//     deep: true
+// },
 
 f_i_b_data1: {
     handler() {
@@ -863,6 +908,8 @@ if(this.ABCDEF === "i_t_n"){
 beforeUpdate() {
 },
 async updated() {
+    // this.data_type = 'i_t_n';
+    // this.tmp_test_data_insert();
     // await this.download_data_from_web_data_id();
 },
 methods: {
@@ -914,13 +961,20 @@ i_t_n_data2_data3_string_to_array(){
     this.i_t_n_ary_data3 = this.i_t_n_data3.split("\n")
 },
 i_t_n_make_image_to_name_Q_A_array(){
-    this.i_t_n_data4 = this.to_ary(this.i_t_n_ary_data3).map(V=> [V, this.i_t_n_take2(shuffle(this.i_t_n_erase(V, this.i_t_n_ary_data3)))]
-    )
-    this.i_t_n_data4 = this.to_ary(this.i_t_n_data4).map(V=> [V[0], shuffle(R.flatten(V))]
+    // this.i_t_n_data4 = this.to_ary(this.i_t_n_ary_data3).map(V=> [V, this.i_t_n_take2(shuffle(this.i_t_n_erase(V, this.i_t_n_ary_data3)))]);
+    const ary_a = this.to_ary(this.i_t_n_ary_data3).map(V=> [V, this.i_t_n_take2(shuffle(this.i_t_n_erase(V, this.i_t_n_ary_data3)))]
     );
-    this.i_t_n_data5 = R.zip(this.i_t_n_ary_data2, this.i_t_n_data4);
+    // this.i_t_n_data4 = this.to_ary(this.i_t_n_data4).map(V=> [V[0], shuffle(R.flatten(V))]);
+
+    // this.i_t_n_data4 = this.to_ary(ary_a).map(V=> [V[0], shuffle(R.flatten(V))]);
+    const ary_b = this.to_ary(ary_a).map(V=> [V[0], shuffle(R.flatten(V))]);
+    
+    // this.i_t_n_data5 = R.zip(this.i_t_n_ary_data2, ary_b);
+    const ary_c = R.zip(this.i_t_n_ary_data2, ary_b);
     // i_t_n_data5のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
-    this.i_t_n_data5 = R.map(R.insert(2, false), this.i_t_n_data5);
+
+    this.i_t_n_data5 = R.map(R.insert(2, false), ary_c);
+
     // this.for_debug();
 },
 i_t_n_init(){
@@ -931,10 +985,9 @@ i_t_n_init(){
 },
 i_t_n_check_image_to_name(correct_URL, URL, IDX){
     this.i_t_n_data5[IDX][2] = correct_URL === URL ? true : false;
-    // this.for_debug();
 },
 i_t_n_check_name_to_image(correct_URL, URL, IDX){
-    this.i_t_n_data9[IDX][2] = correct_URL === URL ? true : false;
+    // this.i_t_n_data9[IDX][2] = correct_URL === URL ? true : false;
 },
 i_t_n_data6_data7_string_to_array(){
     this.i_t_n_ary_data6 = this.i_t_n_data2.split("\n")
@@ -953,14 +1006,23 @@ i_t_n_swap_q_a(){
     this.i_t_n_data6_data7_string_to_array();
     this.i_t_n_swap_data6_data7();
     this.i_t_n_change_result();
-    this.i_t_n_data8 = this.to_ary(this.i_t_n_ary_data7).map(V=> [V, this.i_t_n_take2(shuffle(this.remove(V, this.i_t_n_ary_data7)))]
-    )
-    this.i_t_n_data8 = this.to_ary(this.i_t_n_data8).map(V=> [V[0], shuffle(R.flatten(V))]
+    const ary_a = this.to_ary(this.i_t_n_ary_data7).map(V=> [V, this.i_t_n_take2(shuffle(
+            this.i_t_n_erase(V, this.i_t_n_ary_data7)
+        ))]
     );
-    this.i_t_n_data9 = R.zip(this.i_t_n_ary_data6, this.i_t_n_data8);
+    // this.i_t_n_data8 = this.to_ary(this.i_t_n_ary_data7).map(V=> [V, this.i_t_n_take2(shuffle(
+    //         this.i_t_n_erase(V, this.i_t_n_ary_data7)
+    //     ))]
+    // );
+    // this.i_t_n_data8 = this.to_ary(ary_a).map(V=> [V[0], shuffle(R.flatten(V))]);
+    const ary_b = this.to_ary(ary_a).map(V=> [V[0], shuffle(R.flatten(V))]);
+    // this.i_t_n_data9 = R.zip(this.i_t_n_ary_data6, this.i_t_n_data8);
+    const ary_c = R.zip(this.i_t_n_ary_data6, ary_b);
+    // this.i_t_n_data9 = R.zip(this.i_t_n_ary_data6, ary_b);
     // i_t_n_data9のそれぞれの配列の3つ目にfalseを挿入するramda.jsの関数
-    this.i_t_n_data9 = R.map(R.insert(2, false), this.i_t_n_data9);
-    this.for_debug();
+    this.i_t_n_data9 = R.map(R.insert(2, false), ary_c);
+    // this.i_t_n_data9 = R.map(R.insert(2, false), this.i_t_n_data9);
+    // this.for_debug();
 },
 i_t_n_filter_image_and_name(){
     if(this.i_t_n_data5.map(V=>V[2]).every(V=>V === true)){
@@ -1320,13 +1382,14 @@ column_3_none_fn(){
 this.column_3_none === true ? (this.css_var_set('--css-var-column-3-none', '1fr'), this.column_3_none = false) : (this.css_var_set('--css-var-column-3-none', '0px'), this.column_3_none = true);
 },
 test_exe(){
-this.css_var_set('--css-var-test-inline', 'inlilne');
-this.css_var_set('--css-var-color-1', 'LightGray');
-this.css_var_set('--css-var-color-2', 'SlateGray');
-this.css_var_set('--css-var-color-3', 'DimGray');
-this.test0();
-this.test1();
-this.test2();
+// this.css_var_set('--css-var-test-inline', 'inlilne');
+// this.css_var_set('--css-var-color-1', 'LightGray');
+// this.css_var_set('--css-var-color-2', 'SlateGray');
+// this.css_var_set('--css-var-color-3', 'DimGray');
+// this.test0();
+// this.test1();
+// this.test2();
+// this.tmp_test_data_insert();
 },
 
 
@@ -1867,7 +1930,9 @@ change_to_f_i_b() {
     console.log('f_i_b');
 },
 change_to_i_t_n() {
+    // this.data_type = 'i_t_n';
     this.data_type = 'i_t_n';
+    this.tmp_test_data_insert();
 },
 return_current_temporary_list() {
     let Index_of_list = 0;
@@ -1902,6 +1967,36 @@ data_a_b_converter_for(Service) {
         this.i_t_n_data2 = this.data_a;
         this.i_t_n_data3 = this.data_b;
     };
+
+},
+
+
+tmp_test_data_insert(){
+this.data_a = `cat
+dog
+halr
+grf
+eleph
+sushi
+cake
+pink_pixel
+paint`;
+this.data_b = `https://taroyanaka.github.io/q_a/asset/cat.png
+https://taroyanaka.github.io/q_a/asset/dog.png
+https://taroyanaka.github.io/q_a/asset/halr.png
+https://taroyanaka.github.io/q_a/asset/grf.png
+https://taroyanaka.github.io/q_a/asset/eleph.png
+https://pbs.twimg.com/media/FpfSgHdaEAE-Ts6?format=jpg
+https://pbs.twimg.com/media/FpfRSXQacAARY-a?format=jpg
+https://pbs.twimg.com/media/FoaB5b9aUAAXgAU?format=jpg
+https://pbs.twimg.com/media/FjuxRy-agAAgAFJ?format=jpg`;
+console.log('tmp_test_data_insert');
+// this.i_t_n_init();
+this.data_a_b_converter_for('i_t_n');
+this.i_t_n_data2_data3_string_to_array();
+this.i_t_n_make_image_to_name_Q_A_array();
+
+// app.i_t_n_swap_q_a()した後のi_t_n_data9のCSSを書く(参照元の./i_t_n.htmlの方も表示がバグってる)
 
 },
 

@@ -366,8 +366,11 @@ position: relative;
 display: inline;
 }
 .png_image{
-    
 }
+
+
+
+
 /* 以下は未使用のため、削除予定
 .result_color
 .result_color2
@@ -375,6 +378,47 @@ display: inline;
 .png_image_back */
 
 /* i_t_n用CSS ↑ */
+
+
+
+
+
+
+
+
+/* grid layout(grid-template-areas)でi_t_n_data9_x_parent配下を以下のようにlayoutする */
+.i_t_n_data9_x_parent{
+    display: grid;
+    grid-template-areas:
+    "OK_or_NG png_image png_image"
+    "choose_answer_image_1 choose_answer_image_2 choose_answer_image_3";
+}
+.i_t_n_data9_x_parent .OK_or_NG{
+    grid-area: OK_or_NG;
+    font-size: 3rem;
+}
+.i_t_n_data9_x_parent .png_image{
+    grid-area: png_image;
+    height: 5rem;
+}
+.i_t_n_data9_x_parent .common_choose_the_answer_image{
+    height: 3rem;
+    font-size: 2.5rem;
+}
+.i_t_n_data9_x_parent .choose_the_answer_image_0{
+    grid-area: choose_answer_image_1;
+}
+.i_t_n_data9_x_parent .choose_the_answer_image_1{
+    grid-area: choose_answer_image_2;
+}
+.i_t_n_data9_x_parent .choose_the_answer_image_2{
+    grid-area: choose_answer_image_3;
+}
+
+/* i_t_n用CSS ↑ */
+
+
+
 
 
 
@@ -540,6 +584,8 @@ display: inline;
     <button @click="change_to_q_a" class="font_sizing">change_to_q_a</button>
     <button @click="change_to_f_i_b" class="font_sizing">change_to_f_i_b</button>
     <button @click="change_to_i_t_n" class="font_sizing">change_to_i_t_n</button>
+
+    <button @click="i_t_n_data9_x_setup" class="font_sizing">i_t_n_data9_x_setup</button>
     
     </div>
 
@@ -592,15 +638,14 @@ display: inline;
                     <!-- <button @click="change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button> -->
 
                     <!-- <li v-for="(item, IDX) in data5" :key="item" class="result_color simple_mode2" :style="{display: data5_result ? 'block' : 'none'}"> -->
+
+
 <li v-for="(item, IDX) in i_t_n_data5" :key="item" class="result_color simple_mode2" :style="{display: i_t_n_data5_result ? 'block' : 'none'}">
 <div class="simple_mode2" v-if="only_one_q_a_mode ? IDX === current_index : true">
-<!-- i_t_n_true_or_false_to_emoji -->
-<!-- <span class="OK_or_NG simple_mode2">{{ true_or_false_to_emoji(item[2]) }}</span> -->
 <span class="OK_or_NG simple_mode2">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>    
 <span class="answer simple_mode2">{{ item[0] }}</span>
 <span class="any simple_mode2">
 <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="i_t_n_check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
-<!-- <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" > -->
 </span>
 </div>
 </li>
@@ -608,15 +653,27 @@ display: inline;
                     <!-- <button @click="change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button> -->
                     <!-- <button @click="change_only_one_q_a_mode" class="check_button">📏</button> -->
 
+<div v-for="(item, IDX) in i_t_n_data9_x" :key="item" :style="{display: i_t_n_data9_result ? 'block' : 'none'}">
+    <div class="i_t_n_data9_x_parent">
+    <div class="OK_or_NG">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</div>
+    <img :src="item[0]" :alt="item[0]" class="png_image" >
+        <button v-for="(item2,item2_IDX) in item[1][1]" 
+            :class="'common_choose_the_answer_image choose_the_answer_image_'+item2_IDX"
+            @click="i_t_n_check_name_to_image(item[1][0], item2, IDX)">
+                {{ item2 }}
+        </button>
+    </div>
+</div>
+                        
 
-<div v-for="(item, IDX) in i_t_n_data9" :key="item" class="result_color result_color2" :style="{display: i_t_n_data9_result ? 'block' : 'none'}">
+<!-- <div v-for="(item, IDX) in i_t_n_data9" :key="item" class="result_color result_color2" :style="{display: i_t_n_data9_result ? 'block' : 'none'}">
     <span class="OK_or_NG">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>
     <img :src="item[0]" :alt="item[0]" class="png_image png_image_back" >
     <span v-for="item2 in item[1][1]">
         <button @click="i_t_n_check_name_to_image(item[1][0], item2, IDX)">{{ item2 }}</button>
     </span>
 </div>
-<button @click="i_t_n_filter_image_and_name" class="check_button">🎮</button>
+<button @click="i_t_n_filter_image_and_name" class="check_button">🎮</button> -->
 
 
 
@@ -714,6 +771,7 @@ i_t_n_data4:[],
 i_t_n_data5:[],
 i_t_n_data8:[],
 i_t_n_data9:[],
+i_t_n_data9_x: [],
 
 i_t_n_data5_result: true,
 i_t_n_data9_result: false,
@@ -990,6 +1048,7 @@ i_t_n_check_image_to_name(correct_URL, URL, IDX){
 },
 i_t_n_check_name_to_image(correct_URL, URL, IDX){
     // this.i_t_n_data9[IDX][2] = correct_URL === URL ? true : false;
+    this.i_t_n_data9_x[IDX][2] = correct_URL === URL ? true : false;
 },
 i_t_n_data6_data7_string_to_array(){
     this.i_t_n_ary_data6 = this.i_t_n_data2.split("\n")
@@ -2014,6 +2073,43 @@ this.i_t_n_make_image_to_name_Q_A_array();
     // => i_t_n_reverse_ver.htmlを移植する
 
 },
+
+i_t_n_data9_x_setup() {
+    // this.tmp_test_data_insert();
+// this.i_t_n_data9_result = true;
+this.data_type = 'i_t_n';
+// const tmp_1
+this.data_a = `cat
+dog
+halr
+grf
+eleph`;
+// const tmp_2;
+this.data_b = `./asset/cat.png
+./asset/dog.png
+./asset/halr.png
+./asset/grf.png
+./asset/eleph.png`;
+
+
+this.i_t_n_change_result();
+console.log(this.i_t_n_data5_result, this.i_t_n_data9_result);
+
+// this.data_a_b_converter_for('i_t_n');
+this.i_t_n_data2 = this.data_a;const ary1 = this.i_t_n_data2;
+// const ary1 = tmp_1;
+this.i_t_n_data3 = this.data_b;const ary2 = this.i_t_n_data3;
+// const ary2 = tmp_2;
+const ary10 = ary1.split("\n");
+const ary20 = ary2.split("\n");
+const ary10_1 = R.clone(ary10);
+const ary10_2 = R.clone(ary10);
+const ary100 = ary20.map((V,I)=>[V, [ary10_1[I], shuffle(ary10_2).slice(0,3)], false ]);
+this.i_t_n_data9_x = ary100;
+},
+
+
+
 
 // コア部分の関数と変数をまとめる
     // それぞれのプロダクトのコア部分のアウトプットはfn9とonline_data_A0が接続部分

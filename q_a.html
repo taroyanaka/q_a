@@ -2069,9 +2069,6 @@ this.data_a_b_converter_for('i_t_n');
 this.i_t_n_data2_data3_string_to_array();
 this.i_t_n_make_image_to_name_Q_A_array();
 
-// app.i_t_n_swap_q_a()した後のi_t_n_data9のCSSを書く(参照元の./i_t_n.htmlの方も表示がバグってる)
-    // => i_t_n_reverse_ver.htmlを移植する
-
 },
 
 i_t_n_data9_x_setup() {
@@ -2108,12 +2105,16 @@ const ary100 = ary20.map((V,I)=>[V, [ary10_1[I], shuffle(ary10_2).slice(0,3)], f
 this.i_t_n_data9_x = ary100;
 },
 
-
-
+// app.i_t_n_swap_q_a()した後のi_t_n_data9のCSSを書く(参照元の./i_t_n.htmlの方も表示がバグってる)
+    // => i_t_n_reverse_ver.htmlを移植できたから、UIの上書きをする
 
 // コア部分の関数と変数をまとめる
     // それぞれのプロダクトのコア部分のアウトプットはfn9とonline_data_A0が接続部分
     // そのため、fn9とonline_data_A0をそれぞれのプロダクト用のconverter関数で接続する
+
+// 一旦全体的にリファクタリングする
+// (今後のアップデートの費用対効果で関数ジャンプが効くsvelteが明らかに高速で開発可。
+    // やるんだな!?今ここで)
 
 // コア部分以外の命名と処理内容を共通化する
 // <style>の中身をまとめる

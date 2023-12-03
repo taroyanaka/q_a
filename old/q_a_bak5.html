@@ -585,7 +585,7 @@ display: inline;
     <button @click="change_to_f_i_b" class="font_sizing">change_to_f_i_b</button>
     <button @click="change_to_i_t_n" class="font_sizing">change_to_i_t_n</button>
 
-    <!-- <button @click="i_t_n_data9_x_setup" class="font_sizing">i_t_n_data9_x_setup</button> -->
+    <button @click="i_t_n_data9_x_setup" class="font_sizing">i_t_n_data9_x_setup</button>
     
     </div>
 
@@ -1054,16 +1054,17 @@ i_t_n_data6_data7_string_to_array(){
     this.i_t_n_ary_data6 = this.i_t_n_data2.split("\n")
     this.i_t_n_ary_data7 = this.i_t_n_data3.split("\n")
 },
-// i_t_n_swap_data6_data7(){
-//     [this.i_t_n_ary_data6, this.i_t_n_ary_data7] = [this.i_t_n_ary_data7, this.i_t_n_ary_data6];
-// },
+i_t_n_swap_data6_data7(){
+    // swap_:i_t_n_ary_data6とi_t_n_ary_data7を入れ替える関数
+    [this.i_t_n_ary_data6, this.i_t_n_ary_data7] = [this.i_t_n_ary_data7, this.i_t_n_ary_data6];
+},
 i_t_n_change_result(){
     // i_t_n_data5_resultとi_t_n_data9_resultのtrue/falseの切り替え
     this.i_t_n_data5_result = !this.i_t_n_data5_result;
     this.i_t_n_data9_result = !this.i_t_n_data9_result;
 },
 i_t_n_swap_q_a(){
-    // this.i_t_n_data9_x_setup();
+    this.i_t_n_data9_x_setup();
     // this.i_t_n_data6_data7_string_to_array();
     // this.i_t_n_swap_data6_data7();
     // this.i_t_n_change_result();
@@ -1359,13 +1360,6 @@ this.data_a = shuffled_data[0].join("\n");
 this.data_b = shuffled_data[1].join("\n");
 },
 swap_q_a(){
-if(this.data_type === 'i_t_n'){
-    // i_t_nにおいては実際にはdata_aとdata_bのスワップはせず、
-    // data_aとdata_bの表示のみをスワップする
-    this.i_t_n_change_result();
-    this.change_to_i_t_n();
-    return;
-};
 [tmp0, tmp1] = [this.data_a, this.data_b];
 [this.data_a, this.data_b] = [tmp1, tmp0];
 },
@@ -1988,14 +1982,11 @@ change_to_f_i_b() {
     console.log('f_i_b');
 },
 change_to_i_t_n() {
+    // this.data_type = 'i_t_n';
     this.data_type = 'i_t_n';
-    // [this.data_a, this.data_b] = [this.data_b, this.data_a];
-    if(this.i_t_n_data5_result === true){
-        this.tmp_test_data_insert();
-    }
-    if(this.i_t_n_data9_result === true){
-        this.i_t_n_data9_x_setup();
-    }
+    this.i_t_n_data5_result === true ? this.tmp_test_data_insert() : null;
+    this.i_t_n_data9_result === true ? this.i_t_n_data9_x_setup() : null;
+    // this.tmp_test_data_insert();
 },
 return_current_temporary_list() {
     let Index_of_list = 0;
@@ -2033,16 +2024,69 @@ data_a_b_converter_for(Service) {
 
 },
 
+
 tmp_test_data_insert(){
-this.data_type = 'i_t_n';
+this.data_a = `cat
+dog
+halr
+grf
+eleph`;
+this.data_b = `./asset/cat.png
+./asset/dog.png
+./asset/halr.png
+./asset/grf.png
+./asset/eleph.png`;
+// this.data_a = `cat
+// dog
+// halr
+// grf
+// eleph
+// sushi
+// cake
+// pink_pixel
+// paint`;
+// this.data_b = `https://taroyanaka.github.io/q_a/asset/cat.png
+// https://taroyanaka.github.io/q_a/asset/dog.png
+// https://taroyanaka.github.io/q_a/asset/halr.png
+// https://taroyanaka.github.io/q_a/asset/grf.png
+// https://taroyanaka.github.io/q_a/asset/eleph.png
+// https://pbs.twimg.com/media/FpfSgHdaEAE-Ts6?format=jpg
+// https://pbs.twimg.com/media/FpfRSXQacAARY-a?format=jpg
+// https://pbs.twimg.com/media/FoaB5b9aUAAXgAU?format=jpg
+// https://pbs.twimg.com/media/FjuxRy-agAAgAFJ?format=jpg`;
+sleep(1500);
+
+console.log('tmp_test_data_insert');
+// this.i_t_n_init();
 this.data_a_b_converter_for('i_t_n');
 this.i_t_n_data2_data3_string_to_array();
 this.i_t_n_make_image_to_name_Q_A_array();
+
 },
+
 i_t_n_data9_x_setup() {
 this.data_type = 'i_t_n';
+// this.data_a = `cat
+// dog
+// halr
+// grf
+// eleph`;
+// // const tmp_2;
+// this.data_b = `./asset/cat.png
+// ./asset/dog.png
+// ./asset/halr.png
+// ./asset/grf.png
+// ./asset/eleph.png`;
+
+
+this.i_t_n_change_result();
+console.log(this.i_t_n_data5_result, this.i_t_n_data9_result);
+
+// this.data_a_b_converter_for('i_t_n');
 this.i_t_n_data2 = this.data_a;const ary1 = this.i_t_n_data2;
+// const ary1 = tmp_1;
 this.i_t_n_data3 = this.data_b;const ary2 = this.i_t_n_data3;
+// const ary2 = tmp_2;
 const ary10 = ary1.split("\n");
 const ary20 = ary2.split("\n");
 const ary10_1 = R.clone(ary10);

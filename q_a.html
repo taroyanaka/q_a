@@ -692,8 +692,6 @@ f_i_b_data_X_2: [],
 f_i_b_data_X_3: [],
 f_i_b_data_X_4: [],
 f_i_b_data_X_5: [],
-// f_i_b_test_mode: true,
-f_i_b_test_mode: false,
 // for f_i_b
 
 
@@ -712,8 +710,6 @@ i_t_n_data9_x: [],
 
 i_t_n_data5_result: true,
 i_t_n_data9_result: false,
-
-i_t_n_test_mode: false,
 // for i_t_n
 
 
@@ -724,13 +720,10 @@ q_a_data4: [],
 q_a_data5: [],
 data_a: '',
 online_data_A: [],
-// online_data_A1: '',
-test_mode: true,
+test_mode: false,
 column_1_none: false,
 column_2_none: false,
 column_3_none: false,
-// progress_val: 0,
-
 
 DATA_TYPE_ARRAY: [
     'q_a',
@@ -859,14 +852,14 @@ this.fetch_get_tags_for_autocomplete();
 this.q_a_processing();
 this.save_data_load();
 this.advanced_visible_fn();
-this.test_mode === false ? this.test_exe() : null;
+this.test_mode === false ? this.test_data_exe() : null;
 
 if(this.data_type === "f_i_b"){
     this.data_a_b_converter_for('f_i_b');
     this.f_i_b_data3_setup();
     this.f_i_b_data4_5_setup();
     this.f_i_b_exe();
-    this.f_i_b_test_mode === true ? this.f_i_b_test_exe() : null;
+    this.test_mode === true ? this.test_data_exe() : null;
 };
 if(this.data_type === "i_t_n"){
     this.i_t_n_init();
@@ -1261,58 +1254,6 @@ q_a_data5 = to_ary(this.q_a_data5);
 data_a = to_ary(this.data_a);
 online_data_A = to_ary(this.online_data_A);
 },
-test_data_exe(Test_Index){
-if(Test_Index === 0){
-    this.data_a = `Hello
-Thank you
-Goodbye
-Yes
-No
-Please
-Sorry
-Excuse me
-Good
-Bad`;
-    this.data_b = `こんにちは
-ありがとう
-さようなら
-はい
-いいえ
-お願いします
-ごめんなさい
-失礼します
-良い
-悪い`;
-};
-
-if(Test_Index === 1){
-    this.data_a = `ぁ
-あぃい
-ぅうぇ
-えぉお
-かがき
-ぎくぐ
-けげこ
-ごさざ
-しじす
-ず`;
-    this.data_b = `ァ
-アィイ
-ゥウェ
-エォオ
-カガキ
-ギクグ
-ケゲコ
-ゴサザ
-シジス
-ズ`;
-}
-
-},
-
-
-
-
 
 
 // for_online_function
@@ -1794,7 +1735,53 @@ const ary10_2 = R.clone(ary10);
 const ary100 = ary20.map((V,I)=>[V, [ary10_1[I], shuffle(ary10_2).slice(0,3)], false ]);
 this.i_t_n_data9_x = ary100;
 },
-test_exe(){
+test_data_exe(Test_Index){
+if(Test_Index === 0){
+    this.data_a = `Hello
+Thank you
+Goodbye
+Yes
+No
+Please
+Sorry
+Excuse me
+Good
+Bad`;
+    this.data_b = `こんにちは
+ありがとう
+さようなら
+はい
+いいえ
+お願いします
+ごめんなさい
+失礼します
+良い
+悪い`;
+};
+
+if(Test_Index === 1){
+    this.data_a = `ぁ
+あぃい
+ぅうぇ
+えぉお
+かがき
+ぎくぐ
+けげこ
+ごさざ
+しじす
+ず`;
+    this.data_b = `ァ
+アィイ
+ゥウェ
+エォオ
+カガキ
+ギクグ
+ケゲコ
+ゴサザ
+シジス
+ズ`;
+}
+
 },
 
 
@@ -1808,8 +1795,6 @@ test_exe(){
 
 // コア部分以外の命名と処理内容を共通化する
 // <style>の中身をまとめる
-    // => q_a, f_i_b, i_t_nの3つのページを1つのHTMLにまとめる
-
 },
 }).mount('.app');
 </script>

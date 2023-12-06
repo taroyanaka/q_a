@@ -11,7 +11,7 @@
 <script src="./lib/vue@3.2.36.global.prod.js"></script>
 <script src="./lib/ramda.@0.28.0.js"></script>
 <script src="./lib/shuffle.js"></script>
-<script src="./lib/my_global_function_for_q_a.js" defer></script>
+<script src="./lib/my_global_function_for_q_a.js"></script>
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script> -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.prod.js"></script> -->
@@ -1010,41 +1010,50 @@ this.f_i_b_data9 = this.f_i_b_data6.filter(V => V !== '');
 },
 
 f_i_b_for_debug(){
-this.css_var_set('--css-var-test-inline', 'inlilne');
-this.css_var_set('--css-var-color-1', 'LightGray');
-this.css_var_set('--css-var-color-2', 'SlateGray');
-this.css_var_set('--css-var-color-3', 'DimGray');
+// this.css_var_set('--css-var-test-inline', 'inlilne');
+// this.css_var_set('--css-var-color-1', 'LightGray');
+// this.css_var_set('--css-var-color-2', 'SlateGray');
+// this.css_var_set('--css-var-color-3', 'DimGray');
 
-const data1 = to_ary(this.f_i_b_data1);
-const data2 = to_ary(this.f_i_b_data2);
-const data3 = to_ary(this.f_i_b_data3);
+const f_i_b_data1 = to_ary(this.f_i_b_data1);
+const f_i_b_data2 = to_ary(this.f_i_b_data2);
+const f_i_b_data3 = to_ary(this.f_i_b_data3);
 const f_i_b_data4 = to_ary(this.f_i_b_data4);
 const f_i_b_data5 = to_ary(this.f_i_b_data5);
-const data6 = to_ary(this.f_i_b_data6);
-const data7 = to_ary(this.f_i_b_data7);
-const data8 = to_ary(this.f_i_b_data8);
-const data9 = to_ary(this.f_i_b_data9);
-const data_X_1 = to_ary(this.f_i_b_data_X_1);
-const data_X_2 = to_ary(this.f_i_b_data_X_2);
-const data_X_3 = to_ary(this.f_i_b_data_X_3);
-const data_X_4 = to_ary(this.f_i_b_data_X_4);
-const data_X_5 = to_ary(this.f_i_b_data_X_5);
-console.log(
-'f_i_b_data1:' , data1, '\n',
-'f_i_b_data2:' , data2, '\n',
-'f_i_b_data3:' , data3, '\n',
-'f_i_b_data4:' , f_i_b_data4, '\n',
-'f_i_b_data5:' , f_i_b_data5, '\n',
-'f_i_b_data6:' , data6, '\n',
-'f_i_b_data7:' , data7, '\n',
-'f_i_b_data8:' , data8, '\n',
-'f_i_b_data9:' , data9, '\n',
-'f_i_b_data_X_1' , data_X_1, '\n',
-'f_i_b_data_X_2' , data_X_2, '\n',
-'f_i_b_data_X_3' , data_X_3, '\n',
-'f_i_b_data_X_4' , data_X_4, '\n',
-'f_i_b_data_X_5' , data_X_5, '\n',
-);
+const f_i_b_data6 = to_ary(this.f_i_b_data6);
+const f_i_b_data7 = to_ary(this.f_i_b_data7);
+const f_i_b_data8 = to_ary(this.f_i_b_data8);
+const f_i_b_data9 = to_ary(this.f_i_b_data9);
+const f_i_b_data_X_1 = to_ary(this.f_i_b_data_X_1);
+const f_i_b_data_X_2 = to_ary(this.f_i_b_data_X_2);
+const f_i_b_data_X_3 = to_ary(this.f_i_b_data_X_3);
+const f_i_b_data_X_4 = to_ary(this.f_i_b_data_X_4);
+const f_i_b_data_X_5 = to_ary(this.f_i_b_data_X_5);
+
+const obj = {
+f_i_b_data1: f_i_b_data1,
+f_i_b_data2: f_i_b_data2,
+f_i_b_data3: f_i_b_data3,
+f_i_b_data4: f_i_b_data4,
+f_i_b_data5: f_i_b_data5,
+f_i_b_data6: f_i_b_data6,
+f_i_b_data7: f_i_b_data7,
+f_i_b_data8: f_i_b_data8,
+f_i_b_data9: f_i_b_data9,
+f_i_b_data_X_1: f_i_b_data_X_1,
+f_i_b_data_X_2: f_i_b_data_X_2,
+f_i_b_data_X_3: f_i_b_data_X_3,
+f_i_b_data_X_4: f_i_b_data_X_4,
+f_i_b_data_X_5: f_i_b_data_X_5,
+};
+let ary = [];
+for (let i = 0; i < ary.length; i++) {
+  obj[ary[i]] = i;
+}
+for (let [key, val] of Object.entries(obj)) {
+  console.log(key); console.log(val);
+}
+
 },
 f_i_b_exe(){
     this.f_i_b_composer();

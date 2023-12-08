@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>memory system of tile style: sample</title>
+    <link rel="stylesheet" href="./lib/reset.css">
+<script src="./lib/vue@3.2.36.global.prod.js"></script>
+<script src="./lib/ramda.@0.28.0.js"></script>
+<style>
+.app {
+    font-size: 3rem;
+}
+
+</style>
+</head>
+<body class="app">
+    <div style="position: absolute">
+        <button @click="fn1(event, 10, 0)">fn1x</button>
+        <button @click="fn1(event, 0, 10)">fn1y</button>
+        <span id="be_parent_target_elm"></span>
+    </div>
+</body>
+<script>
+
+// let cnt_ary = [[1,1], [3,3], [5,5], [7,7], [9,9]];
+// let current_ary = cnt_ary[0];
+
+const app = Vue.createApp({
+data() {
+    return {
+foo1: 'foo',
+counter: 1,
+    }},
+watch: {
+},
+beforeMounte(){
+},
+mounted() {
+    document.querySelectorAll('button').forEach((elm) => {
+        elm.addEventListener('click', this.fn1);
+    })
+},
+beforeUpdate() {
+},
+updated() {
+},
+methods: {
+fn1(event, x, y) {
+    current_ary = [1, 1];
+    current_ary = [current_ary[0]*x, current_ary[1]*y];
+    console.log(current_ary);
+    div = document.createElement('div');
+    div.style = `position: relative; top: ${current_ary[0]*10}px; left: ${current_ary[1]*10}px`;
+    button = document.createElement('button');
+    button.innerText = 'fn1';
+    span = document.createElement('span');
+    span.id = 'be_parent_target_elm';
+    div.appendChild(button);
+    div.appendChild(span);
+    event.target.nextElementSibling.appendChild(div);
+    document.querySelectorAll('button').forEach((elm) => {
+            elm.addEventListener('click', this.fn1);
+    })
+},
+
+},
+}).mount('.app');
+
+// 意図した挙動をしていない。
+    // 実装案1
+    // ナンバリングをデバグする
+    // ナンバリングをx-yにして、cssのpositionでx-yのleft-topで配置する。
+    // xクリックでインクリメントされて右に要素が追加。
+    // yクリックでインクリメントされて下に要素が追加
+
+</script>
+</html>

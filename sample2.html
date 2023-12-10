@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./lib/reset.css">
 </head>
+<style>
+    #parent_block {
+        top:0;
+        left:0;
+    }
+</style>
 <body>
 <div id="parent_block" data-x="0" data-y="0" style="position: relative;" >
     <div class="block1" data-x="0" data-y="0" style="position: absolute;">
@@ -14,83 +21,55 @@
 </div>
 </body>
 <script>
-
-    let ary1 = [
-        [0, 0],
-
-    ];
-
-    let after_ary = [];
+let ary1 = [];
 const add_x = (event) => make_block(event, 'x');
 const add_y = (event) => make_block(event, 'y');
 const make_block = (event) => {
-
-    let parent_block = document.querySelector('#parent_block');
-
-    let block = document.createElement('div');
-    block.classList.add('block1');
-    block.dataset.x = 0;
-    block.dataset.y = 0;
-    console.log(
-         block.dataset.x,
-         block.dataset.y,
-         event.target.parentElement.dataset.y,
-         event.target.parentElement.dataset.y,
-         event.target.innerText,
-    );
-    block.dataset.x = Number(event.target.parentElement.dataset.x);
-    block.dataset.y = Number(event.target.parentElement.dataset.y);
-    if (event.target.innerText === 'add_x') {
-        block.dataset.x = Number(event.target.parentElement.dataset.x) + 1;
-    }
-    if (event.target.innerText === 'add_y') {
-        block.dataset.y = Number(event.target.parentElement.dataset.y) + 1;
-    }
-
-    let add_x_button = document.createElement('button');
-    add_x_button.innerText = 'add_x';
-    add_x_button.addEventListener('click', add_x);
-
-
-    let add_y_button = document.createElement('button');
-    add_y_button.innerText = 'add_y';
-    add_y_button.addEventListener('click', add_y);
-
-    console.log(
-         block.dataset.x,
-         block.dataset.y
-    );
-    block.style.position = 'absolute';
-    block.style.left = block.dataset.x * 200 + 'px';
-    block.style.top = block.dataset.y * 200 + 'px';
-
-    block.appendChild(add_x_button);
-    block.appendChild(add_y_button);
-
-    parent_block.appendChild(block);
-
-
+let block = document.createElement('div');
+block.classList.add('block1');
+block.dataset.x = 0;
+block.dataset.y = 0;
+console.log(
+    block.dataset.x,
+    block.dataset.y,
+    event.target.parentElement.dataset.y,
+    event.target.parentElement.dataset.y,
+    event.target.innerText,
+);
+block.dataset.x = Number(event.target.parentElement.dataset.x);
+block.dataset.y = Number(event.target.parentElement.dataset.y);
+if (event.target.innerText === 'add_x') {
+    block.dataset.x = Number(event.target.parentElement.dataset.x) + 1;
+}
+if (event.target.innerText === 'add_y') {
+    block.dataset.y = Number(event.target.parentElement.dataset.y) + 1;
+}
+let add_x_button = document.createElement('button');
+add_x_button.innerText = 'add_x';
+add_x_button.addEventListener('click', add_x);
+let add_y_button = document.createElement('button');
+add_y_button.innerText = 'add_y';
+add_y_button.addEventListener('click', add_y);
+console.log(
+    block.dataset.x,
+    block.dataset.y
+);
+block.style.position = 'absolute';
+block.style.left = block.dataset.x * 200 + 'px';
+block.style.top = block.dataset.y * 200 + 'px';
+block.appendChild(add_x_button);
+block.appendChild(add_y_button);
+let parent_block = document.querySelector('#parent_block');
+parent_block.appendChild(block);
 // ary1に全てのblock1のx,yを収集して格納する
-    let block1s = document.querySelectorAll('.block1');
-    ary1 = [];
-    block1s.forEach((block1) => {
-        ary1.push([
-            Number(block1.dataset.x),
-            Number(block1.dataset.y),
-        ]);
-    });
-
-
-
-
-
-
-
-
-
-
-
-
+let block1s = document.querySelectorAll('.block1');
+ary1 = [];
+block1s.forEach((block1) => {
+    ary1.push([
+        Number(block1.dataset.x),
+        Number(block1.dataset.y),
+    ]);
+});
 }
 </script>
 </html>

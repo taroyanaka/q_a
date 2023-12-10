@@ -32,6 +32,8 @@ data() {
     return {
 foo1: 'foo',
 counter: 1,
+x_counter: 1,
+y_counter: 1,
     }},
 watch: {
 },
@@ -48,21 +50,27 @@ updated() {
 },
 methods: {
 fn1(event, x, y) {
-    current_ary = [1, 1];
-    current_ary = [current_ary[0]*x, current_ary[1]*y];
-    console.log(current_ary);
+    x = x === 0 ? 0 : this.x_counter++;
+    y = y === 0 ? 0 : this.y_counter++;
+    console.log(x, y);
+    // console.log(        this.x_counter,        this.y_counter,    )
+    // current_ary = [1, 1];
+    // current_ary = [current_ary[0]*x, current_ary[1]*y];
+    // console.log(current_ary);
     div = document.createElement('div');
-    div.style = `position: relative; top: ${current_ary[0]*10}px; left: ${current_ary[1]*10}px`;
+    // div.style = `position: relative; top: ${current_ary[0]*30}px; left: ${current_ary[1]*30}px`;
+    div.style = `position: relative; top: ${x*50}px; left: ${y*50}px`;
     button = document.createElement('button');
     button.innerText = 'fn1';
     span = document.createElement('span');
     span.id = 'be_parent_target_elm';
     div.appendChild(button);
     div.appendChild(span);
+    console.log(event);
     event.target.nextElementSibling.appendChild(div);
-    document.querySelectorAll('button').forEach((elm) => {
-        elm.addEventListener('click', this.fn1);
-    })
+    // document.querySelectorAll('button').forEach((elm) => {
+        // elm.addEventListener('click', this.fn1);
+    // })
 },
 
 },

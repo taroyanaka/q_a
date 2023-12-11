@@ -1,87 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>memory system of tile style: sample</title>
-    <link rel="stylesheet" href="./lib/reset.css">
+
+<!-- <link rel="manifest" href="manifest.json"> -->
+
+<!-- https://taroyanaka.github.io/q_a/sample_data_for_index3.txt -->
+
+<link rel="stylesheet" href="./lib/reset.css">
+<!-- <script src="./lib/localforage@1.10.0.js"></script> -->
 <script src="./lib/vue@3.2.36.global.prod.js"></script>
 <script src="./lib/ramda.@0.28.0.js"></script>
+<script src="./lib/shuffle.js"></script>
+<script src="./lib/my_global_function_for_q_a.js" defer></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.prod.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
 <style>
-.app {
-    font-size: 3rem;
+:root {
 }
-
+.app{
+}
+input[type="text"]{
+    width: 3rem;
+}
 </style>
 </head>
 <body class="app">
-    <div style="position: absolute">
-        <button @click="fn1(event, 10, 0)">fn1x</button>
-        <button @click="fn1(event, 0, 10)">fn1y</button>
-        <span id="be_parent_target_elm"></span>
+<div id="parent_block" data-x="0" data-y="0" style="position: relative;" >
+    <div class="block1"
+    :data-x="VAL[0]"
+    :data-y="VAL[1]"
+    :style="'position: absolute;' + 'left: ' + (VAL[0]*x_px) + 'px;' + 'top: ' + (VAL[1]*y_px) + 'px;'"
+    v-for="(VAL, IDX) in data1"
+    >
+        <input type="text" 
+        :style="{ 'color': (VAL[3]['no_show'] === true ? 'transparent' : 'black') }"
+        v-model="data1[IDX][2]">
+        <button @click="add_x(IDX)">add_x</button>
+        <button @click="add_y(IDX)">add_y</button>
+        <button @click="remove_block(IDX)">remove</button>
+        <button @click="change_to_no_show(IDX)">!</button>
     </div>
+</div>
 </body>
 <script>
-
-// let cnt_ary = [[1,1], [3,3], [5,5], [7,7], [9,9]];
-// let current_ary = cnt_ary[0];
-
 const app = Vue.createApp({
 data() {
-    return {
-foo1: 'foo',
-counter: 1,
-x_counter: 1,
-y_counter: 1,
-    }},
+return {
+x_px: 300,
+y_px: 18,
+data1: [
+    [0, 0, 'text10', {no_show: false}],
+],
+}},
 watch: {
+    data1: {
+        handler() {
+        },
+        deep: true
+    },
 },
-beforeMounte(){
-},
-mounted() {
-    document.querySelectorAll('button').forEach((elm) => {
-        elm.addEventListener('click', this.fn1);
-    })
-},
-beforeUpdate() {
-},
-updated() {
-},
+beforeCreate(){},
+created(){},
+beforeMount(){},
+mounted(){},
+beforeUpdate(){},
+updated(){},
 methods: {
-fn1(event, x, y) {
-    x = x === 0 ? 0 : this.x_counter++;
-    y = y === 0 ? 0 : this.y_counter++;
-    console.log(x, y);
-    // console.log(        this.x_counter,        this.y_counter,    )
-    // current_ary = [1, 1];
-    // current_ary = [current_ary[0]*x, current_ary[1]*y];
-    // console.log(current_ary);
-    div = document.createElement('div');
-    // div.style = `position: relative; top: ${current_ary[0]*30}px; left: ${current_ary[1]*30}px`;
-    div.style = `position: relative; top: ${x*50}px; left: ${y*50}px`;
-    button = document.createElement('button');
-    button.innerText = 'fn1';
-    span = document.createElement('span');
-    span.id = 'be_parent_target_elm';
-    div.appendChild(button);
-    div.appendChild(span);
-    console.log(event);
-    event.target.nextElementSibling.appendChild(div);
-    // document.querySelectorAll('button').forEach((elm) => {
-        // elm.addEventListener('click', this.fn1);
-    // })
+// return true when there is same x,y in data1, one line fn
+check_xy(x, y){
+    return this.data1.some((val) => {
+        return (val[0] === x && val[1] === y);
+    });
+},
+add_x(IDX){
+    // early return when there is same x,y in data1
+    if(this.check_xy(this.data1[IDX][0]+1, this.data1[IDX][1])){
+        console.log('same x,y');
+        return;
+    }
+    // add x offset from IDX block
+    this.data1.splice(IDX, 0, [this.data1[IDX][0]+1, this.data1[IDX][1], 'text10', {no_show: false}]);
+},
+add_y(IDX){
+    // early return when there is same x,y in data1
+    if(this.check_xy(this.data1[IDX][0], this.data1[IDX][1]+1)){
+        console.log('same x,y');
+        return;
+    }
+    // add y offset from IDX block
+    this.data1.splice(IDX, 0, [this.data1[IDX][0], this.data1[IDX][1]+1, 'text10', {no_show: false}]);
+
+},
+remove_block(IDX){
+    this.data1.splice(IDX, 1);
+},
+change_to_no_show(IDX){
+    this.data1[IDX][3]['no_show'] = this.data1[IDX][3]['no_show'] === true ? false : true;
 },
 
 },
 }).mount('.app');
-
-// 意図した挙動をしていない。
-    // 実装案1
-    // ナンバリングをデバグする
-    // ナンバリングをx-yにして、cssのpositionでx-yのleft-topで配置する。
-    // xクリックでインクリメントされて右に要素が追加。
-    // yクリックでインクリメントされて下に要素が追加
-
 </script>
 </html>

@@ -37,10 +37,13 @@ input[type="text"]{
         :style="'position: absolute;' + 'left: ' + (VAL[0]*x_px) + 'px;' + 'top: ' + (VAL[1]*y_px) + 'px;'"
         v-for="(VAL, IDX) in data1"
         >
-        <input type="text" v-model="data1[IDX][2]">
+        <input type="text" 
+        :style="{ 'color': (VAL[3]['no_show'] === true ? 'transparent' : 'black') }"
+        v-model="data1[IDX][2]">
             <button @click="add_x(IDX)">add_x</button>
             <button @click="add_y(IDX)">add_y</button>
             <button @click="remove_block(IDX)">remove</button>
+            <button @click="change_to_no_show(IDX)">!</button>
         </div>
     </div>    
 </body>
@@ -51,7 +54,7 @@ return {
     x_px: 300,
     y_px: 18,
 data1: [
-    [0, 0, 'text10'],
+    [0, 0, 'text10', {no_show: false}],
 ],
 }},
 watch: {
@@ -82,7 +85,7 @@ add_x(IDX){
         return;
     }
     // add x offset from IDX block
-    this.data1.splice(IDX, 0, [this.data1[IDX][0]+1, this.data1[IDX][1], 'text10']);
+    this.data1.splice(IDX, 0, [this.data1[IDX][0]+1, this.data1[IDX][1], 'text10', {no_show: false}]);
 },
 add_y(IDX){
     // early return when there is same x,y in data1
@@ -91,12 +94,15 @@ add_y(IDX){
         return;
     }
     // add y offset from IDX block
-    this.data1.splice(IDX, 0, [this.data1[IDX][0], this.data1[IDX][1]+1, 'text10']);
+    this.data1.splice(IDX, 0, [this.data1[IDX][0], this.data1[IDX][1]+1, 'text10', {no_show: false}]);
 
 },
 remove_block(IDX){
     this.data1.splice(IDX, 1);
-}
+},
+change_to_no_show(IDX){
+    this.data1[IDX][3]['no_show'] = this.data1[IDX][3]['no_show'] === true ? false : true;
+},
 
 },
 }).mount('.app');

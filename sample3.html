@@ -30,29 +30,29 @@ input[type="text"]{
 </style>
 </head>
 <body class="app">
-    <div id="parent_block" data-x="0" data-y="0" style="position: relative;" >
-        <div class="block1"
-        :data-x="VAL[0]"
-        :data-y="VAL[1]"
-        :style="'position: absolute;' + 'left: ' + (VAL[0]*x_px) + 'px;' + 'top: ' + (VAL[1]*y_px) + 'px;'"
-        v-for="(VAL, IDX) in data1"
-        >
+<div id="parent_block" data-x="0" data-y="0" style="position: relative;" >
+    <div class="block1"
+    :data-x="VAL[0]"
+    :data-y="VAL[1]"
+    :style="'position: absolute;' + 'left: ' + (VAL[0]*x_px) + 'px;' + 'top: ' + (VAL[1]*y_px) + 'px;'"
+    v-for="(VAL, IDX) in data1"
+    >
         <input type="text" 
         :style="{ 'color': (VAL[3]['no_show'] === true ? 'transparent' : 'black') }"
         v-model="data1[IDX][2]">
-            <button @click="add_x(IDX)">add_x</button>
-            <button @click="add_y(IDX)">add_y</button>
-            <button @click="remove_block(IDX)">remove</button>
-            <button @click="change_to_no_show(IDX)">!</button>
-        </div>
-    </div>    
+        <button @click="add_x(IDX)">add_x</button>
+        <button @click="add_y(IDX)">add_y</button>
+        <button @click="remove_block(IDX)">remove</button>
+        <button @click="change_to_no_show(IDX)">!</button>
+    </div>
+</div>
 </body>
 <script>
 const app = Vue.createApp({
 data() {
 return {
-    x_px: 300,
-    y_px: 18,
+x_px: 300,
+y_px: 18,
 data1: [
     [0, 0, 'text10', {no_show: false}],
 ],
@@ -71,7 +71,6 @@ mounted(){},
 beforeUpdate(){},
 updated(){},
 methods: {
-fn1(){},
 // return true when there is same x,y in data1, one line fn
 check_xy(x, y){
     return this.data1.some((val) => {

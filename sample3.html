@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sample3(from sample2)</title>
+
+<!-- <link rel="manifest" href="manifest.json"> -->
+
+<!-- https://taroyanaka.github.io/q_a/sample_data_for_index3.txt -->
+
+<link rel="stylesheet" href="./lib/reset.css">
+<!-- <script src="./lib/localforage@1.10.0.js"></script> -->
+<script src="./lib/vue@3.2.36.global.prod.js"></script>
+<script src="./lib/ramda.@0.28.0.js"></script>
+<script src="./lib/shuffle.js"></script>
+<script src="./lib/my_global_function_for_q_a.js" defer></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.prod.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
+<style>
+:root {
+}
+.app{
+}
+</style>
+</head>
+<body class="app">
+    <div id="parent_block" data-x="0" data-y="0" style="position: relative;" >
+        <div class="block1"
+        :data-x="VAL[0]"
+        :data-y="VAL[1]"
+        :style="'position: absolute;' + 'left: ' + VAL[0]*200 + 'px;' + 'top: ' + VAL[1]*200 + 'px;'"
+        v-for="(VAL, IDX) in data1"
+        >
+        <textarea name="" id="" cols="10" rows="1" v-model="data1[IDX][2]"></textarea>
+            <button @click="add_x">add_x</button>
+            <button @click="add_y">add_y</button>
+        </div>
+    </div>    
+</body>
+<script>
+const app = Vue.createApp({
+data() {
+return {
+data1: [
+    [0, 0, 'text10'],
+],
+}},
+watch: {
+    data1: {
+        handler() {
+        },
+        deep: true
+    },
+},
+beforeCreate(){},
+created(){},
+beforeMount(){},
+mounted(){},
+beforeUpdate(){},
+updated(){},
+methods: {
+fn1(){},
+add_x(){
+    this.data1.push([this.data1[this.data1.length-1][0]+1, this.data1[this.data1.length-1][1], 'text10']);
+},
+add_y(){
+    this.data1.push([this.data1[this.data1.length-1][0], this.data1[this.data1.length-1][1]+1, 'text10']);
+},
+
+},
+}).mount('.app');
+</script>
+</html>

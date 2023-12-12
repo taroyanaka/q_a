@@ -27,6 +27,16 @@
 input[type="text"]{
     width: 3rem;
 }
+/* 画面に追従して常に示する */
+.change_to_no_show_all{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+    font-size: 1.5rem;
+}
+
 </style>
 </head>
 <body class="app">
@@ -38,14 +48,23 @@ input[type="text"]{
     v-for="(VAL, IDX) in data1"
     >
         <input type="text" 
-        :style="{ 'color': (VAL[3]['no_show'] === true ? 'transparent' : 'black') }"
-        v-model="data1[IDX][2]">
-        <button @click="add_x(IDX)">add_x</button>
-        <button @click="add_y(IDX)">add_y</button>
-        <button @click="remove_block(IDX)">remove</button>
+        :style="{ 'color': (VAL[4]['no_show'] === true ? 'transparent' : 'black') }"
+        v-model="data1[IDX][2][ data1[IDX][2]['now'] ]">
+        <button @click="add_x(IDX)">x</button>
+        <button @click="add_y(IDX)">y</button>
+        <button @click="remove_block(IDX)">/</button>
+        <button @click="flip(IDX)">-</button>
         <button @click="change_to_no_show(IDX)">!</button>
+        <button @click="change_show_full(IDX)">0</button>
+        <button @click="change_show_first(IDX)">1</button>
+        <button @click="change_show_last(IDX)">-1</button>
     </div>
 </div>
+<!-- class change_to_no_show_all をdivで作成 -->
+<div class="change_to_no_show_all">
+    <button @click="change_to_no_show_all()">!</button>
+</div>
+
 </body>
 <script>
 const app = Vue.createApp({
@@ -53,13 +72,17 @@ data() {
 return {
 x_px: 300,
 y_px: 18,
-data1: [
-    [0, 0, 'text10', {no_show: false}],
-],
+data1_template: [
+            {now: 'full', full: 'text10', first: 't', last: '0'},
+           {now: 'full', full: 'TEXT22', first: 'T', last: '2'},
+            {no_show: false}
+        ],
+data1: [],
 }},
 watch: {
     data1: {
         handler() {
+            this.make_first_last();
         },
         deep: true
     },
@@ -67,42 +90,105 @@ watch: {
 beforeCreate(){},
 created(){},
 beforeMount(){},
-mounted(){},
+mounted(){
+    this.data1.push([0, 0, ...this.data1_template]);
+ },
 beforeUpdate(){},
 updated(){},
 methods: {
+make_first_last(){
+    this.data1.forEach((val) => {
+        val[2]['first'] = val[2]['full'].slice(0, 1);
+        val[2]['last'] = val[2]['full'].slice(-1);
+    });
+},
 // return true when there is same x,y in data1, one line fn
-check_xy(x, y){
+check_add_xy(x, y){
     return this.data1.some((val) => {
         return (val[0] === x && val[1] === y);
     });
+
+},
+make_block(IDX, x, y){
+    return [IDX, 0,
+        R.clone([x, y, ...this.data1_template])
+    ];
 },
 add_x(IDX){
     // early return when there is same x,y in data1
-    if(this.check_xy(this.data1[IDX][0]+1, this.data1[IDX][1])){
+    if(this.check_add_xy(this.data1[IDX][0]+1, this.data1[IDX][1])){
         console.log('same x,y');
         return;
     }
     // add x offset from IDX block
-    this.data1.splice(IDX, 0, [this.data1[IDX][0]+1, this.data1[IDX][1], 'text10', {no_show: false}]);
+    this.data1.splice(
+        ...this.make_block(IDX, this.data1[IDX][0]+1, this.data1[IDX][1])
+    );
 },
 add_y(IDX){
     // early return when there is same x,y in data1
-    if(this.check_xy(this.data1[IDX][0], this.data1[IDX][1]+1)){
+    if(this.check_add_xy(this.data1[IDX][0], this.data1[IDX][1]+1)){
         console.log('same x,y');
         return;
     }
     // add y offset from IDX block
-    this.data1.splice(IDX, 0, [this.data1[IDX][0], this.data1[IDX][1]+1, 'text10', {no_show: false}]);
+    this.data1.splice(
+        ...this.make_block(IDX, this.data1[IDX][0], this.data1[IDX][1]+1)
+    );
 
 },
+// return true when +1x or +1y from IDX block
+check_remove_xy(x, y){
+    return this.data1.some((val) => {
+        return (val[0] === x+1 && val[1] === y) || (val[0] === x && val[1] === y+1);
+    });
+},
 remove_block(IDX){
+    // IDXのblockがx,yが0,0の場合は削除しない
+    if(this.data1[IDX][0] === 0 && this.data1[IDX][1] === 0){
+        console.log('0,0');
+        return;
+    }
+    // early return when +1x or +1y from IDX block
+    if(this.check_remove_xy(this.data1[IDX][0], this.data1[IDX][1])){
+        console.log('+1 x,y');
+        return;
+    }
+
     this.data1.splice(IDX, 1);
 },
 change_to_no_show(IDX){
-    this.data1[IDX][3]['no_show'] = this.data1[IDX][3]['no_show'] === true ? false : true;
+    this.data1[IDX][4]['no_show'] = this.data1[IDX][4]['no_show'] === true ? false : true;
+},
+change_to_no_show_all(){
+    this.data1.forEach((val) => {
+        val[4]['no_show'] = val[4]['no_show'] === true ? false : true;
+    });
+},
+change_show_full(IDX){
+    this.data1[IDX][4]['no_show'] = false;
+    this.data1[IDX][2]['now'] = 'full';
+},
+change_show_first(IDX){
+    this.data1[IDX][4]['no_show'] = false;
+    this.data1[IDX][2]['now'] = 'first';
+},
+change_show_last(IDX){
+    this.data1[IDX][4]['no_show'] = false;
+    this.data1[IDX][2]['now'] = 'last';
+},
+flip(IDX){
+    // IDXのdata1の[2]を[3]とスワップする
+    this.data1[IDX][2] = [this.data1[IDX][3], this.data1[IDX][3] = this.data1[IDX][2]][0];
 },
 
+
+
+
+
+to_ary(it){
+    return JSON.parse(JSON.stringify(it));
+}
 },
 }).mount('.app');
 </script>

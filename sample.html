@@ -354,12 +354,15 @@ to_ary(it){
 },
 }).mount('.app');
 
+// get_textsの説明:
+    // data1の中からX_paramとY_paramを含む配列を取得し、
+    // その配列の中からX_paramとY_paramが連続している配列を取得する
 function get_texts(X_param, Y_param, axis){
     const check = app.data1.filter(V=>V[0] === X_param && V[1] === Y_param);
     if(check.length === 0) return;
 
-    const x_or_y = (axis === 'x' ? 0 : 1);
-    let lastNum = x_or_y === 0 ? X_param : Y_param;
+    const x_or_y = axis === 'x' ? 0 : 1;
+    let lastNum = axis === 'x' ? X_param : Y_param;
 
     let result = app.to_ary(app.data1).map(V=>[V[0], V[1]])
         .filter(V=>V[0] >= X_param && V[1] >= Y_param && (V[0] === X_param || V[1] === Y_param))

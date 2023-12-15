@@ -356,7 +356,9 @@ to_ary(it){
 
 // get_textsの説明:
     // data1の中からX_paramとY_paramを含む配列を取得し、
-    // その配列の中からX_paramとY_paramが連続している配列を取得する
+    // その配列の中からX_paramとY_paramが連続している配列を取得し、
+    // その配列のfullを取得し、
+    // そのfullを改行で結合した後に、返す
 function get_texts(X_param, Y_param, axis){
     const check = app.data1.filter(V=>V[0] === X_param && V[1] === Y_param);
     if(check.length === 0) return;

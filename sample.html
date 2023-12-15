@@ -19,6 +19,7 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.prod.js"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
 <style>
 :root {
 }
@@ -85,6 +86,22 @@ input[type="checkbox"] {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+.minimap{
+    z-index: 2;
+}
+.top_left{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+.top_right{
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 2;
+}
+
 </style>
 </head>
 <body class="app">
@@ -118,6 +135,14 @@ input[type="checkbox"] {
     <button @click="remove_all_checked_items">&</button>
 </div>
 
+<div class="top_left">
+    <button @click="scrollToPosition(0, 0)">0,0</button>
+</div>
+<div class="top_right">
+    <button onclick="mapping()">mapping</button>
+    <button onclick="delete_map()">delete map</button>
+</div>
+
 <template class="center_bottom">
     <div>
       <div v-for="(item, index) in checked_items" :key="index">
@@ -137,6 +162,7 @@ input[type="checkbox"] {
 const app = Vue.createApp({
 data() {
 return {
+    current_x_y: [],
     data_a: 'abc\ndef\nghi\njkl\nmno\npqr\nstu\nvwx\nyz\n012\n345\n678\n9',
     data_b: 'ABC\nDEF\nGHI\nJKL\nMNO\nPQR\nSTU\nVWX\nYZ\n012\n345\n678\n9',
 
@@ -290,14 +316,19 @@ flip(IDX){
     this.data1[IDX][2] = [this.data1[IDX][3], this.data1[IDX][3] = this.data1[IDX][2]][0];
 },
 test(){
-    const test_ary = [[1, 0],[2, 0],[3, 0],[4, 0],[0, 1],[0, 2],[0, 3],[0, 4],[0, 5],[3, 1],[3, 2],[3, 3],[3, 4],[3, 5],[3, 6],[4, 5],[5, 5],[5, 6],[5, 7],
+    let test_ary = [[1, 0],[2, 0],[3, 0],[4, 0],[0, 1],[0, 2],[0, 3],[0, 4],[0, 5],[3, 1],[3, 2],[3, 3],[3, 4],[3, 5],[3, 6],[4, 5],[5, 5],[5, 6],[5, 7],
         [1, 2],[1, 3],[1,4],[1, 6],[1, 7],
         [0,6],[0,7],
     ];
+    // test_ary = make_data1();
+    test_ary = make_data1_2();
     test_ary.forEach((val) => {
         // this.data1.push([val[0], val[1], ...this.data1_template]);
         this.init(val[0], val[1]);
     });
+    // [0,0]の位置にスクロールする
+    // this.scrollToPosition(0, 0);
+
 },
 checked_items_fn(){
     try {
@@ -352,6 +383,19 @@ data_a_data_b_set_x(IDX, X_Or_Y='x'){
 data_a_data_b_set_y(IDX, X_Or_Y='y'){
     this.data_a_data_b_set_any(IDX, X_Or_Y);
 },
+scrollToPosition(x, y) {
+    // mapping();
+        const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+        const x_px = this.x_rem * rootFontSize * x;
+        const y_px = this.y_rem * rootFontSize * y;
+        this.current_x_y = [x, y];
+
+        window.scrollTo({
+            top: y_px,
+            left: x_px,
+            // behavior: 'smooth'
+        });
+},
 
 
 to_ary(it){
@@ -386,6 +430,109 @@ function get_texts(X_param, Y_param, axis){
     return [result.map(val => app.data1.filter(V=>V[0] === val[0] && V[1] === val[1])[0][2]['full']).join('\n'),
             result.map(val => app.data1.filter(V=>V[0] === val[0] && V[1] === val[1])[0][3]['full']).join('\n')];
 };
+
+// [0,0]から[10,10]を生成する関数(R.cloneを利用して参照を切る)
+function make_data1(){
+    let ary = [];
+    for(let i=0; i<100; i++){
+        for(let j=0; j<10; j++){
+            ary.push([i, j]);
+        }
+    }
+    return ary;
+}
+// [0,0],[1,1],[2,2]のような配列を[100,100]まで生成する関数(R.cloneを利用して参照を切る)
+function make_data1_2(){
+    let ary = [];
+    for(let i=0; i<100; i++){
+        ary.push([i, i]);
+    }
+    return ary;
+}
+function mapping(){
+
+
+    // minimapの初期化(minimapクラスを持つ要素を削除する)
+    document.querySelectorAll('.minimap').forEach((val) => {
+        val.remove();
+    });
+    // minimapImageの初期化(minimapImageクラスを持つ要素を削除する)
+    document.querySelectorAll('.minimapImage').forEach((val) => {
+        val.remove();
+    });
+    // markerの初期化(markerクラスを持つ要素を削除する)
+    document.querySelectorAll('.marker').forEach((val) => {
+        val.remove();
+    });
+
+
+    // ミニマップのコンテナを作成
+const minimapContainer = document.createElement('div');
+// minimapContainerにclassを追加
+minimapContainer.classList.add('minimap');
+
+minimapContainer.style.position = 'fixed';
+minimapContainer.style.bottom = '0';
+minimapContainer.style.right = '0';
+minimapContainer.style.width = '200px';
+minimapContainer.style.height = '200px';
+minimapContainer.style.overflow = 'hidden';
+minimapContainer.style.border = '1px solid black';
+minimapContainer.style.background = 'white';
+document.body.appendChild(minimapContainer);
+
+// ミニマップの画像を作成
+const minimapImage = document.createElement('img');
+// minimapImageにclassを追加
+minimapImage.classList.add('minimapImage');
+minimapImage.style.width = '100%';
+minimapImage.style.height = 'auto';
+minimapContainer.appendChild(minimapImage);
+
+// 現在の表示位置を示すマーカーを作成(赤い四角形)
+// const marker = document.createElement('div');
+// marker.classList.add('marker');
+// marker.style.position = 'absolute';
+// marker.style.top = app.current_x_y[1] + 'rem';
+// marker.style.left = app.current_x_y[0] + 'rem';
+// marker.style.width = '1rem';
+// marker.style.height = '1rem';
+// marker.style.border = '0.5rem solid red';
+// marker.style.background = 'transparent';
+// minimapContainer.appendChild(marker);
+
+
+
+// ページ全体のスクリーンショットを取得
+html2canvas(document.querySelector(".app"), {
+        scrollX: 0,
+        scrollY: 0
+      }).then(function(canvas) {
+// html2canvas(document.documentElement).then(canvas => {
+    // minimapImage.src = '';
+    minimapImage.src = canvas.toDataURL();
+});
+};
+
+// delete map
+function delete_map(){
+    // minimapの初期化(minimapクラスを持つ要素を削除する)
+    document.querySelectorAll('.minimap').forEach((val) => {
+        val.remove();
+    });
+    // minimapImageの初期化(minimapImageクラスを持つ要素を削除する)
+    document.querySelectorAll('.minimapImage').forEach((val) => {
+        val.remove();
+    });
+    // markerの初期化(markerクラスを持つ要素を削除する)
+    document.querySelectorAll('.marker').forEach((val) => {
+        val.remove();
+    });
+};
+
+
+// 次に実装するやつ
+    // 要素同士を1:1で関連付けしてscrollToPositionで相互にスクロールできる
 
 
 

@@ -106,6 +106,8 @@ input[type="checkbox"] {
         <button :style="{ 'display': ( checked_items['change_show_full'] === false ? 'none' : 'inline') }" @click="change_show_full(IDX)">0</button>
         <button :style="{ 'display': ( checked_items['change_show_first'] === false ? 'none' : 'inline') }" @click="change_show_first(IDX)">1</button>
         <button :style="{ 'display': ( checked_items['change_show_last'] === false ? 'none' : 'inline') }" @click="change_show_last(IDX)">-</button>
+        <button :style="{ 'display': ( checked_items['data_a_data_b_set_x'] === false ? 'none' : 'inline') }" @click="data_a_data_b_set_x(IDX)">></button>
+        <button :style="{ 'display': ( checked_items['data_a_data_b_set_y'] === false ? 'none' : 'inline') }" @click="data_a_data_b_set_y(IDX)">↓</button>
     </div>
 </div>
 
@@ -139,9 +141,9 @@ return {
     data_b: 'ABC\nDEF\nGHI\nJKL\nMNO\nPQR\nSTU\nVWX\nYZ\n012\n345\n678\n9',
 
 display_none_or_inline: false,
-original_x_rem: 12,
+original_x_rem: 14,
 original_y_rem: 1.3,
-x_rem: 12,
+x_rem: 14,
 y_rem: 1.3,
 short_x_rem: 3.5,
 short_y_rem: 1.3,
@@ -164,6 +166,8 @@ change_to_no_show: true,
 change_show_full: true,
 change_show_first: true,
 change_show_last: true,
+data_a_data_b_set_x: true,
+data_a_data_b_set_y: true,
 },
 
 }},
@@ -317,6 +321,30 @@ remove_all_checked_items(){
     exe(false);
     this.checked_items_fn();
 },
+data_a_data_b_set_any(IDX, X_Or_Y){
+    const x_or_y = (X_Or_Y === 'x' ? 'x' : 'y');
+    const ary = get_texts(this.data1[IDX][0], this.data1[IDX][1], x_or_y);
+    // console.log(ary);
+    if(ary === undefined){
+        return;
+    }
+    // this.data1[IDX][2]['full'] = ary[0];
+    // this.data1[IDX][3]['full'] = ary[1];
+    // data_aとdata_bの両方に代入する
+    this.data_a = ary[0];
+    this.data_b = ary[1];
+    
+},
+// IDXからx,yを取得する関数
+get_x_or_y_num(IDX){
+    return [this.data1[IDX][0], this.data1[IDX][1]];
+},
+data_a_data_b_set_x(IDX, X_Or_Y='x'){
+    this.data_a_data_b_set_any(IDX, X_Or_Y);
+},
+data_a_data_b_set_y(IDX, X_Or_Y='y'){
+    this.data_a_data_b_set_any(IDX, X_Or_Y);
+},
 
 
 
@@ -343,10 +371,12 @@ function get_texts(X_param, Y_param, axis){
 
     // 例:[[0,0], [0,1], [0,3], [0,4], [0, 5], [0, 8], [0,9]]で、get_texts(0, 3, 'y');ならば[[0,3], [0,4], [0, 5]]となる関数
     // つまり、yが6だった場合早期stoppingする関数
-    array = app.to_ary(app.data1).map(V=>[V[0], V[1]]).filter(V=>V[0] === X_param && V[1] >= Y_param);
-    lastNum = Y_param;
+    array = app.to_ary(app.data1).map(V=>[V[0], V[1]]).filter(V=>V[0] >= X_param && V[1] >= Y_param);
 
     const x_or_y = (axis === 'x' ? 0 : 1);
+    lastNum = x_or_y === 0 ? X_param : Y_param;
+
+    // console.log(x_or_y);
 
     // jsのreduceで配列の数字が連続している時だけcollectして連続が止まった時は処理が停止するコード
     let result = array.reduce((acc, ary) => {
@@ -366,11 +396,11 @@ function get_texts(X_param, Y_param, axis){
     const result2 = result.map((val) => {
         const check = app.data1.filter(V=>V[0] === val[0] && V[1] === val[1]);
         return check[0][2]['full'];
-    }).join('');
+    }).join('\n');
     const result3 = result.map((val) => {
         const check = app.data1.filter(V=>V[0] === val[0] && V[1] === val[1]);
         return check[0][3]['full'];
-    }).join('');
+    }).join('\n');
 
     return [result2, result3];
 

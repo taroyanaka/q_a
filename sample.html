@@ -79,6 +79,12 @@ input[type="checkbox"] {
     margin-right: 1rem;
 }
 
+.center_middle {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 </style>
 </head>
 <body class="app">
@@ -119,12 +125,19 @@ input[type="checkbox"] {
     </div>
 </template>      
 
+<div class="center_middle">
+    <textarea name="" class="" v-model="data_a" id="" cols="30" rows="10"></textarea>
+    <textarea name="" class="" v-model="data_b" id="" cols="30" rows="10"></textarea>
+</div>
 
 </body>
 <script>
 const app = Vue.createApp({
 data() {
 return {
+    data_a: 'abc\ndef\nghi\njkl\nmno\npqr\nstu\nvwx\nyz\n012\n345\n678\n9',
+    data_b: 'ABC\nDEF\nGHI\nJKL\nMNO\nPQR\nSTU\nVWX\nYZ\n012\n345\n678\n9',
+
 display_none_or_inline: false,
 original_x_rem: 12,
 original_y_rem: 1.3,
@@ -164,8 +177,9 @@ watch: {
     checked_items: {
         handler() {
             // this.make_first_last();
-            this.data1.push([0, 0, ...this.data1_template]);
-            // this.test_mode === true ? this.test() : null;
+            // this.data1.push([0, 0, ...this.data1_template]);
+            this.init(0, 0);
+            this.test_mode === true ? this.test() : null;
         },
         deep: true
     },
@@ -174,12 +188,15 @@ beforeCreate(){},
 created(){},
 beforeMount(){},
 mounted(){
-    this.data1.push([0, 0, ...this.data1_template]);
+    this.init(0, 0);
     this.test_mode === true ? this.test() : null;
 },
 beforeUpdate(){},
 updated(){},
 methods: {
+    init(X, Y){
+        this.data1.push([X, Y, ...R.clone(this.data1_template)]);
+    },
 make_first_last(){
     this.data1.forEach((val) => {
         val[2]['first'] = val[2]['full'].slice(0, 1);
@@ -194,7 +211,7 @@ check_add_xy(x, y){
 },
 make_block(IDX, x, y){
     return [IDX, 0,
-        R.clone([x, y, ...this.data1_template])
+        R.clone([x, y, ...R.clone(this.data1_template)])
     ];
 },
 add_x(IDX){
@@ -269,9 +286,13 @@ flip(IDX){
     this.data1[IDX][2] = [this.data1[IDX][3], this.data1[IDX][3] = this.data1[IDX][2]][0];
 },
 test(){
-    const test_ary = [[1, 0],[2, 0],[3, 0],[4, 0],[0, 1],[0, 2],[0, 3],[0, 4],[0, 5],[3, 1],[3, 2],[3, 3],[3, 4],[3, 5],[3, 6],[4, 5],[5, 5],[5, 6],[5, 7],];
+    const test_ary = [[1, 0],[2, 0],[3, 0],[4, 0],[0, 1],[0, 2],[0, 3],[0, 4],[0, 5],[3, 1],[3, 2],[3, 3],[3, 4],[3, 5],[3, 6],[4, 5],[5, 5],[5, 6],[5, 7],
+        [1, 2],[1, 3],[1,4],[1, 6],[1, 7],
+        [0,6],[0,7],
+    ];
     test_ary.forEach((val) => {
-        this.data1.push([val[0], val[1], ...this.data1_template]);
+        // this.data1.push([val[0], val[1], ...this.data1_template]);
+        this.init(val[0], val[1]);
     });
 },
 checked_items_fn(){
@@ -281,22 +302,22 @@ checked_items_fn(){
     this.x_rem = this.original_x_rem - (checked_items_count - checked_items_true_count);
 },
 remove_all_checked_items(){
-    // checked_itemsが全てfalseであれば、全てのchecked_itemsをtrueにし、早期リターンする
-    if(Object.values(this.checked_items).every((val) => val === false)){
+    function exe(True_Or_False){
         this.checked_items = Object.entries(this.checked_items).reduce((acc, [key, val]) => {
-            acc[key] = true;
+            acc[key] = True_Or_False;
             return acc;
         }, {});
+    };
+    // checked_itemsが全てfalseであれば、全てのchecked_itemsをtrueにし、早期リターンする
+    if(Object.values(this.checked_items).every((val) => val === false)){
+        exe(true);
         this.checked_items_fn();
         return;
-    }
-
-    this.checked_items = Object.entries(this.checked_items).reduce((acc, [key, val]) => {
-        acc[key] = false;
-        return acc;
-    }, {});
+    };
+    exe(false);
     this.checked_items_fn();
 },
+
 
 
 
@@ -306,5 +327,58 @@ to_ary(it){
 
 },
 }).mount('.app');
+
+
+
+// get_textsはq_aへのsynapseを作るための関数
+
+// get_texts(0, 3, 'y');ならば、xが1 yが2から始まり,連続するyの数字(yが連続せず1以上離れている場合は連結しない)のblockのfullのtextを連結する
+function get_texts(X_param, Y_param, axis){
+    // X_paramもしくはY_paramが存在しない場合は早期リターン
+    const check = app.data1.filter(V=>V[0] === X_param && V[1] === Y_param);
+    if(check.length === 0){
+        return;
+    }
+
+
+    // 例:[[0,0], [0,1], [0,3], [0,4], [0, 5], [0, 8], [0,9]]で、get_texts(0, 3, 'y');ならば[[0,3], [0,4], [0, 5]]となる関数
+    // つまり、yが6だった場合早期stoppingする関数
+    array = app.to_ary(app.data1).map(V=>[V[0], V[1]]).filter(V=>V[0] === X_param && V[1] >= Y_param);
+    lastNum = Y_param;
+
+    const x_or_y = (axis === 'x' ? 0 : 1);
+
+    // jsのreduceで配列の数字が連続している時だけcollectして連続が止まった時は処理が停止するコード
+    let result = array.reduce((acc, ary) => {
+        if (ary[x_or_y] === lastNum + 1) {
+        acc.push(ary);
+        lastNum++;
+        } else {
+            // return acc;
+        //   throw new Error('Sequence stopped');
+        }
+        return acc;
+    }, []);
+    // resultの先頭に[1,2]を入れる
+    result.unshift([X_param, Y_param]);
+
+    // resultの各要素のfullを連結する(TEXT22の部分も連結する
+    const result2 = result.map((val) => {
+        const check = app.data1.filter(V=>V[0] === val[0] && V[1] === val[1]);
+        return check[0][2]['full'];
+    }).join('');
+    const result3 = result.map((val) => {
+        const check = app.data1.filter(V=>V[0] === val[0] && V[1] === val[1]);
+        return check[0][3]['full'];
+    }).join('');
+
+    return [result2, result3];
+
+
+};
+
+
+
+
 </script>
 </html>

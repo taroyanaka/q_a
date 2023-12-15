@@ -347,8 +347,6 @@ data_a_data_b_set_y(IDX, X_Or_Y='y'){
 },
 
 
-
-
 to_ary(it){
     return JSON.parse(JSON.stringify(it));
 },
@@ -356,29 +354,20 @@ to_ary(it){
 },
 }).mount('.app');
 
-
-
 // get_textsはq_aへのsynapseを作るための関数
-
-// get_texts(0, 3, 'y');ならば、xが1 yが2から始まり,連続するyの数字(yが連続せず1以上離れている場合は連結しない)のblockのfullのtextを連結する
 function get_texts(X_param, Y_param, axis){
     // X_paramもしくはY_paramが存在しない場合は早期リターン
     const check = app.data1.filter(V=>V[0] === X_param && V[1] === Y_param);
     if(check.length === 0){
         return;
     }
-
-
     // 例:[[0,0], [0,1], [0,3], [0,4], [0, 5], [0, 8], [0,9]]で、get_texts(0, 3, 'y');ならば[[0,3], [0,4], [0, 5]]となる関数
     // つまり、yが6だった場合早期stoppingする関数
     const array0 = app.to_ary(app.data1).map(V=>[V[0], V[1]]).filter(V=>V[0] >= X_param && V[1] >= Y_param);
     const array = array0.filter(V=>V[0] === X_param || V[1] === Y_param);
-
     const x_or_y = (axis === 'x' ? 0 : 1);
     lastNum = x_or_y === 0 ? X_param : Y_param;
-
     // console.log(X_param, Y_param, axis);
-
     // jsのreduceで配列の数字が連続している時だけcollectして連続が止まった時は処理が停止するコード
     let result = array.reduce((acc, ary) => {
         if (ary[x_or_y] === lastNum + 1) {
@@ -390,10 +379,7 @@ function get_texts(X_param, Y_param, axis){
         }
         return acc;
     }, []);
-    // resultの先頭に[1,2]を入れる
     result.unshift([X_param, Y_param]);
-    // console.table(result);
-
     // resultの各要素のfullを連結する(TEXT22の部分も連結する
     const result2 = result.map((val) => {
         const check = app.data1.filter(V=>V[0] === val[0] && V[1] === val[1]);
@@ -405,8 +391,6 @@ function get_texts(X_param, Y_param, axis){
     }).join('\n');
 
     return [result2, result3];
-
-
 };
 
 

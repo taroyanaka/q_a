@@ -82,14 +82,14 @@ button{
         <input type="text" 
         :style="{ 'color': (VAL[4]['no_show'] === true ? 'transparent' : 'black') }"
         v-model="data1[IDX][2][ data1[IDX][2]['now'] ]">
-        <button :style="{ 'display': ( display_none_or_inline ? 'none' : 'inline') }" @click="add_x(IDX)">x</button>
-        <button :style="{ 'display': ( display_none_or_inline ? 'none' : 'inline') }" @click="add_y(IDX)">y</button>
-        <button :style="{ 'display': ( display_none_or_inline ? 'none' : 'inline') }" @click="remove_block(IDX)">/</button>
-        <button :style="{ 'display': ( display_none_or_inline ? 'none' : 'inline') }" @click="flip(IDX)">|</button>
-        <button :style="{ 'display': ( display_none_or_inline ? 'none' : 'inline') }" @click="change_to_no_show(IDX)">!</button>
-        <button :style="{ 'display': ( display_none_or_inline ? 'none' : 'inline') }" @click="change_show_full(IDX)">0</button>
-        <button :style="{ 'display': ( display_none_or_inline ? 'none' : 'inline') }" @click="change_show_first(IDX)">1</button>
-        <button :style="{ 'display': ( display_none_or_inline ? 'none' : 'inline') }" @click="change_show_last(IDX)">-</button>
+        <button :style="{ 'display': ( display_none_or_inline || (checkedItems['add_x'] === false) ? 'none' : 'inline') }" @click="add_x(IDX)">x</button>
+        <button :style="{ 'display': ( display_none_or_inline || (checkedItems['add_y'] === false) ? 'none' : 'inline') }" @click="add_y(IDX)">y</button>
+        <button :style="{ 'display': ( display_none_or_inline || (checkedItems['remove_block'] === false) ? 'none' : 'inline') }" @click="remove_block(IDX)">/</button>
+        <button :style="{ 'display': ( display_none_or_inline || (checkedItems['flip'] === false) ? 'none' : 'inline') }" @click="flip(IDX)">|</button>
+        <button :style="{ 'display': ( display_none_or_inline || (checkedItems['change_to_no_show'] === false) ? 'none' : 'inline') }" @click="change_to_no_show(IDX)">!</button>
+        <button :style="{ 'display': ( display_none_or_inline || (checkedItems['change_show_full'] === false) ? 'none' : 'inline') }" @click="change_show_full(IDX)">0</button>
+        <button :style="{ 'display': ( display_none_or_inline || (checkedItems['change_show_first'] === false) ? 'none' : 'inline') }" @click="change_show_first(IDX)">1</button>
+        <button :style="{ 'display': ( display_none_or_inline || (checkedItems['change_show_last'] === false) ? 'none' : 'inline') }" @click="change_show_last(IDX)">-</button>
     </div>
 </div>
 
@@ -102,10 +102,10 @@ button{
 
 <template class="center_bottom">
     <div>
-      <div v-for="(item, index) in items" :key="index">
-        <input type="checkbox" :value="item" v-model="checkedItems">{{ item }}
+      <div v-for="(item, index) in checkedItems" :key="index">
+        <input type="checkbox" :value="item" v-model="checkedItems[index]">{{ index }}
       </div>
-      <div>Checked items: {{ checkedItems }}</div>
+      <!-- <div>Checked items: {{ checkedItems }}</div> -->
     </div>
 </template>      
 
@@ -132,14 +132,31 @@ data1: [],
 test_mode: false,
 all_show_or_none: 'show',
 
-items: ['Item 1', 'Item 2', 'Item 3'],
-checkedItems: [],
+items: ['checkedItems','add_x','add_y','remove_block','flip','change_to_no_show','change_show_full','change_show_first','change_show_last',],
+checkedItems: {
+add_x: true,
+add_y: true,
+remove_block: true,
+flip: true,
+change_to_no_show: true,
+change_show_full: true,
+change_show_first: true,
+change_show_last: true,
+},
 
 }},
 watch: {
     data1: {
         handler() {
             this.make_first_last();
+        },
+        deep: true
+    },
+    checkedItems: {
+        handler() {
+            // this.make_first_last();
+            this.data1.push([0, 0, ...this.data1_template]);
+            // this.test_mode === true ? this.test() : null;
         },
         deep: true
     },

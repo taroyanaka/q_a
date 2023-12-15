@@ -300,18 +300,25 @@ test(){
     });
 },
 checked_items_fn(){
-    const checked_items_count = Object.values(this.checked_items).length;
+    try {
+        const checked_items_count = Object.values(this.checked_items).length;
     // checked_itemsのtrueの数からx_remを決定する(checked_itemsのtrueの数が多いほどx_remが小さくなる)
     const checked_items_true_count = Object.values(this.checked_items).filter((val) => val === true).length;
     this.x_rem = this.original_x_rem - (checked_items_count - checked_items_true_count);
+    } catch (error) {
+        console.log(error);
+        
+    }
+
 },
 remove_all_checked_items(){
+    console.log('remove_all_checked_items');
     function exe(True_Or_False){
-        this.checked_items = Object.entries(this.checked_items).reduce((acc, [key, val]) => {
-            acc[key] = True_Or_False;
-            return acc;
-        }, {});
-    };
+        // checked_itemsの全ての値をTrue_Or_Falseにする
+        Object.keys(app.checked_items).forEach((val) => {
+            app.checked_items[val] = True_Or_False;
+        });
+    }
     // checked_itemsが全てfalseであれば、全てのchecked_itemsをtrueにし、早期リターンする
     if(Object.values(this.checked_items).every((val) => val === false)){
         exe(true);

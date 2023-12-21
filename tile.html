@@ -14,15 +14,13 @@
 <!-- <script src="./lib/localforage@1.10.0.js"></script> -->
 <script src="./lib/vue@3.2.36.global.prod.js"></script>
 <script src="./lib/ramda.@0.28.0.js"></script>
+<script src="./lib/html2canvas.js"></script>
 <script src="./lib/shuffle.js"></script>
 <script src="./lib/my_global_function_for_q_a.js" defer></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script> -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.prod.js"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
-
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script> -->
 <style>
 :root {
 }
@@ -128,10 +126,16 @@ input[type="checkbox"] {
         <button :style="{ 'display': ( checked_items['change_show_last'] === false ? 'none' : 'inline') }" @click="change_show_last(IDX)">-</button>
         <button :style="{ 'display': ( checked_items['data_a_data_b_set_x'] === false ? 'none' : 'inline') }" @click="data_a_data_b_set_x(IDX)">></button>
         <button :style="{ 'display': ( checked_items['data_a_data_b_set_y'] === false ? 'none' : 'inline') }" @click="data_a_data_b_set_y(IDX)">↓</button>
-        <button :style="{ 'display': ( checked_items['set_data_a_data_b_to_data1'] === false ? 'none' : 'inline') }" @click="set_data_a_data_b_to_data1('x', VAL[0], VAL[1])">x</button>
-        <button :style="{ 'display': ( checked_items['set_data_a_data_b_to_data1'] === false ? 'none' : 'inline') }" @click="set_data_a_data_b_to_data1('y', VAL[0], VAL[1])">y</button>
+        <button :style="{ 'display': ( checked_items['set_data_a_data_b_to_data1_x'] === false ? 'none' : 'inline') }" @click="set_data_a_data_b_to_data1_x(VAL[0], VAL[1])">x</button>
+        <button :style="{ 'display': ( checked_items['set_data_a_data_b_to_data1_y'] === false ? 'none' : 'inline') }" @click="set_data_a_data_b_to_data1_y(VAL[0], VAL[1])">y</button>
+
+<button :style="{ 'display': ( (current_x_y === []) && (checked_items['from_set'] === false) ? 'none' : 'inline') }" @click="from_set(VAL[0], VAL[1])">f</button>
+<button :style="{ 'display': ( checked_items['to_set'] === false ? 'none' : 'inline') }" @click="to_set(VAL[0], VAL[1])">t</button>
+<button :style="{ 'display': ( checked_items['move_from_to'] === false ? 'none' : 'inline') }" @click="move_from_to(VAL[0], VAL[1])">m</button>
+
     </div>
 </div>
+
 
 <div class="change_to_no_show_all">
     <button @click="change_to_no_show_all()">!</button>
@@ -172,9 +176,9 @@ return {
     data_b: 'ABC\nDEF\nGHI\nJKL\nMNO\nPQR\nSTU\nVWX\nYZ\n012\n345\n678\n9',
 
 display_none_or_inline: false,
-original_x_rem: 16,
+original_x_rem: 19,
 original_y_rem: 1.3,
-x_rem: 16,
+x_rem: 19,
 y_rem: 1.3,
 short_x_rem: 3.5,
 short_y_rem: 1.3,
@@ -182,6 +186,7 @@ data1_template: [
         {now: 'full', full: 'text10', first: 't', last: '0'},
         {now: 'full', full: 'TEXT22', first: 'T', last: '2'},
         {no_show: false},
+        {relate: []},
     ],
 data1: [],
 // test_mode: true,
@@ -199,6 +204,13 @@ change_show_first: true,
 change_show_last: true,
 data_a_data_b_set_x: true,
 data_a_data_b_set_y: true,
+set_data_a_data_b_to_data1_x: true,
+set_data_a_data_b_to_data1_y: true,
+
+from_set: true,
+to_set: true,
+move_from_to: true,
+
 },
 
 }},
@@ -393,7 +405,6 @@ scrollToPosition(x, y) {
         const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
         const x_px = this.x_rem * rootFontSize * x;
         const y_px = this.y_rem * rootFontSize * y;
-        this.current_x_y = [x, y];
 
         window.scrollTo({
             top: y_px,
@@ -402,65 +413,80 @@ scrollToPosition(x, y) {
         });
 },
 
-// 方向　英語で 
-
-// data_aとdata_bをdata1に反映する関数
 set_data_a_data_b_to_data1(To_X_Or_Y, Start_X, Start_Y){
-    // console.log(To_X_Or_Y, Start_X, Start_Y);
-    // data_aとdata_bを改行で分割した配列を作成する
     const data_a_ary = this.data_a.split('\n');
     const data_b_ary = this.data_b.split('\n');
-    // To_X_Or_Yがxの場合はx方向に、yの場合はy方向にdata1に反映する
     const x_or_y = To_X_Or_Y === 'x' ? 0 : 1;
-    // data_a_aryとdata_b_aryを結合した配列を作成する
     const data_a_b_ary = data_a_ary.map((val, idx) => [val, data_b_ary[idx]]);
-    // data_a_b_aryをdata1に反映する
-    // To_X_Or_Yがxであれば、data1のxをインクリメントする
-    // To_X_Or_Yがyであれば、data1のyをインクリメントする
-    // Start_X, Start_Yはdata1のx,yの開始位置を示す
-    // 該当のdata1が空であれば、data1に追加する
     data_a_b_ary.forEach((val, idx) => {
-
         const x_y = [Start_X, Start_Y];
-
-
-        // To_X_Or_Yがxであれば、x_yのxをインクリメントする
-        // To_X_Or_Yがyであれば、x_yのyをインクリメントする
-
-// data1に該当のx,yが存在しなければ、data1に追加する
-if(this.data1.some((V) => V[0] === Start_X && V[1] === Start_Y) === false){
-    this.data1.push([Start_X, Start_Y, ...R.clone(this.data1_template)]);
-}
-
-
-
-
-
-        // data1のx,yを更新する(data1から該当のx,yを取得し、fullを更新する)
+        if(this.data1.some((V) => V[0] === Start_X && V[1] === Start_Y) === false){
+            this.data1.push([Start_X, Start_Y, ...R.clone(this.data1_template)]);
+        }
         this.data1.filter(V=>V[0] === x_y[0] && V[1] === x_y[1])[0][2]['full'] = val[0];
         this.data1.filter(V=>V[0] === x_y[0] && V[1] === x_y[1])[0][3]['full'] = val[1];
-        console.log(val);
-
-
-
-
-        // x,yが該当する
-        // data1のx,yを更新する(data1から該当のx,yを取得し、fullを更新する)
-
-
-
-
         To_X_Or_Y === 'x' ? Start_X++ : Start_Y++;
 
-console.log(        
-x_y[0],
-x_y[1],
-val[0],
-val[1],
-)
-
-
     });
+},
+
+set_data_a_data_b_to_data1_x(Start_X, Start_Y){
+    this.set_data_a_data_b_to_data1('x', Start_X, Start_Y);
+},
+set_data_a_data_b_to_data1_y(Start_X, Start_Y){
+    this.set_data_a_data_b_to_data1('y', Start_X, Start_Y);
+},
+
+
+
+from_set(Param_X, Param_Y){
+    console.log(Param_X, Param_Y);
+    console.log('from_set');
+    // data1の中からX_paramとY_paramを含む配列にrelateがあれば、そのrelateを初期化する
+    // this.data1.filter(V=>V[0] === Param_X && V[1] === Param_Y)[0][3]['relate'] = [Param_X, Param_Y];
+    // this.data1[0][3].relate[0] = 0;
+    // this.data1.filter(V=>V[0] === Param_X && V[1] === Param_Y)[0][3]['relate'] = [0, 0];
+    // this.data1[0][3].relate[1] = 0;
+    // this.data1.filter(V=>V[0] === Param_X && V[1] === Param_Y)[0][3]['relate'][1] = 0;
+
+    // current_x_yを初期化する
+    this.current_x_y = [];
+    // current_x_yにParam_X, Param_Yを代入する
+    this.current_x_y.push(Param_X);
+    this.current_x_y.push(Param_Y);
+    // console.log(this.data1.filter(V=>V[0] === Param_X && V[1] === Param_Y)[0][3]['relate']);
+    // console.log(this.current_x_y);
+},
+to_set(Param_X, Param_Y){
+    console.log('to_set');
+    // current_x_yが空であれば、早期リターンする
+    if(this.current_x_y.length === 0){
+        return;
+    }
+
+    [to_x, to_y] = this.to_ary(this.current_x_y);
+    // data1の中からX_paramとY_paramを含む配列にrelateがあれば、そのrelateを初期化する
+    this.data1.filter(V=>V[0] === Param_X && V[1] === Param_Y)[0][5]['relate'] = [to_x, to_y];
+    this.data1.filter(V=>V[0] === to_x && V[1] === to_y)[0][5]['relate'] = [Param_X, Param_Y];
+    console.log(this.current_x_y, to_x, to_y);
+
+    // current_x_yを初期化する
+    this.current_x_y = [];
+},
+move_from_to(Param_X, Param_Y){ // relateのfromからtoへ(もしくはtoからfromへ)scrollする関数
+    console.log('move_from_to');
+    // relateがなければ早期リターンする
+    if(this.data1.filter(V=>V[0] === Param_X && V[1] === Param_Y)[0][5]['relate'] === undefined){
+        return;
+    }
+    console.log('move_from_to');
+    x_y = this.data1.filter(V=>V[0] === Param_X && V[1] === Param_Y)[0][5]['relate'];
+    [go_to_x, go_to_y] = this.to_ary(x_y);
+    console.log(x_y, go_to_x, go_to_y);
+    this.scrollToPosition(go_to_x, go_to_y);
+
+
+
 },
 
 
@@ -602,6 +628,7 @@ function delete_map(){
 
 // 次に実装するやつ
     // 要素同士を1:1で関連付けしてscrollToPositionで相互にスクロールできる
+        // from_set to_set move_from_to 周り何かバグってる(relateがきちんと反映されてない)からfixする
 
 
 

@@ -127,8 +127,8 @@ input[type="checkbox"] {
         <button :style="{ 'display': ( checked_items['change_show_last'] === false ? 'none' : 'inline') }" @click="change_show_last(IDX)">-</button>
         <button :style="{ 'display': ( checked_items['data_a_data_b_set_x'] === false ? 'none' : 'inline') }" @click="data_a_data_b_set_x(IDX)">></button>
         <button :style="{ 'display': ( checked_items['data_a_data_b_set_y'] === false ? 'none' : 'inline') }" @click="data_a_data_b_set_y(IDX)">↓</button>
-        <button :style="{ 'display': ( checked_items['set_data_a_data_b_to_data1'] === false ? 'none' : 'inline') }" @click="set_data_a_data_b_to_data1('x', VAL[0], VAL[1])">x</button>
-        <button :style="{ 'display': ( checked_items['set_data_a_data_b_to_data1'] === false ? 'none' : 'inline') }" @click="set_data_a_data_b_to_data1('y', VAL[0], VAL[1])">y</button>
+        <button :style="{ 'display': ( checked_items['set_data_a_data_b_to_data1_x'] === false ? 'none' : 'inline') }" @click="set_data_a_data_b_to_data1_x(VAL[0], VAL[1])">x</button>
+        <button :style="{ 'display': ( checked_items['set_data_a_data_b_to_data1_y'] === false ? 'none' : 'inline') }" @click="set_data_a_data_b_to_data1_y(VAL[0], VAL[1])">y</button>
     </div>
 </div>
 
@@ -150,7 +150,7 @@ input[type="checkbox"] {
 <template class="center_bottom">
     <div>
       <div v-for="(item, index) in checked_items" :key="index">
-        <input type="checkbox" :value="item" v-model="checked_items[index]" @change="checked_items_fn(index)">{{ index }}
+        <!-- <input type="checkbox" :value="item" v-model="checked_items[index]" @change="checked_items_fn(index)">{{ index }} -->
       </div>
       <!-- <div>Checked items: {{ checked_items }}</div> -->
     </div>
@@ -198,6 +198,8 @@ change_show_first: true,
 change_show_last: true,
 data_a_data_b_set_x: true,
 data_a_data_b_set_y: true,
+set_data_a_data_b_to_data1_x: true,
+set_data_a_data_b_to_data1_y: true,
 },
 
 }},
@@ -350,8 +352,8 @@ remove_all_checked_items(){
     console.log('remove_all_checked_items');
     function exe(True_Or_False){
         // checked_itemsの全ての値をTrue_Or_Falseにする
-        Object.keys(app.checked_items).forEach((val) => {
-            app.checked_items[val] = True_Or_False;
+        Object.keys(this.checked_items).forEach((val) => {
+            this.checked_items[val] = True_Or_False;
         });
     }
     // checked_itemsが全てfalseであれば、全てのchecked_itemsをtrueにし、早期リターンする
@@ -401,11 +403,8 @@ scrollToPosition(x, y) {
         });
 },
 
-// 方向　英語で 
-
 // data_aとdata_bをdata1に反映する関数
 set_data_a_data_b_to_data1(To_X_Or_Y, Start_X, Start_Y){
-    // console.log(To_X_Or_Y, Start_X, Start_Y);
     // data_aとdata_bを改行で分割した配列を作成する
     const data_a_ary = this.data_a.split('\n');
     const data_b_ary = this.data_b.split('\n');
@@ -413,53 +412,23 @@ set_data_a_data_b_to_data1(To_X_Or_Y, Start_X, Start_Y){
     const x_or_y = To_X_Or_Y === 'x' ? 0 : 1;
     // data_a_aryとdata_b_aryを結合した配列を作成する
     const data_a_b_ary = data_a_ary.map((val, idx) => [val, data_b_ary[idx]]);
-    // data_a_b_aryをdata1に反映する
-    // To_X_Or_Yがxであれば、data1のxをインクリメントする
-    // To_X_Or_Yがyであれば、data1のyをインクリメントする
-    // Start_X, Start_Yはdata1のx,yの開始位置を示す
-    // 該当のdata1が空であれば、data1に追加する
     data_a_b_ary.forEach((val, idx) => {
-
         const x_y = [Start_X, Start_Y];
-
-
-        // To_X_Or_Yがxであれば、x_yのxをインクリメントする
-        // To_X_Or_Yがyであれば、x_yのyをインクリメントする
-
-// data1に該当のx,yが存在しなければ、data1に追加する
-if(this.data1.some((V) => V[0] === Start_X && V[1] === Start_Y) === false){
-    this.data1.push([Start_X, Start_Y, ...R.clone(this.data1_template)]);
-}
-
-
-
-
-
+        // data1に該当のx,yが存在しなければ、data1に追加する
+        if(this.data1.some((V) => V[0] === Start_X && V[1] === Start_Y) === false){
+            this.data1.push([Start_X, Start_Y, ...R.clone(this.data1_template)]);
+        }
         // data1のx,yを更新する(data1から該当のx,yを取得し、fullを更新する)
         this.data1.filter(V=>V[0] === x_y[0] && V[1] === x_y[1])[0][2]['full'] = val[0];
         this.data1.filter(V=>V[0] === x_y[0] && V[1] === x_y[1])[0][3]['full'] = val[1];
-        console.log(val);
-
-
-
-
-        // x,yが該当する
-        // data1のx,yを更新する(data1から該当のx,yを取得し、fullを更新する)
-
-
-
-
         To_X_Or_Y === 'x' ? Start_X++ : Start_Y++;
-
-console.log(        
-x_y[0],
-x_y[1],
-val[0],
-val[1],
-)
-
-
     });
+},
+set_data_a_data_b_to_data1_x(Start_X, Start_Y){
+    this.set_data_a_data_b_to_data1('x', Start_X, Start_Y);
+},
+set_data_a_data_b_to_data1_y(Start_X, Start_Y){
+    this.set_data_a_data_b_to_data1('y', Start_X, Start_Y);
 },
 
 

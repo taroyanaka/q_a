@@ -189,8 +189,8 @@ data1_template: [
         {relate: []},
     ],
 data1: [],
-// test_mode: true,
-test_mode: false,
+test_mode: true,
+// test_mode: false,
 all_show_or_none: 'show',
 
 checked_items: {
@@ -241,9 +241,9 @@ mounted(){
 beforeUpdate(){},
 updated(){},
 methods: {
-    init(X, Y){
-        this.data1.push([X, Y, ...R.clone(this.data1_template)]);
-    },
+init(X, Y){
+    this.data1.push([X, Y, ...R.clone(this.data1_template)]);
+},
 make_first_last(){
     this.data1.forEach((val) => {
         val[2]['first'] = val[2]['full'].slice(0, 1);
@@ -333,11 +333,12 @@ flip(IDX){
     this.data1[IDX][2] = [this.data1[IDX][3], this.data1[IDX][3] = this.data1[IDX][2]][0];
 },
 test(){
-    let test_ary = [[1, 0],[2, 0],[3, 0],[4, 0],[0, 1],[0, 2],[0, 3],[0, 4],[0, 5],[3, 1],[3, 2],[3, 3],[3, 4],[3, 5],[3, 6],[4, 5],[5, 5],[5, 6],[5, 7],
+    let test_ary = [];
+    let test_ary1 = [[1, 0],[2, 0],[3, 0],[4, 0],[0, 1],[0, 2],[0, 3],[0, 4],[0, 5],[3, 1],[3, 2],[3, 3],[3, 4],[3, 5],[3, 6],[4, 5],[5, 5],[5, 6],[5, 7],
         [1, 2],[1, 3],[1,4],[1, 6],[1, 7],
         [0,6],[0,7],
     ];
-    test_ary = make_data1();
+    test_ary = test_ary1;
     // test_ary = make_data1_2();
     test_ary.forEach((val) => {
         // this.data1.push([val[0], val[1], ...this.data1_template]);
@@ -489,6 +490,10 @@ move_from_to(Param_X, Param_Y){ // relateのfromからtoへ(もしくはtoから
 
 },
 
+spl(){
+    console.log(this.to_ary(this.data1[0]));
+},
+
 
 to_ary(it){
     return JSON.parse(JSON.stringify(it));
@@ -629,6 +634,72 @@ function delete_map(){
 // 次に実装するやつ
     // 要素同士を1:1で関連付けしてscrollToPositionで相互にスクロールできる
         // from_set to_set move_from_to 周り何かバグってる(relateがきちんと反映されてない)からfixする
+
+
+
+// function: get Serial number index data1 array chunks
+function get_serial_number_index_data1_array_chunks(same_axis_group_X_Or_Y){
+    // data1の中からx,yを取得する
+    const x_y = app.data1.map((val) => [val[0], val[1]]);
+    // x_yをxでソートする
+    const x_sorted = x_y.sort((a, b) => a[0] - b[0]);
+    // xが同じものをグループ化
+    const x_grouped = R.groupWith((a, b) => a[0] === b[0], x_sorted);
+// x_groupedを連番でグルーピングする
+    const x_grouped_serial_number = x_grouped.map((val) => {
+        return groupConsecutiveNumbers(val, 1);
+    });
+
+    // x_y_をyでソートする
+    const y_sorted = x_y.sort((a, b) => a[1] - b[1]);
+    // yが同じものをグループ化
+    const y_grouped = R.groupWith((a, b) => a[1] === b[1], y_sorted);
+// y_groupedを連番でグルーピングする
+    const y_grouped_serial_number = y_grouped.map((val) => {
+        return groupConsecutiveNumbers(val, 0);
+    });
+
+// x is y, y is x......shit......
+    return same_axis_group_X_Or_Y === 'x' ? x_grouped_serial_number : y_grouped_serial_number;
+};
+const sample_ary1 = [
+[1, 0],
+[1, 2],
+[1, 3],
+[1, 4],
+[1, 6],
+[1, 7],
+];
+// groupConsecutiveNumbersをindex指定できるように改造
+function groupConsecutiveNumbers(arr, index) {
+    arr.sort((a, b) => a[index] - b[index]);
+    
+    const result = [];
+    let tempArray = [];
+    
+    for (let i = 0; i < arr.length; i++) {
+        if (tempArray.length === 0 || arr[i][index] === tempArray[tempArray.length - 1][index] + 1) {
+            tempArray.push(arr[i]);
+        } else {
+            result.push(tempArray);
+            tempArray = [arr[i]];
+        }
+    }
+    
+    if (tempArray.length > 0) {
+        result.push(tempArray);
+    }
+    
+    return result;
+}
+
+// the x axis chunks is this(same index 0)
+get_serial_number_index_data1_array_chunks('x').flat(1);
+// the y axis chunks is this(same index 1)
+get_serial_number_index_data1_array_chunks('y').flat(1);
+// 連番のデータを全て収集してdata_a,data_bのフォーマットに流し込むコードを作る
+    // => 
+
 
 
 

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>list and talk sample</title>
+<link rel="stylesheet" href="./lib/reset.css">
+<script src="./lib/vue@3.2.36.global.prod.js"></script>
+<style>
+li{
+  height: 1.2rem;
+}
+.input_text, .a_href {
+  height: 1rem;
+}
+</style>
+</head>
+<body>
+<div class="app">
+<ul>
+<li v-for="list_of_one, idx in list">
+<a :href="list[idx]['url']" class="a_href">{{list[idx]['name']}}</a>
+<span>{{list[idx]['desc']}}</span>
+<span v-if="edit_mode" class="input_text">
+<input type="text" name="" class="" v-model="list[idx]['name']">
+<input type="text" name="" class="" v-model="list[idx]['url']">
+<input type="text" name="" class="" v-model="list[idx]['desc']">
+</span>
+</li>
+</ul>
+<button @click="edit">edit</button>
+</div>
+</body>
+<script>
+let d = null;
+const app = Vue.createApp({
+data() {
+    return {
+list: [
+{name:'a0123456789', url:'https://www.google.co.jp/', desc:'aABCDEFG'},
+{name:'b0123456789', url:'https://www.google.co.jp/', desc:'bABCDEFG'},
+{name:'c0123456789', url:'https://www.google.co.jp/', desc:'cABCDEFG'},
+{name:'d0123456789', url:'https://www.google.co.jp/', desc:'dABCDEFG'},
+{name:'e0123456789', url:'https://www.google.co.jp/', desc:'eABCDEFG'},
+{name:'f0123456789', url:'https://www.google.co.jp/', desc:'fABCDEFG'},
+{name:'f0123456789', url:'https://www.google.co.jp/', desc:'fABCDEFG'},
+{name:'f0123456789', url:'https://www.google.co.jp/', desc:'fABCDEFG'},
+{name:'f0123456789', url:'https://www.google.co.jp/', desc:'fABCDEFG'},
+{name:'f0123456789', url:'https://www.google.co.jp/', desc:'fABCDEFG'},
+{name:'f0123456789', url:'https://www.google.co.jp/', desc:'fABCDEFG'},
+{name:'f0123456789', url:'https://www.google.co.jp/', desc:'fABCDEFG'},
+{name:'f0123456789', url:'https://www.google.co.jp/', desc:'fABCDEFG'},
+{name:'f0123456789', url:'https://www.google.co.jp/', desc:'fABCDEFG'},
+{name:'f0123456789', url:'https://www.google.co.jp/', desc:'fABCDEFG'},
+{name:'f0123456789', url:'https://www.google.co.jp/', desc:'fABCDEFG'},
+{name:'f0123456789', url:'https://www.google.co.jp/', desc:'fABCDEFG'},
+{name:'f0123456789', url:'https://www.google.co.jp/', desc:'fABCDEFG'},
+{name:'f0123456789', url:'https://www.google.co.jp/', desc:'fABCDEFG'},
+],
+edit_mode: false,
+
+    }
+},
+// watch: {
+//    any: {
+//      handler() {
+//      },
+//      deep: true
+//    },
+// },
+beforeMounte(){
+},
+mounted() {
+},
+beforeUpdate() {
+},
+updated() {
+},
+methods: {
+fn1() {
+},
+edit() {
+this.edit_mode = !this.edit_mode;
+},
+f(it){
+d = JSON.parse(JSON.stringify(it));
+console.table(JSON.parse(JSON.stringify(it)));
+return JSON.parse(JSON.stringify(it));
+},
+},
+}).mount('.app');
+</script>
+</html>

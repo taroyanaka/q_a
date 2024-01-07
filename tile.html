@@ -105,6 +105,12 @@ input[type="checkbox"] {
 .cant_click{
     pointer-events: none;
 }
+.textarea_block{
+    display: block;
+}
+.textarea_span{
+    display: inline;
+}
 
 </style>
 </head>
@@ -181,14 +187,24 @@ input[type="checkbox"] {
     <canvas v-for="(val, idx) in canvas_container_ary" :key="idx" :id="'myCanvas' + idx" class="canvas_container" ref="myCanvas">
         {{ idx }}
     </canvas>
-
 </div>
+
+<div v-for="(val, idx) in ary1" :key="idx" class="textarea_block">
+    <textarea class="textarea_span">{{ val[0] }}</textarea>
+    <textarea class="textarea_span">{{ val[1] }}</textarea>
+</div>
+
 
 </body>
 <script>
 const app = Vue.createApp({
 data() {
 return {
+    ary1: [
+["a10\na10\na10\na10","A22\nA22\nA22\nA22"],
+["b10\nb10\nb10\nb10","B22\nB22\nB22\nB22"],
+["c10\nc10\nc10\nc10","C22\nC22\nC22\nC22"],
+],
     canvas_container_ary: [1,2,3,4,5,6,7,8,9,10,11,12,13,14],
     current_x_y: [],
     data_a: 'abc\ndef\nghi\njkl\nmno\npqr\nstu\nvwx\nyz\n012\n345\n678\n9',
@@ -208,8 +224,8 @@ data1_template: [
         {relate: []},
     ],
 data1: [],
-// test_mode: true,
-test_mode: false,
+test_mode: true,
+// test_mode: false,
 all_show_or_none: 'show',
 
 checked_items: {
@@ -530,6 +546,10 @@ make_line(){
     ctx.moveTo(rect1.left + rect1.width / 2, rect1.top + rect1.height / 2);
     ctx.lineTo(rect2.left + rect2.width / 2, rect2.top + rect2.height / 2);
     ctx.stroke();
+},
+make_textarea(Ary){
+    const ary = Ary || this.ary1;
+    this.ary1 = this.to_ary(ary);
 },
 
 

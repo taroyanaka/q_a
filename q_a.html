@@ -583,68 +583,66 @@ display: inline;
     <button @click="change_to_i_t_n" class="font_sizing">change_to_i_t_n</button>    
     </div>
 
-    <div class="column-2 simple_mode2" :class="{'column-2-none': column_2_none}">
-    <div>
-    </div>
-    
-    <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
-    <button @click="q_a_change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
+<div class="column-2 simple_mode2" :class="{'column-2-none': column_2_none}">
+                <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
+                <button @click="q_a_change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
 
-<div v-if="data_type=== 'q_a'">
-    <template v-for="(DATAVAL, DATAIDX) in q_a_data4" class="simple_mode2">
-    <div class="q_and_a simple_mode2 minimum" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
-        <span class="text_right simple_mode2" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span>
-        <button class="simple_mode2" v-for="item in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
-        <span class="text_center simple_mode2">{{ DATAVAL[2] }}</span>
-    </div>
-    </template>
-    <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
-    <button @click="q_a_fn4" class="check_button">🎮</button>
-</div>
-<div v-if="data_type=== 'f_i_b'">
-    <span v-for="(DATAVAL, DATAIDX) in f_i_b_data9" class="simple_mode2 minimum">
-        <span @click="" v-if="typeof DATAVAL === 'string'" ref="core" class="simple_mode2">{{ DATAVAL }}</span>
-        <template v-if="typeof DATAVAL === 'object'" class="simple_mode2">
-        <select name="" id="A" @change="f_i_b_check_option(DATAIDX)" style="background-color: ''" ref="core" class="simple_mode2">
-            <option v-for="(FOO, BAR) in DATAVAL[1]" :value="FOO" class="simple_mode2">
-                {{ FOO }}
-            </option>
-        </select>
-        </template>
-    </span>
-    <button @click="f_i_b_fn5" class="check_button">🎮</button>
-</div>
-<div v-if="data_type=== 'i_t_n'">
-    <ul class="centering simple_mode2 minimum">
-    <li v-for="(item, IDX) in i_t_n_data5" :key="item" class="result_color simple_mode2" :style="{display: i_t_n_data5_result ? 'block' : 'none'}">
-    <div class="simple_mode2" v-if="only_one_q_a_mode ? IDX === current_index : true">
-    <span class="OK_or_NG simple_mode2">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>    
-    <span class="answer simple_mode2">{{ item[0] }}</span>
-    <span class="any simple_mode2">
-    <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="i_t_n_check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
-    </span>
-    </div>
-    </li>
+            <div v-if="data_type=== 'q_a'">
+                <template v-for="(DATAVAL, DATAIDX) in q_a_data4" class="simple_mode2">
+                <div class="q_and_a simple_mode2 minimum" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
+                    <span class="text_right simple_mode2" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span>
+                    <button class="simple_mode2" v-for="item in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
+                    <span class="text_center simple_mode2">{{ DATAVAL[2] }}</span>
+                </div>
+                </template>
+                <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
+                <button @click="q_a_fn4" class="check_button">🎮</button>
+            </div>
+            <div v-if="data_type=== 'f_i_b'">
+                <span v-for="(DATAVAL, DATAIDX) in f_i_b_data9" class="simple_mode2 minimum">
+                    <span @click="" v-if="typeof DATAVAL === 'string'" ref="core" class="simple_mode2">{{ DATAVAL }}</span>
+                    <template v-if="typeof DATAVAL === 'object'" class="simple_mode2">
+                    <select name="" id="A" @change="f_i_b_check_option(DATAIDX)" style="background-color: ''" ref="core" class="simple_mode2">
+                        <option v-for="(FOO, BAR) in DATAVAL[1]" :value="FOO" class="simple_mode2">
+                            {{ FOO }}
+                        </option>
+                    </select>
+                    </template>
+                </span>
+                <button @click="f_i_b_fn5" class="check_button">🎮</button>
+            </div>
+            <div v-if="data_type=== 'i_t_n'">
+                <ul class="centering simple_mode2 minimum">
+                <li v-for="(item, IDX) in i_t_n_data5" :key="item" class="result_color simple_mode2" :style="{display: i_t_n_data5_result ? 'block' : 'none'}">
+                <div class="simple_mode2" v-if="only_one_q_a_mode ? IDX === current_index : true">
+                <span class="OK_or_NG simple_mode2">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>    
+                <span class="answer simple_mode2">{{ item[0] }}</span>
+                <span class="any simple_mode2">
+                <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="i_t_n_check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
+                </span>
+                </div>
+                </li>
 
-    <div v-for="(item, IDX) in i_t_n_data9_x" :key="item" :style="{display: i_t_n_data9_result ? 'block' : 'none'}">
-    <div class="i_t_n_data9_x_parent">
-    <div class="OK_or_NG">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</div>
-    <img :src="item[0]" :alt="item[0]" class="png_image" >
-    <button v-for="(item2,item2_IDX) in item[1][1]" 
-    :class="'common_choose_the_answer_image choose_the_answer_image_'+item2_IDX"
-    @click="i_t_n_check_name_to_image(item[1][0], item2, IDX)">
-    {{ item2 }}
-    </button>
-    </div>
-    </div>
+                <div v-for="(item, IDX) in i_t_n_data9_x" :key="item" :style="{display: i_t_n_data9_result ? 'block' : 'none'}">
+                <div class="i_t_n_data9_x_parent">
+                <div class="OK_or_NG">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</div>
+                <img :src="item[0]" :alt="item[0]" class="png_image" >
+                <button v-for="(item2,item2_IDX) in item[1][1]" 
+                :class="'common_choose_the_answer_image choose_the_answer_image_'+item2_IDX"
+                @click="i_t_n_check_name_to_image(item[1][0], item2, IDX)">
+                {{ item2 }}
+                </button>
+                </div>
+                </div>
 
-    <button @click="i_t_n_filter_image_and_name" class="check_button">🎮</button>
-    </ul>
-</div>
-<button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
-
+                <button @click="i_t_n_filter_image_and_name" class="check_button">🎮</button>
+                </ul>
+            </div>
+            <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
 
 </div>
+
+
     <div class="column-3" :class="{'column-3-none': column_3_none}">
     <div>
     <button @click="fn18" class="result_opener">📖</button>
@@ -673,6 +671,7 @@ display: inline;
 const app = Vue.createApp({
 data() {
 return {
+visible_swithc: null,
 
 // for f_i_b
 f_i_b_all_save: [],
@@ -873,6 +872,11 @@ beforeUpdate() {
 async updated() {
 },
 methods: {
+
+// q_a_change_only_one_q_a_modeとは、q_aの問題を一つずつ表示するか、全て表示するかを切り替える関数
+q_a_change_only_one_q_a_mode(){
+    this.only_one_q_a_mode = !this.only_one_q_a_mode;
+},
 
 
 // core of i_t_n
@@ -1563,6 +1567,28 @@ simple_funtionable() {
     }
     this.simple_funtionable_flag === true ? simple() : funtionable();
 },
+
+// simple_funtionable() {
+//     this.simple_funtionable_flag = !this.simple_funtionable_flag;
+//     function simple(){
+//         document.querySelectorAll('body :not(.simple_mode2)').forEach((V) => {
+//             V.classList.add('display_none');
+//         });
+//         document.querySelectorAll('.minimum, .column-2').forEach((V) => {
+//             V.classList.add('maximum');
+//         });
+//     }
+//     function funtionable(){
+//         document.querySelectorAll('body :not(.simple_mode2)').forEach((V) => {
+//             V.classList.remove('display_none');
+//         });
+//         document.querySelectorAll('.minimum, .column-2').forEach((V) => {
+//             V.classList.remove('maximum');
+//         });
+//     }
+//     this.simple_funtionable_flag === true ? simple() : funtionable();
+// },
+
 apply_inline_block_styles_all_at_once(Simple=false) {
     // simple_mode1が本来のinline-block指定のCSS指定と競合するため、
     // インラインスタイルを優先適用させるための関数
@@ -1582,8 +1608,27 @@ scrollToTarget(For='local') {
     For ==='local' ? this.$refs.save_data_set_list_parent1.style.display = 'none' : null;
     For ==='web' ? this.$refs.save_data_set_list_parent2.style.display = 'none' : null;
 },
+
+
+
+
+
+
+
+
+
+
+
+
 advanced_visible_fn() {
     this.advanced_visible === 'advanced' ? this.css_var_set('--advanced-display-var', 'inline-block') : this.css_var_set('--advanced-display-var', 'none');
+},
+visible_swithc_fn() {
+    // $$(".simple_mode2")以外を非表示/表示を切り替える
+    // this.visible_swithc === 'visible' ?
+    //     this.css_var_set('--visible-display-var', 'none')
+    //         : this.css_var_set('--visible-display-var', 'inline-block');
+document.querySelectorAll(':not(.simple_mode2)').forEach(V=> V.display = this.visible_swithc === 'visible' ? 'none' : 'inline-block');
 },
 // for_online_function
 
@@ -1806,5 +1851,9 @@ if(Test_Index === 1){
 // <style>の中身をまとめる
 },
 }).mount('.app');
+
+
+// div.column-2とfixed_element以外を非表示にする
+// document.querySelectorAll('body :not(.fixed_element)').forEach(V=>V.style.display='none');
 </script>
 </html>

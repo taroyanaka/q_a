@@ -539,7 +539,7 @@ font-size: 2.5rem;
     <span v-for="(DATAVAL, DATAIDX) in f_i_b_data9" class="simple_mode2 minimum">
         <span @click="" v-if="typeof DATAVAL === 'string'" ref="core" class="simple_mode2">{{ DATAVAL }}</span>
         <template v-if="typeof DATAVAL === 'object'" class="simple_mode2">
-        <select name="" id="A" @change="check_option(DATAIDX)" style="background-color: ''" ref="core" class="simple_mode2">
+        <select name="" id="A" @change="f_i_b_check_option(DATAIDX)" style="background-color: ''" ref="core" class="simple_mode2">
             <option v-for="(FOO, BAR) in DATAVAL[1]" :value="FOO" class="simple_mode2">
                 {{ FOO }}
             </option>
@@ -547,8 +547,7 @@ font-size: 2.5rem;
         </template>
     </span>
 
-    <button @click="fn5" class="check_button">🎮</button>
-    <!-- <button @click="fn4" class="check_button">🎮</button> -->
+    <button @click="f_i_b_fn5" class="check_button">🎮</button>
     </div>
 
 
@@ -594,6 +593,7 @@ font-size: 2.5rem;
 
 
 <script>
+let d = null;
 let data1 = null;
 let data2 = null;
 let data3 = null;
@@ -1095,6 +1095,15 @@ f_i_b_exe(){
     this.f_i_b_test_mode === true ? this.f_i_b_for_debug() : null;
 },
 f_i_b_check_option(INDEX){
+console.log(
+this.$refs.core,
+INDEX,
+this.f_i_b_data_X_2,
+this.f_i_b_data_X_3,
+this.f_i_b_data_X_4,
+this.f_i_b_data4,
+this.f_i_b_data9,
+),
     // this.f_i_b_data9からarrayの要素だけを取り出す一行コード
     this.f_i_b_data9[INDEX][2] =
         this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value ? true : false;
@@ -1116,7 +1125,12 @@ f_i_b_check_option(INDEX){
     this.f_i_b_data_X_3 = this.f_i_b_data4
         .filter(V=>R.pluck(0, this.f_i_b_data_X_2).includes(V));
     this.f_i_b_data_X_4 = this.f_i_b_data_X_3.join("\n");
-    this.f_i_b_for_debug();
+    // this.f_i_b_for_debug();
+
+    // '#F9E4C6'になった要素を配列で取得する
+    const sample1 = this.f_i_b_data9.filter(V=>Array.isArray(V)).filter(V=>V[2]===false);
+    d = sample1;
+
 },
 f_i_b_fn4_3(){
     this.f_i_b_data_X_1.push([

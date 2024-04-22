@@ -368,6 +368,9 @@ font-size: 2.5rem;
 }
 /* for_online_function */
 
+#prgr {
+    width: 100%;
+}  
 </style>
 
 </head>
@@ -535,6 +538,8 @@ font-size: 2.5rem;
             <button @click="test_data0" class="test-fn-none-inline">test_data0</button>
             <button @click="test_data1" class="test-fn-none-inline">test_data1</button>
         </div>
+
+<div><progress value="0" max="100" id="prgr"></progress></div>
 
     <span v-for="(DATAVAL, DATAIDX) in f_i_b_data9" class="simple_mode2 minimum">
         <span @click="" v-if="typeof DATAVAL === 'string'" ref="core" class="simple_mode2">{{ DATAVAL }}</span>
@@ -1095,15 +1100,18 @@ f_i_b_exe(){
     this.f_i_b_test_mode === true ? this.f_i_b_for_debug() : null;
 },
 f_i_b_check_option(INDEX){
-console.log(
-this.$refs.core,
-INDEX,
-this.f_i_b_data_X_2,
-this.f_i_b_data_X_3,
-this.f_i_b_data_X_4,
-this.f_i_b_data4,
-this.f_i_b_data9,
-),
+// console.log(
+// this.$refs.core,
+// INDEX,
+// this.f_i_b_data_X_2,
+// this.f_i_b_data_X_3,
+// this.f_i_b_data_X_4,
+// this.f_i_b_data4,
+// this.f_i_b_data9,
+// ),
+
+
+
     // this.f_i_b_data9からarrayの要素だけを取り出す一行コード
     this.f_i_b_data9[INDEX][2] =
         this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value ? true : false;
@@ -1130,7 +1138,19 @@ this.f_i_b_data9,
     // '#F9E4C6'になった要素を配列で取得する
     const sample1 = this.f_i_b_data9.filter(V=>Array.isArray(V)).filter(V=>V[2]===false);
     d = sample1;
+    // ''になった要素を配列で取得する
+    const sample2 = this.f_i_b_data9.filter(V=>Array.isArray(V)).filter(V=>V[2]===true);
+    // ''と'#F9E4C6'になった要素をマージする
+    const sample3 = sample1.concat(sample2);
 
+
+    const prgr = document.getElementById('prgr');
+// => ['❎', '❎', '⭕️', null]
+// progress_bar_value_arrayの'⭕️'の割合を求める
+const progress_bar_value_array_length = sample2.length;
+const progress_bar_value_array_per = progress_bar_value_array_length / sample3.length * 100;
+console.log(progress_bar_value_array_per);
+prgr.value = progress_bar_value_array_per;
 },
 f_i_b_fn4_3(){
     this.f_i_b_data_X_1.push([
@@ -1142,10 +1162,12 @@ f_i_b_fn4_4(){
     return this.f_i_b_data9.filter(V=>Array.isArray(V)).every(V=>V[2]===true);
 },
 f_i_b_fn5(){
-if(this.f_i_b_fn4_4()){
-    window.alert("正解です！");
-    return;
-};
+    if(this.f_i_b_fn4_4()){
+        window.alert("正解です！");
+        return;
+    };
+    // #prgrの値を0にする
+    document.getElementById('prgr').value = 0;
     this.f_i_b_fn4_3();
 },
 // core of f_i_b

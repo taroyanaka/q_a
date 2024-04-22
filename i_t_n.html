@@ -648,6 +648,7 @@ display: inline;
     <button @click="change_only_one_q_a_mode" class="check_button">📏</button>
     <button @click="change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
 
+    <div><progress value="0" max="100" id="prgr"></progress></div>
     <li v-for="(item, IDX) in data5" :key="item" class="result_color simple_mode2" :style="{display: data5_result ? 'block' : 'none'}">
         <div class="simple_mode2" v-if="only_one_q_a_mode ? IDX === current_index : true">
 
@@ -912,10 +913,22 @@ init(){
     this.make_image_to_name_Q_A_array();
 },
 check_image_to_name(correct_URL, URL, IDX){
+    console.log("check_image_to_name");
     this.data5[IDX][2] = correct_URL === URL ? true : false;
+    this.i_t_n_progress_bar();
     // this.for_debug();
 },
+i_t_n_progress_bar(){
+    // data5の長さ、data5のtrueの数、data5のfalseの数を取得する1行の関数
+    const [all_length, true_length, false_length] = [this.data5.length, this.data5.map(V=>V[2]).filter(V=>V === true).length, this.data5.map(V=>V[2]).filter(V=>V === false).length];
+    // プログレスバーの値を変更する1行の関数(小数点第2位まで,最大値が100,最小値が0)
+const make_progress_bar_value = (all_length, true_length) => Math.round(true_length / all_length * 100 * 100) / 100;
+    console.log(all_length, true_length, false_length, make_progress_bar_value(all_length, true_length));
+    const prgr = document.getElementById('prgr');
+    prgr.value = make_progress_bar_value(all_length, true_length);
+},
 check_name_to_image(correct_URL, URL, IDX){
+    console.log("check_name_to_image");
     this.data9[IDX][2] = correct_URL === URL ? true : false;
 },
 
@@ -1028,6 +1041,9 @@ filter_image_and_name(){
         res1.map(V=> [V[0], V[1][0]])
     );
     this.data10.push([res2[0].join("\n"), res2[1].join("\n")]);
+    // prgrの値を0に
+    document.getElementById('prgr').value = 0;
+
     this.for_debug();
 },
 

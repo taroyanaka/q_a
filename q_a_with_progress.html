@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>q_a</title>
+
+<link rel="stylesheet" href="./lib/reset.css">
+<script src="./lib/localforage@1.10.0.js"></script>
+<script src="./lib/vue@3.2.36.global.prod.js"></script>
+<script src="./lib/ramda.@0.28.0.js"></script>
+<script src="./lib/shuffle.js"></script>
+<script src="./lib/my_global_function_for_q_a.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.prod.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
+
+<style>
+
+:root {
+--css-var-root-font-size: 12px;
+font-size: var(--css-var-root-font-size);
+--css-var-test-inline: none;
+--css-var-column-1-none: 1fr;
+--css-var-column-2-none: 1fr;
+--css-var-column-3-none: 1fr;
+--css-var-color-1: ;
+--css-var-color-2: ;
+--css-var-color-3: ;
+--test: 'blue';
+
+--advanced-display-var: none;
+}
+button{
+border: none;
+background-color: aliceblue;
+border-radius: 1rem;
+margin: 0.1rem;
+}
+.app{
+width: 100vw;
+}
+
+.toggleDisplay_parent{
+display: grid;
+grid-template-columns: 1fr;
+grid-template-rows: 4rem;
+}
+
+.header{
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+grid-template-rows: 4rem;
+}
+.contents{
+width: 100vw;
+display: grid;
+grid-template-columns: var(--css-var-column-1-none) var(--css-var-column-2-none) var(--css-var-column-3-none);
+}
+.column-1-none{
+visibility: hidden;
+}
+.column-2-none{
+visibility: hidden;
+}
+.column-3-none{
+visibility: hidden;
+}
+.textarea-column-1{
+display: grid;
+grid-template-columns: 1fr 1fr;
+}
+.textarea-column-2{
+display: grid;
+grid-template-rows: 4rem 1fr;
+grid-template-columns: 1fr 1fr;
+grid-template-areas:
+"button-zone button-zone"
+"question answer";
+}
+.column-1{background-color: var(--css-var-color-1)}
+.column-2{background-color: var(--css-var-color-2)}
+.column-3{background-color: var(--css-var-color-3)}
+.a{
+grid-area: button-zone;
+display: grid;
+grid-template-rows: 4rem;
+grid-template-columns: 1fr 1fr 1fr;
+}
+.a-1{}
+.a-2{}
+.a-3{}
+.b{
+grid-area: question;
+width: 100%;
+}
+.c{
+grid-area: answer;
+width: 100%;
+}
+.test-fn-none-inline {
+height: 4rem;
+display: var(--css-var-test-inline);
+}
+.textarea_none {
+display: none;
+}
+.q_and_a{
+display: grid;
+grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr;
+justify-content: center;
+align-content: center;
+grid-auto-flow: column;
+}
+.q_and_a button{
+display: inline-block;
+width: auto;
+min-height: 4rem;
+word-break: break-all;
+}
+.check_button{
+width: 100%;
+height: 4rem;
+justify-self: center;
+align-self: center;
+font-size: 3rem;
+}
+/* .link_button, */
+.text_center{
+display: inline-block;
+width: auto;
+min-height: 4rem;
+font-size: 1.5rem;
+align-self: center;
+justify-self:center;
+word-break: break-all;
+}
+.text_left{
+text-align: start;
+font-size: 1.5rem;
+}
+.text_right{
+justify-self: center;
+align-self: center;
+font-size: 1.5rem;
+}
+.optional_function{
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+}
+.optional_function button{
+height: 4rem;
+font-size: 1.5rem;
+}
+.q_a_processing{
+width: 100%;
+height: 4rem;
+font-size: 3rem;
+}
+.save_data_set_list > *{
+overflow: hidden;
+white-space: nowrap;
+}
+.save_data_set_list{
+display: grid;
+grid-template-columns: 1fr 2.5rem 2.5rem;
+word-break: break-all;
+}
+.save_data_set_list > span{
+font-size: 1.3rem;
+}
+.save_data_set{}
+.save_data_delete{}
+.column_none{
+font-size: 2rem;
+}
+.font_sizing{
+font-size: 2.5rem;
+}
+
+.close{
+--FITB-button-ul-height: 5vh;
+--FITB-li-visibility: hidden;
+--FITB-collapse-display: none;
+}
+
+
+/* for_online_function */
+.simple_mode2 {
+    /* simple_funtionable用の空のclass */
+}
+.flex_child {
+    display: flex;
+}
+.block_of_one {
+    position: relative;
+    margin-bottom: 1rem;
+}
+.data_type {
+    display: inline-block;
+    font-size: 1rem;
+}
+.data_type, .download_data, .go_to_any_service_page_with_id, .all_tags {
+    display: inline-block;
+}
+.download_data, .go_to_any_service_page_with_id {
+    font-size: 1.5rem;
+}
+.tags_parent, .tags {
+    display: inline;
+    font-size: 0.7rem;
+}
+.top_right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.bottom_right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 1.5rem;
+}
+.bottom_middle {
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    font-size: 1.4rem;
+}
+.dialog_ul {
+    display: inline-block;
+}
+.dialog_li {
+    display: inline-block;
+}
+.showDialog {
+    display: inline-block;
+}
+.synapse {
+    font-size: 2.5rem;
+}
+.created_at, .username, .id {
+    display: inline-block;
+    font-size: 0.7rem;
+}
+.comment_and_tag {
+    padding: 10px;
+    border: 1px solid black;
+}
+.bigger_font, .show_tag_more_button_all {
+    font-size: 2rem;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    margin: 0;
+    padding: 0;
+}
+.vw_full {
+    width: 100vw;
+}
+.additional_parent {
+    display: flex;
+    place-content: flex-start;
+}
+.additional_child {
+    width: 31vw;
+    font-size: 2rem;
+    text-align: center;
+}
+.additional_child_small {
+    width: 2vw;
+}
+.additional_child_small > * {
+    display: inline-block;
+}
+.additional_child button {
+    vertical-align: middle;
+    border: 0.01rem solid #000000;
+}
+.fixed_element {
+    z-index: 10;
+    font-size: 2.5rem;
+}
+.fixed_element_top_right {
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+.fixed_element_top_left {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.fixed_element_bottom_right {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+.fixed_element_bottom_left {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+.display_none {
+    display: none;
+}
+.data_a_b_text {
+    font-size: 1.3rem;
+}
+.minimum {
+}
+.maximum {
+    width: 100vw;
+}
+.name, .placeholder {
+    height: 1.5rem;
+}
+.download_data {
+    font-size: 3rem;
+}
+.advanced {
+    display: var(--advanced-display-var);
+    /* display: inline-block; */
+}
+.result_opener, .save_opener, .textarea_opener, .fetch_insert_link {
+width: 100%;
+height: 4rem;
+font-size: 1.5rem;
+position: relative;
+}
+/* for_online_function */
+
+
+
+
+/* i_t_n用CSS ↓ */
+.centering{
+}
+.centering *{
+    word-wrap: break-word;
+    overflow: hidden;
+  text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+}
+.OK_or_NG{
+  font-size: 2rem;
+}
+.answer{
+  font-size: 2rem;
+}
+.any{
+  display: block;
+}
+.any > *{
+  width: 6rem;
+display: inline;
+}
+.png_image{
+}
+
+
+
+
+/* 以下は未使用のため、削除予定
+.result_color
+.result_color2
+.png_image
+.png_image_back */
+
+/* i_t_n用CSS ↑ */
+
+
+
+
+
+
+
+
+/* grid layout(grid-template-areas)でi_t_n_data9_x_parent配下を以下のようにlayoutする */
+.i_t_n_data9_x_parent{
+    display: grid;
+    grid-template-areas:
+    "OK_or_NG png_image png_image"
+    "choose_answer_image_1 choose_answer_image_2 choose_answer_image_3";
+}
+.i_t_n_data9_x_parent .OK_or_NG{
+    grid-area: OK_or_NG;
+    font-size: 3rem;
+}
+.i_t_n_data9_x_parent .png_image{
+    grid-area: png_image;
+    height: 5rem;
+}
+.i_t_n_data9_x_parent .common_choose_the_answer_image{
+    height: 3rem;
+    font-size: 2.5rem;
+}
+.i_t_n_data9_x_parent .choose_the_answer_image_0{
+    grid-area: choose_answer_image_1;
+}
+.i_t_n_data9_x_parent .choose_the_answer_image_1{
+    grid-area: choose_answer_image_2;
+}
+.i_t_n_data9_x_parent .choose_the_answer_image_2{
+    grid-area: choose_answer_image_3;
+}
+
+/* i_t_n用CSS ↑ */
+
+
+
+
+
+
+</style>
+
+
+</head>
+<body class="app">
+
+<button @click="test_data_exe(0)" class="test-fn-none-inline">test_data_exe0</button>
+<button @click="test_data_exe(1)" class="test-fn-none-inline">test_data_exe1</button>
+<button @click="test_data_exe(2)" class="test-fn-none-inline">test_data_exe2</button>
+<button @click="test_online_data_A" class="test-fn-none-inline">test_online_data_A</button>
+
+
+<div @click="simple_funtionable" class="fixed_element fixed_element_top_right simple_mode2">◎</div>
+<div @click="simple_funtionable" class="fixed_element fixed_element_top_left simple_mode2">◎</div>
+<div @click="simple_funtionable" class="fixed_element fixed_element_bottom_right simple_mode2">◎</div>
+<div @click="simple_funtionable" class="fixed_element fixed_element_bottom_left simple_mode2">◎</div>    
+
+
+<div class="toggleDisplay_parent">
+<button @click="go_to_any_service_page()" class="go_to_any_service_page">🔽</button>
+</div>
+
+<div class="header_and_contents simple_mode2">
+    <header class="header">
+    <button @click="column_1_none_fn" class="column_none">💾</button>
+    <button @click="column_2_none_fn" class="column_none">⌨️</button>
+    <button @click="column_3_none_fn" class="column_none">🖥️</button>
+    </header>
+
+    <div class="contents simple_mode2">
+    <div class="column-1" :class="{'column-1-none': column_1_none}">
+    <div class="optional_function">
+        <button @click="reverse_q_a">🔃</button>
+        <button @click="shuffle_q_a">🌪️</button>
+        <button @click="swap_q_a">🔁</button>
+        <button @click="save_data_to_all_save">🗂️</button>
+    </div>
+    <button @click="fn19_0" class="save_opener">📂</button>
+    <ul style='display: block' ref="save_data_set_list_parent1">
+    <li v-for="(DATAVAL, DATAIDX) in all_save" class="save_data_set_list">
+        <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span>
+        <button @click="save_data_set(DATAIDX)" class="save_data_set">📂</button>
+        <button @click="save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button>
+    </li>
+    </ul>
+
+
+<button @click="fn19_1" class="save_opener">🌐</button>
+<div style='display: none' ref="save_data_set_list_parent2" class="vw_full">
+<div v-if="return_current_temporary_list()" class="simple_mode1">
+    <div class="additional_parent">
+        <div class="additional_child">👥 <button v-if="show_user" @click="show_all_user">{{ show_user }}</button></div>
+        <div class="additional_child">🏷️ <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button></div>
+        <div class="additional_child">⬆️⬇️ <button @click="change_show_order_by">{{ show_order_by }}</button></div>
+        <div class="additional_child_small">
+            <input type="radio" id="option1" value="advanced" v-model="advanced_visible">
+            <label for="option1"></label>
+            <input type="radio" id="option2" value="not_advanced" v-model="advanced_visible">
+            <label for="option2"></label>
+        </div>
+    </div>
+    <div class="flex_child q_a_data" ref="flex_child_display_q_a_data">
+    <ul class="simple_mode1">
+    <li v-for="(DATA_VAL, DATA_IDX) in return_current_temporary_list()" class="block_of_one simple_mode1">
+        <div class="data_type" v-if="DATA_VAL['data_type']">{{ DATA_VAL['data_type'] }}</div>
+        <div :style="apply_inline_block_styles_all_at_once(false, true)" class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div>
+        <span v-if="DATA_VAL['likes'].length === 0"
+            @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
+            {{ '♡' }}</span>
+        <span
+            v-for="(like, like_i) in DATA_VAL['likes']"
+            @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
+            {{ '❤️' }}</span>
+        <ul class="tags_parent">
+            <li v-for="(Tag, Tag_I) in DATA_VAL['tags']" class="tags">
+                <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button>
+                <button
+                    v-if="DATA_VAL['tags'].length >0"
+                    @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])"
+                    :style="{ display: tag_more_visible ? 'inline' : 'none' }"
+                    >🗑️</button>
+            </li>
+        </ul>
+        <button @click="show_tag_more_button" class="show_tag_more_button">🏷️→</button>
+        <div :style="{ display: tag_more_visible ? 'block' : 'none' }">
+            <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+            <datalist id="tag-options" @click>
+                <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+            </datalist>
+            <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
+        </div>
+        <div class="top_right advanced">
+            <ul class="dialog_ul">
+            <li class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+                <span class="synapse" @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                    data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data1'],
+                    data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data2'],
+                )" :style="{ display: synapse_visible ? 'block' : 'none' }">{{ choice_emoji(Other_Of_One) }}</span>
+            </li>
+            </ul>
+            <div @click="showDialog" class="showDialog">⚙️</div>
+        </div>
+        <div class="bottom_right">
+            <div class="created_at">{{ date_time_form(DATA_VAL['created_at']) }}</div>
+            <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button>
+            <div class="id">{{ DATA_VAL['id'] }}</div>
+        </div>
+        <div class="clickable_for_short_or_long simple_mode1 " @click="short_or_long( DATA_VAL['id'] )" ref="exception">
+            <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+            <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
+        </div>
+        <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
+            <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
+            <ul>
+            <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+                {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+                <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+                    <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
+                    <button class="advanced" @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+                </span>
+                    <input class="advanced" type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
+                    <button class="advanced" @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
+                <ul>
+                    <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+                    <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
+                    <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+                        <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                        <button class="advanced" @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
+                    </span>
+                    </li>
+                </ul>
+            </li>
+            </ul>
+            <input class="advanced" type="text" v-model="comment" placeholder="comment" @click.stop>
+            <button class="advanced" @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
+            <div style="margin-top: 0.5rem" @click.stop>
+                <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
+                <button class="advanced" @click.stop="show_comment_button" class="bigger_font">💬→</button>
+            </div>
+        </div>
+    </li>
+    </ul>
+    </div>
+</div>
+</div>
+
+<button @click="textarea_opener" class="textarea_opener">📝</button>
+    <div class="textarea-column-1" id="target">
+    <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data_a" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
+    <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data_b" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
+    </div>
+    <div>
+        <button @click="fetch_insert_link" class="fetch_insert_link">📲🛫📲🚀📲</button>
+        <input type="text" v-model="name" placeholder="name" class="name">
+        <input type="password" v-model="password" placeholder="password" class="password">
+    </div>
+    <button @click="fn21(1)" class="font_sizing">◉</button>
+    <button @click="fn21(-1)" class="font_sizing">⦿</button>
+    <button @click="fn21" class="font_sizing">◎</button>
+
+
+    <button @click="go_to_f_i_b" class="font_sizing">go_to_f_i_b</button>
+    <button @click="go_to_i_t_n" class="font_sizing">go_to_i_t_n</button>
+    <!-- <button @click="data_change_to_q_a" class="font_sizing">data_change_to_q_a</button> -->
+    <!-- <button @click="data_change_to_f_i_b" class="font_sizing">data_change_to_f_i_b</button> -->
+    <!-- <button @click="data_change_to_i_t_n" class="font_sizing">data_change_to_i_t_n</button>     -->
+    </div>
+
+<div class="column-2 simple_mode2" :class="{'column-2-none': column_2_none}">
+                <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
+                <button @click="q_a_change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
+
+            <div v-if="data_type=== 'q_a'">
+                <div><progress value="0" max="100" id="prgr"></progress></div>
+
+                <template v-for="(DATAVAL, DATAIDX) in q_a_data4" class="simple_mode2">
+<div class="q_and_a simple_mode2 minimum" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
+<span class="text_right simple_mode2" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span>
+<button class="simple_mode2" v-for="item in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
+<span class="text_center simple_mode2">{{ DATAVAL[2] }}</span>
+</div>
+                </template>
+                <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
+                <button @click="q_a_fn4" class="check_button">🎮</button>
+            </div>
+            <div v-if="data_type=== 'f_i_b'">
+                <span v-for="(DATAVAL, DATAIDX) in f_i_b_data9" class="simple_mode2 minimum">
+                    <span @click="" v-if="typeof DATAVAL === 'string'" ref="core" class="simple_mode2">{{ DATAVAL }}</span>
+                    <template v-if="typeof DATAVAL === 'object'" class="simple_mode2">
+                    <select name="" id="A" @change="f_i_b_check_option(DATAIDX)" style="background-color: ''" ref="core" class="simple_mode2">
+                        <option v-for="(FOO, BAR) in DATAVAL[1]" :value="FOO" class="simple_mode2">
+                            {{ FOO }}
+                        </option>
+                    </select>
+                    </template>
+                </span>
+                <button @click="f_i_b_fn5" class="check_button">🎮</button>
+            </div>
+            <div v-if="data_type=== 'i_t_n'">
+                <ul class="centering simple_mode2 minimum">
+                <li v-for="(item, IDX) in i_t_n_data5" :key="item" class="result_color simple_mode2" :style="{display: i_t_n_data5_result ? 'block' : 'none'}">
+                <div class="simple_mode2" v-if="only_one_q_a_mode ? IDX === current_index : true">
+                <span class="OK_or_NG simple_mode2">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>    
+                <span class="answer simple_mode2">{{ item[0] }}</span>
+                <span class="any simple_mode2">
+                <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="i_t_n_check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
+                </span>
+                </div>
+                </li>
+
+                <div v-for="(item, IDX) in i_t_n_data9_x" :key="item" :style="{display: i_t_n_data9_result ? 'block' : 'none'}">
+                <div class="i_t_n_data9_x_parent">
+                <div class="OK_or_NG">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</div>
+                <img :src="item[0]" :alt="item[0]" class="png_image" >
+                <button v-for="(item2,item2_IDX) in item[1][1]" 
+                :class="'common_choose_the_answer_image choose_the_answer_image_'+item2_IDX"
+                @click="i_t_n_check_name_to_image(item[1][0], item2, IDX)">
+                {{ item2 }}
+                </button>
+                </div>
+                </div>
+
+                <button @click="i_t_n_filter_image_and_name" class="check_button">🎮</button>
+                </ul>
+            </div>
+            <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
+
+</div>
+
+
+    <div class="column-3" :class="{'column-3-none': column_3_none}">
+    <div>
+    <button @click="fn18" class="result_opener">📖</button>
+    </div>
+    <template v-for="(DATAVAL, DATAIDX) in online_data_A">
+        <div class="textarea-column-2">
+        <div class="a">
+            <button @click="fn9(DATAIDX)" class="a-1">↩️</button>
+            <button @click="fn16(DATAIDX)" class="a-2">🗑️</button>
+            <button @click="fn17(DATAIDX)" class="a-3">📚</button>
+        </div>
+    <textarea name="" cols="30" rows="10" class="b" style='display: block;' ref="results">{{ DATAVAL[0] }}</textarea>
+    <textarea name="" cols="30" rows="10" class="c" style='display: block;' ref="results">{{ DATAVAL[1] }}</textarea>
+        </div>
+    </template>
+    </div>
+    </div>
+</div>
+
+
+</body>
+
+
+
+<script>
+const app = Vue.createApp({
+data() {
+return {
+visible_swithc: null,
+
+// for f_i_b
+f_i_b_all_save: [],
+f_i_b_data1: '',
+f_i_b_data2: '',
+f_i_b_data3: [],
+f_i_b_data4: [],
+f_i_b_data5: '',
+f_i_b_data6: [],
+f_i_b_data7: [],
+f_i_b_data8: [],
+f_i_b_data9: [],
+
+// Xはリファクタリング時に他のナンバリングの変数と被らないようにするためのもの
+f_i_b_data_X_1: [],
+f_i_b_data_X_2: [],
+f_i_b_data_X_3: [],
+f_i_b_data_X_4: [],
+f_i_b_data_X_5: [],
+// for f_i_b
+
+
+// for i_t_n
+i_t_n_all_save: [],
+
+i_t_n_data2:'',
+i_t_n_ary_data2: [],
+i_t_n_data3:'',
+i_t_n_ary_data3: [],
+i_t_n_data4:[],
+i_t_n_data5:[],
+i_t_n_data8:[],
+i_t_n_data9:[],
+i_t_n_data9_x: [],
+
+i_t_n_data5_result: true,
+i_t_n_data9_result: false,
+// for i_t_n
+
+
+all_save: [],
+online_data_B: [],
+data_b: '',
+q_a_data4: [],
+q_a_data5: [],
+data_a: '',
+online_data_A: [],
+test_mode: false,
+column_1_none: false,
+column_2_none: false,
+column_3_none: false,
+
+DATA_TYPE_ARRAY: [
+    'q_a',
+    'f_i_b',
+    'i_t_n',
+],
+
+current_index: 0,
+only_one_q_a_mode: false,
+
+
+// for_online_function
+name: 'user1',
+password: 'user_pass1',
+tags: [],
+search_tag: '',
+web_data: {},
+show_user: '',
+show_tag: '',
+show_order_by: 'DESC',
+data_type: 'q_a',
+link: '',
+truncate_text_length: 100,
+untruncate_text_array: [],
+// endpoint: 'http://localhost:8000',
+endpoint: 'https://cotton-concrete-catsup.glitch.me',
+only_q_a_list: [],
+only_f_i_b_list: [],
+only_i_t_n_list: [],
+temporary_list: [],
+simple_funtionable_flag: false,
+only_show_flag: false,
+tag_more_visible: false,
+comment_button_visible: false,
+synapse_visible: false,
+comment_and_tag_visible: false,
+textarea_visible: false,
+
+advanced_visible: 'not_advanced',
+// for_online_function
+
+}},
+watch: {
+f_i_b_data1: {
+    handler() {
+        this.f_i_b_data3_setup();
+        this.f_i_b_data4_5_setup();
+        this.f_i_b_exe();
+    },
+    deep: true
+},
+f_i_b_data2: {
+    handler() {
+        this.f_i_b_data3_setup();
+        this.f_i_b_data4_5_setup();
+        this.f_i_b_exe();
+    },
+    deep: true
+},
+
+data_b: {
+    handler() {
+    this.all_error_check();
+    this.q_a_processing();
+    },
+    deep: true
+},
+data_a: {
+    handler() {
+    this.all_error_check();
+    this.q_a_processing();
+    },
+    deep: true
+},
+
+show_user: {
+    async handler(newVal, oldVal) {
+        await this.fetch_read_all();
+    },
+    deep: true,
+},
+show_tag: {
+    async handler(newVal, oldVal) {
+        await this.fetch_read_all();
+    },
+    deep: true,
+},
+show_order_by: {
+    async handler(newVal, oldVal) {
+        await this.fetch_read_all();
+    },
+    deep: true,
+},
+
+
+
+// for_online_function
+// separate_each_listをdeep watchする
+web_data: {
+    handler: function (newVal, oldVal) {
+        this.separate_each_list();
+    },
+    deep: true,
+},
+advanced_visible: {
+    handler: function (newVal, oldVal) {
+        this.advanced_visible === 'advanced' ? this.css_var_set('--advanced-display-var', 'inline-block') : this.css_var_set('--advanced-display-var', 'none');
+    },
+    deep: true,
+},
+// for_online_function
+
+
+},
+beforeCreate(){
+},
+created(){
+this.css_var_set('--css-var-root-font-size', "12px");
+},
+beforeMount(){
+},
+mounted() {
+this.fetch_read_all();
+this.fetch_get_tags_for_autocomplete();
+
+this.q_a_processing();
+this.save_data_load();
+this.advanced_visible_fn();
+this.test_mode === false ? this.test_data_exe() : null;
+
+if(this.data_type === "f_i_b"){
+    this.data_a_b_converter_for('f_i_b');
+    this.f_i_b_data3_setup();
+    this.f_i_b_data4_5_setup();
+    this.f_i_b_exe();
+    this.test_mode === true ? this.test_data_exe() : null;
+};
+if(this.data_type === "i_t_n"){
+    this.i_t_n_init();
+    this.test_mode === true ? (this.sample1(), sleep(100, this.test_exe)) : null;
+};
+
+
+},
+beforeUpdate() {
+},
+async updated() {
+},
+methods: {
+go_to_f_i_b(){
+    window.location.href = './f_i_b.html';
+},
+go_to_i_t_n(){
+    window.location.href = './i_t_n.html';
+},
+
+// q_a_change_only_one_q_a_modeとは、q_aの問題を一つずつ表示するか、全て表示するかを切り替える関数
+q_a_change_only_one_q_a_mode(){
+    this.only_one_q_a_mode = !this.only_one_q_a_mode;
+},
+
+
+// core of i_t_n
+i_t_n_erase(item, ary){
+    // 指定した要素を配列から削除するramda.jsを使った1行の関数
+    const ers = R.curry((item, ary) => R.filter(R.complement(R.equals(item)), ary));
+    return ers(item, ary);
+},
+i_t_n_take2(ary){
+    // 指定した要素から先頭から2つの要素を取り出すramda.jsを使った1行の関数
+    const i_t_n_take2 = R.compose(R.take(2), R.drop(1));
+    return i_t_n_take2(ary);
+},
+i_t_n_data2_data3_string_to_array(){
+    this.i_t_n_ary_data2 = this.i_t_n_data2.split("\n")
+    this.i_t_n_ary_data3 = this.i_t_n_data3.split("\n")
+},
+i_t_n_make_image_to_name_Q_A_array(){
+    const ary_a = to_ary(this.i_t_n_ary_data3).map(V=> [V, this.i_t_n_take2(shuffle(this.i_t_n_erase(V, this.i_t_n_ary_data3)))]);
+    const ary_b = to_ary(ary_a).map(V=> [V[0], shuffle(R.flatten(V))]);
+    const ary_c = R.zip(this.i_t_n_ary_data2, ary_b);
+    this.i_t_n_data5 = R.map(R.insert(2, false), ary_c);
+},
+i_t_n_init(){
+    this.data_a_b_converter_for('i_t_n');
+    this.i_t_n_data2_data3_string_to_array();
+    this.i_t_n_make_image_to_name_Q_A_array();
+},
+i_t_n_check_image_to_name(correct_URL, URL, IDX){
+    this.i_t_n_data5[IDX][2] = correct_URL === URL ? true : false;
+},
+i_t_n_check_name_to_image(correct_URL, URL, IDX){
+    this.i_t_n_data9_x[IDX][2] = correct_URL === URL ? true : false;
+},
+i_t_n_data6_data7_string_to_array(){
+    this.i_t_n_ary_data6 = this.i_t_n_data2.split("\n")
+    this.i_t_n_ary_data7 = this.i_t_n_data3.split("\n")
+},
+i_t_n_change_result(){
+    this.i_t_n_data5_result = !this.i_t_n_data5_result;
+    this.i_t_n_data9_result = !this.i_t_n_data9_result;
+},
+i_t_n_filter_image_and_name(){
+    if(this.i_t_n_data5.map(V=>V[2]).every(V=>V === true)){
+        this.i_t_n_data5 = [];
+        alert("すべての問題が正解しました。🦖\nすべての問題が正解しました。🦕");
+        return;
+    }
+    const res1 = this.i_t_n_data5.filter(V=>V[2] === false);
+    const res2 = R.transpose(
+        res1.map(V=> [V[0], V[1][0]])
+    );
+    this.data10.push([res2[0].join("\n"), res2[1].join("\n")]);
+    this.for_debug();
+},
+i_t_n_true_or_false_to_emoji(bool){
+    // trueだったら⭕️、falseだったら❎を返す関数
+    return bool ? "⭕️" : "❎";
+},
+// core of i_t_n
+
+
+
+
+// core of f_i_b
+f_i_b_data3_setup(){
+    this.f_i_b_data3 = this.f_i_b_data1.split("\n");
+},
+f_i_b_filter_and_DESC_sort_and_remove_short_str(){
+    // フィルタリングして長さで降順ソートし、重複した短い要素を除外する。strに含まれない要素は除外される
+    // ['fo', 'foo', '日', 'qux', 'qx', '日本', 'blabla', 'brabra', 'bowbow']のような要素のその要素が含む文字列がある場合に、長い文字列の要素を残して短い文字列を削除する関数
+    // この場合'fo'と'日'は削除される
+    const remove_short_str = (ary) => ary.filter(V => !ary.some(VAL => VAL !== V && VAL.includes(V)));
+    this.f_i_b_data4 = remove_short_str(
+        this.f_i_b_data3.filter(v => this.f_i_b_data2.includes(v)).sort((a, b) => b.length - a.length));
+},
+f_i_b_data4_5_setup(){
+    this.f_i_b_filter_and_DESC_sort_and_remove_short_str();
+    this.f_i_b_data5 = this.f_i_b_data4.join("\n");
+},
+f_i_b_fn2_1(target_str, replacer_str) {
+    // 正規表現による分割と区切り文字の挿入を組み合わせる
+    // JSの正規表現で使う記号を全てサニタイズするJSの関数escape_reg_expをconst形式の1行関数で
+    const escape_reg_exp = string => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const escaped_result = escape_reg_exp(replacer_str);
+    const RESULT = R.intersperse([escaped_result], target_str.split(new RegExp(escaped_result)))
+    return RESULT;
+},
+f_i_b_get_shuffled_array(ARG_ARY, VAL){
+    // ARG_ARYからVALを除外し、シャッフルした配列から先頭2つの要素を取得し、VALと結合し、シャッフルした配列を返す
+    // 与えられた配列 ary から要素 val を取り除いた新しい配列を返すアロー関数
+    const remove_any_elelemnt_from_ary_one_liner = (ary, val) => ary.filter(V=> V !== val);
+    return shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(ARG_ARY, VAL)).slice(0, 2).concat(VAL));
+},
+f_i_b_composer() {
+    // [
+    //     [VAL, ['', VAL, BAR, BAZ],
+    //     [BAR, ['', BAR, VAL, BAZ],
+    //     [BAZ, ['', VAL, BAR, BAZ],
+    // ]
+    // 上記のように[正解, [空文字, シャッフルされた正解を含む3つの要素]]の配列を作成する
+    this.f_i_b_data7 = this.f_i_b_data4.map(VAL => {
+        return [VAL, R.insert(0, '', this.f_i_b_get_shuffled_array(this.f_i_b_data4, VAL)), false];
+    });
+},
+f_i_b_fn3() {
+    let RESULT_ARRAY = [];
+    const fn2 = (target_str, replacer_str_ary) => {
+        if (replacer_str_ary.length <= 0) {
+            return target_str;
+        } else {
+            // 文字列の場合にのみ関数を適用し、文字列でなければそのまま返す
+            const result = (typeof target_str === 'string') ? this.f_i_b_fn2_1(target_str, replacer_str_ary[0]) : target_str;
+            // replacer_str_ary = this.f_i_b_remove_index_0(replacer_str_ary);
+            replacer_str_ary = R.remove(0, 1, replacer_str_ary);
+            // 再帰
+            let res = result.map(V=>fn2(V, replacer_str_ary));
+            res.includes(undefined) === false ? RESULT_ARRAY.push(res) : null;
+        }
+    };
+    fn2(this.f_i_b_data2, this.f_i_b_data4);
+    this.f_i_b_data8 = RESULT_ARRAY;
+},
+f_i_b_fn4() {
+// 2次元配列を1次元配列に変換し、各要素に対して別の配列に含まれるかをチェックし、一致する要素を別の配列から取得して、最終的な1次元配列を生成する処理
+this.f_i_b_data6 = R.flatten(this.f_i_b_data8).map(V=>{
+    return this.f_i_b_data4.includes(V) ?
+                this.f_i_b_data7.filter(VAL=>VAL[0]===V)[0] :
+                V
+});
+},
+f_i_b_remove_empty_str_from_ary() {
+// 配列から''を除外する
+this.f_i_b_data9 = this.f_i_b_data6.filter(V => V !== '');
+},
+
+f_i_b_for_debug(){
+// this.css_var_set('--css-var-test-inline', 'inlilne');
+// this.css_var_set('--css-var-color-1', 'LightGray');
+// this.css_var_set('--css-var-color-2', 'SlateGray');
+// this.css_var_set('--css-var-color-3', 'DimGray');
+
+const f_i_b_data1 = to_ary(this.f_i_b_data1);
+const f_i_b_data2 = to_ary(this.f_i_b_data2);
+const f_i_b_data3 = to_ary(this.f_i_b_data3);
+const f_i_b_data4 = to_ary(this.f_i_b_data4);
+const f_i_b_data5 = to_ary(this.f_i_b_data5);
+const f_i_b_data6 = to_ary(this.f_i_b_data6);
+const f_i_b_data7 = to_ary(this.f_i_b_data7);
+const f_i_b_data8 = to_ary(this.f_i_b_data8);
+const f_i_b_data9 = to_ary(this.f_i_b_data9);
+const f_i_b_data_X_1 = to_ary(this.f_i_b_data_X_1);
+const f_i_b_data_X_2 = to_ary(this.f_i_b_data_X_2);
+const f_i_b_data_X_3 = to_ary(this.f_i_b_data_X_3);
+const f_i_b_data_X_4 = to_ary(this.f_i_b_data_X_4);
+const f_i_b_data_X_5 = to_ary(this.f_i_b_data_X_5);
+
+const obj = {
+f_i_b_data1: f_i_b_data1,
+f_i_b_data2: f_i_b_data2,
+f_i_b_data3: f_i_b_data3,
+f_i_b_data4: f_i_b_data4,
+f_i_b_data5: f_i_b_data5,
+f_i_b_data6: f_i_b_data6,
+f_i_b_data7: f_i_b_data7,
+f_i_b_data8: f_i_b_data8,
+f_i_b_data9: f_i_b_data9,
+f_i_b_data_X_1: f_i_b_data_X_1,
+f_i_b_data_X_2: f_i_b_data_X_2,
+f_i_b_data_X_3: f_i_b_data_X_3,
+f_i_b_data_X_4: f_i_b_data_X_4,
+f_i_b_data_X_5: f_i_b_data_X_5,
+};
+let ary = [];
+for (let i = 0; i < ary.length; i++) {
+  obj[ary[i]] = i;
+}
+for (let [key, val] of Object.entries(obj)) {
+  console.log(key); console.log(val);
+}
+
+},
+f_i_b_exe(){
+    this.f_i_b_composer();
+    this.f_i_b_fn3();
+    this.f_i_b_fn4();
+    this.f_i_b_remove_empty_str_from_ary();
+},
+f_i_b_check_option(INDEX){
+    // this.f_i_b_data9からarrayの要素だけを取り出す一行コード
+    this.f_i_b_data9[INDEX][2] =
+        this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value ? true : false;
+    this.$refs.core[INDEX].style.backgroundColor =
+        this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value
+            ? '' :
+            '#F9E4C6'; //ミルレージュ（Mille Feuille）
+            // '#D6A5A5'; //ダスティローズ（Dusty Rose）
+            // '#8A9A5B'; //モスグリーン（Moss Green）
+            // '#B0E0E6'; //パウダーブルー（Powder Blue）
+            // '#E2725B'; //テラコッタ（Terracotta）
+            // '#36454F'; //チャコールグレー（Charcoal Gray）
+            // '#6699CC'; //ブルーグレイ（Blue Gray）
+            // '#98FF98'; //ミントグリーン（Mint Green）
+            // '#B76E79'; //ローズゴールド（Rose Gold）
+            // '#800000'; //マルーン（Maroon）
+    this.f_i_b_data_X_2 = this.f_i_b_data9
+        .filter(V=>Array.isArray(V)).filter(V=>V[2]===false);
+    this.f_i_b_data_X_3 = this.f_i_b_data4
+        .filter(V=>R.pluck(0, this.f_i_b_data_X_2).includes(V));
+    this.f_i_b_data_X_4 = this.f_i_b_data_X_3.join("\n");
+    this.f_i_b_for_debug();
+},
+f_i_b_fn4_3(){
+    this.f_i_b_data_X_1.push([
+        this.f_i_b_data_X_4,
+        this.f_i_b_data2,
+    ]);
+},
+f_i_b_fn4_4(){
+    return this.f_i_b_data9.filter(V=>Array.isArray(V)).every(V=>V[2]===true);
+},
+f_i_b_fn5(){
+if(this.f_i_b_fn4_4()){
+    window.alert("正解です！");
+    return;
+};
+    this.f_i_b_fn4_3();
+},
+// core of f_i_b
+
+
+
+async throw_error_for_local_save_data() {
+    // this.data_typeが空か、
+    // DATA_TYPE_ARRAYに含まれていない場合は処理を中断する
+    if(this.data_type === '' || this.data_type === null || this.data_type === undefined
+        || !this.DATA_TYPE_ARRAY.includes(this.data_type)){
+            // エラーをreturnで返す
+            return (new Error('en: this.data_type is not correct, ja: this.data_typeが正しくありません'));
+    };
+},
+async save_data_to_all_save(){
+    try {
+    await this.throw_error_for_local_save_data();
+    const item_key = this.data_type;
+    this.all_save.push(to_ary([this.data_a, this.data_b]));
+    await localforage.setItem(item_key, JSON.stringify(this.all_save));
+    } catch (error) {
+        console.log(error);
+    };
+},
+async save_data_load() {
+    try {
+    await this.throw_error_for_local_save_data();
+    const item_key = this.data_type;
+    this.all_save = JSON.parse(await localforage.getItem(item_key)) || [];
+    } catch (error) {
+        console.log(error);
+    }
+},
+async save_data_delete(INDEX){
+    try {
+    await this.throw_error_for_local_save_data();
+    const item_key = this.data_type;
+    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
+        this.all_save.splice(INDEX, 1);
+        await localforage.setItem(item_key, JSON.stringify(this.all_save));
+    };
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+save_data_set(INDEX){
+    this.scrollToTarget('local');
+    this.data_a = this.all_save[INDEX][0];
+    this.data_b = this.all_save[INDEX][1];
+},
+
+
+
+
+
+
+fn9(IDX){
+this.data_a = this.online_data_A[IDX][0];
+this.data_b = this.online_data_A[IDX][1];
+},
+reverse_q_a(){
+this.data_a = this.data_a.split("\n").reverse().join("\n");
+this.data_b = this.data_b.split("\n").reverse().join("\n");
+},
+shuffle_q_a(){
+shuffled_data = R.transpose(shuffle(R.zip(
+    this.data_a.split("\n"),
+    this.data_b.split("\n")
+)));
+this.data_a = shuffled_data[0].join("\n");
+this.data_b = shuffled_data[1].join("\n");
+},
+swap_q_a(){
+if(this.data_type === 'i_t_n'){
+    // i_t_nにおいては実際にはdata_aとdata_bのスワップはせず、
+    // data_aとdata_bの表示のみをスワップする
+    this.i_t_n_change_result();
+    this.change_to_i_t_n();
+    return;
+};
+[tmp0, tmp1] = [this.data_a, this.data_b];
+[this.data_a, this.data_b] = [tmp1, tmp0];
+},
+fn16(INDEX){
+this.online_data_A.splice(INDEX, 1);
+},
+fn17(INDEX){
+const TARGET_INDEX_FIRST = INDEX * 2;
+const TARGET_INDEX_SECOND = INDEX * 2 + 1;
+this.$refs.results[TARGET_INDEX_FIRST].style.display =
+this.$refs.results[TARGET_INDEX_SECOND].style.display =
+    this.$refs.results[TARGET_INDEX_FIRST].style.display === "block"
+    ||
+    this.$refs.results[TARGET_INDEX_FIRST].style.display === '' ? "none" : "block";
+},
+fn18(){
+    const RESULTS = this.$refs.results;
+        RESULTS.map(ELM=>ELM.style.display).some(DISPLAY=>DISPLAY==='block' || DISPLAY==='') ?
+            RESULTS.map(ELM=>ELM.style.display = 'none') :
+            RESULTS.map(ELM=>ELM.style.display = 'block');
+},
+fn19_0(){
+    const THE_STYLE_DISPLAY1 = this.$refs.save_data_set_list_parent1.style.display;
+    this.$refs.save_data_set_list_parent1.style.display = (THE_STYLE_DISPLAY1 === 'block' || THE_STYLE_DISPLAY1 === '') ? 'none' : 'block';
+},
+fn19_1(){
+    const THE_STYLE_DISPLAY2 = this.$refs.save_data_set_list_parent2.style.display;
+    this.$refs.save_data_set_list_parent2.style.display = (THE_STYLE_DISPLAY2 === 'block' || THE_STYLE_DISPLAY2 === '') ? 'none' : 'block';
+},
+fn21(ONE_UP_OR_ONE_DOWN_OR_12px){
+ONE_UP_OR_ONE_DOWN_OR_12px = ONE_UP_OR_ONE_DOWN_OR_12px ? ONE_UP_OR_ONE_DOWN_OR_12px : '12px';
+num_px_string = (
+        Number(
+            document.documentElement.style.getPropertyValue('--css-var-root-font-size').split("px")[0]
+        ) + (ONE_UP_OR_ONE_DOWN_OR_12px)
+    ).toString() + 'px';
+this.css_var_set('--css-var-root-font-size', num_px_string);
+},
+
+
+
+is_not_blank(STR){
+return STR.length > 0;
+},
+blank_check(TARGET){
+ELM = document.querySelector(TARGET);
+ELM.style.backgroundColor = ELM.value.split("\n").every(V=>this.is_not_blank(V)) === false ? "cornflowerblue" : '';
+},
+check_if_same_length(){
+const length_any_textarea = (TARGET) => document.querySelector(TARGET).value.split("\n").length;
+const both_target_coloring = (COLOR) => document.querySelectorAll(".textarea-column-1 > textarea").forEach(TEXTAREA=>TEXTAREA.style.backgroundColor = COLOR || TEXTAREA.style.backgroundColor);
+length_any_textarea("#textarea-column-1-1") === length_any_textarea("#textarea-column-1-2") ? both_target_coloring() : both_target_coloring('coral');
+},
+all_error_check(){
+this.blank_check("#textarea-column-1-1");
+this.blank_check("#textarea-column-1-2");
+this.check_if_same_length();
+},
+
+
+
+css_var_set(VAR_NAME, VAR){
+document.documentElement.style.setProperty(VAR_NAME, VAR);
+},
+column_1_none_fn(){
+this.column_1_none === true ? (this.css_var_set('--css-var-column-1-none', '1fr'), this.column_1_none = false) : (this.css_var_set('--css-var-column-1-none', '0px'), this.column_1_none = true);
+},
+column_2_none_fn(){
+this.column_2_none === true ? (this.css_var_set('--css-var-column-2-none', '1fr'), this.column_2_none = false) : (this.css_var_set('--css-var-column-2-none', '0px'), this.column_2_none = true);
+},
+column_3_none_fn(){
+this.column_3_none === true ? (this.css_var_set('--css-var-column-3-none', '1fr'), this.column_3_none = false) : (this.css_var_set('--css-var-column-3-none', '0px'), this.column_3_none = true);
+},
+
+
+for_debug(){
+online_data_B = to_ary(this.online_data_B);
+data_b = to_ary(this.data_b);
+q_a_data5 = to_ary(this.q_a_data5);
+data_a = to_ary(this.data_a);
+online_data_A = to_ary(this.online_data_A);
+},
+
+
+// for_online_function
+// only_service_data(){
+//     this.temporary_list[0] = this.web_data.message.filter(V=> V.data_type === this.data_type);
+// },
+data_json_parse_online_data_A_online_data_B(JSON_STR_online_data_A_online_data_B){
+    return JSON.parse(JSON_STR_online_data_A_online_data_B);
+},
+download_data(Data_Id){
+    console.log(Data_Id);
+    // const pre_online_data_A_2 = this.temporary_list[0].filter(V=>V.data_type === this.data_type).filter(V=> V.id === Data_Id )[0];
+    const pre_online_data_A_2 = this.return_current_temporary_list().filter(V=>V.data_type === this.data_type).filter(V=> V.id === Data_Id )[0];
+    // console.log(pre_online_data_A_2);
+    const pre_online_data_A = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['data1'];
+    const pre_online_data_B = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['data2'];
+    // const pre_online_data_A = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['online_data_A'];
+    // const pre_online_data_B = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['online_data_B'];
+    // this.data_a = pre_online_data_A;
+    // console.log(pre_online_data_A);
+    this.online_data_A_connector(pre_online_data_A);
+    // this.data_b = pre_online_data_B;
+    this.online_data_B_connector(pre_online_data_B);
+    this.all_error_check();
+    this.q_a_processing();
+    this.scrollToTarget('web');
+},
+date_time_form(DATE_TIME){
+    // const date = new Date('2023-09-22T16:40:19.249Z');
+    const date = new Date(DATE_TIME);
+    const formattedDate = date.toLocaleString('ja-JP', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false});
+    return formattedDate;
+},
+change_show_user(USER){
+    this.show_user = USER;
+},
+show_all_user(){
+    this.show_user = '';
+},
+change_show_tag(TAG){
+    this.show_tag = TAG;
+},
+show_all_tag(){
+    this.show_tag = '';
+},
+change_show_order_by(){
+    this.show_order_by = this.show_order_by === 'DESC' ? 'ASC' : 'DESC';
+},
+async fetch_get_tags_for_autocomplete(){
+    const res = await fetch(this.endpoint + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify({ name: this.name, password: this.password, search_tag: this.search_tag }),
+    });
+    const data = await res.json();
+    this.tags = data['message'];
+},
+
+// this.online_data_A_connector()とthis.online_data_B_connector()によって、webのonline_data_Aとonline_data_Bは変換される。
+online_data_A_connector(online_data_A_param){
+    if(online_data_A_param){this.data_a = online_data_A_param};
+    return this.data_a;
+},
+online_data_B_connector(online_data_B_param){
+    if(online_data_B_param){this.data_b = online_data_B_param};
+    return this.data_b;
+},
+
+
+
+
+
+
+
+truncateText(text, id) {
+    if (text === undefined) { return };
+    if (text.length > this.truncate_text_length && !this.untruncate_text_array.includes(id)) {
+        return text.substring(0, this.truncate_text_length) + '...';
+    } else {
+        return text;
+    }
+},
+short_or_long(id) {
+    // untruncate_text_arrayにidが含まれていない場合は追加する。含まれている場合は削除する
+    const is_include_id = this.untruncate_text_array.includes(id);
+    is_include_id ? this.untruncate_text_array.splice(this.untruncate_text_array.indexOf(id), 1) : this.untruncate_text_array.push(id);
+},
+
+go_to_any_service_page(Service='portal'){
+    switch (Service) {
+        case 'portal': window.location.href = 'portal.html';break;
+        case 'q_a': window.location.href = 'q_a.html';break;
+        case 'f_i_b': window.location.href = 'f_i_b.html';break;
+        case 'i_t_n': window.location.href = 'i_t_n.html';break;
+        default: break;
+    }
+},
+
+
+async download_data_from_web_data_id(){
+    const id = (new URL(window.location.href).searchParams.get("id")) ? Number(new URL(window.location.href).searchParams.get("id")) : null;
+    if(id === null){return};
+    const result = await this.web_data.message
+        .filter(V=> V['id'] === id && V['data_type'] === this.data_type)
+        [0];
+    if(result === undefined){return};
+    this.download_data(result['id']);
+},
+
+
+
+separate_each_list(){
+    this.only_q_a_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'q_a');
+    this.only_f_i_b_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'f_i_b');
+    this.only_i_t_n_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'i_t_n');
+    this.temporary_list = [
+            this.only_q_a_list,
+            this.only_f_i_b_list,
+            this.only_i_t_n_list,
+        ];
+},
+other_data_type(DATA_TYPE){
+    return this.DATA_TYPE_ARRAY.filter(V=>V !== DATA_TYPE);
+},
+comment_and_tag_toggle() {
+    this.comment_and_tag_visible = !this.comment_and_tag_visible;
+},
+choice_emoji(Service) {
+    return Service === 'q_a' ? '🟰' : Service === 'f_i_b' ? '🕳️' : Service === 'i_t_n' ? '🖼️' : '📝';
+},
+showDialog() {
+    // showDialogをクリックしたら.synapseを表示/非表示の切り替えをする
+    this.synapse_visible = !this.synapse_visible;
+},
+show_comment_button() {
+    this.comment_button_visible = !this.comment_button_visible;
+},
+show_tag_more_button() {
+    this.tag_more_visible = !this.tag_more_visible;
+},
+
+
+async fetch_read_all(){
+    try {
+    this.show_user = this.show_user === '' ? '' : this.show_user;
+    this.show_tag = this.show_tag === '' ? '' : this.show_tag;
+    const params_for_get = {
+        user: this.show_user,
+        tag: this.show_tag,
+        order_by: this.show_order_by,
+    };
+    const url = new URL(this.endpoint + '/' + 'read_all');
+    url.search = new URLSearchParams(params_for_get).toString();
+    const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
+    this.web_data = await res.json(); console.log(this.web_data);
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+async fetch_insert_link(){
+try {
+    const error_check_online_data_A_online_data_B = (online_data_A, online_data_B) => {
+        switch (true) {
+            case online_data_A === undefined || online_data_A === null || online_data_A.length === 0: return 'online_data_Aが空です'; break;
+            case online_data_B === undefined || online_data_B === null || online_data_B.length === 0: return 'online_data_Bが空です'; break;
+            default: return 'OK'; break;
+        }
+    };
+    const error_check_insert_data = (data_type, data_json_str) => {
+        const is_include_DATA_TYPE = (target_data_type_str) => this.DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
+        switch (true) {
+            case data_json_str === undefined: return 'dataが空です'; break;
+            case data_json_str.length > 10000: return 'dataが長すぎます'; break;
+            case !is_include_DATA_TYPE(data_type): return '許可されていないdata_typeです'; break;
+            default: return 'OK'; break;
+        }
+    };
+    error_check_online_data_A_online_data_B(this.online_data_A_connector(), this.online_data_B_connector()) === 'OK' ? null : (()=>{throw new Error(error_check_online_data_A_online_data_B(this.online_data_A, this.online_data_B))})();
+    const data_convert_jsonstr = (online_data_A, online_data_B) => JSON.stringify({'data1': online_data_A, 'data2': online_data_B});
+    const data_json_str = data_convert_jsonstr(this.online_data_A_connector(), this.online_data_B_connector());
+    error_check_insert_data(this.data_type, data_json_str) === 'OK' ? null : (()=>{throw new Error(error_check_insert_data(this.data_type, data_json_str))})();
+    const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify({ name: this.name, password: this.password, link: this.link,
+            data_type: this.data_type,
+            data_json_str: data_json_str,
+        }),
+    });
+    const data = await res.json(); console.log(data);
+} catch (error) {
+    console.log(error);
+}
+},
+
+async fetch_delete_link(LINK_ID){
+    if (window.confirm('Are you sure you want to delete this link?')) {
+        const res = await fetch(this.endpoint + '/delete_link', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json',},
+            body: JSON.stringify({ name: this.name, password: this.password, id: LINK_ID }),
+        });
+        const data = await res.json(); 
+        await this.fetch_read_all();
+    } else {
+        console.log('Delete operation cancelled by the user.');
+    }
+},
+async fetch_like_increment_or_decrement(LINK_ID){
+    const res = await fetch(this.endpoint + '/like_increment_or_decrement', {method: 'POST',headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID }),
+    });
+    const data = await res.json(); console.log(data);
+    await this.fetch_read_all();
+},
+async fetch_insert_comment(LINK_ID){
+    const res = await fetch(this.endpoint + '/insert_comment', {method: 'POST',headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, comment: this.comment }),
+    });
+    const data = await res.json(); console.log(data);
+    await this.fetch_read_all();
+},
+async fetch_delete_comment(COMMENT_ID){
+    console.log(COMMENT_ID);
+    const res = await fetch(this.endpoint + '/delete_comment', {method: 'POST',headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify({ name: this.name, password: this.password, comment_id: COMMENT_ID }),
+    });
+    const data = await res.json(); console.log(data);
+    await this.fetch_read_all();
+},
+async fetch_insert_comment_reply(COMMENT_ID){
+    console.log(COMMENT_ID);
+    const res = await fetch(this.endpoint + '/insert_comment_reply', {method: 'POST',headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify({ name: this.name, password: this.password, comment_id: COMMENT_ID, comment_reply: this.comment_reply }),
+    });
+    const data = await res.json(); console.log(data);
+    await this.fetch_read_all();
+},
+async fetch_delete_comment_reply(COMMENT_REPLY_ID){
+    const res = await fetch(this.endpoint + '/delete_comment_reply', {method: 'POST',headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify({ name: this.name, password: this.password, comment_reply_id: COMMENT_REPLY_ID }),
+    });
+    this.data = await res.json(); console.log(this.data);
+    await this.fetch_read_all();
+},
+async fetch_insert_tag(LINK_ID){
+    const res = await fetch(this.endpoint + '/insert_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, new_tag: this.search_tag }),
+    });
+    const data = await res.json(); console.log(data);
+    await this.fetch_read_all();
+},
+async fetch_get_tags_for_autocomplete(){
+    const res = await fetch(this.endpoint + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify({ name: this.name, password: this.password, search_tag: this.search_tag }),
+    });
+    const data = await res.json();
+    this.tags = data['message'];
+},
+async fetch_delete_tag(LINK_ID, TAG_ID){
+    const res = await fetch(this.endpoint + '/delete_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify({ name: this.name, password: this.password, id: TAG_ID, link_id: LINK_ID, }),
+    });
+    const data = await res.json(); console.log(data);
+    await this.fetch_read_all();
+},
+
+show_all_user(){
+    this.show_user = '';
+},
+show_all_tag(){
+    this.show_tag = '';
+},
+change_show_order_by(){
+    this.show_order_by = this.show_order_by === 'DESC' ? 'ASC' : 'DESC';
+},
+
+simple_funtionable() {
+    this.simple_funtionable_flag = !this.simple_funtionable_flag;
+    function simple(){
+        // cssのsimple_mode1クラスを含む要素以外を全て非表示にする
+        const simple_mode1_ary_not = document.querySelectorAll('body :not(.simple_mode2)');
+        const simple_mode1_ary_not_ary = Array.from(simple_mode1_ary_not);
+        simple_mode1_ary_not_ary.forEach((V) => {
+            V.classList.add('display_none');
+        });
+        document.querySelectorAll('.minimum, .column-2').forEach((V) => {
+            V.classList.add('maximum');
+        });
+    }
+    function funtionable(){
+        // cssのsimple_mode1クラスを含む要素以外を全て表示にする
+        const simple_mode1_ary_not = document.querySelectorAll('body :not(.simple_mode2)');
+        const simple_mode1_ary_not_ary = Array.from(simple_mode1_ary_not);
+        simple_mode1_ary_not_ary.forEach((V) => {
+            V.classList.remove('display_none');
+        });
+        document.querySelectorAll('.minimum, .column-2').forEach((V) => {
+            V.classList.remove('maximum');
+        });
+    }
+    this.simple_funtionable_flag === true ? simple() : funtionable();
+},
+
+// simple_funtionable() {
+//     this.simple_funtionable_flag = !this.simple_funtionable_flag;
+//     function simple(){
+//         document.querySelectorAll('body :not(.simple_mode2)').forEach((V) => {
+//             V.classList.add('display_none');
+//         });
+//         document.querySelectorAll('.minimum, .column-2').forEach((V) => {
+//             V.classList.add('maximum');
+//         });
+//     }
+//     function funtionable(){
+//         document.querySelectorAll('body :not(.simple_mode2)').forEach((V) => {
+//             V.classList.remove('display_none');
+//         });
+//         document.querySelectorAll('.minimum, .column-2').forEach((V) => {
+//             V.classList.remove('maximum');
+//         });
+//     }
+//     this.simple_funtionable_flag === true ? simple() : funtionable();
+// },
+
+apply_inline_block_styles_all_at_once(Simple=false) {
+    // simple_mode1が本来のinline-block指定のCSS指定と競合するため、
+    // インラインスタイルを優先適用させるための関数
+    // .simple_mode1配下の場合はdisplay: none;を適用する
+    this.simple_funtionable_flag === true ? Simple = true : Simple = false;
+    let style = Simple === true ? 'display: none;' : 'display: inline-block;' ;
+    return style;
+},
+textarea_opener() {
+    this.textarea_visible = !this.textarea_visible;
+},
+scrollToTarget(For='local') {
+    this.textarea_visible = true;
+    document.getElementById('target').scrollIntoView(
+        {behavior: 'instant', block: 'end', inline: 'nearest'}
+    );
+    For ==='local' ? this.$refs.save_data_set_list_parent1.style.display = 'none' : null;
+    For ==='web' ? this.$refs.save_data_set_list_parent2.style.display = 'none' : null;
+},
+
+
+
+
+
+
+
+
+
+
+
+
+advanced_visible_fn() {
+    this.advanced_visible === 'advanced' ? this.css_var_set('--advanced-display-var', 'inline-block') : this.css_var_set('--advanced-display-var', 'none');
+},
+visible_swithc_fn() {
+    // $$(".simple_mode2")以外を非表示/表示を切り替える
+    // this.visible_swithc === 'visible' ?
+    //     this.css_var_set('--visible-display-var', 'none')
+    //         : this.css_var_set('--visible-display-var', 'inline-block');
+document.querySelectorAll(':not(.simple_mode2)').forEach(V=> V.display = this.visible_swithc === 'visible' ? 'none' : 'inline-block');
+},
+// for_online_function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+q_a_fn2_1() {
+return this.online_data_B.map((V, IDX)=>{
+    return shuffle(shuffle(R.without(this.online_data_B[IDX], this.online_data_B)).slice(0, 2).concat(this.online_data_B[IDX]));
+});
+},
+// fn2_2() {
+q_a_fn2_2() {
+return R.zip(this.online_data_B, this.q_a_fn2_1()).map((V,IDX)=>[V[0], V[1], this.data_a.split("\n")[IDX]]);
+},
+// processing() {
+q_a_processing() {
+this.online_data_B = this.data_b.split("\n");
+this.q_a_data4 = this.q_a_fn2_2();
+this.q_a_data5 = R.repeat(undefined, this.q_a_data4.length);
+this.for_debug();
+},
+// fn3(correct, answer, INDEX) {
+q_a_fn3(correct, answer, INDEX) {
+this.q_a_data5[INDEX] = answer === correct ? "⭕️" : "❎";
+this.q_a_fn3_1();
+this.q_a_change_current_index(+1);
+this.current_index === this.q_a_data4.length ? this.current_index = 0 : null;
+},
+q_a_fn3_1(){
+    const prgr = document.getElementById('prgr');
+    // progress_bar_value_arrayの値を設定する
+    const progress_bar_value_array = to_ary(this.q_a_data5);
+    // => ['❎', '❎', '⭕️', null]
+    // progress_bar_value_arrayの'⭕️'の割合を求める
+    const progress_bar_value_array_length = progress_bar_value_array.filter(V=>V==='⭕️').length;
+    const progress_bar_value_array_per = progress_bar_value_array_length / progress_bar_value_array.length * 100;
+    console.log(progress_bar_value_array_per);
+    prgr.value = progress_bar_value_array_per;
+},
+// fn4_1() {
+q_a_fn4_1() {
+a = R.zip(this.q_a_data4, this.q_a_data5);
+b = R.collectBy(
+        (V)=> ( V[1] === '❎' || V[1] === undefined ) ,
+        a
+    );
+c = b[0][0][1] === '⭕️' ? b[1] : b[0];
+this.q_a_data4 = c.map(V=>V[0]);
+},
+// fn4_2() {
+q_a_fn4_2() {
+this.q_a_data5 = [];
+},
+// fn4_3() {
+q_a_fn4_3() {
+this.online_data_A.push([
+    R.transpose(this.q_a_data4)[2].join("\n"),
+    R.transpose(this.q_a_data4)[0].join("\n"),
+]);
+},
+// fn4_4() {
+q_a_fn4_4() {
+return to_ary(this.q_a_data5).every(V=>V === '⭕️')
+},
+// fn4() {
+q_a_fn4() {
+if(this.q_a_fn4_4()){
+    this.q_a_data4 = this.q_a_data5 = [];
+    return;
+};
+this.q_a_fn4_1();
+this.q_a_fn4_2();
+this.q_a_fn4_3();
+},
+// test_index(Test_index) {
+q_a_test_index(Test_index) {
+this.q_a_data4.forEach((V,IDX)=>this.q_a_fn3(V[0], V[1][Test_index], IDX));
+this.q_a_fn4();
+},
+// change_current_index(ONE_UP_OR_ONE_DOWN=1) {
+q_a_change_current_index(ONE_UP_OR_ONE_DOWN=1) {
+    this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
+    this.current_index < 0 ? this.current_index = this.q_a_data4.length - 1 : null;
+    this.current_index > this.q_a_data4.length - 1 ? this.current_index = 0 : null;
+},
+// ge_only_one_mode() {
+q_a_fn20(INDEX){
+this.q_a_data5[INDEX] = null;
+},
+
+
+// core of q_a
+
+
+
+data_change_to_q_a() {
+    this.data_type = 'q_a';
+},
+data_change_to_f_i_b() {
+    this.data_type = 'f_i_b';
+    console.log('f_i_b');
+},
+data_change_to_i_t_n() {
+    this.data_type = 'i_t_n';
+    if(this.i_t_n_data5_result === true){
+        this.tmp_test_data_insert();
+    }
+    if(this.i_t_n_data9_result === true){
+        this.i_t_n_data9_x_setup();
+    }
+},
+return_current_temporary_list() {
+    let Index_of_list = 0;
+    // q_aは0
+    // f_i_bは1
+    // i_t_nは2
+    // this.data_typeがq_aの時は0
+    // this.data_typeがf_i_bの時は1
+    // this.data_typeがi_t_nの時は2
+    switch (this.data_type) {
+        case "q_a":
+            Index_of_list = 0;
+            break;
+        case "f_i_b":
+            Index_of_list = 1;
+            break;
+        case "i_t_n":
+            Index_of_list = 2;
+            break;
+    }
+    return this.temporary_list[Index_of_list];
+},
+data_a_b_converter_for(Service) {
+    if(Service === 'f_i_b'){
+        this.f_i_b_data1 = this.data_a;
+        this.f_i_b_data2 = this.data_b;
+    };
+    if(Service === 'i_t_n'){
+        this.i_t_n_data2 = this.data_a;
+        this.i_t_n_data3 = this.data_b;
+    };
+},
+
+tmp_test_data_insert(){
+this.data_type = 'i_t_n';
+this.data_a_b_converter_for('i_t_n');
+this.i_t_n_data2_data3_string_to_array();
+this.i_t_n_make_image_to_name_Q_A_array();
+},
+i_t_n_data9_x_setup() {
+this.data_type = 'i_t_n';
+this.i_t_n_data2 = this.data_a;const ary1 = this.i_t_n_data2;
+this.i_t_n_data3 = this.data_b;const ary2 = this.i_t_n_data3;
+const ary10 = ary1.split("\n");
+const ary20 = ary2.split("\n");
+const ary10_1 = R.clone(ary10);
+const ary10_2 = R.clone(ary10);
+const ary100 = ary20.map((V,I)=>[V, [ary10_1[I], shuffle(ary10_2).slice(0,3)], false ]);
+this.i_t_n_data9_x = ary100;
+},
+test_data_exe(Test_Index){
+if(Test_Index === 0){
+    this.data_a = `Hello
+Thank you
+Goodbye
+Yes
+No
+Please
+Sorry
+Excuse me
+Good
+Bad`;
+    this.data_b = `こんにちは
+ありがとう
+さようなら
+はい
+いいえ
+お願いします
+ごめんなさい
+失礼します
+良い
+悪い`;
+};
+
+if(Test_Index === 1){
+    this.data_a = `ぁ
+あぃい
+ぅうぇ
+えぉお
+かがき
+ぎくぐ
+けげこ
+ごさざ
+しじす
+ず`;
+    this.data_b = `ァ
+アィイ
+ゥウェ
+エォオ
+カガキ
+ギクグ
+ケゲコ
+ゴサザ
+シジス
+ズ`;
+}
+
+},
+
+
+// コア部分の関数と変数をまとめる
+    // それぞれのプロダクトのコア部分のアウトプットはfn9とonline_data_A0が接続部分
+    // そのため、fn9とonline_data_A0をそれぞれのプロダクト用のconverter関数で接続する
+
+// 一旦全体的にリファクタリングする
+// (今後のアップデートの費用対効果で関数ジャンプが効くsvelteが明らかに高速で開発可。
+    // やるんだな!?今ここで)
+
+// コア部分以外の命名と処理内容を共通化する
+// <style>の中身をまとめる
+},
+}).mount('.app');
+
+
+// div.column-2とfixed_element以外を非表示にする
+// document.querySelectorAll('body :not(.fixed_element)').forEach(V=>V.style.display='none');
+</script>
+</html>

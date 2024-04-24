@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue_3_starter</title>
+<script src="./lib/vue@3.2.36.global.prod.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.36/vue.cjs.js"></script> -->
+
+<style>
+    /* 黒塗り文字にするclass */
+    .black-paint {
+        color: black;
+        background-color: black;
+    }
+
+</style>
+
+</head>
+<body class="app">
+<button @click="fn_0">fn_0</button>
+<!-- <template v-for="(DATA_VAL, DATA_IDX) in data_0_1_pair_ary.slice(0, 2)"> -->
+<template v-for="(DATA_VAL, DATA_IDX) in data_0_1_pair_ary">
+    <!-- <div>{{ DATA_VAL }}</div> -->
+    <!-- data_0はボタン表示。@clickでchange_paint_or_raw関数をIDXを指定で実行 -->
+    <button @click="change_paint_or_raw(DATA_IDX)">{{ DATA_VAL.data_0 }}</button>
+    <!-- data_1はpaintがtrueの場合はblack-paintクラスで
+        @clickでchange_paint_or_raw関数をIDXを指定してpaintのtrue/false切り替え -->
+    <div :class="DATA_VAL.paint ? 'black-paint' : ''" @click="change_paint_or_raw(DATA_IDX)">{{ DATA_VAL.data_1 }}</div>
+
+
+</template>
+<textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
+<textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
+</body>
+<script>
+const app = Vue.createApp({
+data() {
+    return {
+        data_0: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+ccccccccccccccccccccccccccccccccccc
+ddddddddddddddddddddddddddddddddddddddddddddd
+eeeeeeeeeeeeeeeeeeeeeeee`,
+data_1: `AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+EEEEEEEEEEEEEEEEEEEEEEEE`,
+data_0_ary: ['a','b','c','d','e'],
+data_1_ary: [
+'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
+'EEEEEEEEEEEEEEEEEEEEEEEE',
+    ],
+
+    data_0_1_pair_ary: [],
+
+
+}},
+watch: {
+//    any: {
+//      handler() {
+//      },
+//      deep: true
+//    },
+
+// data_0かdata_1どちらかが変更されたらfn_1を実行
+data_0: 'fn_1',
+data_1: 'fn_1',
+
+},
+beforeMounte(){
+},
+mounted() {
+    this.fn_1();
+},
+beforeUpdate() {
+},
+updated() {
+},
+methods: {
+fn_0(){
+    console.log(this.data_0);
+},
+fn_1(){
+    console.log(JSON.parse(JSON.stringify(this.data_1)));
+
+    // data_0を改行で分割してdata_0_aryに格納
+    this.data_0_ary = this.data_0.split('\n');
+    // data_1を改行で分割してdata_1_aryに格納
+    this.data_1_ary = this.data_1.split('\n');
+    // data_0_aryとdata_1_ary1:1の配列のペアにする
+    this.data_0_1_pair_ary = this.data_0_ary.map((val, idx) => {
+        return {
+            data_0: val,
+            data_1: this.data_1_ary[idx],
+            paint: true,
+        };
+    });
+    // data_0_1_pair_aryをコンソールに表示
+    console.log(this.data_0_1_pair_ary[0]);
+
+},
+change_paint_or_raw(RAW_IDX){
+    // paintのtrue/falseを切り替える
+    this.data_0_1_pair_ary[RAW_IDX].paint = !this.data_0_1_pair_ary[RAW_IDX].paint;
+    // data_0_1_pair_aryをコンソールに表示
+    console.log(this.data_0_1_pair_ary[RAW_IDX]);
+},
+},
+}).mount('.app');
+</script>
+</html>

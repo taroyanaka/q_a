@@ -24,17 +24,31 @@
     <div v-for="(DATA_VAL, DATA_IDX) in sample_array_obj">
         <button @click="set_data_sample_array_obj(DATA_IDX)">set_data_sample_array_obj({{ DATA_IDX }})</button>
     </div>
-    <h1>黒塗りクイズ作成アプリ デモ版</h1>
+<h1>⭕️❎クイズ作成アプリ デモ版</h1>
 <!-- <button @click="fn_0">fn_0</button> -->
 <!-- <template v-for="(DATA_VAL, DATA_IDX) in data_0_1_pair_ary.slice(0, 2)"> -->
 
+    <!-- done_delete_mode switch button -->
+    <!-- <button @click="done_delete_mode = !done_delete_mode">done_delete_mode</button> -->
+    <!-- done_delete_mode ON/OFF表示 -->
+    <!-- <span>
+        <span v-if="done_delete_mode">ON</span>
+        <span v-else>OFF</span>
+    </span> -->
+
+    <!-- show_textarea switch button -->
+    <button @click="show_textarea = !show_textarea">show_textarea</button>
+    <!-- show_textareaでこのdivの表示非表示を切り替える -->
+<div v-if="show_textarea">
 <textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
 <textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
+</div>
 
 
 
 
-<template>
+
+<!-- <template>
     <div>
       <div id="parent_section">
         <a v-for="i in 100" :key="i" :href="'#target_section_' + i">リンク{{ i }}</a>
@@ -47,7 +61,7 @@
         </div>
       </div>
     </div>
-</template>
+</template> -->
 
 <!-- <template v-for="(DATA_VAL, DATA_IDX) in data_0_1_pair_ary">
     <div :id="DATA_VAL.data_0" :ref="DATA_VAL.data_0">
@@ -55,29 +69,26 @@
         <button @click="exe1(DATA_IDX)">{{ DATA_VAL.data_1 }}</button>
     </div>
 </template> -->
+
+<!-- {{done_delete_mode}} -->
 <template v-for="(DATA_VAL, DATA_IDX) in exe1_data">
-    <div>
+    <!-- done_delete_modeがtrueかつDATA_VAL[3]がtrueならその行は非表示になる -->
+    <!-- <div v-if="done_delete_mode === true && DATA_VAL[3] === false"> -->
+    <!-- <div v-if="done_delete_mode === false && DATA_VAL[3] === false"> -->
+    <div v-if="DATA_VAL[3] === false">
+    <!-- {{DATA_VAL[3]}} -->
+    <!-- <div> -->
         <span>{{ DATA_VAL[0] }}</span>
-        <!-- <span>{{ DATA_VAL[1] }}</span> -->
         <span> = </span>
-        <!-- <span>{{ DATA_VAL[2] }}</span> -->
         <span>{{ DATA_VAL[2][0] }}</span>
-        <!-- <span>{{ DATA_VAL[2][0] }}</span>  -->
-        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0])">⭕️</button>
-        <!-- <span>{{ DATA_VAL[2][1] }}</span> -->
-        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1])">❎</button>
-        <!-- ⭕️/❎ -->
-        <!-- DATA_VAL[2][0]とDATA_VAL[2]が同じ値か確認 -->
-        <!-- ⭕️ button -->
-        <!-- ❎ button -->
-        <!-- DATA_VAL[3]がtrueならチェックマーク表示 -->
-        <span>
-            <span v-if="DATA_VAL[3]">✔️</span>
-        </span>
+        <div>
+            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0])">⭕️</button>
+            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1])">❎</button>
+        </div>
 
-
-
-
+        <!-- <span>
+            <span v-if="done_delete_mode === false && DATA_VAL[3] === true">✔️</span>
+        </span> -->
     </div>
 </template>
 
@@ -88,6 +99,11 @@ let d1, d2, d3, d4, d5, d6, d7, d8, d9 = null;
 const app = Vue.createApp({
 data() {
     return {
+textContent: '',
+done_delete_mode: false,
+// done_delete_mode: true,
+show_textarea: false,
+
         exe1_data: [],
         data_0: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
@@ -144,7 +160,7 @@ data_1: 'fn_1',
 },
 beforeMounte(){
 },
-mounted() {
+async mounted() {
     // this.fn_1();
 
 // let url = new URL(window.location.href);
@@ -159,10 +175,12 @@ mounted() {
 // setTimeout(() => {
 //   this.scrollToDiv();
 // });
+const response = await fetch('/asset/res_2_ary_2.txt');
+this.textContent = await response.text();
 
 this.set_data_sample_array_obj(1);
-this.fn_1();
-this.exe1();
+// this.fn_1();
+// this.exe1();
 },
 beforeUpdate() {
 },
@@ -184,13 +202,6 @@ scrollToDiv(){
     });
     // this.$refs[preset][0].scrollIntoView();
 },
-set_data_sample_array_obj(IDX){
-    this.data_0 = this.sample_array_obj[IDX].data_0.join('\n');
-    this.data_1 = this.sample_array_obj[IDX].data_1.join('\n');
-},
-fn_0(){
-    console.log(this.data_0);
-},
 fn_1(){
     this.data_0_ary = this.data_0.split('\n');
     this.data_1_ary = this.data_1.split('\n');
@@ -203,6 +214,7 @@ fn_1(){
     });
 },
 exe1(RAW_IDX){
+    this.fn_1();
     d1 = this.data_0_1_pair_ary;
     d2 = d1.map((val, idx) => val.data_1 );
     d3 = d2.map((val, idx) => {
@@ -216,6 +228,12 @@ exe1(RAW_IDX){
     });
     this.exe1_data = d3;
     // d1,d2,d3 = null;
+},
+set_data_sample_array_obj(IDX){
+    console.log("test", IDX);
+    this.data_0 = this.sample_array_obj[IDX].data_0.join('\n');
+    this.data_1 = this.sample_array_obj[IDX].data_1.join('\n');
+    this.exe1();
 },
 check_maru_batu(VAL, RESULT){
     console.log(VAL);

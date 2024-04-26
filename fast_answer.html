@@ -15,37 +15,71 @@
         color: black;
         background-color: black;
     }
+    /* not_quiz_sectionをサイドバーで表示/非表示を切り替え */
+    .not_quiz_section {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 2rem;
+        height: 100vh;
+        background-color: #f1f1f1;
+        z-index: 100;
+    }
+    .show_not_quiz_section {
+        left: 0;
+        width: 8rem;
+    }
+    /* quiz_sectionをnot_quiz_sectionの分横にずらす */
+    .quiz_section {
+        position: relative;
+        top: 0;
+        left: 4rem;
+        width: calc(100% - 4rem);
+        height: 100vh;
+        background-color: #f1f1f1;
+        z-index: 1;
+    }
+
+
+
 
 </style>
 
 </head>
 <body class="app">
-    <!-- data_sample_array_obj for して　set_data_sample_array_obj(IDX) するボタンの -->
-    <div v-for="(DATA_VAL, DATA_IDX) in sample_array_obj">
-        <button @click="set_data_sample_array_obj(DATA_IDX)">set_data_sample_array_obj({{ DATA_IDX }})</button>
-    </div>
-<h1>⭕️❎クイズ作成アプリ デモ版</h1>
-<!-- <button @click="fn_0">fn_0</button> -->
-<!-- <template v-for="(DATA_VAL, DATA_IDX) in data_0_1_pair_ary.slice(0, 2)"> -->
 
-    <!-- done_delete_mode switch button -->
-    <!-- <button @click="done_delete_mode = !done_delete_mode">done_delete_mode</button> -->
-    <!-- done_delete_mode ON/OFF表示 -->
-    <!-- <span>
-        <span v-if="done_delete_mode">ON</span>
-        <span v-else>OFF</span>
-    </span> -->
+    <!-- not_quiz_section slide button -->
+<!-- <button @click="change_show_not_quiz_section">not_quiz_section</button> -->
+<div class="not_quiz_section">
+        <!-- this.textContent_ary_1.length の 長さ分のeachをする -->
+        <div v-for="(DATA_VAL, DATA_IDX) in textContent_ary_1">
+            <div>
+                <!-- <button @click="set_data_sample_array_obj(DATA_IDX)">set_data_sample_array_obj({{ DATA_IDX }})</button> -->
+                <!-- file_name_aryを表示 -->
+                <!-- <span>{{ file_name_ary[DATA_IDX] }}</span> -->
+                <!-- file_name_aryをbuttonにする -->
+                <button @click="set_data_sample_array_obj(DATA_IDX)">{{ file_name_ary[DATA_IDX] }}</button>
+            </div>
+        </div>
 
-    <!-- show_textarea switch button -->
-    <button @click="show_textarea = !show_textarea">show_textarea</button>
-    <!-- show_textareaでこのdivの表示非表示を切り替える -->
-<div v-if="show_textarea">
-<textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
-<textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
+        <!-- data_sample_array_obj for して　set_data_sample_array_obj(IDX) するボタンの -->
+        <div v-for="(DATA_VAL, DATA_IDX) in sample_array_obj">
+            <button @click="set_data_sample_array_obj(DATA_IDX)">set_data_sample_array_obj({{ DATA_IDX }})</button>
+        </div>
+    <!-- <h1>⭕️❎クイズ作成アプリ デモ版</h1> -->
+    <!-- <button @click="fn_0">fn_0</button> -->
+    <!-- <template v-for="(DATA_VAL, DATA_IDX) in data_0_1_pair_ary.slice(0, 2)"> -->
+
+        <!-- done_delete_mode switch button -->
+        <!-- <button @click="done_delete_mode = !done_delete_mode">done_delete_mode</button> -->
+        <!-- done_delete_mode ON/OFF表示 -->
+        <!-- <span>
+            <span v-if="done_delete_mode">ON</span>
+            <span v-else>OFF</span>
+        </span> -->
+
+        <!-- show_textarea switch button -->
 </div>
-
-
-
 
 
 <!-- <template>
@@ -71,6 +105,17 @@
 </template> -->
 
 <!-- {{done_delete_mode}} -->
+
+<div class="quiz_section">
+    <!-- <button @click="change_show_not_quiz_section">not_quiz_section</button> -->
+    <button @click="show_textarea = !show_textarea">show_textarea</button>
+    <!-- show_textareaでこのdivの表示非表示を切り替える -->
+<div v-if="show_textarea">
+<textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
+<textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
+</div>
+
+
 <template v-for="(DATA_VAL, DATA_IDX) in exe1_data">
     <!-- done_delete_modeがtrueかつDATA_VAL[3]がtrueならその行は非表示になる -->
     <!-- <div v-if="done_delete_mode === true && DATA_VAL[3] === false"> -->
@@ -91,6 +136,7 @@
         </span> -->
     </div>
 </template>
+</div>
 
 </body>
 <script>
@@ -99,7 +145,10 @@ let d1, d2, d3, d4, d5, d6, d7, d8, d9 = null;
 const app = Vue.createApp({
 data() {
     return {
-textContent: '',
+file_name_ary: [],
+textContent_ary_1: [],
+textContent_ary_2: [],
+
 done_delete_mode: false,
 // done_delete_mode: true,
 show_textarea: false,
@@ -126,23 +175,23 @@ data_1_ary: [
 
     data_0_1_pair_ary: [],
 
-    sample_array_obj: [
-{
-    data_0: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10','11', '12', '13', '14', '15','16', '17', '18', '19', '20',],
-    data_1: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100','110','120','130','140','150','160','170','180','190','200',]
-},
-{data_0: ['a','b','c','d',
-'e','f','g','h',
-'i','j','k','l',
-'m','n','o','p',
-'q','r','s','t',
-],data_1: ['A','B','C','D',
-'E','F','G','H',
-'I','J','K','L',
-'M','N','O','P',
-'Q','R','S','T',
-],},
-{data_0: ['あ','い','う','え','お',],data_1: ['ア','イ','ウ','エ','オ',],},
+sample_array_obj: [
+// {
+//     data_0: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10','11', '12', '13', '14', '15','16', '17', '18', '19', '20',],
+//     data_1: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100','110','120','130','140','150','160','170','180','190','200',]
+// },
+// {data_0: ['a','b','c','d',
+// 'e','f','g','h',
+// 'i','j','k','l',
+// 'm','n','o','p',
+// 'q','r','s','t',
+// ],data_1: ['A','B','C','D',
+// 'E','F','G','H',
+// 'I','J','K','L',
+// 'M','N','O','P',
+// 'Q','R','S','T',
+// ],},
+// {data_0: ['あ','い','う','え','お',],data_1: ['ア','イ','ウ','エ','オ',],},
 ],
 
 }},
@@ -175,12 +224,46 @@ async mounted() {
 // setTimeout(() => {
 //   this.scrollToDiv();
 // });
-const response = await fetch('/asset/res_2_ary_2.txt');
-this.textContent = await response.text();
+const text_url_ary_1 = [
+    './asset/txt_dir/res_2_ary_1.txt',
+    './asset/txt_dir/res_2_2_ary_1.txt',
+    './asset/txt_dir/res_3_ary_1.txt',
+    './asset/txt_dir/res_4_ary_1.txt',
+    './asset/txt_dir/res_5_ary_1.txt',
+];
+const text_url_ary_2 = [
+    './asset/txt_dir/res_2_ary_3.txt',
+    './asset/txt_dir/res_2_2_ary_3.txt',
+    './asset/txt_dir/res_3_ary_3.txt',
+    './asset/txt_dir/res_4_ary_3.txt',
+    './asset/txt_dir/res_5_ary_3.txt',
+];
+const global_file_name_ary = [
+    '英検2級',
+    '英検準2級',
+    '英検3級',
+    '英検4級',
+    '英検5級',
+];
+this.file_name_ary = global_file_name_ary;
+// text_url_ary_1と2をfetchしてtextContent_aryに格納
+for(let i = 0; i < text_url_ary_1.length; i++){
+    const response = await fetch(text_url_ary_1[i]);
+    this.textContent_ary_1.push(await response.text());
+}
+for(let i = 0; i < text_url_ary_2.length; i++){
+    const response = await fetch(text_url_ary_2[i]);
+    this.textContent_ary_2.push(await response.text());
+}
+// textContent_ary_1とtextContent_ary_2が同じlengthなことを確認
+if(this.textContent_ary_1.length !== this.textContent_ary_2.length){
+    console.error('textContent_ary_1とtextContent_ary_2のlengthが異なります');
+}
 
-this.set_data_sample_array_obj(1);
-// this.fn_1();
-// this.exe1();
+
+// 上記の処理が完了したらset_data_sample_array_obj(0)を実行
+this.set_data_sample_array_obj(0);
+
 },
 beforeUpdate() {
 },
@@ -213,7 +296,7 @@ fn_1(){
         };
     });
 },
-exe1(RAW_IDX){
+exe1(){
     this.fn_1();
     d1 = this.data_0_1_pair_ary;
     d2 = d1.map((val, idx) => val.data_1 );
@@ -230,9 +313,13 @@ exe1(RAW_IDX){
     // d1,d2,d3 = null;
 },
 set_data_sample_array_obj(IDX){
-    console.log("test", IDX);
-    this.data_0 = this.sample_array_obj[IDX].data_0.join('\n');
-    this.data_1 = this.sample_array_obj[IDX].data_1.join('\n');
+    // this.data_0 = this.sample_array_obj[IDX].data_0.join('\n');
+    // this.data_1 = this.sample_array_obj[IDX].data_1.join('\n');
+    // this.exe1();
+    // this.textContent_ary_1を改行で分割してdata_0に格納
+    this.data_0 = this.textContent_ary_1[IDX];
+    // this.textContent_ary_2を改行で分割してdata_1に格納
+    this.data_1 = this.textContent_ary_2[IDX];
     this.exe1();
 },
 check_maru_batu(VAL, RESULT){
@@ -245,6 +332,13 @@ check_maru_batu(VAL, RESULT){
         console.log('不正解');
         VAL[3] = false;
     }
+},
+change_show_not_quiz_section(){
+    this.show_not_quiz_section = !this.show_not_quiz_section;
+    // cssを貼り替える
+    this.show_not_quiz_section ? this.show_not_quiz_section = false : this.show_not_quiz_section = true;
+
+
 },
 },
 }).mount('.app');

@@ -1,0 +1,12442 @@
+[
+  null,
+  {
+    "word": "abroad",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "absent",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": [
+      "absently"
+    ]
+  },
+  {
+    "word": "accident",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "accidents"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "act",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "acts"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "action",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "actions"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "activity",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "activities"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "actor",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "actors"
+      }
+    ],
+    "other_words": [
+      "actress"
+    ]
+  },
+  {
+    "word": "actress",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "actresses"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "actually",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "add",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "adds"
+      },
+      {
+        "meta": "過去形",
+        "word": "added"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "added"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "adding"
+      }
+    ],
+    "other_words": [
+      "addition"
+    ]
+  },
+  {
+    "word": "address",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "addresses"
+      },
+      {
+        "meta": "過去形",
+        "word": "addressed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "addressed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "addressing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "adult",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "adults"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "adventure",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "adventures"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "advice",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": [
+      "advise"
+    ]
+  },
+  {
+    "word": "afraid",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "again",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "age",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "ages"
+      }
+    ],
+    "other_words": [
+      "aged"
+    ]
+  },
+  null,
+  {
+    "word": "agree",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "agrees"
+      },
+      {
+        "meta": "過去形",
+        "word": "agreed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "agreed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "agreeing"
+      }
+    ],
+    "other_words": [
+      "agreement",
+      "agreeable"
+    ]
+  },
+  {
+    "word": "ahead",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "air",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "airs"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "airport",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "airports"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "alarm",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "alarms"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "alive",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "almost",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "alone",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "aloud",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "already",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "also",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  null,
+  {
+    "word": "angry",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "angrier"
+      },
+      {
+        "meta": "最上級",
+        "word": "angriest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "animal",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "animals"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "answer",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "answers"
+      },
+      {
+        "meta": "過去形",
+        "word": "answered"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "answered"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "answering"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "anymore",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  null,
+  {
+    "word": "anytime",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "anyway",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "anywhere",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "apartment",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "apartments"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "appear",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "appears"
+      },
+      {
+        "meta": "過去形",
+        "word": "appeared"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "appeared"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "appearing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "aquarium",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "aquariums , aquaria"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "area",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "areas"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "arm",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "arms"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "arrest",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "arrests"
+      },
+      {
+        "meta": "過去形",
+        "word": "arrested"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "arrested"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "arresting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "arrive",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "arrives"
+      },
+      {
+        "meta": "過去形",
+        "word": "arrived"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "arrived"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "arriving"
+      }
+    ],
+    "other_words": [
+      "arrival"
+    ]
+  },
+  {
+    "word": "asleep",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "athlete",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "athletes"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "attack",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "attacks"
+      },
+      {
+        "meta": "過去形",
+        "word": "attacked"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "attacked"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "attacking"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "attend",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "attends"
+      },
+      {
+        "meta": "過去形",
+        "word": "attended"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "attended"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "attending"
+      }
+    ],
+    "other_words": [
+      "attendance",
+      "attendant",
+      "attendant",
+      "attention"
+    ]
+  },
+  {
+    "word": "aunt",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "aunts"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "award",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "awards"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "badly",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "worse /wərs/"
+      },
+      {
+        "meta": "最上級",
+        "word": "worst /wərst/"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "bake",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "bakes"
+      },
+      {
+        "meta": "過去形",
+        "word": "baked"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "baked"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "baking"
+      }
+    ],
+    "other_words": [
+      "baker"
+    ]
+  },
+  {
+    "word": "bakery",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "bakeries"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "band",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "bands"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "bank",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "banks"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "barbecue",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "barbecues"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "basket",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "baskets"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "bathroom",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "bathrooms"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "battle",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "battles"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "beach",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "beaches"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "beautiful",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "become",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "becomes"
+      },
+      {
+        "meta": "過去形",
+        "word": "became /bɪˈkeɪm/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "become /bɪˈkʌm/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "becoming"
+      }
+    ],
+    "other_words": [
+      "becoming"
+    ]
+  },
+  null,
+  {
+    "word": "begin",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "begins"
+      },
+      {
+        "meta": "過去形",
+        "word": "began /bɪˈgæn/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "begun /bɪˈgʌn/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "beginning"
+      }
+    ],
+    "other_words": [
+      "beginner",
+      "beginning"
+    ]
+  },
+  {
+    "word": "beginner",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "beginners"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "beginning",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "beginnings"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "believe",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "believes"
+      },
+      {
+        "meta": "過去形",
+        "word": "believed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "believed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "believing"
+      }
+    ],
+    "other_words": [
+      "belief"
+    ]
+  },
+  null,
+  {
+    "word": "best",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  null,
+  {
+    "word": "bicycle",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "bicycles"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "bike",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "bikes"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "billion",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "billions"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "blackboard",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "blackboards"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "block",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "blocks"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "body",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "bodies"
+      }
+    ],
+    "other_words": [
+      "bodily"
+    ]
+  },
+  {
+    "word": "boil",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "boils"
+      },
+      {
+        "meta": "過去形",
+        "word": "boiled"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "boiled"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "boiling"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "bookstore",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "bookstores"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "boring",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "borrow",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "borrows"
+      },
+      {
+        "meta": "過去形",
+        "word": "borrowed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "borrowed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "borrowing"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "bottle",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "bottles"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "bottom",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "bottoms"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "break",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "breaks"
+      },
+      {
+        "meta": "過去形",
+        "word": "broke /broʊk/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "broken /ˈbroʊkən/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "breaking"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "bridge",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "bridges"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "bright",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "brighter"
+      },
+      {
+        "meta": "最上級",
+        "word": "brightest"
+      }
+    ],
+    "other_words": [
+      "brightly",
+      "brighten"
+    ]
+  },
+  {
+    "word": "bring",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "brings"
+      },
+      {
+        "meta": "過去形",
+        "word": "brought /brɔt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "brought /brɔt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "bringing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "broken",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "build",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "builds"
+      },
+      {
+        "meta": "過去形",
+        "word": "built /bɪlt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "built /bɪlt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "building"
+      }
+    ],
+    "other_words": [
+      "building"
+    ]
+  },
+  {
+    "word": "building",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "buildings"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "burn",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "burns"
+      },
+      {
+        "meta": "過去形",
+        "word": "burned , burnt /bərnt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "burned , burnt /bərnt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "burning"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "business",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "businesses"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "busy",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "busier"
+      },
+      {
+        "meta": "最上級",
+        "word": "busiest"
+      }
+    ],
+    "other_words": [
+      "busyness"
+    ]
+  },
+  {
+    "word": "button",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "buttons"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "cafeteria",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "cafeterias"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "call",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "calls"
+      },
+      {
+        "meta": "過去形",
+        "word": "called"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "called"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "calling"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "camera",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "cameras"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "camp",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "camps"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "cancel",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "cancels"
+      },
+      {
+        "meta": "過去形",
+        "word": "canceled"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "canceled"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "canceling"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "capital",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "capitals"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "captain",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "captains"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "care",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "cares"
+      },
+      {
+        "meta": "過去形",
+        "word": "cared"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "cared"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "caring"
+      }
+    ],
+    "other_words": [
+      "caring",
+      "caring"
+    ]
+  },
+  {
+    "word": "careful",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "carefully"
+    ]
+  },
+  {
+    "word": "carefully",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "carry",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "carries"
+      },
+      {
+        "meta": "過去形",
+        "word": "carried"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "carried"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "carrying"
+      }
+    ],
+    "other_words": [
+      "carriage"
+    ]
+  },
+  {
+    "word": "castle",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "castles"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "catch",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "catches"
+      },
+      {
+        "meta": "過去形",
+        "word": "caught /kɔt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "caught /kɔt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "catching"
+      }
+    ],
+    "other_words": [
+      "catcher",
+      "catching"
+    ]
+  },
+  {
+    "word": "cause",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "causes"
+      },
+      {
+        "meta": "過去形",
+        "word": "caused"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "caused"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "causing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "ceiling",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "ceilings"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "celebrate",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "celebrates"
+      },
+      {
+        "meta": "過去形",
+        "word": "celebrated"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "celebrated"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "celebrating"
+      }
+    ],
+    "other_words": [
+      "celebration",
+      "celebrated"
+    ]
+  },
+  {
+    "word": "celebration",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "celebrations"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "center",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "centers"
+      }
+    ],
+    "other_words": [
+      "central"
+    ]
+  },
+  {
+    "word": "centimeter",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "centimeters"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "central",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "century",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "centuries"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "ceremony",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "ceremonies"
+      }
+    ],
+    "other_words": [
+      "ceremonial",
+      "ceremonious"
+    ]
+  },
+  {
+    "word": "chance",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "chances"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "change",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "changes"
+      },
+      {
+        "meta": "過去形",
+        "word": "changed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "changed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "changing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "cheap",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "cheaper"
+      },
+      {
+        "meta": "最上級",
+        "word": "cheapest"
+      }
+    ],
+    "other_words": [
+      "cheaply"
+    ]
+  },
+  {
+    "word": "cheaply",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "check",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "checks"
+      },
+      {
+        "meta": "過去形",
+        "word": "checked"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "checked"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "checking"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "cheer",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "cheers"
+      },
+      {
+        "meta": "過去形",
+        "word": "cheered"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "cheered"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "cheering"
+      }
+    ],
+    "other_words": [
+      "cheerful"
+    ]
+  },
+  {
+    "word": "cheerful",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "cheerfully"
+    ]
+  },
+  {
+    "word": "chef",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "chefs"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "child",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "children /ˈtʃɪldrɛn/"
+      }
+    ],
+    "other_words": [
+      "childhood"
+    ]
+  },
+  {
+    "word": "chimpanzee",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "chimpanzees"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "Chinese",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "chocolate",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "chocolates"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "choose",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "chooses"
+      },
+      {
+        "meta": "過去形",
+        "word": "chose /tʃoʊz/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "chosen /ˈtʃoʊzən/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "choosing"
+      }
+    ],
+    "other_words": [
+      "choice"
+    ]
+  },
+  {
+    "word": "circle",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "circles"
+      }
+    ],
+    "other_words": [
+      "circular",
+      "circulate"
+    ]
+  },
+  {
+    "word": "classmate",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "classmates"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "classroom",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "classrooms"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "clean",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "cleans"
+      },
+      {
+        "meta": "過去形",
+        "word": "cleaned"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "cleaned"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "cleaning"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "clever",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "cleverer , more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "cleverest , most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "climate",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "climates"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "climb",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "climbs"
+      },
+      {
+        "meta": "過去形",
+        "word": "climbed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "climbed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "climbing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "close",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "closes"
+      },
+      {
+        "meta": "過去形",
+        "word": "closed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "closed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "closing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "closet",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "closets"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "cloth",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "cloths /klɔθs/, /klɔðz/"
+      }
+    ],
+    "other_words": [
+      "clothe",
+      "clothes",
+      "clothing"
+    ]
+  },
+  {
+    "word": "clothes",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "cloudy",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "cloudier , more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "cloudiest , most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "coach",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "coaches"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "coat",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "coats"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "collect",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "collects"
+      },
+      {
+        "meta": "過去形",
+        "word": "collected"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "collected"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "collecting"
+      }
+    ],
+    "other_words": [
+      "collection",
+      "collective",
+      "collector"
+    ]
+  },
+  {
+    "word": "college",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "colleges"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "color",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "colors"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "comedy",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "comedies"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "comfortable",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "comic",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "common",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜 , commoner"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜 , commonest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "communicate",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "communicates"
+      },
+      {
+        "meta": "過去形",
+        "word": "communicated"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "communicated"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "communicating"
+      }
+    ],
+    "other_words": [
+      "communication"
+    ]
+  },
+  {
+    "word": "communication",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "communications"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "company",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "companies"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "computer",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "computers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "concert",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "concerts"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "contact",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "contest",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "contests"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "continent",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "continents"
+      }
+    ],
+    "other_words": [
+      "continental"
+    ]
+  },
+  {
+    "word": "continue",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "continues"
+      },
+      {
+        "meta": "過去形",
+        "word": "continued"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "continued"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "continuing"
+      }
+    ],
+    "other_words": [
+      "continuous",
+      "continuance",
+      "continuation",
+      "continuity"
+    ]
+  },
+  {
+    "word": "control",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "controls"
+      },
+      {
+        "meta": "過去形",
+        "word": "controlled"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "controlled"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "controlling"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "convenience",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "cookie",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "cookies"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "corner",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "corners"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "cost",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "costs"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "costume",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "costumes"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "country",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "countries"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "course",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "courses"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "court",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "courts"
+      }
+    ],
+    "other_words": [
+      "courteous"
+    ]
+  },
+  {
+    "word": "cousin",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "cousins"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "cover",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "covers"
+      },
+      {
+        "meta": "過去形",
+        "word": "covered"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "covered"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "covering"
+      }
+    ],
+    "other_words": [
+      "coverage"
+    ]
+  },
+  {
+    "word": "cross",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "crosses"
+      },
+      {
+        "meta": "過去形",
+        "word": "crossed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "crossed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "crossing"
+      }
+    ],
+    "other_words": [
+      "crossing"
+    ]
+  },
+  {
+    "word": "crowded",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "cry",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "cries"
+      },
+      {
+        "meta": "過去形",
+        "word": "cried"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "cried"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "crying"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "culture",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "cultures"
+      }
+    ],
+    "other_words": [
+      "cultural",
+      "cultured"
+    ]
+  },
+  {
+    "word": "custom",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "customs"
+      }
+    ],
+    "other_words": [
+      "customer",
+      "customary",
+      "customarily"
+    ]
+  },
+  {
+    "word": "customer",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "customers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "cut",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "cuts"
+      },
+      {
+        "meta": "過去形",
+        "word": "cut /kʌt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "cut /kʌt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "cutting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "cute",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "cuter"
+      },
+      {
+        "meta": "最上級",
+        "word": "cutest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "daily",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "damage",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "danger",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "dangers"
+      }
+    ],
+    "other_words": [
+      "dangerous"
+    ]
+  },
+  {
+    "word": "dangerous",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "dangerously"
+    ]
+  },
+  {
+    "word": "dark",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "darker"
+      },
+      {
+        "meta": "最上級",
+        "word": "darkest"
+      }
+    ],
+    "other_words": [
+      "darkness"
+    ]
+  },
+  {
+    "word": "date",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "dates"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "daughter",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "daughters"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "dear",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "dearer"
+      },
+      {
+        "meta": "最上級",
+        "word": "dearest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "death",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "decide",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "decides"
+      },
+      {
+        "meta": "過去形",
+        "word": "decided"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "decided"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "deciding"
+      }
+    ],
+    "other_words": [
+      "decision",
+      "decisive"
+    ]
+  },
+  {
+    "word": "decorate",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "decorates"
+      },
+      {
+        "meta": "過去形",
+        "word": "decorated"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "decorated"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "decorating"
+      }
+    ],
+    "other_words": [
+      "decoration"
+    ]
+  },
+  {
+    "word": "decoration",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "decorations"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "deep",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "deeper"
+      },
+      {
+        "meta": "最上級",
+        "word": "deepest"
+      }
+    ],
+    "other_words": [
+      "deeply",
+      "depth",
+      "deepen"
+    ]
+  },
+  {
+    "word": "delicious",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "deliver",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "delivers"
+      },
+      {
+        "meta": "過去形",
+        "word": "delivered"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "delivered"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "delivering"
+      }
+    ],
+    "other_words": [
+      "delivery"
+    ]
+  },
+  {
+    "word": "dentist",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "dentists"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "description",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "descriptions"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "desert",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "deserts"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "design",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "designs"
+      },
+      {
+        "meta": "過去形",
+        "word": "designed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "designed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "designing"
+      }
+    ],
+    "other_words": [
+      "designer"
+    ]
+  },
+  {
+    "word": "dessert",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "desserts"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "destroy",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "destroys"
+      },
+      {
+        "meta": "過去形",
+        "word": "destroyed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "destroyed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "destroying"
+      }
+    ],
+    "other_words": [
+      "destruction",
+      "destructive"
+    ]
+  },
+  {
+    "word": "dictionary",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "dictionaries"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "die",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "dies"
+      },
+      {
+        "meta": "過去形",
+        "word": "died"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "died"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "dying"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "difference",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "differences"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "different",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "differently"
+    ]
+  },
+  {
+    "word": "difficult",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "difficulty"
+    ]
+  },
+  {
+    "word": "difficulty",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "difficulties"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "digital",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "dining",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "direct",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "directs"
+      },
+      {
+        "meta": "過去形",
+        "word": "directed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "directed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "directing"
+      }
+    ],
+    "other_words": [
+      "direction",
+      "director"
+    ]
+  },
+  {
+    "word": "director",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "directors"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "dirty",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "dirtier"
+      },
+      {
+        "meta": "最上級",
+        "word": "dirtiest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "disappear",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "disappears"
+      },
+      {
+        "meta": "過去形",
+        "word": "disappeared"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "disappeared"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "disappearing"
+      }
+    ],
+    "other_words": [
+      "disappearance"
+    ]
+  },
+  {
+    "word": "discount",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "discounts"
+      },
+      {
+        "meta": "過去形",
+        "word": "discounted"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "discounted"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "discounting"
+      }
+    ],
+    "other_words": [
+      "discounter"
+    ]
+  },
+  {
+    "word": "discover",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "discovers"
+      },
+      {
+        "meta": "過去形",
+        "word": "discovered"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "discovered"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "discovering"
+      }
+    ],
+    "other_words": [
+      "discovery"
+    ]
+  },
+  {
+    "word": "dish",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "dishes"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "doctor",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "doctors"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "doghouse",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "doghouses"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "dollar",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "dollars"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "doughnut",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "doughnuts"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "draw",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "draws"
+      },
+      {
+        "meta": "過去形",
+        "word": "drew /dru/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "drawn /drɔn/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "drawing"
+      }
+    ],
+    "other_words": [
+      "drawer"
+    ]
+  },
+  {
+    "word": "dream",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "dreams"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "dress",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "dresses"
+      },
+      {
+        "meta": "過去形",
+        "word": "dressed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "dressed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "dressing"
+      }
+    ],
+    "other_words": [
+      "dressed",
+      "dresser",
+      "dressing"
+    ]
+  },
+  {
+    "word": "drive",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "drives"
+      },
+      {
+        "meta": "過去形",
+        "word": "drove /droʊv/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "driven /ˈdrɪvən/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "driving"
+      }
+    ],
+    "other_words": [
+      "driver"
+    ]
+  },
+  {
+    "word": "drugstore",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "drugstores"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "e-mail",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "e-mails"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "ear",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "ears"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "early",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "earlier"
+      },
+      {
+        "meta": "最上級",
+        "word": "earliest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "earthquake",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "earthquakes"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "easily",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "easy"
+    ]
+  },
+  {
+    "word": "easy",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "easier"
+      },
+      {
+        "meta": "最上級",
+        "word": "easiest"
+      }
+    ],
+    "other_words": [
+      "easily"
+    ]
+  },
+  {
+    "word": "elderly",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "elementary",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "elephant",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "elephant , elephants"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "elevator",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "elevators"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "else",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "end",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "ends"
+      }
+    ],
+    "other_words": [
+      "endless"
+    ]
+  },
+  {
+    "word": "enemy",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "enemies"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "energy",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": [
+      "energetic"
+    ]
+  },
+  {
+    "word": "enjoy",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "enjoys"
+      },
+      {
+        "meta": "過去形",
+        "word": "enjoyed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "enjoyed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "enjoying"
+      }
+    ],
+    "other_words": [
+      "enjoyable"
+    ]
+  },
+  {
+    "word": "enjoyable",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "enough",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "enter",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "enters"
+      },
+      {
+        "meta": "過去形",
+        "word": "entered"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "entered"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "entering"
+      }
+    ],
+    "other_words": [
+      "entrance",
+      "entry"
+    ]
+  },
+  {
+    "word": "entrance",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "entrances"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "environment",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "environments"
+      }
+    ],
+    "other_words": [
+      "environmental"
+    ]
+  },
+  {
+    "word": "escape",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "escapes"
+      },
+      {
+        "meta": "過去形",
+        "word": "escaped"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "escaped"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "escaping"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "especially",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "even",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "event",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "events"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "ever",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "everywhere",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "exam",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "exams"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "examination",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "examinations"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "example",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "examples"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "excellent",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "exchange",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "exchanges"
+      },
+      {
+        "meta": "過去形",
+        "word": "exchanged"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "exchanged"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "exchanging"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "excited",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "exciting",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "expect",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "expects"
+      },
+      {
+        "meta": "過去形",
+        "word": "expected"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "expected"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "expecting"
+      }
+    ],
+    "other_words": [
+      "expectation"
+    ]
+  },
+  {
+    "word": "expensive",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "experience",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "experiences"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "explain",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "explains"
+      },
+      {
+        "meta": "過去形",
+        "word": "explained"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "explained"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "explaining"
+      }
+    ],
+    "other_words": [
+      "explanation"
+    ]
+  },
+  {
+    "word": "express",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "expresses"
+      },
+      {
+        "meta": "過去形",
+        "word": "expressed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "expressed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "expressing"
+      }
+    ],
+    "other_words": [
+      "expression"
+    ]
+  },
+  {
+    "word": "expression",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "expressions"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "fact",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "facts"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "factory",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "factories"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "fail",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "fails"
+      },
+      {
+        "meta": "過去形",
+        "word": "failed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "failed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "failing"
+      }
+    ],
+    "other_words": [
+      "failure"
+    ]
+  },
+  {
+    "word": "fair",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "fairer"
+      },
+      {
+        "meta": "最上級",
+        "word": "fairest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "fall",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "falls"
+      },
+      {
+        "meta": "過去形",
+        "word": "fell /fɛl/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "fallen /ˈfɔlən/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "falling"
+      }
+    ],
+    "other_words": [
+      "fallen",
+      "falling"
+    ]
+  },
+  {
+    "word": "familiar",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "famous",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "fame"
+    ]
+  },
+  {
+    "word": "far",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "further /ˈfərðər/"
+      },
+      {
+        "meta": "最上級",
+        "word": "furthest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "farm",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "farms"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "farmer",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "farmers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "fast",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "faster"
+      },
+      {
+        "meta": "最上級",
+        "word": "fastest"
+      }
+    ],
+    "other_words": [
+      "fasten"
+    ]
+  },
+  {
+    "word": "favorite",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "favorites"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "feed",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "feeds"
+      },
+      {
+        "meta": "過去形",
+        "word": "fed /fɛd/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "fed /fɛd/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "feeding"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "feel",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "feels"
+      },
+      {
+        "meta": "過去形",
+        "word": "felt /fɛlt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "felt /fɛlt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "feeling"
+      }
+    ],
+    "other_words": [
+      "feeling"
+    ]
+  },
+  {
+    "word": "female",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "females"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "fence",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "fences"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "festival",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "festivals"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "fever",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "fevers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "few",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "fewer"
+      },
+      {
+        "meta": "最上級",
+        "word": "fewest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "field",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "fields"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "fight",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "fights"
+      },
+      {
+        "meta": "過去形",
+        "word": "fought /fɔt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "fought /fɔt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "fighting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "figure",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "figures"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "finally",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "find",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "finds"
+      },
+      {
+        "meta": "過去形",
+        "word": "found /faʊnd/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "found /faʊnd/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "finding"
+      }
+    ],
+    "other_words": [
+      "finding"
+    ]
+  },
+  {
+    "word": "fine",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "finer"
+      },
+      {
+        "meta": "最上級",
+        "word": "finest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "finish",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "finishes"
+      },
+      {
+        "meta": "過去形",
+        "word": "finished"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "finished"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "finishing"
+      }
+    ],
+    "other_words": [
+      "finisher",
+      "finishing",
+      "finished"
+    ]
+  },
+  {
+    "word": "fire",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "fires"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "firework",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "fireworks"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "first",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": [
+      "firstly"
+    ]
+  },
+  {
+    "word": "fit",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "fits"
+      },
+      {
+        "meta": "過去形",
+        "word": "fitted"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "fitted"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "fitting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "fix",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "fixes"
+      },
+      {
+        "meta": "過去形",
+        "word": "fixed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "fixed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "fixing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "flag",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "flags , flag"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "flight",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "floor",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "floors"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "fly",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "flies"
+      },
+      {
+        "meta": "過去形",
+        "word": "flew /flu/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "flown /floʊn/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "flying"
+      }
+    ],
+    "other_words": [
+      "flight"
+    ]
+  },
+  {
+    "word": "fold",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "folds"
+      },
+      {
+        "meta": "過去形",
+        "word": "folded"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "folded"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "folding"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "follow",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "follows"
+      },
+      {
+        "meta": "過去形",
+        "word": "followed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "followed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "following"
+      }
+    ],
+    "other_words": [
+      "following",
+      "following",
+      "follower"
+    ]
+  },
+  {
+    "word": "food",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "foods"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "foreign",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": [
+      "foreigner"
+    ]
+  },
+  {
+    "word": "forest",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "forests"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "forget",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "forgets"
+      },
+      {
+        "meta": "過去形",
+        "word": "forgot /fərˈgɑt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "forgotten /fərˈgɑtn/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "forgetting"
+      }
+    ],
+    "other_words": [
+      "forgetful",
+      "forgettable"
+    ]
+  },
+  {
+    "word": "fork",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "forks"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "free",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "freer"
+      },
+      {
+        "meta": "最上級",
+        "word": "freest"
+      }
+    ],
+    "other_words": [
+      "freedom",
+      "freely"
+    ]
+  },
+  {
+    "word": "freedom",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "freedoms"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "French",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "fresh",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "fresher"
+      },
+      {
+        "meta": "最上級",
+        "word": "freshest"
+      }
+    ],
+    "other_words": [
+      "freshen",
+      "freshly"
+    ]
+  },
+  {
+    "word": "fridge",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "fridges"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "friendly",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "friendlier"
+      },
+      {
+        "meta": "最上級",
+        "word": "friendliest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "friendship",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "friendships"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "fruit",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "fruit , fruits"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "full",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "fuller"
+      },
+      {
+        "meta": "最上級",
+        "word": "fullest"
+      }
+    ],
+    "other_words": [
+      "fully"
+    ]
+  },
+  {
+    "word": "fun",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": [
+      "funny"
+    ]
+  },
+  {
+    "word": "funny",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "funnier"
+      },
+      {
+        "meta": "最上級",
+        "word": "funniest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "furniture",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "future",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "futures"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "garbage",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "garbages"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "garden",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "gardens"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "gate",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "gates"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "generation",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "generations"
+      }
+    ],
+    "other_words": [
+      "generate",
+      "generational"
+    ]
+  },
+  {
+    "word": "German",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "Germans"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "gesture",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "gestures"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "gift",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "gifts"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "give",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "gives"
+      },
+      {
+        "meta": "過去形",
+        "word": "gave /geɪv/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "given /ˈgɪvən/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "giving"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "glad",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "gladder"
+      },
+      {
+        "meta": "最上級",
+        "word": "gladdest"
+      }
+    ],
+    "other_words": [
+      "gladly"
+    ]
+  },
+  {
+    "word": "glass",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "glasses"
+      }
+    ],
+    "other_words": [
+      "glassful",
+      "glassy"
+    ]
+  },
+  {
+    "word": "glove",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "gloves"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "goal",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "goals"
+      }
+    ],
+    "other_words": [
+      "goalless"
+    ]
+  },
+  {
+    "word": "god",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "gods"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "goldfish",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "goldfish , goldfishes"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "government",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "governments"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "grade",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "grades"
+      }
+    ],
+    "other_words": [
+      "gradual"
+    ]
+  },
+  {
+    "word": "graduate",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "graduates"
+      },
+      {
+        "meta": "過去形",
+        "word": "graduated"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "graduated"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "graduating"
+      }
+    ],
+    "other_words": [
+      "graduation"
+    ]
+  },
+  {
+    "word": "grandfather",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "grandfathers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "grandmother",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "grandmothers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "grandparent",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "grandparents"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "grandson",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "grandsons"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "grass",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "grasses"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "greet",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "greets"
+      },
+      {
+        "meta": "過去形",
+        "word": "greeted"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "greeted"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "greeting"
+      }
+    ],
+    "other_words": [
+      "greeting",
+      "greeter"
+    ]
+  },
+  {
+    "word": "greeting",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "greetings"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "group",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "groups"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "grow",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "grows"
+      },
+      {
+        "meta": "過去形",
+        "word": "grew /gru/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "grown /groʊn/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "growing"
+      }
+    ],
+    "other_words": [
+      "growth",
+      "growing"
+    ]
+  },
+  {
+    "word": "guess",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "guesses"
+      },
+      {
+        "meta": "過去形",
+        "word": "guessed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "guessed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "guessing"
+      }
+    ],
+    "other_words": [
+      "guesser"
+    ]
+  },
+  {
+    "word": "guide",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "guides"
+      },
+      {
+        "meta": "過去形",
+        "word": "guided"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "guided"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "guiding"
+      }
+    ],
+    "other_words": [
+      "guidance",
+      "guiding"
+    ]
+  },
+  {
+    "word": "gym",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "gyms"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "half",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "halves"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "hamburger",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "hamburgers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "hang",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "hangs"
+      },
+      {
+        "meta": "過去形",
+        "word": "hung /hʌŋ/, hanged"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "hung /hʌŋ/, hanged"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "hanging"
+      }
+    ],
+    "other_words": [
+      "hanger",
+      "hanging"
+    ]
+  },
+  {
+    "word": "happen",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "happens"
+      },
+      {
+        "meta": "過去形",
+        "word": "happened"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "happened"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "happening"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "hard",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "harder"
+      },
+      {
+        "meta": "最上級",
+        "word": "hardest"
+      }
+    ],
+    "other_words": [
+      "hardship",
+      "hardy"
+    ]
+  },
+  {
+    "word": "headache",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "headaches"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "health",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": [
+      "healthy",
+      "healthful"
+    ]
+  },
+  {
+    "word": "healthy",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "healthier"
+      },
+      {
+        "meta": "最上級",
+        "word": "healthiest"
+      }
+    ],
+    "other_words": [
+      "healthily",
+      "healthiness"
+    ]
+  },
+  {
+    "word": "heat",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "heats"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "heavy",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "heavier"
+      },
+      {
+        "meta": "最上級",
+        "word": "heaviest"
+      }
+    ],
+    "other_words": [
+      "heavily"
+    ]
+  },
+  {
+    "word": "height",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "heights"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "helpful",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "helpfulness",
+      "helpfully"
+    ]
+  },
+  {
+    "word": "hero",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "heroes /ˈhiroʊz/"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "hide",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "hides"
+      },
+      {
+        "meta": "過去形",
+        "word": "hid /hɪd/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "hidden /hɪdən/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "hiding"
+      }
+    ],
+    "other_words": [
+      "hiding",
+      "hidden"
+    ]
+  },
+  {
+    "word": "hike",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "hikes"
+      },
+      {
+        "meta": "過去形",
+        "word": "hiked"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "hiked"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "hiking"
+      }
+    ],
+    "other_words": [
+      "hiker",
+      "hiking"
+    ]
+  },
+  {
+    "word": "hill",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "hills"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "hint",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "hints"
+      },
+      {
+        "meta": "過去形",
+        "word": "hinted"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "hinted"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "hinting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "history",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "histories"
+      }
+    ],
+    "other_words": [
+      "historic",
+      "historical",
+      "historian"
+    ]
+  },
+  {
+    "word": "hit",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "hits"
+      },
+      {
+        "meta": "過去形",
+        "word": "hit /hɪt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "hit /hɪt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "hitting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "hobby",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "hobbies"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "hold",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "holds"
+      },
+      {
+        "meta": "過去形",
+        "word": "held /hɛld/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "held /hɛld/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "holding"
+      }
+    ],
+    "other_words": [
+      "holder",
+      "holding",
+      "grip",
+      "grasp"
+    ]
+  },
+  {
+    "word": "hole",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "holes"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "holiday",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "holidays"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "homesick",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "homesickness"
+    ]
+  },
+  {
+    "word": "homestay",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "homestays"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "hometown",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "hometowns"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "hope",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "hopes"
+      },
+      {
+        "meta": "過去形",
+        "word": "hoped"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "hoped"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "hoping"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "horizon",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "horizons"
+      }
+    ],
+    "other_words": [
+      "horizontal"
+    ]
+  },
+  {
+    "word": "horse",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "horses"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "hospital",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "hospitals"
+      }
+    ],
+    "other_words": [
+      "hospitalize",
+      "hospitality"
+    ]
+  },
+  {
+    "word": "host",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "hosts"
+      }
+    ],
+    "other_words": [
+      "hostess"
+    ]
+  },
+  {
+    "word": "hour",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "hours"
+      }
+    ],
+    "other_words": [
+      "hourly"
+    ]
+  },
+  {
+    "word": "huge",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "huger"
+      },
+      {
+        "meta": "最上級",
+        "word": "hugest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "human",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "humanity",
+      "humanize"
+    ]
+  },
+  {
+    "word": "hungry",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "hungrier"
+      },
+      {
+        "meta": "最上級",
+        "word": "hungriest"
+      }
+    ],
+    "other_words": [
+      "hungrily",
+      "hungriness"
+    ]
+  },
+  {
+    "word": "hunt",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "hunts"
+      },
+      {
+        "meta": "過去形",
+        "word": "hunted"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "hunted"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "hunting"
+      }
+    ],
+    "other_words": [
+      "hunter",
+      "hunting"
+    ]
+  },
+  {
+    "word": "hurricane",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "hurricanes"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "hurry",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "hurries"
+      },
+      {
+        "meta": "過去形",
+        "word": "hurried"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "hurried"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "hurrying"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "hurt",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "hurts"
+      },
+      {
+        "meta": "過去形",
+        "word": "hurt /hərt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "hurt /hərt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "hurting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "husband",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "husbands"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "ice",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "ices"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "idea",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "ideas"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "illness",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "illnesses"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "imagine",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "imagines"
+      },
+      {
+        "meta": "過去形",
+        "word": "imagined"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "imagined"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "imagining"
+      }
+    ],
+    "other_words": [
+      "imaginary",
+      "imagination"
+    ]
+  },
+  null,
+  {
+    "word": "important",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "importantly",
+      "importance"
+    ]
+  },
+  {
+    "word": "impossible",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "impossibility"
+    ]
+  },
+  {
+    "word": "impress",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "impresses"
+      },
+      {
+        "meta": "過去形",
+        "word": "impressed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "impressed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "impressing"
+      }
+    ],
+    "other_words": [
+      "impression",
+      "impressive"
+    ]
+  },
+  {
+    "word": "information",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "injure",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "injures"
+      },
+      {
+        "meta": "過去形",
+        "word": "injured"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "injured"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "injuring"
+      }
+    ],
+    "other_words": [
+      "injury"
+    ]
+  },
+  {
+    "word": "ink",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "inks"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "inside",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "instrument",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "instruments"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "interesting",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "international",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "internationally"
+    ]
+  },
+  {
+    "word": "Internet",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "interview",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "interviews"
+      },
+      {
+        "meta": "過去形",
+        "word": "interviewed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "interviewed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "interviewing"
+      }
+    ],
+    "other_words": [
+      "interviewer",
+      "interviewee"
+    ]
+  },
+  {
+    "word": "introduce",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "introduces"
+      },
+      {
+        "meta": "過去形",
+        "word": "introduced"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "introduced"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "introducing"
+      }
+    ],
+    "other_words": [
+      "introduction"
+    ]
+  },
+  {
+    "word": "invent",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "invents"
+      },
+      {
+        "meta": "過去形",
+        "word": "invented"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "invented"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "inventing"
+      }
+    ],
+    "other_words": [
+      "invention",
+      "inventor"
+    ]
+  },
+  {
+    "word": "invite",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "invites"
+      },
+      {
+        "meta": "過去形",
+        "word": "invited"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "invited"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "inviting"
+      }
+    ],
+    "other_words": [
+      "invitation",
+      "invitee"
+    ]
+  },
+  {
+    "word": "island",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "islands"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "Italian",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "Italians"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "jazz",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "job",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "jobs"
+      }
+    ],
+    "other_words": [
+      "jobless"
+    ]
+  },
+  {
+    "word": "jog",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "jogs"
+      },
+      {
+        "meta": "過去形",
+        "word": "jogged"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "jogged"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "jogging"
+      }
+    ],
+    "other_words": [
+      "jogging",
+      "jogger"
+    ]
+  },
+  {
+    "word": "join",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "joins"
+      },
+      {
+        "meta": "過去形",
+        "word": "joined"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "joined"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "joining"
+      }
+    ],
+    "other_words": [
+      "joint",
+      "joint"
+    ]
+  },
+  {
+    "word": "judge",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "judges"
+      },
+      {
+        "meta": "過去形",
+        "word": "judged"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "judged"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "judging"
+      }
+    ],
+    "other_words": [
+      "judgment"
+    ]
+  },
+  {
+    "word": "juice",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "jump",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "jumps"
+      },
+      {
+        "meta": "過去形",
+        "word": "jumped"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "jumped"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "jumping"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "junior",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "juniors"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "just",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "keep",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "keeps"
+      },
+      {
+        "meta": "過去形",
+        "word": "kept /kɛpt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "kept /kɛpt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "keeping"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "key",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "keys"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "kid",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "kids"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "kill",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "kills"
+      },
+      {
+        "meta": "過去形",
+        "word": "killed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "killed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "killing"
+      }
+    ],
+    "other_words": [
+      "killer",
+      "killing"
+    ]
+  },
+  {
+    "word": "kilogram",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "kilograms"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "kind",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "kinds"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "kitchen",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "kitchens"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "kitten",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "kittens"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "knock",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "knocks"
+      },
+      {
+        "meta": "過去形",
+        "word": "knocked"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "knocked"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "knocking"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "land",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "lands"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "language",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "languages"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "last",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "late",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "later"
+      },
+      {
+        "meta": "最上級",
+        "word": "latest"
+      }
+    ],
+    "other_words": [
+      "lately",
+      "later"
+    ]
+  },
+  {
+    "word": "later",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "latest",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "laugh",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "laughs"
+      },
+      {
+        "meta": "過去形",
+        "word": "laughed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "laughed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "laughing"
+      }
+    ],
+    "other_words": [
+      "laughter"
+    ]
+  },
+  {
+    "word": "law",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "laws"
+      }
+    ],
+    "other_words": [
+      "lawful",
+      "lawyer"
+    ]
+  },
+  {
+    "word": "lay",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "lays"
+      },
+      {
+        "meta": "過去形",
+        "word": "laid /leɪd/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "laid /leɪd/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "laying"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "lead",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "leads"
+      },
+      {
+        "meta": "過去形",
+        "word": "led /lɛd/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "led /lɛd/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "leading"
+      }
+    ],
+    "other_words": [
+      "leader",
+      "leading"
+    ]
+  },
+  {
+    "word": "leaf",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "leaves /livz/"
+      }
+    ],
+    "other_words": [
+      "leafy"
+    ]
+  },
+  {
+    "word": "learn",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "learns"
+      },
+      {
+        "meta": "過去形",
+        "word": "learned"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "learned"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "learning"
+      }
+    ],
+    "other_words": [
+      "learning"
+    ]
+  },
+  {
+    "word": "leave",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "leaves"
+      },
+      {
+        "meta": "過去形",
+        "word": "left /lɛft/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "left /lɛft/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "leaving"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "lend",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "lends"
+      },
+      {
+        "meta": "過去形",
+        "word": "lent /lɛnt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "lent /lɛnt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "lending"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "lesson",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "lessons"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "let",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "lets"
+      },
+      {
+        "meta": "過去形",
+        "word": "let /lɛt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "let /lɛt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "letting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "letter",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "letters"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "librarian",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "librarians"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "library",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "libraries"
+      }
+    ],
+    "other_words": [
+      "librarian"
+    ]
+  },
+  {
+    "word": "license",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "licenses"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "life",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "lives /laɪvz/"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "line",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "lines"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "list",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "lists"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "little",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "less /lɛs/"
+      },
+      {
+        "meta": "最上級",
+        "word": "least /list/"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "local",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": [
+      "locality",
+      "localize"
+    ]
+  },
+  {
+    "word": "locker",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "lockers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "lonely",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "lonelier"
+      },
+      {
+        "meta": "最上級",
+        "word": "loneliest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "look",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "looks"
+      },
+      {
+        "meta": "過去形",
+        "word": "looked"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "looked"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "looking"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "lose",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "loses"
+      },
+      {
+        "meta": "過去形",
+        "word": "lost /lɔst/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "lost /lɔst/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "losing"
+      }
+    ],
+    "other_words": [
+      "loss",
+      "lost",
+      "loser"
+    ]
+  },
+  {
+    "word": "lost",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "loud",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "louder"
+      },
+      {
+        "meta": "最上級",
+        "word": "loudest"
+      }
+    ],
+    "other_words": [
+      "aloud",
+      "loudly"
+    ]
+  },
+  {
+    "word": "low",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "lower"
+      },
+      {
+        "meta": "最上級",
+        "word": "lowest"
+      }
+    ],
+    "other_words": [
+      "lower"
+    ]
+  },
+  {
+    "word": "luckily",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "lucky",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "luckier"
+      },
+      {
+        "meta": "最上級",
+        "word": "luckiest"
+      }
+    ],
+    "other_words": [
+      "luckily"
+    ]
+  },
+  {
+    "word": "machine",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "machines"
+      }
+    ],
+    "other_words": [
+      "machinery",
+      "mechanical"
+    ]
+  },
+  {
+    "word": "magazine",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "magazines"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "main",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": [
+      "mainly"
+    ]
+  },
+  {
+    "word": "make",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "makes"
+      },
+      {
+        "meta": "過去形",
+        "word": "made /meɪd/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "made /meɪd/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "making"
+      }
+    ],
+    "other_words": [
+      "maker"
+    ]
+  },
+  {
+    "word": "male",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "males"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "manager",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "managers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "mark",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "marks"
+      },
+      {
+        "meta": "過去形",
+        "word": "marked"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "marked"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "marking"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "marry",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "marries"
+      },
+      {
+        "meta": "過去形",
+        "word": "married"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "married"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "marrying"
+      }
+    ],
+    "other_words": [
+      "marriage",
+      "married"
+    ]
+  },
+  {
+    "word": "maybe",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "mayor",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "mayors"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "meal",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "meals"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "mean",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "means"
+      },
+      {
+        "meta": "過去形",
+        "word": "meant /mɛnt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "meant /mɛnt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "meaning"
+      }
+    ],
+    "other_words": [
+      "meaning"
+    ]
+  },
+  {
+    "word": "meat",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "medal",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "medals"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "medicine",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": [
+      "medical"
+    ]
+  },
+  {
+    "word": "meeting",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "meetings"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "member",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "members"
+      }
+    ],
+    "other_words": [
+      "membership"
+    ]
+  },
+  {
+    "word": "memory",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "memories"
+      }
+    ],
+    "other_words": [
+      "memorial",
+      "memorize"
+    ]
+  },
+  {
+    "word": "message",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "messagees"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "meter",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "meters"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "middle",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "middles"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "midnight",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "mild",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "milder"
+      },
+      {
+        "meta": "最上級",
+        "word": "mildest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "million",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "minute",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "minutes"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "mirror",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "mirrors"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "miss",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "misses"
+      },
+      {
+        "meta": "過去形",
+        "word": "missed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "missed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "missing"
+      }
+    ],
+    "other_words": [
+      "missing"
+    ]
+  },
+  {
+    "word": "mix",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "mixes"
+      },
+      {
+        "meta": "過去形",
+        "word": "mixed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "mixed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "mixing"
+      }
+    ],
+    "other_words": [
+      "mixture"
+    ]
+  },
+  {
+    "word": "model",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "models"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "money",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "moneys , monies"
+      }
+    ],
+    "other_words": [
+      "monetary"
+    ]
+  },
+  {
+    "word": "month",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "months"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "most",
+    "related": [],
+    "other_words": [
+      "mostly"
+    ]
+  },
+  {
+    "word": "mountain",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "mountains"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "move",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "moves"
+      },
+      {
+        "meta": "過去形",
+        "word": "moved"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "moved"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "moving"
+      }
+    ],
+    "other_words": [
+      "motion",
+      "motive",
+      "movement"
+    ]
+  },
+  {
+    "word": "movie",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "movies"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "museum",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "museums"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "musical",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "musician",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "musicians"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "narrow",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "narrower"
+      },
+      {
+        "meta": "最上級",
+        "word": "narrowest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "national",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": [
+      "nationality",
+      "nationally"
+    ]
+  },
+  {
+    "word": "native",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "natural",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "naturally"
+    ]
+  },
+  {
+    "word": "nature",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "natures"
+      }
+    ],
+    "other_words": [
+      "natural"
+    ]
+  },
+  {
+    "word": "necessary",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "necessarily",
+      "necessity"
+    ]
+  },
+  {
+    "word": "necklace",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "necklaces"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "need",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "needs"
+      },
+      {
+        "meta": "過去形",
+        "word": "needed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "needed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "needing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "neighbor",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "neighbors"
+      }
+    ],
+    "other_words": [
+      "neighborhood"
+    ]
+  },
+  {
+    "word": "neighborhood",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "neighborhoods"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "nephew",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "nephews"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "nervous",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "never",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "newspaper",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "newspapers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "next",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "noise",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "noises"
+      }
+    ],
+    "other_words": [
+      "noisy"
+    ]
+  },
+  {
+    "word": "noisy",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "noisier"
+      },
+      {
+        "meta": "最上級",
+        "word": "noisiest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "noon",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "note",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "notes"
+      },
+      {
+        "meta": "過去形",
+        "word": "noted"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "noted"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "noting"
+      }
+    ],
+    "other_words": [
+      "notable",
+      "noted"
+    ]
+  },
+  null,
+  {
+    "word": "notice",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "notices"
+      },
+      {
+        "meta": "過去形",
+        "word": "noticed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "noticed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "noticing"
+      }
+    ],
+    "other_words": [
+      "notify"
+    ]
+  },
+  {
+    "word": "novel",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "novels"
+      }
+    ],
+    "other_words": [
+      "novelist"
+    ]
+  },
+  {
+    "word": "nurse",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "nurses"
+      },
+      {
+        "meta": "過去形",
+        "word": "nursed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "nursed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "nursing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "offer",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "offers"
+      },
+      {
+        "meta": "過去形",
+        "word": "offered"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "offered"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "offering"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "office",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "offices"
+      }
+    ],
+    "other_words": [
+      "officer",
+      "official"
+    ]
+  },
+  {
+    "word": "official",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "officials"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "often",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜 , oftener"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜 , oftenest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "oil",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "oils"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "Olympic",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "Olympics"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "one",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "online",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "opinion",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "opinions"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "order",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "orders"
+      },
+      {
+        "meta": "過去形",
+        "word": "ordered"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "ordered"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "ordering"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "outdoor",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "oven",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "ovens"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "overseas",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "oversleep",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "oversleeps"
+      },
+      {
+        "meta": "過去形",
+        "word": "overslept"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "overslept"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "oversleeping"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "own",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "owns"
+      },
+      {
+        "meta": "過去形",
+        "word": "owned"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "owned"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "owning"
+      }
+    ],
+    "other_words": [
+      "owner"
+    ]
+  },
+  {
+    "word": "owner",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "owners"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "page",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "pages"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "pain",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "pains"
+      }
+    ],
+    "other_words": [
+      "painful"
+    ]
+  },
+  {
+    "word": "paint",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "paints"
+      },
+      {
+        "meta": "過去形",
+        "word": "painted"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "painted"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "painting"
+      }
+    ],
+    "other_words": [
+      "painter",
+      "painting"
+    ]
+  },
+  {
+    "word": "painting",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "paintings"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "pajamas",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "pancake",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "pancakes"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "panda",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "panda , pandas"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "paper",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "papers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "parade",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "parades"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "parent",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "parents"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "part",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "parts"
+      }
+    ],
+    "other_words": [
+      "partial",
+      "partly"
+    ]
+  },
+  {
+    "word": "part-time",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "pass",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "passes"
+      },
+      {
+        "meta": "過去形",
+        "word": "passed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "passed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "passing"
+      }
+    ],
+    "other_words": [
+      "passage"
+    ]
+  },
+  {
+    "word": "passenger",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "passengers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "pay",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "pays"
+      },
+      {
+        "meta": "過去形",
+        "word": "paid"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "paid"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "paying"
+      }
+    ],
+    "other_words": [
+      "payment"
+    ]
+  },
+  {
+    "word": "peace",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": [
+      "peaceful"
+    ]
+  },
+  {
+    "word": "peaceful",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "peacefully"
+    ]
+  },
+  {
+    "word": "perfect",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "perfectly"
+    ]
+  },
+  {
+    "word": "perform",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "performs"
+      },
+      {
+        "meta": "過去形",
+        "word": "performed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "performed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "performing"
+      }
+    ],
+    "other_words": [
+      "performance"
+    ]
+  },
+  {
+    "word": "performance",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "performances"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "person",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "persons"
+      }
+    ],
+    "other_words": [
+      "personal"
+    ]
+  },
+  {
+    "word": "phone",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "phones"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "photo",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "photos"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "pick",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "picks"
+      },
+      {
+        "meta": "過去形",
+        "word": "picked"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "picked"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "picking"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "pie",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "pies"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "pizza",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "pizzas"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "place",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "places"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "plan",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "plans"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "plane",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "planes"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "planet",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "planets"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "plant",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "plants"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "pleasure",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "pleasures"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "pocket",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "pockets"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "point",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "points"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "police",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "polite",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "politer , more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "politest , most 〜"
+      }
+    ],
+    "other_words": [
+      "politely"
+    ]
+  },
+  {
+    "word": "pollution",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "pool",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "pools"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "poor",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "poorer"
+      },
+      {
+        "meta": "最上級",
+        "word": "poorest"
+      }
+    ],
+    "other_words": [
+      "poverty"
+    ]
+  },
+  {
+    "word": "popular",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "popularity",
+      "popularly",
+      "popularize"
+    ]
+  },
+  {
+    "word": "port",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "ports"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "possible",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "possibly",
+      "possibility"
+    ]
+  },
+  {
+    "word": "postcard",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "postcards"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "poster",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "posters"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "powerful",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "practice",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "practices"
+      }
+    ],
+    "other_words": [
+      "practical"
+    ]
+  },
+  {
+    "word": "prepare",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "prepares"
+      },
+      {
+        "meta": "過去形",
+        "word": "prepared"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "prepared"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "preparing"
+      }
+    ],
+    "other_words": [
+      "preparation"
+    ]
+  },
+  {
+    "word": "present",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": [
+      "presence",
+      "presently"
+    ]
+  },
+  {
+    "word": "president",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "presidents"
+      }
+    ],
+    "other_words": [
+      "presidential"
+    ]
+  },
+  {
+    "word": "pretty",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "price",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "prices"
+      }
+    ],
+    "other_words": [
+      "pricey",
+      "priceless"
+    ]
+  },
+  {
+    "word": "prize",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "prizes"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "problem",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "problems"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "produce",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "produces"
+      },
+      {
+        "meta": "過去形",
+        "word": "produced"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "produced"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "producing"
+      }
+    ],
+    "other_words": [
+      "product",
+      "producer",
+      "production",
+      "productive"
+    ]
+  },
+  {
+    "word": "professional",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "professionally"
+    ]
+  },
+  {
+    "word": "program",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "programs"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "project",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "projects"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "promise",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "promises"
+      },
+      {
+        "meta": "過去形",
+        "word": "promised"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "promised"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "promising"
+      }
+    ],
+    "other_words": [
+      "promising"
+    ]
+  },
+  {
+    "word": "protect",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "protects"
+      },
+      {
+        "meta": "過去形",
+        "word": "protected"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "protected"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "protecting"
+      }
+    ],
+    "other_words": [
+      "protection"
+    ]
+  },
+  {
+    "word": "public",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "publication",
+      "publicity",
+      "publicly"
+    ]
+  },
+  {
+    "word": "pull",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "pulls"
+      },
+      {
+        "meta": "過去形",
+        "word": "pulled"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "pulled"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "pulling"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "pumpkin",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "pumpkins"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "puppy",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "puppies"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "push",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "pushes"
+      },
+      {
+        "meta": "過去形",
+        "word": "pushed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "pushed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "pushing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "put",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "puts"
+      },
+      {
+        "meta": "過去形",
+        "word": "put /pʊt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "put /pʊt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "putting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "queen",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "queens"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "question",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "questions"
+      }
+    ],
+    "other_words": [
+      "questionable",
+      "questionnaire"
+    ]
+  },
+  {
+    "word": "quiet",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "quieter"
+      },
+      {
+        "meta": "最上級",
+        "word": "quietest"
+      }
+    ],
+    "other_words": [
+      "quietly"
+    ]
+  },
+  {
+    "word": "race",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "races"
+      },
+      {
+        "meta": "過去形",
+        "word": "raced"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "raced"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "racing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "radio",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "radios"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "rain",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "rains"
+      }
+    ],
+    "other_words": [
+      "rainy"
+    ]
+  },
+  {
+    "word": "raise",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "raises"
+      },
+      {
+        "meta": "過去形",
+        "word": "raised"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "raised"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "raising"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "reach",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "reaches"
+      },
+      {
+        "meta": "過去形",
+        "word": "reached"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "reached"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "reaching"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "ready",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "readier"
+      },
+      {
+        "meta": "最上級",
+        "word": "readiest"
+      }
+    ],
+    "other_words": [
+      "readily",
+      "readiness"
+    ]
+  },
+  {
+    "word": "realize",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "realizes"
+      },
+      {
+        "meta": "過去形",
+        "word": "realized"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "realized"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "realizing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "reason",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "reasons"
+      }
+    ],
+    "other_words": [
+      "reasonable"
+    ]
+  },
+  {
+    "word": "receive",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "receives"
+      },
+      {
+        "meta": "過去形",
+        "word": "received"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "received"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "receiving"
+      }
+    ],
+    "other_words": [
+      "receipt",
+      "reception",
+      "receiver"
+    ]
+  },
+  {
+    "word": "recipe",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "recipes"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "record",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "recycle",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "recycles"
+      },
+      {
+        "meta": "過去形",
+        "word": "recycled"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "recycled"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "recycling"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "relax",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "relaxes"
+      },
+      {
+        "meta": "過去形",
+        "word": "relaxed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "relaxed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "relaxing"
+      }
+    ],
+    "other_words": [
+      "relaxed",
+      "relaxing",
+      "relaxation"
+    ]
+  },
+  {
+    "word": "remember",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "remembers"
+      },
+      {
+        "meta": "過去形",
+        "word": "remembered"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "remembered"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "remembering"
+      }
+    ],
+    "other_words": [
+      "remembrance"
+    ]
+  },
+  {
+    "word": "repeat",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "repeats"
+      },
+      {
+        "meta": "過去形",
+        "word": "repeated"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "repeated"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "repeating"
+      }
+    ],
+    "other_words": [
+      "repetition",
+      "repeater",
+      "repeated"
+    ]
+  },
+  {
+    "word": "report",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "reports"
+      },
+      {
+        "meta": "過去形",
+        "word": "reported"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "reported"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "reporting"
+      }
+    ],
+    "other_words": [
+      "reporter",
+      "reportable",
+      "reporting"
+    ]
+  },
+  {
+    "word": "resort",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "resorts"
+      },
+      {
+        "meta": "過去形",
+        "word": "resorted"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "resorted"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "resorting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "rest",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "rests"
+      },
+      {
+        "meta": "過去形",
+        "word": "rested"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "rested"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "resting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "restaurant",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "restaurants"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "return",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "returns"
+      },
+      {
+        "meta": "過去形",
+        "word": "returned"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "returned"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "returning"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "ride",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "rides"
+      },
+      {
+        "meta": "過去形",
+        "word": "rode /roʊd/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "ridden /rɪdn/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "riding"
+      }
+    ],
+    "other_words": [
+      "rider",
+      "riding"
+    ]
+  },
+  {
+    "word": "right",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "rights"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "rise",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "rises"
+      },
+      {
+        "meta": "過去形",
+        "word": "rose /roʊz/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "risen /ˈrɪsən/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "rising"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "road",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "roads"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "rock",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "rocket",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "rockets"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "rule",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "rules"
+      }
+    ],
+    "other_words": [
+      "ruler"
+    ]
+  },
+  {
+    "word": "sad",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "sadder"
+      },
+      {
+        "meta": "最上級",
+        "word": "saddest"
+      }
+    ],
+    "other_words": [
+      "sadly",
+      "sadness",
+      "sadden"
+    ]
+  },
+  {
+    "word": "sadness",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "safely",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "safety",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "safeties"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sail",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "sails"
+      },
+      {
+        "meta": "過去形",
+        "word": "sailed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "sailed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "sailing"
+      }
+    ],
+    "other_words": [
+      "sailor"
+    ]
+  },
+  {
+    "word": "salad",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sale",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sales"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "salesclerk",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "salesclerks"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "same",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sandwich",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sandwiches"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "save",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "saves"
+      },
+      {
+        "meta": "過去形",
+        "word": "saved"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "saved"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "saving"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "say",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "says"
+      },
+      {
+        "meta": "過去形",
+        "word": "said /sɛd/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "said /sɛd/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "saying"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "scared",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "scarf",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "scarves , scarfs"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "scene",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "scenes"
+      }
+    ],
+    "other_words": [
+      "scenery"
+    ]
+  },
+  {
+    "word": "schedule",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "schedules"
+      },
+      {
+        "meta": "過去形",
+        "word": "scheduled"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "scheduled"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "scheduling"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "science",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sciences"
+      }
+    ],
+    "other_words": [
+      "scientific",
+      "scientist"
+    ]
+  },
+  {
+    "word": "scientist",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "scientists"
+      }
+    ],
+    "other_words": [
+      "science"
+    ]
+  },
+  {
+    "word": "scissors",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "score",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "scores , score"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "secret",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "section",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sections"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "see",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "sees"
+      },
+      {
+        "meta": "過去形",
+        "word": "saw /sɔ/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "seen /sin/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "seeing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "seem",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "seems"
+      },
+      {
+        "meta": "過去形",
+        "word": "seemed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "seemed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "seeming"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sell",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "sells"
+      },
+      {
+        "meta": "過去形",
+        "word": "sold /soʊld/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "sold /soʊld/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "selling"
+      }
+    ],
+    "other_words": [
+      "sale",
+      "seller"
+    ]
+  },
+  {
+    "word": "send",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "sends"
+      },
+      {
+        "meta": "過去形",
+        "word": "sent /sɛnt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "sent /sɛnt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "sending"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sentence",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sentences"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "serious",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "seriously"
+    ]
+  },
+  {
+    "word": "serve",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "serves"
+      },
+      {
+        "meta": "過去形",
+        "word": "served"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "served"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "serving"
+      }
+    ],
+    "other_words": [
+      "servant",
+      "service",
+      "server"
+    ]
+  },
+  null,
+  {
+    "word": "shake",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "shakes"
+      },
+      {
+        "meta": "過去形",
+        "word": "shook /ʃʊk/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "shaken /ˈʃeɪkən/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "shaking"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "shampoo",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "shampoos"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "shape",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "shapes"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "share",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "shares"
+      },
+      {
+        "meta": "過去形",
+        "word": "shared"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "shared"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "sharing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "shine",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "shines"
+      },
+      {
+        "meta": "過去形",
+        "word": "shone /ʃoʊn/, shined"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "shone /ʃoʊn/, shined"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "shining"
+      }
+    ],
+    "other_words": [
+      "shiny"
+    ]
+  },
+  {
+    "word": "shock",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "shocks"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "shoot",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "shoots"
+      },
+      {
+        "meta": "過去形",
+        "word": "shot /ʃɑt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "shot /ʃɑt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "shooting"
+      }
+    ],
+    "other_words": [
+      "shot",
+      "shooting"
+    ]
+  },
+  {
+    "word": "short",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "shorter"
+      },
+      {
+        "meta": "最上級",
+        "word": "shortest"
+      }
+    ],
+    "other_words": [
+      "shortage",
+      "shortly"
+    ]
+  },
+  null,
+  {
+    "word": "shout",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "shouts"
+      },
+      {
+        "meta": "過去形",
+        "word": "shouted"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "shouted"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "shouting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "show",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "shows"
+      },
+      {
+        "meta": "過去形",
+        "word": "showed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "showed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "showing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "shower",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "showers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "shrine",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "shrines"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "shut",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "shuts"
+      },
+      {
+        "meta": "過去形",
+        "word": "shut /ʃʌt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "shut /ʃʌt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "shutting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "shuttle",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "shuttles"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "shy",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "shier , shyer"
+      },
+      {
+        "meta": "最上級",
+        "word": "shiest , shyest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sick",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "sicker"
+      },
+      {
+        "meta": "最上級",
+        "word": "sickest"
+      }
+    ],
+    "other_words": [
+      "sicken"
+    ]
+  },
+  {
+    "word": "side",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sides"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sight",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sights"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sightseeing",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sign",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "signs"
+      },
+      {
+        "meta": "過去形",
+        "word": "signed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "signed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "signing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "silent",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "silenter , more silent"
+      },
+      {
+        "meta": "最上級",
+        "word": "silentest , most silent"
+      }
+    ],
+    "other_words": [
+      "silence",
+      "silently"
+    ]
+  },
+  {
+    "word": "simple",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "simpler , more simple"
+      },
+      {
+        "meta": "最上級",
+        "word": "simplest , most simple"
+      }
+    ],
+    "other_words": [
+      "simplify",
+      "simply"
+    ]
+  },
+  null,
+  {
+    "word": "sincerely",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sir",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sirs"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "skate",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "skates"
+      },
+      {
+        "meta": "過去形",
+        "word": "skated"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "skated"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "skating"
+      }
+    ],
+    "other_words": [
+      "skater",
+      "skating"
+    ]
+  },
+  {
+    "word": "skill",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "skills"
+      }
+    ],
+    "other_words": [
+      "skillful",
+      "skilled"
+    ]
+  },
+  {
+    "word": "sleep",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "sleeps"
+      },
+      {
+        "meta": "過去形",
+        "word": "slept /slɛpt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "slept /slɛpt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "sleeping"
+      }
+    ],
+    "other_words": [
+      "sleeper",
+      "sleeping",
+      "sleeping"
+    ]
+  },
+  {
+    "word": "slice",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "slices"
+      },
+      {
+        "meta": "過去形",
+        "word": "sliced"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "sliced"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "slicing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "smart",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "smarter"
+      },
+      {
+        "meta": "最上級",
+        "word": "smartest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "smell",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "smells"
+      },
+      {
+        "meta": "過去形",
+        "word": "smelled , smelt"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "smelled , smelt"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "smelling"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "smile",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "smiles"
+      },
+      {
+        "meta": "過去形",
+        "word": "smiled"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "smiled"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "smiling"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "smoke",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "smokes"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "snack",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "snacks"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sneaker",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sneakers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "snow",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "snows"
+      }
+    ],
+    "other_words": [
+      "snowy"
+    ]
+  },
+  {
+    "word": "snowboard",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "snowboards"
+      },
+      {
+        "meta": "過去形",
+        "word": "snowboarded"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "snowboarded"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "snowboarding"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "snowy",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "snowier"
+      },
+      {
+        "meta": "最上級",
+        "word": "snowiest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sofa",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sofas"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "softly",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "soldier",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "soldiers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "solve",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "solves"
+      },
+      {
+        "meta": "過去形",
+        "word": "solved"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "solved"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "solving"
+      }
+    ],
+    "other_words": [
+      "solution",
+      "solvable"
+    ]
+  },
+  {
+    "word": "someday",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  null,
+  {
+    "word": "sometimes",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "son",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sons"
+      }
+    ],
+    "other_words": [
+      "daughter"
+    ]
+  },
+  {
+    "word": "sorry",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "sorrier , more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "sorriest , most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sound",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sounds"
+      }
+    ],
+    "other_words": [
+      "soundless"
+    ]
+  },
+  {
+    "word": "southern",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "space",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "spaces"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "Spanish",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "speak",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "speaks"
+      },
+      {
+        "meta": "過去形",
+        "word": "spoke /spoʊk/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "spoken /ˈspoʊkən/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "speaking"
+      }
+    ],
+    "other_words": [
+      "speaker",
+      "speech",
+      "speaking",
+      "speaking"
+    ]
+  },
+  {
+    "word": "special",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "specialist",
+      "specialist",
+      "specialize",
+      "specially",
+      "specialty"
+    ]
+  },
+  {
+    "word": "speech",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "speeches"
+      }
+    ],
+    "other_words": [
+      "speechless"
+    ]
+  },
+  {
+    "word": "speed",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "speeds"
+      }
+    ],
+    "other_words": [
+      "speedy"
+    ]
+  },
+  {
+    "word": "spell",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "spells"
+      },
+      {
+        "meta": "過去形",
+        "word": "spelled"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "spelled"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "spelling"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "spend",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "spends"
+      },
+      {
+        "meta": "過去形",
+        "word": "spent /spɛnt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "spent /spɛnt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "spending"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "stadium",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "stadiums"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "stair",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "stairs"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "stamp",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "stamps"
+      },
+      {
+        "meta": "過去形",
+        "word": "stamped"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "stamped"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "stamping"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "star",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "stars"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "state",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "states"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "station",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "stations"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "statue",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "statues"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "steak",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "steaks"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "steal",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "steals"
+      },
+      {
+        "meta": "過去形",
+        "word": "stole /stoʊl/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "stolen /ˈstoʊlən/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "stealing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "stew",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "stews"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "still",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "stomach",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "stomachs"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "stop",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "stops"
+      },
+      {
+        "meta": "過去形",
+        "word": "stopped"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "stopped"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "stopping"
+      }
+    ],
+    "other_words": [
+      "stoppage"
+    ]
+  },
+  {
+    "word": "store",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "stores"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "storm",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "storms"
+      }
+    ],
+    "other_words": [
+      "stormy"
+    ]
+  },
+  {
+    "word": "straight",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "straighter"
+      },
+      {
+        "meta": "最上級",
+        "word": "straightest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "stranger",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "strangers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "street",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "streets"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "strong",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "stronger"
+      },
+      {
+        "meta": "最上級",
+        "word": "strongest"
+      }
+    ],
+    "other_words": [
+      "strongly",
+      "strength",
+      "strengthen"
+    ]
+  },
+  {
+    "word": "subject",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "subjects"
+      }
+    ],
+    "other_words": [
+      "subjective"
+    ]
+  },
+  null,
+  {
+    "word": "suddenly",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sugar",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sugars"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "suit",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "suits"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "suitcase",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "suitcases"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sunny",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "sunnier"
+      },
+      {
+        "meta": "最上級",
+        "word": "sunniest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sunrise",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sunset",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sunsets"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "supermarket",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "supermarkets"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "support",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "supports"
+      },
+      {
+        "meta": "過去形",
+        "word": "supported"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "supported"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "supporting"
+      }
+    ],
+    "other_words": [
+      "supporter"
+    ]
+  },
+  {
+    "word": "sure",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "surer"
+      },
+      {
+        "meta": "最上級",
+        "word": "surest"
+      }
+    ],
+    "other_words": [
+      "surely"
+    ]
+  },
+  {
+    "word": "surprised",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "surprising",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "surprisingly"
+    ]
+  },
+  {
+    "word": "survive",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "survives"
+      },
+      {
+        "meta": "過去形",
+        "word": "survived"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "survived"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "surviving"
+      }
+    ],
+    "other_words": [
+      "survival"
+    ]
+  },
+  {
+    "word": "sweater",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "sweaters"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "sweet",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "sweeter"
+      },
+      {
+        "meta": "最上級",
+        "word": "sweetest"
+      }
+    ],
+    "other_words": [
+      "sweetly",
+      "sweeten"
+    ]
+  },
+  {
+    "word": "symbol",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "symbols"
+      }
+    ],
+    "other_words": [
+      "symbolic"
+    ]
+  },
+  {
+    "word": "system",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "systems"
+      }
+    ],
+    "other_words": [
+      "systematic",
+      "systematize"
+    ]
+  },
+  {
+    "word": "take",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "takes"
+      },
+      {
+        "meta": "過去形",
+        "word": "took /tʊk/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "taken /ˈteɪkən/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "taking"
+      }
+    ],
+    "other_words": [
+      "mistake",
+      "taker"
+    ]
+  },
+  {
+    "word": "taste",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "tastes"
+      }
+    ],
+    "other_words": [
+      "tasteful",
+      "tasty"
+    ]
+  },
+  {
+    "word": "tasty",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "tastier"
+      },
+      {
+        "meta": "最上級",
+        "word": "tastiest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "telephone",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "telephones"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "tell",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "tells"
+      },
+      {
+        "meta": "過去形",
+        "word": "told /toʊld/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "told /toʊld/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "telling"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "temperature",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "temperatures"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "textbook",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "textbooks"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "theater",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "theaters"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "thick",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "thicker"
+      },
+      {
+        "meta": "最上級",
+        "word": "thickest"
+      }
+    ],
+    "other_words": [
+      "thicken",
+      "thickness"
+    ]
+  },
+  {
+    "word": "thing",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "things"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "thirsty",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "thirstier"
+      },
+      {
+        "meta": "最上級",
+        "word": "thirstiest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "thousand",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "thousands"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "throw",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "throws"
+      },
+      {
+        "meta": "過去形",
+        "word": "threw /θru/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "thrown /θroʊn/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "throwing"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "ticket",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "tickets"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "tie",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "ties"
+      },
+      {
+        "meta": "過去形",
+        "word": "tied"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "tied"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "tying"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "tiger",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "tiger , tigers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "tight",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "tighter"
+      },
+      {
+        "meta": "最上級",
+        "word": "tightest"
+      }
+    ],
+    "other_words": [
+      "tighten",
+      "tightly"
+    ]
+  },
+  {
+    "word": "tired",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜 , tireder"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜 , tiredest"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "together",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "tonight",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "tool",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "tools"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "top",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "tops"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "touch",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "touchs"
+      },
+      {
+        "meta": "過去形",
+        "word": "touched"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "touched"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "touching"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "tour",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "tours"
+      }
+    ],
+    "other_words": [
+      "tourist"
+    ]
+  },
+  {
+    "word": "tourist",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "tourists"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "tournament",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "tournaments"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "toy",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "toys"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "tradition",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "traditions"
+      }
+    ],
+    "other_words": [
+      "traditional"
+    ]
+  },
+  {
+    "word": "traditional",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "traditionally"
+    ]
+  },
+  {
+    "word": "train",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "trains"
+      },
+      {
+        "meta": "過去形",
+        "word": "trained"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "trained"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "training"
+      }
+    ],
+    "other_words": [
+      "training"
+    ]
+  },
+  {
+    "word": "travel",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "travels"
+      },
+      {
+        "meta": "過去形",
+        "word": "traveled , travelled"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "traveled , travelled"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "traveling"
+      }
+    ],
+    "other_words": [
+      "traveler"
+    ]
+  },
+  {
+    "word": "trick",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "tricks"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "trip",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "trips"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "trouble",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": [
+      "troublesome"
+    ]
+  },
+  {
+    "word": "true",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "truer"
+      },
+      {
+        "meta": "最上級",
+        "word": "truest"
+      }
+    ],
+    "other_words": [
+      "truth",
+      "truly"
+    ]
+  },
+  {
+    "word": "try",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "tries"
+      },
+      {
+        "meta": "過去形",
+        "word": "tried"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "tried"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "trying"
+      }
+    ],
+    "other_words": [
+      "trial",
+      "trial"
+    ]
+  },
+  {
+    "word": "turn",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "turns"
+      },
+      {
+        "meta": "過去形",
+        "word": "turned"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "turned"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "turning"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "twice",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "twin",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "twins"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "type",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "types"
+      }
+    ],
+    "other_words": [
+      "typical",
+      "typist"
+    ]
+  },
+  {
+    "word": "typhoon",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "typhoons"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "uncle",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "uncles"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "understand",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "understands"
+      },
+      {
+        "meta": "過去形",
+        "word": "understood /ˌʌndərˈstʊd/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "understood /ˌʌndərˈstʊd/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "understanding"
+      }
+    ],
+    "other_words": [
+      "understanding",
+      "understandable"
+    ]
+  },
+  {
+    "word": "unfortunately",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "uniform",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "uniforms"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "university",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "universities"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "upset",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "upsets"
+      },
+      {
+        "meta": "過去形",
+        "word": "upset /ʌpˈsɛt/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "upset /ʌpˈsɛt/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "upsetting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "upstairs",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "useful",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "use",
+      "usefulness"
+    ]
+  },
+  {
+    "word": "usual",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "usually"
+    ]
+  },
+  {
+    "word": "usually",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "vacation",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "vacations"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "vegetable",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "vegetables"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "video",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "videos"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "view",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "views"
+      }
+    ],
+    "other_words": [
+      "viewer"
+    ]
+  },
+  {
+    "word": "village",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "villages"
+      }
+    ],
+    "other_words": [
+      "villager"
+    ]
+  },
+  {
+    "word": "visitor",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "visitors"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "voice",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "voices"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "volunteer",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "volunteers"
+      },
+      {
+        "meta": "過去形",
+        "word": "volunteered"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "volunteered"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "volunteering"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "wait",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "waits"
+      },
+      {
+        "meta": "過去形",
+        "word": "waited"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "waited"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "waiting"
+      }
+    ],
+    "other_words": [
+      "waiter",
+      "waiting"
+    ]
+  },
+  {
+    "word": "waiter",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "waiters"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "wake",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "wakes"
+      },
+      {
+        "meta": "過去形",
+        "word": "waked"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "waked"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "waking"
+      }
+    ],
+    "other_words": [
+      "awake"
+    ]
+  },
+  {
+    "word": "wallet",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "wallets"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "war",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "wars"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "warm",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "warmer"
+      },
+      {
+        "meta": "最上級",
+        "word": "warmest"
+      }
+    ],
+    "other_words": [
+      "warmth"
+    ]
+  },
+  {
+    "word": "waste",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "wastes"
+      },
+      {
+        "meta": "過去形",
+        "word": "wasted"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "wasted"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "wasting"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "watch",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "watches"
+      },
+      {
+        "meta": "過去形",
+        "word": "watched"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "watched"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "watching"
+      }
+    ],
+    "other_words": [
+      "watcher"
+    ]
+  },
+  {
+    "word": "way",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "ways"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "wear",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "wears"
+      },
+      {
+        "meta": "過去形",
+        "word": "wore /wɔr/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "worn /wɔrn/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "wearing"
+      }
+    ],
+    "other_words": [
+      "wearable",
+      "wearer"
+    ]
+  },
+  {
+    "word": "weather",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "website",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "websites"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "wedding",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "weddings"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "weekend",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "weekends"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "welcome",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "welcomes"
+      },
+      {
+        "meta": "過去形",
+        "word": "welcomed"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "welcomed"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "welcoming"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "well",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "better /ˈbɛtər/"
+      },
+      {
+        "meta": "最上級",
+        "word": "best /bɛst/"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "wet",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "wetter"
+      },
+      {
+        "meta": "最上級",
+        "word": "wettest"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  null,
+  {
+    "word": "whole",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "wide",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "wider"
+      },
+      {
+        "meta": "最上級",
+        "word": "widest"
+      }
+    ],
+    "other_words": [
+      "widen",
+      "width"
+    ]
+  },
+  {
+    "word": "wife",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "wives"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "wild",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "wilder"
+      },
+      {
+        "meta": "最上級",
+        "word": "wildest"
+      }
+    ],
+    "other_words": [
+      "wildly"
+    ]
+  },
+  {
+    "word": "win",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "wins"
+      },
+      {
+        "meta": "過去形",
+        "word": "won /wʌn/"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "won /wʌn/"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "winning"
+      }
+    ],
+    "other_words": [
+      "winner",
+      "winning",
+      "winning"
+    ]
+  },
+  {
+    "word": "wine",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "wines"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "wing",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "wings"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "winner",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "winners"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "wish",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "wishes"
+      },
+      {
+        "meta": "過去形",
+        "word": "wished"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "wished"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "wishing"
+      }
+    ],
+    "other_words": []
+  },
+  null,
+  {
+    "word": "wonder",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "wonders"
+      },
+      {
+        "meta": "過去形",
+        "word": "wondered"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "wondered"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "wondering"
+      }
+    ],
+    "other_words": [
+      "wonderful"
+    ]
+  },
+  {
+    "word": "wonderful",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "most 〜"
+      }
+    ],
+    "other_words": [
+      "wonderfulness"
+    ]
+  },
+  {
+    "word": "wood",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "woods"
+      }
+    ],
+    "other_words": [
+      "wooden",
+      "woody"
+    ]
+  },
+  {
+    "word": "word",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "words"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "work",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "works"
+      },
+      {
+        "meta": "過去形",
+        "word": "worked"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "worked"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "working"
+      }
+    ],
+    "other_words": [
+      "worker",
+      "working",
+      "working"
+    ]
+  },
+  {
+    "word": "worker",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "workers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "worry",
+    "related": [
+      {
+        "meta": "三人称単数現在形",
+        "word": "worries"
+      },
+      {
+        "meta": "過去形",
+        "word": "worried"
+      },
+      {
+        "meta": "過去分詞形",
+        "word": "worried"
+      },
+      {
+        "meta": "現在分詞形",
+        "word": "worrying"
+      }
+    ],
+    "other_words": [
+      "worried",
+      "worrier",
+      "worrisome",
+      "worrying"
+    ]
+  },
+  {
+    "word": "writer",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "writers"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "wrong",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "wronger , more 〜"
+      },
+      {
+        "meta": "最上級",
+        "word": "wrongest , most 〜"
+      }
+    ],
+    "other_words": [
+      "wrongly"
+    ]
+  },
+  {
+    "word": "yet",
+    "related": [
+      {
+        "meta": "比較級",
+        "word": "-"
+      },
+      {
+        "meta": "最上級",
+        "word": "-"
+      }
+    ],
+    "other_words": []
+  },
+  {
+    "word": "zoo",
+    "related": [
+      {
+        "meta": "複数形",
+        "word": "zoos"
+      }
+    ],
+    "other_words": []
+  }
+]

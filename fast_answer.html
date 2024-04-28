@@ -246,7 +246,6 @@ const global_file_name_ary = [
     '英検5級',
 ];
 this.file_name_ary = global_file_name_ary;
-// text_url_ary_1と2をfetchしてtextContent_aryに格納
 for(let i = 0; i < text_url_ary_1.length; i++){
     const response = await fetch(text_url_ary_1[i]);
     this.textContent_ary_1.push(await response.text());
@@ -255,14 +254,11 @@ for(let i = 0; i < text_url_ary_2.length; i++){
     const response = await fetch(text_url_ary_2[i]);
     this.textContent_ary_2.push(await response.text());
 }
-// textContent_ary_1とtextContent_ary_2が同じlengthなことを確認
 if(this.textContent_ary_1.length !== this.textContent_ary_2.length){
     console.error('textContent_ary_1とtextContent_ary_2のlengthが異なります');
 }
-
-
-// 上記の処理が完了したらset_data_sample_array_obj(0)を実行
 this.set_data_sample_array_obj(0);
+
 
 },
 beforeUpdate() {
@@ -312,13 +308,21 @@ exe1(){
     this.exe1_data = d3;
     // d1,d2,d3 = null;
 },
+text_attacher(IDX){
+    if(this.textContent_ary_1){
+        this.data_0 = this.textContent_ary_1[IDX];
+        this.data_1 = this.textContent_ary_2[IDX];
+        return true;
+    }
+},
+// sample_array_objからIDX指定してsample_array_objのdata_0とdata_1をtextareaに格納する関数
 set_data_sample_array_obj(IDX){
-    // this.data_0 = this.sample_array_obj[IDX].data_0.join('\n');
-    // this.data_1 = this.sample_array_obj[IDX].data_1.join('\n');
-    // this.exe1();
-    // this.textContent_ary_1を改行で分割してdata_0に格納
+    if(this.text_attacher(IDX) === true){
+        this.exe1();
+        return;
+    }
+    
     this.data_0 = this.textContent_ary_1[IDX];
-    // this.textContent_ary_2を改行で分割してdata_1に格納
     this.data_1 = this.textContent_ary_2[IDX];
     this.exe1();
 },
@@ -343,4 +347,36 @@ change_show_not_quiz_section(){
 },
 }).mount('.app');
 </script>
+{
+    data_0: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    data_1: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    paint: true
+}
+
+
+<template v-for="(DATA_VAL, DATA_IDX) in data_0_1_pair_ary">
+    <div :id="DATA_VAL.data_0" :ref="DATA_VAL.data_0">
+        <button @click="change_paint_or_raw(DATA_IDX)">{{ DATA_VAL.data_0 }}</button>
+        <div :class="DATA_VAL.paint ? 'black-paint' : ''" @click="change_paint_or_raw(DATA_IDX)">{{ DATA_VAL.data_1 }}</div>
+    </div>
+</template>
+<!--
+app.exe1_data[0]
+{
+    'abroad',
+    '海外',
+     ['ドーナツ', '海外'],
+    true
+}
+
+<div v-if="DATA_VAL[3] === false">でtrueになると非表示になる
+
+
+{
+    data_0: 'abroad',
+    data_1: '海外',
+    data_2: ['ドーナツ', '海外'],
+    true_is_not_display: true,
+    paint: true,
+} -->
 </html>

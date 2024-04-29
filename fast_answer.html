@@ -47,80 +47,25 @@
 
 </head>
 <body class="app">
-
-    <!-- not_quiz_section slide button -->
-<!-- <button @click="change_show_not_quiz_section">not_quiz_section</button> -->
 <div class="not_quiz_section">
-        <!-- this.textContent_ary_1.length の 長さ分のeachをする -->
         <div v-for="(DATA_VAL, DATA_IDX) in textContent_ary_1">
             <div>
-                <!-- <button @click="set_data_sample_array_obj(DATA_IDX)">set_data_sample_array_obj({{ DATA_IDX }})</button> -->
-                <!-- file_name_aryを表示 -->
-                <!-- <span>{{ file_name_ary[DATA_IDX] }}</span> -->
-                <!-- file_name_aryをbuttonにする -->
                 <button @click="set_data_sample_array_obj(DATA_IDX)">{{ file_name_ary[DATA_IDX] }}</button>
             </div>
         </div>
-
-        <!-- data_sample_array_obj for して　set_data_sample_array_obj(IDX) するボタンの -->
         <div v-for="(DATA_VAL, DATA_IDX) in sample_array_obj">
             <button @click="set_data_sample_array_obj(DATA_IDX)">set_data_sample_array_obj({{ DATA_IDX }})</button>
         </div>
-    <!-- <h1>⭕️❎クイズ作成アプリ デモ版</h1> -->
-    <!-- <button @click="fn_0">fn_0</button> -->
-    <!-- <template v-for="(DATA_VAL, DATA_IDX) in data_0_1_pair_ary.slice(0, 2)"> -->
-
-        <!-- done_delete_mode switch button -->
-        <!-- <button @click="done_delete_mode = !done_delete_mode">done_delete_mode</button> -->
-        <!-- done_delete_mode ON/OFF表示 -->
-        <!-- <span>
-            <span v-if="done_delete_mode">ON</span>
-            <span v-else>OFF</span>
-        </span> -->
-
-        <!-- show_textarea switch button -->
 </div>
-
-
-<!-- <template>
-    <div>
-      <div id="parent_section">
-        <a v-for="i in 100" :key="i" :href="'#target_section_' + i">リンク{{ i }}</a>
-      </div>
-      <div id="target_parent_section">
-        <div v-for="i in 100" :key="i" :id="'target_section_' + i">
-          <h2>Section {{ i }}</h2>
-          <p>Some content...</p>
-          ターゲット{{ i }}
-        </div>
-      </div>
-    </div>
-</template> -->
-
-<!-- <template v-for="(DATA_VAL, DATA_IDX) in data_0_1_pair_ary">
-    <div :id="DATA_VAL.data_0" :ref="DATA_VAL.data_0">
-        <button @click="exe1(DATA_IDX)">{{ DATA_VAL.data_0 }}</button>
-        <button @click="exe1(DATA_IDX)">{{ DATA_VAL.data_1 }}</button>
-    </div>
-</template> -->
-
-<!-- {{done_delete_mode}} -->
-
 <div class="quiz_section">
-    <!-- <button @click="change_show_not_quiz_section">not_quiz_section</button> -->
 <button @click="show_textarea = !show_textarea">show_textarea</button>
-<!-- change mode -->
 <button @click="mode = 'maru_batu'">⭕️❎問題モード</button>
 <button @click="mode = 'black_paint'">黒塗りモード</button>
-
 
 <div v-if="show_textarea">
 <textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
 <textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
 </div>
-
-
-
 
 <template v-for="(DATA_VAL, DATA_IDX) in exe1_data">
 <div v-if="mode === 'maru_batu'">
@@ -150,8 +95,8 @@ let d1, d2, d3, d4, d5, d6, d7, d8, d9 = null;
 const app = Vue.createApp({
 data() {
     return {
-// mode: 'maru_batu',
-mode: 'black_paint',
+mode: 'maru_batu',
+// mode: 'black_paint',
 
 file_name_ary: [],
 textContent_ary_1: [],

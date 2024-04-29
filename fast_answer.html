@@ -108,36 +108,41 @@
 
 <div class="quiz_section">
     <!-- <button @click="change_show_not_quiz_section">not_quiz_section</button> -->
-    <button @click="show_textarea = !show_textarea">show_textarea</button>
-    <!-- show_textareaでこのdivの表示非表示を切り替える -->
+<button @click="show_textarea = !show_textarea">show_textarea</button>
+<!-- change mode -->
+<button @click="mode = 'maru_batu'">⭕️❎問題モード</button>
+<button @click="mode = 'black_paint'">黒塗りモード</button>
+
+
 <div v-if="show_textarea">
 <textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
 <textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
 </div>
 
 
-<template v-for="(DATA_VAL, DATA_IDX) in exe1_data">
-    <!-- done_delete_modeがtrueかつDATA_VAL[3]がtrueならその行は非表示になる -->
-    <!-- <div v-if="done_delete_mode === true && DATA_VAL[3] === false"> -->
-    <!-- <div v-if="done_delete_mode === false && DATA_VAL[3] === false"> -->
-    <div v-if="DATA_VAL[3] === false">
-    <!-- {{DATA_VAL[3]}} -->
-    <!-- <div> -->
-        <span>{{ DATA_VAL[0] }}</span>
-        <span> = </span>
-        <span>{{ DATA_VAL[2][0] }}</span>
-        <div>
-            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0])">⭕️</button>
-            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1])">❎</button>
-        </div>
 
-        <!-- <span>
-            <span v-if="done_delete_mode === false && DATA_VAL[3] === true">✔️</span>
-        </span> -->
+
+<template v-for="(DATA_VAL, DATA_IDX) in exe1_data">
+<div v-if="mode === 'maru_batu'">
+    <div v-if="DATA_VAL[3] === false">
+    <span>{{ DATA_VAL[0] }}</span>
+    <span> = </span>
+    <span>{{ DATA_VAL[2][0] }}</span>
+    <div>
+        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0])">⭕️</button>
+        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1])">❎</button>
     </div>
-</template>
+    </div>
 </div>
 
+<div v-if="mode === 'black_paint'">
+    <div>{{ DATA_VAL[0] }}</div>
+    <div @click="change_paint_or_raw(DATA_IDX)" :class="DATA_VAL[4] ? 'black-paint' : ''">{{ DATA_VAL[2][0] }}</div>
+</div>
+</template>
+
+
+</div>
 </body>
 <script>
 let d1, d2, d3, d4, d5, d6, d7, d8, d9 = null;
@@ -145,6 +150,9 @@ let d1, d2, d3, d4, d5, d6, d7, d8, d9 = null;
 const app = Vue.createApp({
 data() {
     return {
+// mode: 'maru_batu',
+mode: 'black_paint',
+
 file_name_ary: [],
 textContent_ary_1: [],
 textContent_ary_2: [],
@@ -288,9 +296,11 @@ fn_1(){
         return {
             data_0: val,
             data_1: this.data_1_ary[idx],
-            paint: true,
         };
     });
+},
+change_paint_or_raw(RAW_IDX){
+    this.exe1_data[RAW_IDX][4] = !this.exe1_data[RAW_IDX][4];
 },
 exe1(){
     this.fn_1();
@@ -298,12 +308,10 @@ exe1(){
     d2 = d1.map((val, idx) => val.data_1 );
     d3 = d2.map((val, idx) => {
         const filter_d2 = d2.filter((val2, idx2) => val2 !== d2[idx]);
-        console.log(d2);
-        // d4をシャッフルして1つ取り出す
         const only_filter_data = shuffle(filter_d2)[0];
         const ok_or_ng_answer_str_ary = shuffle([d2[idx], only_filter_data]);
         const data_0 = d1[idx].data_0;
-        return [data_0, val, ok_or_ng_answer_str_ary, false];
+        return [data_0, val, ok_or_ng_answer_str_ary, false, true];
     });
     this.exe1_data = d3;
     // d1,d2,d3 = null;
@@ -347,36 +355,4 @@ change_show_not_quiz_section(){
 },
 }).mount('.app');
 </script>
-{
-    data_0: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-    data_1: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-    paint: true
-}
-
-
-<template v-for="(DATA_VAL, DATA_IDX) in data_0_1_pair_ary">
-    <div :id="DATA_VAL.data_0" :ref="DATA_VAL.data_0">
-        <button @click="change_paint_or_raw(DATA_IDX)">{{ DATA_VAL.data_0 }}</button>
-        <div :class="DATA_VAL.paint ? 'black-paint' : ''" @click="change_paint_or_raw(DATA_IDX)">{{ DATA_VAL.data_1 }}</div>
-    </div>
-</template>
-<!--
-app.exe1_data[0]
-{
-    'abroad',
-    '海外',
-     ['ドーナツ', '海外'],
-    true
-}
-
-<div v-if="DATA_VAL[3] === false">でtrueになると非表示になる
-
-
-{
-    data_0: 'abroad',
-    data_1: '海外',
-    data_2: ['ドーナツ', '海外'],
-    true_is_not_display: true,
-    paint: true,
-} -->
 </html>

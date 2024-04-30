@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vue.js 3 スライドショー</title>
+<!-- lib/vue@3.2.36.global.prod.js -->
+<script src="./lib/vue@3.2.36.global.prod.js"></script>
+
+<style>
+    /* スライドの表示を設定 */
+    .slideshow-container {
+        position: relative;
+        max-width: 100%;
+        overflow: hidden;
+        margin: auto;
+    }
+    
+    /* スライドのスタイルを設定 */
+    .mySlides {
+        display: none;
+        padding: 20px;
+        background-color: #f1f1f1;
+        text-align: center;
+        font-size: 24px;
+    }
+    
+    /* 前後のボタンの表示を設定 */
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -22px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+    }
+    
+    /* 右側に移動するボタンの位置を設定 */
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+    
+    /* ボタンのhover時の色を設定 */
+    .prev:hover, .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+</style>
+</head>
+<body>
+
+<!-- Vue.js 3を使用したスライドショーのコンポーネント -->
+<div id="app">
+  <div class="slideshow-container">
+    <div v-for="(slide, index) in slides" :key="index" class="mySlides" v-show="currentIndex === index" @click="nextSlide">
+      {{ slide }}
+    </div>
+  
+    <!-- 前後のボタン -->
+    <a class="prev" @click="prevSlide">❮</a>
+    <a class="next" @click="nextSlide">❯</a>
+  </div>
+</div>
+
+<script>
+const app = Vue.createApp({
+  data() {
+    return {
+      slides: ['Slide 1', 'Slide 2', 'Slide 3'], // スライドの文字列のリスト
+      currentIndex: 0 // 現在のスライドのインデックス
+    };
+  },
+  methods: {
+    // 前のスライドに移動
+    prevSlide() {
+      if (this.currentIndex > 0) {
+        this.currentIndex--;
+      } else {
+        this.currentIndex = this.slides.length - 1;
+      }
+    },
+    // 次のスライドに移動
+    nextSlide() {
+      if (this.currentIndex < this.slides.length - 1) {
+        this.currentIndex++;
+      } else {
+        this.currentIndex = 0;
+      }
+    }
+  }
+});
+
+app.mount('#app');
+</script>
+
+</body>
+</html>

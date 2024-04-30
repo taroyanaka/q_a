@@ -47,6 +47,23 @@
 
 </head>
 <body class="app">
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+<div class="slideshow-container">
+    <div v-for="(slide, index) in slides" :key="index" class="mySlides" v-show="currentIndex === index" @click="nextSlide">
+        {{ slide }}
+    </div>
+    <!-- 前後のボタン -->
+    <a class="prev" @click="prevSlide">❮</a>
+    <a class="next" @click="nextSlide">❯</a>
+</div>
+
+
+
+
+
+
+
+
 <div class="not_quiz_section">
         <div v-for="(DATA_VAL, DATA_IDX) in textContent_ary_1">
             <div>
@@ -69,7 +86,7 @@
 
 <template v-for="(DATA_VAL, DATA_IDX) in exe1_data">
 <div v-if="mode === 'maru_batu'">
-    <div v-if="DATA_VAL[3] === false">
+<div v-if="DATA_VAL[3] === false">
     <span>{{ DATA_VAL[0] }}</span>
     <span> = </span>
     <span>{{ DATA_VAL[2][0] }}</span>
@@ -77,14 +94,40 @@
         <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0])">⭕️</button>
         <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1])">❎</button>
     </div>
-    </div>
+</div>
 </div>
 
 <div v-if="mode === 'black_paint'">
     <div>{{ DATA_VAL[0] }}</div>
     <div @click="change_paint_or_raw(DATA_IDX)" :class="DATA_VAL[4] ? 'black-paint' : ''">{{ DATA_VAL[2][0] }}</div>
 </div>
+
 </template>
+<div v-if="mode === 'slide'">
+    <br>
+    <br>
+    <br>
+    <!-- 現在のスライドを表示 -->
+    <div @click="nextSlide">{{ slides[currentIndex] }}</div>
+  
+    <!-- 前のスライドに移動するボタン -->
+    <button @click="prevSlide">前へ</button>
+  
+    <!-- 次のスライドに移動するボタン -->
+    <button @click="nextSlide">次へ</button>
+
+    <!-- auto slide mode button(auto slide状態の時にクリックするとstop_autoslide) -->
+    <div v-if="!auto_slide_mode">
+        <button @click="auto_slide">auto slide</button>
+            <!-- input numberでtime_intervalを設定 -->
+            <input type="number" v-model="time_interval">
+    </div>
+    <div v-if="auto_slide_mode">
+        <button @click="stop_auto_slide">stop auto slide</button>
+    </div>
+
+</div>
+
 
 
 </div>
@@ -95,8 +138,14 @@ let d1, d2, d3, d4, d5, d6, d7, d8, d9 = null;
 const app = Vue.createApp({
 data() {
     return {
-mode: 'maru_batu',
+slides: [], // exe1_dataをslidesとして設定
+currentIndex: 0, // 現在のスライドのインデックス
+auto_slide_mode: false,
+time_interval: 500,
+
+// mode: 'maru_batu',
 // mode: 'black_paint',
+mode: 'slide',
 
 file_name_ary: [],
 textContent_ary_1: [],
@@ -223,6 +272,32 @@ updated() {
 
 },
 methods: {
+auto_slide(){
+    this.auto_slide_mode = true;
+    setInterval(() => {
+        this.nextSlide();
+    }, this.time_interval);
+},
+stop_auto_slide(){
+    this.auto_slide_mode = false;
+    // 全てのsetIntervalを停止する
+    for (let i = 1; i < 99999; i++) window.clearInterval(i);
+
+},
+prevSlide(){
+    if (this.currentIndex > 0) {
+        this.currentIndex--;
+    } else {
+        this.currentIndex = this.slides.length - 1;
+    }
+},
+nextSlide(){
+    if (this.currentIndex < this.slides.length - 1) {
+        this.currentIndex++;
+    } else {
+        this.currentIndex = 0;
+    }
+},
 scrollToDiv(){
     let url = new URL(window.location.href);
     let preset = url.searchParams.get('preset') ? url.searchParams.get('preset') : null;
@@ -259,6 +334,7 @@ exe1(){
         return [data_0, val, ok_or_ng_answer_str_ary, false, true];
     });
     this.exe1_data = d3;
+    this.slides = this.exe1_data;
     // d1,d2,d3 = null;
 },
 text_attacher(IDX){
@@ -294,8 +370,6 @@ change_show_not_quiz_section(){
     this.show_not_quiz_section = !this.show_not_quiz_section;
     // cssを貼り替える
     this.show_not_quiz_section ? this.show_not_quiz_section = false : this.show_not_quiz_section = true;
-
-
 },
 },
 }).mount('.app');

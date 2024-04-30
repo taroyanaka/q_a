@@ -10,6 +10,14 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.36/vue.cjs.js"></script> -->
 
 <style>
+    /* スライドの表示を設定 qは左寄せ, aは右寄せ */
+    .q{
+        text-align: left;
+    }
+    .a{
+        text-align: right;
+    }
+
     /* 2択最速回答(時間決めてor時間測定) */
     .black-paint {
         color: black;
@@ -50,7 +58,9 @@
     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 <div class="slideshow-container">
     <div v-for="(slide, index) in slides" :key="index" class="mySlides" v-show="currentIndex === index" @click="nextSlide">
-        {{ slide }}
+        <!-- {q: ary[i]}, {a: ary[i]}として取り出されるので、qの場合はclass="q", aの場合はclass="a"を付与 -->
+        <div v-if="slide.q" class="q">{{ slide.q }}</div>
+        <div v-if="slide.a" class="a">{{ slide.a }}</div>
     </div>
     <!-- 前後のボタン -->
     <a class="prev" @click="prevSlide">❮</a>
@@ -78,6 +88,7 @@
 <button @click="show_textarea = !show_textarea">show_textarea</button>
 <button @click="mode = 'maru_batu'">⭕️❎問題モード</button>
 <button @click="mode = 'black_paint'">黒塗りモード</button>
+<button @click="mode = 'slide'">スライドモード</button>
 
 <div v-if="show_textarea">
 <textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
@@ -107,15 +118,15 @@
     <br>
     <br>
     <br>
+
     <!-- 現在のスライドを表示 -->
-    <div @click="nextSlide">{{ slides[currentIndex] }}</div>
-  
+    <!-- <div @click="nextSlide">{{ slides[currentIndex] }}</div> -->
+    <div v-if="slides[currentIndex].q" class="q" @click="nextSlide">{{ slides[currentIndex].q }}</div>
+    <div v-if="slides[currentIndex].a" class="a" @click="nextSlide">{{ slides[currentIndex].a }}</div>
     <!-- 前のスライドに移動するボタン -->
     <button @click="prevSlide">前へ</button>
-  
     <!-- 次のスライドに移動するボタン -->
     <button @click="nextSlide">次へ</button>
-
     <!-- auto slide mode button(auto slide状態の時にクリックするとstop_autoslide) -->
     <div v-if="!auto_slide_mode">
         <button @click="auto_slide">auto slide</button>
@@ -282,7 +293,6 @@ stop_auto_slide(){
     this.auto_slide_mode = false;
     // 全てのsetIntervalを停止する
     for (let i = 1; i < 99999; i++) window.clearInterval(i);
-
 },
 prevSlide(){
     if (this.currentIndex > 0) {
@@ -334,8 +344,27 @@ exe1(){
         return [data_0, val, ok_or_ng_answer_str_ary, false, true];
     });
     this.exe1_data = d3;
-    this.slides = this.exe1_data;
-    // d1,d2,d3 = null;
+    this.slides = this.make_slide(this.exe1_data);
+},
+make_slide(Ary_Param){
+function flattenAndExtract(ary) {
+    // 配列をフラット化し、最初の2つの要素を抽出する
+    // return ary.flatMap(subArray => subArray.slice(0, 2));
+    // 偶数は{q: ary[i]}, 奇数は{a: ary[i]}として返す
+    return ary.flatMap((val, idx) => {
+        if(idx % 2 === 0){
+            return {q: val[0]};
+        }else{
+            return {a: val[1]};
+        }
+    });
+}
+// const ary1 = [[1, 2, 3], [10, 20, 30], [100, 200, 300]];
+// const ary2 = flattenAndExtract(ary1);
+// console.log(ary2); // [1, 2, 10, 20, 100, 200]
+return flattenAndExtract(Ary_Param);
+
+
 },
 text_attacher(IDX){
     if(this.textContent_ary_1){

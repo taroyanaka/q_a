@@ -23,7 +23,7 @@
         position: fixed;
         top: 0;
         left: 0;
-        width: 2rem;
+        width: 5rem;
         height: 100vh;
         background-color: #f1f1f1;
         z-index: 100;
@@ -32,13 +32,17 @@
     .column-2 {
         position: relative;
         top: 0;
-        left: 4rem;
-        width: calc(100% - 4rem);
+        left: 5rem;
+        width: calc(100% - 5rem);
         height: 100vh;
-        background-color: #f1f1f1;
+        /* background-color: #f1f1f1; */
+        background-color: gray;
         z-index: 1;
     }
 
+    .disable_temporary{
+        display: none;
+    }
 </style>
 
 
@@ -65,118 +69,142 @@
         <button @click="save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button>
     </li>
     </ul>
-
-
-<button @click="fn19_1" class="save_opener">🌐</button>
-<div style='display: none' ref="save_data_set_list_parent2" class="vw_full">
-<div v-if="return_current_temporary_list()" class="simple_mode1">
-    <div class="additional_parent">
-        <div class="additional_child">👥 <button v-if="show_user" @click="show_all_user">{{ show_user }}</button></div>
-        <div class="additional_child">🏷️ <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button></div>
-        <div class="additional_child">⬆️⬇️ <button @click="change_show_order_by">{{ show_order_by }}</button></div>
-        <div class="additional_child_small">
-            <input type="radio" id="option1" value="advanced" v-model="advanced_visible">
-            <label for="option1"></label>
-            <input type="radio" id="option2" value="not_advanced" v-model="advanced_visible">
-            <label for="option2"></label>
+    <div v-for="(DATA_VAL, DATA_IDX) in textContent_ary_1">
+        <div>
+            <button @click="set_data_sample_array_obj(DATA_IDX)">{{ file_name_ary[DATA_IDX] }}</button>
         </div>
     </div>
-    <div class="flex_child q_a_data" ref="flex_child_display_q_a_data">
-    <ul class="simple_mode1">
-    <li v-for="(DATA_VAL, DATA_IDX) in return_current_temporary_list()" class="block_of_one simple_mode1">
-        <div class="data_type" v-if="DATA_VAL['data_type']">{{ DATA_VAL['data_type'] }}</div>
-        <div :style="apply_inline_block_styles_all_at_once(false, true)" class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div>
-        <span v-if="DATA_VAL['likes'].length === 0"
-            @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
-            {{ '♡' }}</span>
-        <span
-            v-for="(like, like_i) in DATA_VAL['likes']"
-            @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
-            {{ '❤️' }}</span>
-        <ul class="tags_parent">
-            <li v-for="(Tag, Tag_I) in DATA_VAL['tags']" class="tags">
-                <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button>
-                <button
-                    v-if="DATA_VAL['tags'].length >0"
-                    @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])"
-                    :style="{ display: tag_more_visible ? 'inline' : 'none' }"
-                    >🗑️</button>
-            </li>
-        </ul>
-        <button @click="show_tag_more_button" class="show_tag_more_button">🏷️→</button>
-        <div :style="{ display: tag_more_visible ? 'block' : 'none' }">
-            <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
-            <datalist id="tag-options" @click>
-                <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
-            </datalist>
-            <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
-        </div>
-        <div class="top_right advanced">
-            <ul class="dialog_ul">
-            <li class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
-                <span class="synapse" @click="synapse(DATA_VAL['data_type'], Other_Of_One,
-                    data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data1'],
-                    data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data2'],
-                )" :style="{ display: synapse_visible ? 'block' : 'none' }">{{ choice_emoji(Other_Of_One) }}</span>
-            </li>
-            </ul>
-            <div @click="showDialog" class="showDialog">⚙️</div>
-        </div>
-        <div class="bottom_right">
-            <div class="created_at">{{ date_time_form(DATA_VAL['created_at']) }}</div>
-            <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button>
-            <div class="id">{{ DATA_VAL['id'] }}</div>
-        </div>
-        <div class="clickable_for_short_or_long simple_mode1 " @click="short_or_long( DATA_VAL['id'] )" ref="exception">
-            <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
-            <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
-        </div>
-        <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
-            <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
-            <ul>
-            <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
-                {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
-                <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
-                    <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
-                    <button class="advanced" @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
-                </span>
-                    <input class="advanced" type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
-                    <button class="advanced" @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
-                <ul>
-                    <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
-                    <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
-                    <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
-                        <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
-                        <button class="advanced" @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
-                    </span>
-                    </li>
-                </ul>
-            </li>
-            </ul>
-            <input class="advanced" type="text" v-model="comment" placeholder="comment" @click.stop>
-            <button class="advanced" @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
-            <div style="margin-top: 0.5rem" @click.stop>
-                <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
-                <button class="advanced" @click.stop="show_comment_button" class="bigger_font">💬→</button>
+    <div v-for="(DATA_VAL, DATA_IDX) in sample_array_obj">
+        <button @click="set_data_sample_array_obj(DATA_IDX)">set_data_sample_array_obj({{ DATA_IDX }})</button>
+    </div>
+
+
+
+
+<div class="disable_temporary">
+    <button @click="fn19_1" class="save_opener">🌐</button>
+    <div ref="save_data_set_list_parent2">
+    <div v-if="return_current_temporary_list()" class="simple_mode1">
+        <div class="additional_parent">
+            <div class="additional_child">👥 <button v-if="show_user" @click="show_all_user">{{ show_user }}</button></div>
+            <div class="additional_child">🏷️ <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button></div>
+            <div class="additional_child">⬆️⬇️ <button @click="change_show_order_by">{{ show_order_by }}</button></div>
+            <div class="additional_child_small">
+                <input type="radio" id="option1" value="advanced" v-model="advanced_visible">
+                <label for="option1"></label>
+                <input type="radio" id="option2" value="not_advanced" v-model="advanced_visible">
+                <label for="option2"></label>
             </div>
         </div>
-    </li>
-    </ul>
+        <div class="flex_child q_a_data" ref="flex_child_display_q_a_data">
+        <ul class="simple_mode1">
+        <li v-for="(DATA_VAL, DATA_IDX) in return_current_temporary_list()" class="block_of_one simple_mode1">
+            <div class="data_type" v-if="DATA_VAL['data_type']">{{ DATA_VAL['data_type'] }}</div>
+            <div :style="apply_inline_block_styles_all_at_once(false, true)" class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div>
+            <span v-if="DATA_VAL['likes'].length === 0"
+                @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
+                {{ '♡' }}</span>
+            <span
+                v-for="(like, like_i) in DATA_VAL['likes']"
+                @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
+                {{ '❤️' }}</span>
+            <ul class="tags_parent">
+                <li v-for="(Tag, Tag_I) in DATA_VAL['tags']" class="tags">
+                    <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button>
+                    <button
+                        v-if="DATA_VAL['tags'].length >0"
+                        @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])"
+                        :style="{ display: tag_more_visible ? 'inline' : 'none' }"
+                        >🗑️</button>
+                </li>
+            </ul>
+            <button @click="show_tag_more_button" class="show_tag_more_button">🏷️→</button>
+            <div :style="{ display: tag_more_visible ? 'block' : 'none' }">
+                <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
+                <datalist id="tag-options" @click>
+                    <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
+                </datalist>
+                <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
+            </div>
+            <div class="top_right advanced">
+                <ul class="dialog_ul">
+                <li class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
+                    <span class="synapse" @click="synapse(DATA_VAL['data_type'], Other_Of_One,
+                        data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data1'],
+                        data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data2'],
+                    )" :style="{ display: synapse_visible ? 'block' : 'none' }">{{ choice_emoji(Other_Of_One) }}</span>
+                </li>
+                </ul>
+                <div @click="showDialog" class="showDialog">⚙️</div>
+            </div>
+            <div class="bottom_right">
+                <div class="created_at">{{ date_time_form(DATA_VAL['created_at']) }}</div>
+                <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button>
+                <div class="id">{{ DATA_VAL['id'] }}</div>
+            </div>
+            <div class="clickable_for_short_or_long simple_mode1 " @click="short_or_long( DATA_VAL['id'] )" ref="exception">
+                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
+                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
+            </div>
+            <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
+                <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
+                <ul>
+                <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
+                    {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
+                    <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+                        <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
+                        <button class="advanced" @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
+                    </span>
+                        <input class="advanced" type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
+                        <button class="advanced" @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
+                    <ul>
+                        <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
+                        <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
+                        <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
+                            <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
+                            <button class="advanced" @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
+                        </span>
+                        </li>
+                    </ul>
+                </li>
+                </ul>
+                <input class="advanced" type="text" v-model="comment" placeholder="comment" @click.stop>
+                <button class="advanced" @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
+                <div style="margin-top: 0.5rem" @click.stop>
+                    <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
+                    <button class="advanced" @click.stop="show_comment_button" class="bigger_font">💬→</button>
+                </div>
+            </div>
+        </li>
+        </ul>
+        </div>
     </div>
-</div>
-</div>
-
-<button @click="textarea_opener" class="textarea_opener">📝</button>
-    <div class="textarea-column-1" id="target">
-    <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data_a" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
-    <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data_b" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
     </div>
     <div>
         <button @click="fetch_insert_link" class="fetch_insert_link">📲🛫📲🚀📲</button>
         <input type="text" v-model="name" placeholder="name" class="name">
         <input type="password" v-model="password" placeholder="password" class="password">
     </div>
+</div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<button @click="textarea_opener" class="textarea_opener">📝</button>
+    <div class="textarea-column-1" id="target">
+    <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data_a" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
+    <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data_b" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
+    </div>
     <!-- <button @click="fn21(1)" class="font_sizing">◉</button>
     <button @click="fn21(-1)" class="font_sizing">⦿</button>
     <button @click="fn21" class="font_sizing">◎</button> -->
@@ -210,6 +238,69 @@
                 <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
                 <button @click="q_a_fn4" class="check_button">🎮</button>
             </div>
+
+
+
+<div class="quiz_section">
+<button @click="mode = 'maru_batu'">⭕️❎問題モード</button>
+<button @click="mode = 'black_paint'">黒塗りモード</button>
+<button @click="mode = 'slide'">スライドモード</button>
+
+<div v-if="show_textarea">
+<textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
+<textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
+</div>
+
+<template v-for="(DATA_VAL, DATA_IDX) in exe1_data">
+<div v-if="mode === 'maru_batu'">
+<div v-if="DATA_VAL[3] === false">
+    <span>{{ DATA_VAL[0] }}</span>
+    <span> = </span>
+    <span>{{ DATA_VAL[2][0] }}</span>
+    <div>
+        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0])">⭕️</button>
+        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1])">❎</button>
+    </div>
+</div>
+</div>
+
+<div v-if="mode === 'black_paint'">
+    <div>{{ DATA_VAL[0] }}</div>
+    <div @click="change_paint_or_raw(DATA_IDX)" :class="DATA_VAL[4] ? 'black-paint' : ''">{{ DATA_VAL[2][0] }}</div>
+</div>
+
+</template>
+<div v-if="mode === 'slide'" class="slide_mode_color">
+    <!-- slidesの全部の長さと現在のスライドのインデックスを表示 -->
+    <div>{{ currentIndex }} / {{ slides.length }}</div>
+
+    <br>
+    <br>
+    <br>
+
+    <!-- 現在のスライドを表示 -->
+    <!-- <div @click="next_slide">{{ slides[currentIndex] }}</div> -->
+    <div v-if="slides[currentIndex].q" class="q" @click="next_slide">{{ slides[currentIndex].q }}</div>
+    <div v-if="slides[currentIndex].a" class="a" @click="next_slide">{{ slides[currentIndex].a }}</div>
+    <!-- 最初のスライドに -->
+    <button @click="first_slide">最初へ</button>
+    <!-- 前のスライドに移動するボタン -->
+    <button @click="prev_slide">前へ</button>
+    <!-- 次のスライドに移動するボタン -->
+    <button @click="next_slide">次へ</button>
+    <!-- auto slide mode button(auto slide状態の時にクリックするとstop_autoslide) -->
+    <div v-if="!auto_slide_mode">
+        <button @click="auto_slide">auto slide</button>
+            <!-- input numberでtime_intervalを設定 100刻みで変更できて最低値を100とする -->
+            <input type="number" v-model="time_interval" min="0.1" step="0.1">秒
+    </div>
+    <div v-if="auto_slide_mode">
+        <button @click="stop_auto_slide">stop auto slide</button>
+    </div>
+
+</div>
+</div>
+
 
 
 
@@ -299,7 +390,38 @@
 const app = Vue.createApp({
 data() {
 return {
-visible_swithc: null,
+slides: [],
+currentIndex: 0,
+auto_slide_mode: false,
+time_interval: 0.5,
+// mode: 'maru_batu',
+// mode: 'black_paint',
+mode: 'slide',
+file_name_ary: [],
+textContent_ary_1: [],
+textContent_ary_2: [],
+exe1_data: [],
+data_0: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+ccccccccccccccccccccccccccccccccccc
+ddddddddddddddddddddddddddddddddddddddddddddd
+eeeeeeeeeeeeeeeeeeeeeeee`,
+data_1: `AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+EEEEEEEEEEEEEEEEEEEEEEEE`,
+sample_array_obj: [],
+
+
+
+
+
+
+
+
+
+
 
 // for f_i_b
 f_i_b_all_save: [],
@@ -473,7 +595,9 @@ this.css_var_set('--css-var-root-font-size', "12px");
 },
 beforeMount(){
 },
-mounted() {
+async mounted() {
+await this.set_up();
+
 this.fetch_read_all();
 this.fetch_get_tags_for_autocomplete();
 
@@ -501,6 +625,55 @@ beforeUpdate() {
 async updated() {
 },
 methods: {
+async set_up(){
+    const text_url_ary_1 = [
+        './asset/txt_dir/res_2_ary_1.txt',
+        './asset/txt_dir/res_2_2_ary_1.txt',
+        './asset/txt_dir/res_3_ary_1.txt',
+        './asset/txt_dir/res_4_ary_1.txt',
+        './asset/txt_dir/res_5_ary_1.txt',
+    ];
+    const text_url_ary_2 = [
+        './asset/txt_dir/res_2_ary_3.txt',
+        './asset/txt_dir/res_2_2_ary_3.txt',
+        './asset/txt_dir/res_3_ary_3.txt',
+        './asset/txt_dir/res_4_ary_3.txt',
+        './asset/txt_dir/res_5_ary_3.txt',
+    ];
+    const global_file_name_ary = [
+        '英検2級',
+        '英検準2級',
+        '英検3級',
+        '英検4級',
+        '英検5級',
+    ];
+    this.file_name_ary = global_file_name_ary;
+    for(let i = 0; i < text_url_ary_1.length; i++){
+        const response = await fetch(text_url_ary_1[i]);
+        this.textContent_ary_1.push(await response.text());
+    }
+    for(let i = 0; i < text_url_ary_2.length; i++){
+        const response = await fetch(text_url_ary_2[i]);
+        this.textContent_ary_2.push(await response.text());
+    }
+    if(this.textContent_ary_1.length !== this.textContent_ary_2.length){
+        console.error('textContent_ary_1とtextContent_ary_2のlengthが異なります');
+    }
+
+    this.set_data_sample_array_obj(0);
+},
+
+
+// sample_array_objからIDX指定してsample_array_objのdata_0とdata_1をtextareaに格納する関数
+set_data_sample_array_obj(IDX){
+    if(this.text_attacher(IDX) === true){
+        this.exe1();
+        return;
+    }
+    this.data_a = this.textContent_ary_1[IDX];
+    this.data_b = this.textContent_ary_2[IDX];
+    this.exe1();
+},
 go_to_f_i_b(){
     window.location.href = './f_i_b.html';
 },
@@ -1262,13 +1435,8 @@ scrollToTarget(For='local') {
 advanced_visible_fn() {
     this.advanced_visible === 'advanced' ? this.css_var_set('--advanced-display-var', 'inline-block') : this.css_var_set('--advanced-display-var', 'none');
 },
-visible_swithc_fn() {
-    // $$(".simple_mode2")以外を非表示/表示を切り替える
-    // this.visible_swithc === 'visible' ?
-    //     this.css_var_set('--visible-display-var', 'none')
-    //         : this.css_var_set('--visible-display-var', 'inline-block');
-document.querySelectorAll(':not(.simple_mode2)').forEach(V=> V.display = this.visible_swithc === 'visible' ? 'none' : 'inline-block');
-},
+
+
 // for_online_function
 
 
@@ -1491,16 +1659,100 @@ if(Test_Index === 1){
 },
 
 
-// コア部分の関数と変数をまとめる
-    // それぞれのプロダクトのコア部分のアウトプットはfn9とonline_data_A0が接続部分
-    // そのため、fn9とonline_data_A0をそれぞれのプロダクト用のconverter関数で接続する
-
-// 一旦全体的にリファクタリングする
-// (今後のアップデートの費用対効果で関数ジャンプが効くsvelteが明らかに高速で開発可。
-    // やるんだな!?今ここで)
-
-// コア部分以外の命名と処理内容を共通化する
-// <style>の中身をまとめる
+auto_slide(){
+    this.auto_slide_mode = true;
+    setInterval(() => {
+        this.next_slide();
+        // 0.5であれば1000倍して500msごとにスライドを進める
+    }, this.time_interval * 1000);
+},
+stop_auto_slide(){
+    this.auto_slide_mode = false;
+    // 全てのsetIntervalを停止する
+    for (let i = 1; i < 99999; i++) window.clearInterval(i);
+},
+// 最初へ戻す関数
+first_slide(){
+    this.currentIndex = 0;
+},
+prev_slide(){
+    if (this.currentIndex > 0) {
+        this.currentIndex--;
+    } else {
+        this.currentIndex = this.slides.length - 1;
+    }
+},
+next_slide(){
+    if (this.currentIndex < this.slides.length - 1) {
+        this.currentIndex++;
+    } else {
+        this.currentIndex = 0;
+    }
+},
+change_paint_or_raw(RAW_IDX){
+    this.exe1_data[RAW_IDX][4] = !this.exe1_data[RAW_IDX][4];
+},
+exe1(){
+    const data_0_ary = this.data_a.split('\n');
+    const data_1_ary = this.data_b.split('\n');
+    const res = data_0_ary.map((val, idx) => {
+        return {
+            data_0: val,
+            data_1: data_1_ary[idx],
+        };
+    });
+    d1 = res;
+    d2 = d1.map((val, idx) => val.data_1 );
+    d3 = d2.map((val, idx) => {
+        const filter_d2 = d2.filter((val2, idx2) => val2 !== d2[idx]);
+        const only_filter_data = shuffle(filter_d2)[0];
+        const ok_or_ng_answer_str_ary = shuffle([d2[idx], only_filter_data]);
+        const data_0 = d1[idx].data_0;
+        return [data_0, val, ok_or_ng_answer_str_ary, false, true];
+    });
+    this.exe1_data = d3;
+    this.slides = this.make_slide(this.exe1_data);
+},
+make_slide(Ary_Param){
+    function flattenAndExtract(ary) {
+        return ary.flatMap((val, idx) => {
+                if(idx % 2 === 0){
+                    return {q: val[0]};
+                }else{
+                    return {a: val[1]};
+                }
+            });
+    }
+    return flattenAndExtract(Ary_Param);
+},
+text_attacher(IDX){
+    if(this.textContent_ary_1){
+        this.data_a = this.textContent_ary_1[IDX];
+        this.data_b = this.textContent_ary_2[IDX];
+        return true;
+    }
+},
+// sample_array_objからIDX指定してsample_array_objのdata_0とdata_1をtextareaに格納する関数
+set_data_sample_array_obj(IDX){
+    if(this.text_attacher(IDX) === true){
+        this.exe1();
+        return;
+    }
+    this.data_a = this.textContent_ary_1[IDX];
+    this.data_b = this.textContent_ary_2[IDX];
+    this.exe1();
+},
+check_maru_batu(VAL, RESULT){
+    console.log(VAL);
+    console.log(RESULT);
+    if(VAL[1] === RESULT){
+        console.log('正解');
+        VAL[3] = true;
+    }else{
+        console.log('不正解');
+        VAL[3] = false;
+    }
+},
 },
 }).mount('.app');
 

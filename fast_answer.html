@@ -158,27 +158,19 @@ let d1, d2, d3, d4, d5, d6, d7, d8, d9 = null;
 const app = Vue.createApp({
 data() {
     return {
-slides: [], // exe1_dataをslidesとして設定
-currentIndex: 0, // 現在のスライドのインデックス
-auto_slide_mode: false,
-// time_interval: 1は1秒, time_interval: 0.5は0.5秒
-time_interval: 0.5,
-// 0.5を5000にするにはtime_interval * 1000
 
+slides: [],
+currentIndex: 0,
+auto_slide_mode: false,
+time_interval: 0.5,
 // mode: 'maru_batu',
 // mode: 'black_paint',
 mode: 'slide',
-
 file_name_ary: [],
 textContent_ary_1: [],
 textContent_ary_2: [],
-
-done_delete_mode: false,
-// done_delete_mode: true,
-show_textarea: false,
-
-        exe1_data: [],
-        data_0: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+exe1_data: [],
+data_0: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 ccccccccccccccccccccccccccccccccccc
 ddddddddddddddddddddddddddddddddddddddddddddd
@@ -188,36 +180,10 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 EEEEEEEEEEEEEEEEEEEEEEEE`,
-data_0_ary: ['a','b','c','d','e'],
-data_1_ary: [
-'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
-'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
-'EEEEEEEEEEEEEEEEEEEEEEEE',
-    ],
+sample_array_obj: [],
 
-    data_0_1_pair_ary: [],
 
-sample_array_obj: [
-// {
-//     data_0: ['1', '2', '3', '4', '5','6', '7', '8', '9', '10','11', '12', '13', '14', '15','16', '17', '18', '19', '20',],
-//     data_1: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100','110','120','130','140','150','160','170','180','190','200',]
-// },
-// {data_0: ['a','b','c','d',
-// 'e','f','g','h',
-// 'i','j','k','l',
-// 'm','n','o','p',
-// 'q','r','s','t',
-// ],data_1: ['A','B','C','D',
-// 'E','F','G','H',
-// 'I','J','K','L',
-// 'M','N','O','P',
-// 'Q','R','S','T',
-// ],},
-// {data_0: ['あ','い','う','え','お',],data_1: ['ア','イ','ウ','エ','オ',],},
-],
-
+show_textarea: false,
 }},
 watch: {
 //    any: {
@@ -248,40 +214,7 @@ async mounted() {
 // setTimeout(() => {
 //   this.scrollToDiv();
 // });
-const text_url_ary_1 = [
-    './asset/txt_dir/res_2_ary_1.txt',
-    './asset/txt_dir/res_2_2_ary_1.txt',
-    './asset/txt_dir/res_3_ary_1.txt',
-    './asset/txt_dir/res_4_ary_1.txt',
-    './asset/txt_dir/res_5_ary_1.txt',
-];
-const text_url_ary_2 = [
-    './asset/txt_dir/res_2_ary_3.txt',
-    './asset/txt_dir/res_2_2_ary_3.txt',
-    './asset/txt_dir/res_3_ary_3.txt',
-    './asset/txt_dir/res_4_ary_3.txt',
-    './asset/txt_dir/res_5_ary_3.txt',
-];
-const global_file_name_ary = [
-    '英検2級',
-    '英検準2級',
-    '英検3級',
-    '英検4級',
-    '英検5級',
-];
-this.file_name_ary = global_file_name_ary;
-for(let i = 0; i < text_url_ary_1.length; i++){
-    const response = await fetch(text_url_ary_1[i]);
-    this.textContent_ary_1.push(await response.text());
-}
-for(let i = 0; i < text_url_ary_2.length; i++){
-    const response = await fetch(text_url_ary_2[i]);
-    this.textContent_ary_2.push(await response.text());
-}
-if(this.textContent_ary_1.length !== this.textContent_ary_2.length){
-    console.error('textContent_ary_1とtextContent_ary_2のlengthが異なります');
-}
-this.set_data_sample_array_obj(0);
+await this.set_up();
 
 
 },
@@ -294,6 +227,55 @@ updated() {
 
 },
 methods: {
+// scrollToDiv(){
+//     let url = new URL(window.location.href);
+//     let preset = url.searchParams.get('preset') ? url.searchParams.get('preset') : null;
+//     this.sample_array_obj.forEach((val, idx) => {
+//         if(val.data_0.includes(preset)){
+//             this.data_0 = this.sample_array_obj[idx].data_0.join('\n');
+//             this.data_1 = this.sample_array_obj[idx].data_1.join('\n');
+//         }
+//     });
+// },
+
+async set_up(){
+    const text_url_ary_1 = [
+        './asset/txt_dir/res_2_ary_1.txt',
+        './asset/txt_dir/res_2_2_ary_1.txt',
+        './asset/txt_dir/res_3_ary_1.txt',
+        './asset/txt_dir/res_4_ary_1.txt',
+        './asset/txt_dir/res_5_ary_1.txt',
+    ];
+    const text_url_ary_2 = [
+        './asset/txt_dir/res_2_ary_3.txt',
+        './asset/txt_dir/res_2_2_ary_3.txt',
+        './asset/txt_dir/res_3_ary_3.txt',
+        './asset/txt_dir/res_4_ary_3.txt',
+        './asset/txt_dir/res_5_ary_3.txt',
+    ];
+    const global_file_name_ary = [
+        '英検2級',
+        '英検準2級',
+        '英検3級',
+        '英検4級',
+        '英検5級',
+    ];
+    this.file_name_ary = global_file_name_ary;
+    for(let i = 0; i < text_url_ary_1.length; i++){
+        const response = await fetch(text_url_ary_1[i]);
+        this.textContent_ary_1.push(await response.text());
+    }
+    for(let i = 0; i < text_url_ary_2.length; i++){
+        const response = await fetch(text_url_ary_2[i]);
+        this.textContent_ary_2.push(await response.text());
+    }
+    if(this.textContent_ary_1.length !== this.textContent_ary_2.length){
+        console.error('textContent_ary_1とtextContent_ary_2のlengthが異なります');
+    }
+
+    this.set_data_sample_array_obj(0);
+},
+
 auto_slide(){
     this.auto_slide_mode = true;
     setInterval(() => {
@@ -324,33 +306,19 @@ next_slide(){
         this.currentIndex = 0;
     }
 },
-scrollToDiv(){
-    let url = new URL(window.location.href);
-    let preset = url.searchParams.get('preset') ? url.searchParams.get('preset') : null;
-    this.sample_array_obj.forEach((val, idx) => {
-        if(val.data_0.includes(preset)){
-            this.data_0 = this.sample_array_obj[idx].data_0.join('\n');
-            this.data_1 = this.sample_array_obj[idx].data_1.join('\n');
-        }
-    });
-    // this.$refs[preset][0].scrollIntoView();
-},
-fn_1(){
-    this.data_0_ary = this.data_0.split('\n');
-    this.data_1_ary = this.data_1.split('\n');
-    this.data_0_1_pair_ary = this.data_0_ary.map((val, idx) => {
-        return {
-            data_0: val,
-            data_1: this.data_1_ary[idx],
-        };
-    });
-},
 change_paint_or_raw(RAW_IDX){
     this.exe1_data[RAW_IDX][4] = !this.exe1_data[RAW_IDX][4];
 },
 exe1(){
-    this.fn_1();
-    d1 = this.data_0_1_pair_ary;
+    const data_0_ary = this.data_0.split('\n');
+    const data_1_ary = this.data_1.split('\n');
+    const res = data_0_ary.map((val, idx) => {
+        return {
+            data_0: val,
+            data_1: data_1_ary[idx],
+        };
+    });
+    d1 = res;
     d2 = d1.map((val, idx) => val.data_1 );
     d3 = d2.map((val, idx) => {
         const filter_d2 = d2.filter((val2, idx2) => val2 !== d2[idx]);
@@ -364,9 +332,6 @@ exe1(){
 },
 make_slide(Ary_Param){
     function flattenAndExtract(ary) {
-        // 配列をフラット化し、最初の2つの要素を抽出する
-        // return ary.flatMap(subArray => subArray.slice(0, 2));
-        // 偶数は{q: ary[i]}, 奇数は{a: ary[i]}として返す
         return ary.flatMap((val, idx) => {
                 if(idx % 2 === 0){
                     return {q: val[0]};
@@ -375,9 +340,6 @@ make_slide(Ary_Param){
                 }
             });
     }
-    // const ary1 = [[1, 2, 3], [10, 20, 30], [100, 200, 300]];
-    // const ary2 = flattenAndExtract(ary1);
-    // console.log(ary2); // [1, 2, 10, 20, 100, 200]
     return flattenAndExtract(Ary_Param);
 },
 text_attacher(IDX){
@@ -393,7 +355,6 @@ set_data_sample_array_obj(IDX){
         this.exe1();
         return;
     }
-    
     this.data_0 = this.textContent_ary_1[IDX];
     this.data_1 = this.textContent_ary_2[IDX];
     this.exe1();
@@ -409,11 +370,7 @@ check_maru_batu(VAL, RESULT){
         VAL[3] = false;
     }
 },
-change_show_not_quiz_section(){
-    this.show_not_quiz_section = !this.show_not_quiz_section;
-    // cssを貼り替える
-    this.show_not_quiz_section ? this.show_not_quiz_section = false : this.show_not_quiz_section = true;
-},
+
 },
 }).mount('.app');
 </script>

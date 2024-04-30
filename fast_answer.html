@@ -10,6 +10,10 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.36/vue.cjs.js"></script> -->
 
 <style>
+    .slide_mode_color{
+        /* 薄い緑色 */
+        background-color: #DDFFDD;
+    }
     /* スライドの表示を設定 qは左寄せ, aは右寄せ */
     .q{
         text-align: left;
@@ -57,14 +61,14 @@
 <body class="app">
     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 <div class="slideshow-container">
-    <div v-for="(slide, index) in slides" :key="index" class="mySlides" v-show="currentIndex === index" @click="nextSlide">
+    <div v-for="(slide, index) in slides" :key="index" class="mySlides" v-show="currentIndex === index" @click="next_slide">
         <!-- {q: ary[i]}, {a: ary[i]}として取り出されるので、qの場合はclass="q", aの場合はclass="a"を付与 -->
         <div v-if="slide.q" class="q">{{ slide.q }}</div>
         <div v-if="slide.a" class="a">{{ slide.a }}</div>
     </div>
     <!-- 前後のボタン -->
-    <a class="prev" @click="prevSlide">❮</a>
-    <a class="next" @click="nextSlide">❯</a>
+    <a class="prev" @click="prev_slide">❮</a>
+    <a class="next" @click="next_slide">❯</a>
 </div>
 
 
@@ -114,19 +118,24 @@
 </div>
 
 </template>
-<div v-if="mode === 'slide'">
+<div v-if="mode === 'slide'" class="slide_mode_color">
+    <!-- slidesの全部の長さと現在のスライドのインデックスを表示 -->
+    <div>{{ currentIndex }} / {{ slides.length }}</div>
+
     <br>
     <br>
     <br>
 
     <!-- 現在のスライドを表示 -->
-    <!-- <div @click="nextSlide">{{ slides[currentIndex] }}</div> -->
-    <div v-if="slides[currentIndex].q" class="q" @click="nextSlide">{{ slides[currentIndex].q }}</div>
-    <div v-if="slides[currentIndex].a" class="a" @click="nextSlide">{{ slides[currentIndex].a }}</div>
+    <!-- <div @click="next_slide">{{ slides[currentIndex] }}</div> -->
+    <div v-if="slides[currentIndex].q" class="q" @click="next_slide">{{ slides[currentIndex].q }}</div>
+    <div v-if="slides[currentIndex].a" class="a" @click="next_slide">{{ slides[currentIndex].a }}</div>
+    <!-- 最初のスライドに -->
+    <button @click="first_slide">最初へ</button>
     <!-- 前のスライドに移動するボタン -->
-    <button @click="prevSlide">前へ</button>
+    <button @click="prev_slide">前へ</button>
     <!-- 次のスライドに移動するボタン -->
-    <button @click="nextSlide">次へ</button>
+    <button @click="next_slide">次へ</button>
     <!-- auto slide mode button(auto slide状態の時にクリックするとstop_autoslide) -->
     <div v-if="!auto_slide_mode">
         <button @click="auto_slide">auto slide</button>
@@ -286,7 +295,7 @@ methods: {
 auto_slide(){
     this.auto_slide_mode = true;
     setInterval(() => {
-        this.nextSlide();
+        this.next_slide();
     }, this.time_interval);
 },
 stop_auto_slide(){
@@ -294,14 +303,18 @@ stop_auto_slide(){
     // 全てのsetIntervalを停止する
     for (let i = 1; i < 99999; i++) window.clearInterval(i);
 },
-prevSlide(){
+// 最初へ戻す関数
+first_slide(){
+    this.currentIndex = 0;
+},
+prev_slide(){
     if (this.currentIndex > 0) {
         this.currentIndex--;
     } else {
         this.currentIndex = this.slides.length - 1;
     }
 },
-nextSlide(){
+next_slide(){
     if (this.currentIndex < this.slides.length - 1) {
         this.currentIndex++;
     } else {
@@ -347,24 +360,22 @@ exe1(){
     this.slides = this.make_slide(this.exe1_data);
 },
 make_slide(Ary_Param){
-function flattenAndExtract(ary) {
-    // 配列をフラット化し、最初の2つの要素を抽出する
-    // return ary.flatMap(subArray => subArray.slice(0, 2));
-    // 偶数は{q: ary[i]}, 奇数は{a: ary[i]}として返す
-    return ary.flatMap((val, idx) => {
-        if(idx % 2 === 0){
-            return {q: val[0]};
-        }else{
-            return {a: val[1]};
-        }
-    });
-}
-// const ary1 = [[1, 2, 3], [10, 20, 30], [100, 200, 300]];
-// const ary2 = flattenAndExtract(ary1);
-// console.log(ary2); // [1, 2, 10, 20, 100, 200]
-return flattenAndExtract(Ary_Param);
-
-
+    function flattenAndExtract(ary) {
+        // 配列をフラット化し、最初の2つの要素を抽出する
+        // return ary.flatMap(subArray => subArray.slice(0, 2));
+        // 偶数は{q: ary[i]}, 奇数は{a: ary[i]}として返す
+        return ary.flatMap((val, idx) => {
+                if(idx % 2 === 0){
+                    return {q: val[0]};
+                }else{
+                    return {a: val[1]};
+                }
+            });
+    }
+    // const ary1 = [[1, 2, 3], [10, 20, 30], [100, 200, 300]];
+    // const ary2 = flattenAndExtract(ary1);
+    // console.log(ary2); // [1, 2, 10, 20, 100, 200]
+    return flattenAndExtract(Ary_Param);
 },
 text_attacher(IDX){
     if(this.textContent_ary_1){

@@ -18,408 +18,31 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
 
 <style>
-
-:root {
---css-var-root-font-size: 12px;
-font-size: var(--css-var-root-font-size);
---css-var-test-inline: none;
---css-var-column-1-none: 1fr;
---css-var-column-2-none: 1fr;
---css-var-column-3-none: 1fr;
---css-var-color-1: ;
---css-var-color-2: ;
---css-var-color-3: ;
---test: 'blue';
-
---advanced-display-var: none;
-}
-button{
-border: none;
-background-color: aliceblue;
-border-radius: 1rem;
-margin: 0.1rem;
-}
-.app{
-width: 100vw;
-}
-
-.toggleDisplay_parent{
-display: grid;
-grid-template-columns: 1fr;
-grid-template-rows: 4rem;
-}
-
-.header{
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-grid-template-rows: 4rem;
-}
-.contents{
-width: 100vw;
-display: grid;
-grid-template-columns: var(--css-var-column-1-none) var(--css-var-column-2-none) var(--css-var-column-3-none);
-}
-.column-1-none{
-visibility: hidden;
-}
-.column-2-none{
-visibility: hidden;
-}
-.column-3-none{
-visibility: hidden;
-}
-.textarea-column-1{
-display: grid;
-grid-template-columns: 1fr 1fr;
-}
-.textarea-column-2{
-display: grid;
-grid-template-rows: 4rem 1fr;
-grid-template-columns: 1fr 1fr;
-grid-template-areas:
-"button-zone button-zone"
-"question answer";
-}
-.column-1{background-color: var(--css-var-color-1)}
-.column-2{background-color: var(--css-var-color-2)}
-.column-3{background-color: var(--css-var-color-3)}
-.a{
-grid-area: button-zone;
-display: grid;
-grid-template-rows: 4rem;
-grid-template-columns: 1fr 1fr 1fr;
-}
-.a-1{}
-.a-2{}
-.a-3{}
-.b{
-grid-area: question;
-width: 100%;
-}
-.c{
-grid-area: answer;
-width: 100%;
-}
 .test-fn-none-inline {
 height: 4rem;
-display: var(--css-var-test-inline);
-}
-.textarea_none {
 display: none;
 }
-.q_and_a{
-display: grid;
-grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr;
-justify-content: center;
-align-content: center;
-grid-auto-flow: column;
-}
-.q_and_a button{
-display: inline-block;
-width: auto;
-min-height: 4rem;
-word-break: break-all;
-}
-.check_button{
-width: 100%;
-height: 4rem;
-justify-self: center;
-align-self: center;
-font-size: 3rem;
-}
-/* .link_button, */
-.text_center{
-display: inline-block;
-width: auto;
-min-height: 4rem;
-font-size: 1.5rem;
-align-self: center;
-justify-self:center;
-word-break: break-all;
-}
-.text_left{
-text-align: start;
-font-size: 1.5rem;
-}
-.text_right{
-justify-self: center;
-align-self: center;
-font-size: 1.5rem;
-}
-.optional_function{
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-}
-.optional_function button{
-height: 4rem;
-font-size: 1.5rem;
-}
-.q_a_processing{
-width: 100%;
-height: 4rem;
-font-size: 3rem;
-}
-.save_data_set_list > *{
-overflow: hidden;
-white-space: nowrap;
-}
-.save_data_set_list{
-display: grid;
-grid-template-columns: 1fr 2.5rem 2.5rem;
-word-break: break-all;
-}
-.save_data_set_list > span{
-font-size: 1.3rem;
-}
-.save_data_set{}
-.save_data_delete{}
-.column_none{
-font-size: 2rem;
-}
-.font_sizing{
-font-size: 2.5rem;
-}
+    /* not_quiz_sectionをサイドバーで表示/非表示を切り替え */
+    .column-1 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 2rem;
+        height: 100vh;
+        background-color: #f1f1f1;
+        z-index: 100;
+    }
 
-.close{
---FITB-button-ul-height: 5vh;
---FITB-li-visibility: hidden;
---FITB-collapse-display: none;
-}
+    .foo {
+        position: relative;
+        top: 0;
+        left: 4rem;
+        width: calc(100% - 4rem);
+        height: 100vh;
+        background-color: #f1f1f1;
+        z-index: 1;
+    }
 
-
-/* for_online_function */
-.simple_mode2 {
-    /* simple_funtionable用の空のclass */
-}
-.flex_child {
-    display: flex;
-}
-.block_of_one {
-    position: relative;
-    margin-bottom: 1rem;
-}
-.data_type {
-    display: inline-block;
-    font-size: 1rem;
-}
-.data_type, .download_data, .go_to_any_service_page_with_id, .all_tags {
-    display: inline-block;
-}
-.download_data, .go_to_any_service_page_with_id {
-    font-size: 1.5rem;
-}
-.tags_parent, .tags {
-    display: inline;
-    font-size: 0.7rem;
-}
-.top_right {
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-.bottom_right {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    font-size: 1.5rem;
-}
-.bottom_middle {
-    position: absolute;
-    bottom: 0;
-    right: 50%;
-    font-size: 1.4rem;
-}
-.dialog_ul {
-    display: inline-block;
-}
-.dialog_li {
-    display: inline-block;
-}
-.showDialog {
-    display: inline-block;
-}
-.synapse {
-    font-size: 2.5rem;
-}
-.created_at, .username, .id {
-    display: inline-block;
-    font-size: 0.7rem;
-}
-.comment_and_tag {
-    padding: 10px;
-    border: 1px solid black;
-}
-.bigger_font, .show_tag_more_button_all {
-    font-size: 2rem;
-    background-color: white;
-    color: black;
-    border: 1px solid black;
-    margin: 0;
-    padding: 0;
-}
-.vw_full {
-    width: 100vw;
-}
-.additional_parent {
-    display: flex;
-    place-content: flex-start;
-}
-.additional_child {
-    width: 31vw;
-    font-size: 2rem;
-    text-align: center;
-}
-.additional_child_small {
-    width: 2vw;
-}
-.additional_child_small > * {
-    display: inline-block;
-}
-.additional_child button {
-    vertical-align: middle;
-    border: 0.01rem solid #000000;
-}
-.fixed_element {
-    z-index: 10;
-    font-size: 2.5rem;
-}
-.fixed_element_top_right {
-    position: fixed;
-    top: 0;
-    right: 0;
-}
-.fixed_element_top_left {
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-.fixed_element_bottom_right {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-}
-.fixed_element_bottom_left {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-}
-.display_none {
-    display: none;
-}
-.data_a_b_text {
-    font-size: 1.3rem;
-}
-.minimum {
-}
-.maximum {
-    width: 100vw;
-}
-.name, .placeholder {
-    height: 1.5rem;
-}
-.download_data {
-    font-size: 3rem;
-}
-.advanced {
-    display: var(--advanced-display-var);
-    /* display: inline-block; */
-}
-.result_opener, .save_opener, .textarea_opener, .fetch_insert_link {
-width: 100%;
-height: 4rem;
-font-size: 1.5rem;
-position: relative;
-}
-/* for_online_function */
-
-
-
-
-/* i_t_n用CSS ↓ */
-.centering{
-}
-.centering *{
-    word-wrap: break-word;
-    overflow: hidden;
-  text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
-    text-align: center;
-}
-.OK_or_NG{
-  font-size: 2rem;
-}
-.answer{
-  font-size: 2rem;
-}
-.any{
-  display: block;
-}
-.any > *{
-  width: 6rem;
-display: inline;
-}
-.png_image{
-}
-
-
-
-
-/* 以下は未使用のため、削除予定
-.result_color
-.result_color2
-.png_image
-.png_image_back */
-
-/* i_t_n用CSS ↑ */
-
-
-
-
-
-
-
-
-/* grid layout(grid-template-areas)でi_t_n_data9_x_parent配下を以下のようにlayoutする */
-.i_t_n_data9_x_parent{
-    display: grid;
-    grid-template-areas:
-    "OK_or_NG png_image png_image"
-    "choose_answer_image_1 choose_answer_image_2 choose_answer_image_3";
-}
-.i_t_n_data9_x_parent .OK_or_NG{
-    grid-area: OK_or_NG;
-    font-size: 3rem;
-}
-.i_t_n_data9_x_parent .png_image{
-    grid-area: png_image;
-    height: 5rem;
-}
-.i_t_n_data9_x_parent .common_choose_the_answer_image{
-    height: 3rem;
-    font-size: 2.5rem;
-}
-.i_t_n_data9_x_parent .choose_the_answer_image_0{
-    grid-area: choose_answer_image_1;
-}
-.i_t_n_data9_x_parent .choose_the_answer_image_1{
-    grid-area: choose_answer_image_2;
-}
-.i_t_n_data9_x_parent .choose_the_answer_image_2{
-    grid-area: choose_answer_image_3;
-}
-
-/* i_t_n用CSS ↑ */
-
-
-
-
-
-#prgr {
-    width: 100%;
-}
 </style>
 
 
@@ -432,25 +55,26 @@ display: inline;
 <button @click="test_online_data_A" class="test-fn-none-inline">test_online_data_A</button>
 
 
-<div @click="simple_funtionable" class="fixed_element fixed_element_top_right simple_mode2">◎</div>
+<!-- <div @click="simple_funtionable" class="fixed_element fixed_element_top_right simple_mode2">◎</div>
 <div @click="simple_funtionable" class="fixed_element fixed_element_top_left simple_mode2">◎</div>
 <div @click="simple_funtionable" class="fixed_element fixed_element_bottom_right simple_mode2">◎</div>
-<div @click="simple_funtionable" class="fixed_element fixed_element_bottom_left simple_mode2">◎</div>    
+<div @click="simple_funtionable" class="fixed_element fixed_element_bottom_left simple_mode2">◎</div> -->
 
 
-<div class="toggleDisplay_parent">
+<!-- <div class="toggleDisplay_parent">
 <button @click="go_to_any_service_page()" class="go_to_any_service_page">🔽</button>
-</div>
+</div> -->
 
 <div class="header_and_contents simple_mode2">
-    <header class="header">
+    <!-- <header class="header">
     <button @click="column_1_none_fn" class="column_none">💾</button>
     <button @click="column_2_none_fn" class="column_none">⌨️</button>
     <button @click="column_3_none_fn" class="column_none">🖥️</button>
-    </header>
+    </header> -->
 
-    <div class="contents simple_mode2">
-    <div class="column-1" :class="{'column-1-none': column_1_none}">
+<!-- <div class="contents simple_mode2"> -->
+<div class="simple_mode2">
+<div class="column-1" :class="{'column-1-none': column_1_none}">
     <div class="optional_function">
         <button @click="reverse_q_a">🔃</button>
         <button @click="shuffle_q_a">🌪️</button>
@@ -576,9 +200,10 @@ display: inline;
         <input type="text" v-model="name" placeholder="name" class="name">
         <input type="password" v-model="password" placeholder="password" class="password">
     </div>
-    <button @click="fn21(1)" class="font_sizing">◉</button>
+
+    <!-- <button @click="fn21(1)" class="font_sizing">◉</button>
     <button @click="fn21(-1)" class="font_sizing">⦿</button>
-    <button @click="fn21" class="font_sizing">◎</button>
+    <button @click="fn21" class="font_sizing">◎</button> -->
 
 
     <button @click="go_to_f_i_b" class="font_sizing">go_to_f_i_b</button>
@@ -590,10 +215,12 @@ display: inline;
     </div>
 
 <div class="column-2 simple_mode2" :class="{'column-2-none': column_2_none}">
-                <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
+<!-- <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button> -->
                 <button @click="q_a_change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
 
             <div v-if="data_type=== 'q_a'">
+
+<button onclick="toggleSidebar()">Toggle Sidebar</button>
 
 <div><progress value="0" max="100" id="prgr"></progress></div>
 
@@ -647,7 +274,7 @@ display: inline;
                 <button @click="i_t_n_filter_image_and_name" class="check_button">🎮</button>
                 </ul>
             </div>
-            <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button>
+            <!-- <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button> -->
 
 </div>
 
@@ -1885,6 +1512,10 @@ if(Test_Index === 1){
 },
 }).mount('.app');
 
+function toggleSidebar() {
+  const sidebar = document.querySelector('.column-1');
+  sidebar.classList.toggle('active');
+}
 
 // div.column-2とfixed_element以外を非表示にする
 // document.querySelectorAll('body :not(.fixed_element)').forEach(V=>V.style.display='none');

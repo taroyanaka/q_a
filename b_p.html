@@ -49,11 +49,6 @@
 </head>
 <body class="app">
 
-
-
-
-
-
 <div class="column-1">
     <div class="optional_function">
         <button @click="reverse_q_a">🔃</button>
@@ -82,7 +77,7 @@
 
 
 <div class="disable_temporary">
-    <button @click="fn19_1" class="save_opener">🌐</button>
+    <!-- <button @click="fn19_1" class="save_opener">🌐</button>
     <div ref="save_data_set_list_parent2">
     <div v-if="return_current_temporary_list()" class="simple_mode1">
         <div class="additional_parent">
@@ -184,7 +179,7 @@
         <button @click="fetch_insert_link" class="fetch_insert_link">📲🛫📲🚀📲</button>
         <input type="text" v-model="name" placeholder="name" class="name">
         <input type="password" v-model="password" placeholder="password" class="password">
-    </div>
+    </div> -->
 </div>
 
 
@@ -222,83 +217,78 @@
 <!-- <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button> -->
                 <button @click="q_a_change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
 
-            <div v-if="data_type=== 'q_a'">
-
-<button onclick="toggleSidebar()">Toggle Sidebar</button>
-
-<div><progress value="0" max="100" id="prgr"></progress></div>
-
-                <template v-for="(DATAVAL, DATAIDX) in q_a_data4" class="simple_mode2">
-                <div class="q_and_a simple_mode2 minimum" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
-                    <span class="text_right simple_mode2" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span>
-                    <button class="simple_mode2" v-for="item in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
-                    <span class="text_center simple_mode2">{{ DATAVAL[2] }}</span>
-                </div>
-                </template>
-                <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
-                <button @click="q_a_fn4" class="check_button">🎮</button>
-            </div>
-
-
-
 <div class="quiz_section">
-<button @click="mode = 'maru_batu'">⭕️❎問題モード</button>
-<button @click="mode = 'black_paint'">黒塗りモード</button>
-<button @click="mode = 'slide'">スライドモード</button>
+    <button onclick="toggleSidebar()">Toggle Sidebar</button>
 
-<div v-if="show_textarea">
-<textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
-<textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
-</div>
-
-<template v-for="(DATA_VAL, DATA_IDX) in exe1_data">
-<div v-if="mode === 'maru_batu'">
-<div v-if="DATA_VAL[3] === false">
-    <span>{{ DATA_VAL[0] }}</span>
-    <span> = </span>
-    <span>{{ DATA_VAL[2][0] }}</span>
-    <div>
-        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0])">⭕️</button>
-        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1])">❎</button>
+    <button @click="mode = 'choose'">選択モード</button>
+    <button @click="mode = 'maru_batu'">⭕️❎問題モード</button>
+    <button @click="mode = 'black_paint'">黒塗りモード</button>
+    <button @click="mode = 'slide'">スライドモード</button>
+    <div v-if="show_textarea">
+    <textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
+    <textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
     </div>
-</div>
-</div>
-
-<div v-if="mode === 'black_paint'">
-    <div>{{ DATA_VAL[0] }}</div>
-    <div @click="change_paint_or_raw(DATA_IDX)" :class="DATA_VAL[4] ? 'black-paint' : ''">{{ DATA_VAL[2][0] }}</div>
-</div>
-
-</template>
-<div v-if="mode === 'slide'" class="slide_mode_color">
-    <!-- slidesの全部の長さと現在のスライドのインデックスを表示 -->
-    <div>{{ currentIndex }} / {{ slides.length }}</div>
-
-    <br>
-    <br>
-    <br>
-
-    <!-- 現在のスライドを表示 -->
-    <!-- <div @click="next_slide">{{ slides[currentIndex] }}</div> -->
-    <div v-if="slides[currentIndex].q" class="q" @click="next_slide">{{ slides[currentIndex].q }}</div>
-    <div v-if="slides[currentIndex].a" class="a" @click="next_slide">{{ slides[currentIndex].a }}</div>
-    <!-- 最初のスライドに -->
-    <button @click="first_slide">最初へ</button>
-    <!-- 前のスライドに移動するボタン -->
-    <button @click="prev_slide">前へ</button>
-    <!-- 次のスライドに移動するボタン -->
-    <button @click="next_slide">次へ</button>
-    <!-- auto slide mode button(auto slide状態の時にクリックするとstop_autoslide) -->
-    <div v-if="!auto_slide_mode">
-        <button @click="auto_slide">auto slide</button>
-            <!-- input numberでtime_intervalを設定 100刻みで変更できて最低値を100とする -->
-            <input type="number" v-model="time_interval" min="0.1" step="0.1">秒
+    <template v-for="(DATA_VAL, DATA_IDX) in exe1_data">
+    <div v-if="mode === 'maru_batu'">
+    <div v-if="DATA_VAL[3] === false">
+        <span>{{ DATA_VAL[0] }}</span>
+        <span> = </span>
+        <span>{{ DATA_VAL[2][0] }}</span>
+        <div>
+            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0])">⭕️</button>
+            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1])">❎</button>
+        </div>
     </div>
-    <div v-if="auto_slide_mode">
-        <button @click="stop_auto_slide">stop auto slide</button>
     </div>
 
-</div>
+    <div v-if="mode === 'black_paint'">
+        <div>{{ DATA_VAL[0] }}</div>
+        <div @click="change_paint_or_raw(DATA_IDX)" :class="DATA_VAL[4] ? 'black-paint' : ''">{{ DATA_VAL[2][0] }}</div>
+    </div>
+
+    </template>
+    <div v-if="mode === 'slide'" class="slide_mode_color">
+        <!-- slidesの全部の長さと現在のスライドのインデックスを表示 -->
+        <div>{{ currentIndex }} / {{ slides.length }}</div>
+
+        <br>
+        <br>
+        <br>
+
+        <!-- 現在のスライドを表示 -->
+        <!-- <div @click="next_slide">{{ slides[currentIndex] }}</div> -->
+        <div v-if="slides[currentIndex].q" class="q" @click="next_slide">{{ slides[currentIndex].q }}</div>
+        <div v-if="slides[currentIndex].a" class="a" @click="next_slide">{{ slides[currentIndex].a }}</div>
+        <!-- 最初のスライドに -->
+        <button @click="first_slide">最初へ</button>
+        <!-- 前のスライドに移動するボタン -->
+        <button @click="prev_slide">前へ</button>
+        <!-- 次のスライドに移動するボタン -->
+        <button @click="next_slide">次へ</button>
+        <!-- auto slide mode button(auto slide状態の時にクリックするとstop_autoslide) -->
+        <div v-if="!auto_slide_mode">
+            <button @click="auto_slide">auto slide</button>
+                <!-- input numberでtime_intervalを設定 100刻みで変更できて最低値を100とする -->
+                <input type="number" v-model="time_interval" min="0.1" step="0.1">秒
+        </div>
+        <div v-if="auto_slide_mode">
+            <button @click="stop_auto_slide">stop auto slide</button>
+        </div>
+
+    </div>
+
+    <div v-if="mode === 'choose'">
+        <div><progress value="0" max="100" id="prgr"></progress></div>
+        <template v-for="(DATAVAL, DATAIDX) in q_a_data4" class="simple_mode2">
+        <div class="q_and_a simple_mode2 minimum" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
+            <span class="text_right simple_mode2" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span>
+            <button class="simple_mode2" v-for="item in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
+            <span class="text_center simple_mode2">{{ DATAVAL[2] }}</span>
+        </div>
+        </template>
+        <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
+        <button @click="q_a_fn4" class="check_button">🎮</button>
+    </div>
 </div>
 
 
@@ -517,22 +507,6 @@ advanced_visible: 'not_advanced',
 
 }},
 watch: {
-f_i_b_data1: {
-    handler() {
-        this.f_i_b_data3_setup();
-        this.f_i_b_data4_5_setup();
-        this.f_i_b_exe();
-    },
-    deep: true
-},
-f_i_b_data2: {
-    handler() {
-        this.f_i_b_data3_setup();
-        this.f_i_b_data4_5_setup();
-        this.f_i_b_exe();
-    },
-    deep: true
-},
 
 data_b: {
     handler() {
@@ -549,81 +523,18 @@ data_a: {
     deep: true
 },
 
-show_user: {
-    async handler(newVal, oldVal) {
-        await this.fetch_read_all();
-    },
-    deep: true,
 },
-show_tag: {
-    async handler(newVal, oldVal) {
-        await this.fetch_read_all();
-    },
-    deep: true,
-},
-show_order_by: {
-    async handler(newVal, oldVal) {
-        await this.fetch_read_all();
-    },
-    deep: true,
-},
-
-
-
-// for_online_function
-// separate_each_listをdeep watchする
-web_data: {
-    handler: function (newVal, oldVal) {
-        this.separate_each_list();
-    },
-    deep: true,
-},
-advanced_visible: {
-    handler: function (newVal, oldVal) {
-        this.advanced_visible === 'advanced' ? this.css_var_set('--advanced-display-var', 'inline-block') : this.css_var_set('--advanced-display-var', 'none');
-    },
-    deep: true,
-},
-// for_online_function
-
-
-},
-beforeCreate(){
-},
-created(){
-this.css_var_set('--css-var-root-font-size', "12px");
-},
-beforeMount(){
-},
+beforeCreate(){},
+created(){},
+beforeMount(){},
 async mounted() {
 await this.set_up();
 
-this.fetch_read_all();
-this.fetch_get_tags_for_autocomplete();
-
 this.q_a_processing();
 this.save_data_load();
-this.advanced_visible_fn();
-this.test_mode === false ? this.test_data_exe() : null;
-
-if(this.data_type === "f_i_b"){
-    this.data_a_b_converter_for('f_i_b');
-    this.f_i_b_data3_setup();
-    this.f_i_b_data4_5_setup();
-    this.f_i_b_exe();
-    this.test_mode === true ? this.test_data_exe() : null;
-};
-if(this.data_type === "i_t_n"){
-    this.i_t_n_init();
-    this.test_mode === true ? (this.sample1(), sleep(100, this.test_exe)) : null;
-};
-
-
 },
-beforeUpdate() {
-},
-async updated() {
-},
+beforeUpdate() {},
+async updated() {},
 methods: {
 async set_up(){
     const text_url_ary_1 = [
@@ -663,7 +574,6 @@ async set_up(){
     this.set_data_sample_array_obj(0);
 },
 
-
 // sample_array_objからIDX指定してsample_array_objのdata_0とdata_1をtextareaに格納する関数
 set_data_sample_array_obj(IDX){
     if(this.text_attacher(IDX) === true){
@@ -689,236 +599,6 @@ go_to_t_q_a(){
 q_a_change_only_one_q_a_mode(){
     this.only_one_q_a_mode = !this.only_one_q_a_mode;
 },
-
-
-// core of i_t_n
-i_t_n_erase(item, ary){
-    // 指定した要素を配列から削除するramda.jsを使った1行の関数
-    const ers = R.curry((item, ary) => R.filter(R.complement(R.equals(item)), ary));
-    return ers(item, ary);
-},
-i_t_n_take2(ary){
-    // 指定した要素から先頭から2つの要素を取り出すramda.jsを使った1行の関数
-    const i_t_n_take2 = R.compose(R.take(2), R.drop(1));
-    return i_t_n_take2(ary);
-},
-i_t_n_data2_data3_string_to_array(){
-    this.i_t_n_ary_data2 = this.i_t_n_data2.split("\n")
-    this.i_t_n_ary_data3 = this.i_t_n_data3.split("\n")
-},
-i_t_n_make_image_to_name_Q_A_array(){
-    const ary_a = to_ary(this.i_t_n_ary_data3).map(V=> [V, this.i_t_n_take2(shuffle(this.i_t_n_erase(V, this.i_t_n_ary_data3)))]);
-    const ary_b = to_ary(ary_a).map(V=> [V[0], shuffle(R.flatten(V))]);
-    const ary_c = R.zip(this.i_t_n_ary_data2, ary_b);
-    this.i_t_n_data5 = R.map(R.insert(2, false), ary_c);
-},
-i_t_n_init(){
-    this.data_a_b_converter_for('i_t_n');
-    this.i_t_n_data2_data3_string_to_array();
-    this.i_t_n_make_image_to_name_Q_A_array();
-},
-i_t_n_check_image_to_name(correct_URL, URL, IDX){
-    this.i_t_n_data5[IDX][2] = correct_URL === URL ? true : false;
-},
-i_t_n_check_name_to_image(correct_URL, URL, IDX){
-    this.i_t_n_data9_x[IDX][2] = correct_URL === URL ? true : false;
-},
-i_t_n_data6_data7_string_to_array(){
-    this.i_t_n_ary_data6 = this.i_t_n_data2.split("\n")
-    this.i_t_n_ary_data7 = this.i_t_n_data3.split("\n")
-},
-i_t_n_change_result(){
-    this.i_t_n_data5_result = !this.i_t_n_data5_result;
-    this.i_t_n_data9_result = !this.i_t_n_data9_result;
-},
-i_t_n_filter_image_and_name(){
-    if(this.i_t_n_data5.map(V=>V[2]).every(V=>V === true)){
-        this.i_t_n_data5 = [];
-        alert("すべての問題が正解しました。🦖\nすべての問題が正解しました。🦕");
-        return;
-    }
-    const res1 = this.i_t_n_data5.filter(V=>V[2] === false);
-    const res2 = R.transpose(
-        res1.map(V=> [V[0], V[1][0]])
-    );
-    this.data10.push([res2[0].join("\n"), res2[1].join("\n")]);
-    this.for_debug();
-},
-i_t_n_true_or_false_to_emoji(bool){
-    // trueだったら⭕️、falseだったら❎を返す関数
-    return bool ? "⭕️" : "❎";
-},
-// core of i_t_n
-
-
-
-
-// core of f_i_b
-f_i_b_data3_setup(){
-    this.f_i_b_data3 = this.f_i_b_data1.split("\n");
-},
-f_i_b_filter_and_DESC_sort_and_remove_short_str(){
-    // フィルタリングして長さで降順ソートし、重複した短い要素を除外する。strに含まれない要素は除外される
-    // ['fo', 'foo', '日', 'qux', 'qx', '日本', 'blabla', 'brabra', 'bowbow']のような要素のその要素が含む文字列がある場合に、長い文字列の要素を残して短い文字列を削除する関数
-    // この場合'fo'と'日'は削除される
-    const remove_short_str = (ary) => ary.filter(V => !ary.some(VAL => VAL !== V && VAL.includes(V)));
-    this.f_i_b_data4 = remove_short_str(
-        this.f_i_b_data3.filter(v => this.f_i_b_data2.includes(v)).sort((a, b) => b.length - a.length));
-},
-f_i_b_data4_5_setup(){
-    this.f_i_b_filter_and_DESC_sort_and_remove_short_str();
-    this.f_i_b_data5 = this.f_i_b_data4.join("\n");
-},
-f_i_b_fn2_1(target_str, replacer_str) {
-    // 正規表現による分割と区切り文字の挿入を組み合わせる
-    // JSの正規表現で使う記号を全てサニタイズするJSの関数escape_reg_expをconst形式の1行関数で
-    const escape_reg_exp = string => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const escaped_result = escape_reg_exp(replacer_str);
-    const RESULT = R.intersperse([escaped_result], target_str.split(new RegExp(escaped_result)))
-    return RESULT;
-},
-f_i_b_get_shuffled_array(ARG_ARY, VAL){
-    // ARG_ARYからVALを除外し、シャッフルした配列から先頭2つの要素を取得し、VALと結合し、シャッフルした配列を返す
-    // 与えられた配列 ary から要素 val を取り除いた新しい配列を返すアロー関数
-    const remove_any_elelemnt_from_ary_one_liner = (ary, val) => ary.filter(V=> V !== val);
-    return shuffle(shuffle(remove_any_elelemnt_from_ary_one_liner(ARG_ARY, VAL)).slice(0, 2).concat(VAL));
-},
-f_i_b_composer() {
-    // [
-    //     [VAL, ['', VAL, BAR, BAZ],
-    //     [BAR, ['', BAR, VAL, BAZ],
-    //     [BAZ, ['', VAL, BAR, BAZ],
-    // ]
-    // 上記のように[正解, [空文字, シャッフルされた正解を含む3つの要素]]の配列を作成する
-    this.f_i_b_data7 = this.f_i_b_data4.map(VAL => {
-        return [VAL, R.insert(0, '', this.f_i_b_get_shuffled_array(this.f_i_b_data4, VAL)), false];
-    });
-},
-f_i_b_fn3() {
-    let RESULT_ARRAY = [];
-    const fn2 = (target_str, replacer_str_ary) => {
-        if (replacer_str_ary.length <= 0) {
-            return target_str;
-        } else {
-            // 文字列の場合にのみ関数を適用し、文字列でなければそのまま返す
-            const result = (typeof target_str === 'string') ? this.f_i_b_fn2_1(target_str, replacer_str_ary[0]) : target_str;
-            // replacer_str_ary = this.f_i_b_remove_index_0(replacer_str_ary);
-            replacer_str_ary = R.remove(0, 1, replacer_str_ary);
-            // 再帰
-            let res = result.map(V=>fn2(V, replacer_str_ary));
-            res.includes(undefined) === false ? RESULT_ARRAY.push(res) : null;
-        }
-    };
-    fn2(this.f_i_b_data2, this.f_i_b_data4);
-    this.f_i_b_data8 = RESULT_ARRAY;
-},
-f_i_b_fn4() {
-// 2次元配列を1次元配列に変換し、各要素に対して別の配列に含まれるかをチェックし、一致する要素を別の配列から取得して、最終的な1次元配列を生成する処理
-this.f_i_b_data6 = R.flatten(this.f_i_b_data8).map(V=>{
-    return this.f_i_b_data4.includes(V) ?
-                this.f_i_b_data7.filter(VAL=>VAL[0]===V)[0] :
-                V
-});
-},
-f_i_b_remove_empty_str_from_ary() {
-// 配列から''を除外する
-this.f_i_b_data9 = this.f_i_b_data6.filter(V => V !== '');
-},
-
-f_i_b_for_debug(){
-// this.css_var_set('--css-var-test-inline', 'inlilne');
-// this.css_var_set('--css-var-color-1', 'LightGray');
-// this.css_var_set('--css-var-color-2', 'SlateGray');
-// this.css_var_set('--css-var-color-3', 'DimGray');
-
-const f_i_b_data1 = to_ary(this.f_i_b_data1);
-const f_i_b_data2 = to_ary(this.f_i_b_data2);
-const f_i_b_data3 = to_ary(this.f_i_b_data3);
-const f_i_b_data4 = to_ary(this.f_i_b_data4);
-const f_i_b_data5 = to_ary(this.f_i_b_data5);
-const f_i_b_data6 = to_ary(this.f_i_b_data6);
-const f_i_b_data7 = to_ary(this.f_i_b_data7);
-const f_i_b_data8 = to_ary(this.f_i_b_data8);
-const f_i_b_data9 = to_ary(this.f_i_b_data9);
-const f_i_b_data_X_1 = to_ary(this.f_i_b_data_X_1);
-const f_i_b_data_X_2 = to_ary(this.f_i_b_data_X_2);
-const f_i_b_data_X_3 = to_ary(this.f_i_b_data_X_3);
-const f_i_b_data_X_4 = to_ary(this.f_i_b_data_X_4);
-const f_i_b_data_X_5 = to_ary(this.f_i_b_data_X_5);
-
-const obj = {
-f_i_b_data1: f_i_b_data1,
-f_i_b_data2: f_i_b_data2,
-f_i_b_data3: f_i_b_data3,
-f_i_b_data4: f_i_b_data4,
-f_i_b_data5: f_i_b_data5,
-f_i_b_data6: f_i_b_data6,
-f_i_b_data7: f_i_b_data7,
-f_i_b_data8: f_i_b_data8,
-f_i_b_data9: f_i_b_data9,
-f_i_b_data_X_1: f_i_b_data_X_1,
-f_i_b_data_X_2: f_i_b_data_X_2,
-f_i_b_data_X_3: f_i_b_data_X_3,
-f_i_b_data_X_4: f_i_b_data_X_4,
-f_i_b_data_X_5: f_i_b_data_X_5,
-};
-let ary = [];
-for (let i = 0; i < ary.length; i++) {
-  obj[ary[i]] = i;
-}
-for (let [key, val] of Object.entries(obj)) {
-  console.log(key); console.log(val);
-}
-
-},
-f_i_b_exe(){
-    this.f_i_b_composer();
-    this.f_i_b_fn3();
-    this.f_i_b_fn4();
-    this.f_i_b_remove_empty_str_from_ary();
-},
-f_i_b_check_option(INDEX){
-    // this.f_i_b_data9からarrayの要素だけを取り出す一行コード
-    this.f_i_b_data9[INDEX][2] =
-        this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value ? true : false;
-    this.$refs.core[INDEX].style.backgroundColor =
-        this.f_i_b_data9[INDEX][0] === this.$refs.core[INDEX].value
-            ? '' :
-            '#F9E4C6'; //ミルレージュ（Mille Feuille）
-            // '#D6A5A5'; //ダスティローズ（Dusty Rose）
-            // '#8A9A5B'; //モスグリーン（Moss Green）
-            // '#B0E0E6'; //パウダーブルー（Powder Blue）
-            // '#E2725B'; //テラコッタ（Terracotta）
-            // '#36454F'; //チャコールグレー（Charcoal Gray）
-            // '#6699CC'; //ブルーグレイ（Blue Gray）
-            // '#98FF98'; //ミントグリーン（Mint Green）
-            // '#B76E79'; //ローズゴールド（Rose Gold）
-            // '#800000'; //マルーン（Maroon）
-    this.f_i_b_data_X_2 = this.f_i_b_data9
-        .filter(V=>Array.isArray(V)).filter(V=>V[2]===false);
-    this.f_i_b_data_X_3 = this.f_i_b_data4
-        .filter(V=>R.pluck(0, this.f_i_b_data_X_2).includes(V));
-    this.f_i_b_data_X_4 = this.f_i_b_data_X_3.join("\n");
-    this.f_i_b_for_debug();
-},
-f_i_b_fn4_3(){
-    this.f_i_b_data_X_1.push([
-        this.f_i_b_data_X_4,
-        this.f_i_b_data2,
-    ]);
-},
-f_i_b_fn4_4(){
-    return this.f_i_b_data9.filter(V=>Array.isArray(V)).every(V=>V[2]===true);
-},
-f_i_b_fn5(){
-if(this.f_i_b_fn4_4()){
-    window.alert("正解です！");
-    return;
-};
-    this.f_i_b_fn4_3();
-},
-// core of f_i_b
-
 
 
 async throw_error_for_local_save_data() {
@@ -1003,15 +683,6 @@ if(this.data_type === 'i_t_n'){
 fn16(INDEX){
 this.online_data_A.splice(INDEX, 1);
 },
-fn17(INDEX){
-const TARGET_INDEX_FIRST = INDEX * 2;
-const TARGET_INDEX_SECOND = INDEX * 2 + 1;
-this.$refs.results[TARGET_INDEX_FIRST].style.display =
-this.$refs.results[TARGET_INDEX_SECOND].style.display =
-    this.$refs.results[TARGET_INDEX_FIRST].style.display === "block"
-    ||
-    this.$refs.results[TARGET_INDEX_FIRST].style.display === '' ? "none" : "block";
-},
 fn18(){
     const RESULTS = this.$refs.results;
         RESULTS.map(ELM=>ELM.style.display).some(DISPLAY=>DISPLAY==='block' || DISPLAY==='') ?
@@ -1026,50 +697,10 @@ fn19_1(){
     const THE_STYLE_DISPLAY2 = this.$refs.save_data_set_list_parent2.style.display;
     this.$refs.save_data_set_list_parent2.style.display = (THE_STYLE_DISPLAY2 === 'block' || THE_STYLE_DISPLAY2 === '') ? 'none' : 'block';
 },
-fn21(ONE_UP_OR_ONE_DOWN_OR_12px){
-ONE_UP_OR_ONE_DOWN_OR_12px = ONE_UP_OR_ONE_DOWN_OR_12px ? ONE_UP_OR_ONE_DOWN_OR_12px : '12px';
-num_px_string = (
-        Number(
-            document.documentElement.style.getPropertyValue('--css-var-root-font-size').split("px")[0]
-        ) + (ONE_UP_OR_ONE_DOWN_OR_12px)
-    ).toString() + 'px';
-this.css_var_set('--css-var-root-font-size', num_px_string);
-},
 
 
 
-is_not_blank(STR){
-return STR.length > 0;
-},
-blank_check(TARGET){
-ELM = document.querySelector(TARGET);
-ELM.style.backgroundColor = ELM.value.split("\n").every(V=>this.is_not_blank(V)) === false ? "cornflowerblue" : '';
-},
-check_if_same_length(){
-const length_any_textarea = (TARGET) => document.querySelector(TARGET).value.split("\n").length;
-const both_target_coloring = (COLOR) => document.querySelectorAll(".textarea-column-1 > textarea").forEach(TEXTAREA=>TEXTAREA.style.backgroundColor = COLOR || TEXTAREA.style.backgroundColor);
-length_any_textarea("#textarea-column-1-1") === length_any_textarea("#textarea-column-1-2") ? both_target_coloring() : both_target_coloring('coral');
-},
-all_error_check(){
-this.blank_check("#textarea-column-1-1");
-this.blank_check("#textarea-column-1-2");
-this.check_if_same_length();
-},
 
-
-
-css_var_set(VAR_NAME, VAR){
-document.documentElement.style.setProperty(VAR_NAME, VAR);
-},
-column_1_none_fn(){
-this.column_1_none === true ? (this.css_var_set('--css-var-column-1-none', '1fr'), this.column_1_none = false) : (this.css_var_set('--css-var-column-1-none', '0px'), this.column_1_none = true);
-},
-column_2_none_fn(){
-this.column_2_none === true ? (this.css_var_set('--css-var-column-2-none', '1fr'), this.column_2_none = false) : (this.css_var_set('--css-var-column-2-none', '0px'), this.column_2_none = true);
-},
-column_3_none_fn(){
-this.column_3_none === true ? (this.css_var_set('--css-var-column-3-none', '1fr'), this.column_3_none = false) : (this.css_var_set('--css-var-column-3-none', '0px'), this.column_3_none = true);
-},
 
 
 for_debug(){
@@ -1236,7 +867,6 @@ async fetch_read_all(){
         console.log(error);
     }
 },
-
 async fetch_insert_link(){
 try {
     const error_check_online_data_A_online_data_B = (online_data_A, online_data_B) => {
@@ -1270,7 +900,6 @@ try {
     console.log(error);
 }
 },
-
 async fetch_delete_link(LINK_ID){
     if (window.confirm('Are you sure you want to delete this link?')) {
         const res = await fetch(this.endpoint + '/delete_link', {
@@ -1342,6 +971,9 @@ async fetch_delete_tag(LINK_ID, TAG_ID){
     const data = await res.json(); console.log(data);
     await this.fetch_read_all();
 },
+
+
+
 
 show_all_user(){
     this.show_user = '';
@@ -1432,9 +1064,6 @@ scrollToTarget(For='local') {
 
 
 
-advanced_visible_fn() {
-    this.advanced_visible === 'advanced' ? this.css_var_set('--advanced-display-var', 'inline-block') : this.css_var_set('--advanced-display-var', 'none');
-},
 
 
 // for_online_function
@@ -1544,121 +1173,6 @@ this.q_a_data5[INDEX] = null;
 
 
 
-data_change_to_q_a() {
-    this.data_type = 'q_a';
-},
-data_change_to_f_i_b() {
-    this.data_type = 'f_i_b';
-    console.log('f_i_b');
-},
-data_change_to_i_t_n() {
-    this.data_type = 'i_t_n';
-    if(this.i_t_n_data5_result === true){
-        this.tmp_test_data_insert();
-    }
-    if(this.i_t_n_data9_result === true){
-        this.i_t_n_data9_x_setup();
-    }
-},
-return_current_temporary_list() {
-    let Index_of_list = 0;
-    // q_aは0
-    // f_i_bは1
-    // i_t_nは2
-    // this.data_typeがq_aの時は0
-    // this.data_typeがf_i_bの時は1
-    // this.data_typeがi_t_nの時は2
-    switch (this.data_type) {
-        case "q_a":
-            Index_of_list = 0;
-            break;
-        case "f_i_b":
-            Index_of_list = 1;
-            break;
-        case "i_t_n":
-            Index_of_list = 2;
-            break;
-    }
-    return this.temporary_list[Index_of_list];
-},
-data_a_b_converter_for(Service) {
-    if(Service === 'f_i_b'){
-        this.f_i_b_data1 = this.data_a;
-        this.f_i_b_data2 = this.data_b;
-    };
-    if(Service === 'i_t_n'){
-        this.i_t_n_data2 = this.data_a;
-        this.i_t_n_data3 = this.data_b;
-    };
-},
-
-tmp_test_data_insert(){
-this.data_type = 'i_t_n';
-this.data_a_b_converter_for('i_t_n');
-this.i_t_n_data2_data3_string_to_array();
-this.i_t_n_make_image_to_name_Q_A_array();
-},
-i_t_n_data9_x_setup() {
-this.data_type = 'i_t_n';
-this.i_t_n_data2 = this.data_a;const ary1 = this.i_t_n_data2;
-this.i_t_n_data3 = this.data_b;const ary2 = this.i_t_n_data3;
-const ary10 = ary1.split("\n");
-const ary20 = ary2.split("\n");
-const ary10_1 = R.clone(ary10);
-const ary10_2 = R.clone(ary10);
-const ary100 = ary20.map((V,I)=>[V, [ary10_1[I], shuffle(ary10_2).slice(0,3)], false ]);
-this.i_t_n_data9_x = ary100;
-},
-test_data_exe(Test_Index){
-if(Test_Index === 0){
-    this.data_a = `Hello
-Thank you
-Goodbye
-Yes
-No
-Please
-Sorry
-Excuse me
-Good
-Bad`;
-    this.data_b = `こんにちは
-ありがとう
-さようなら
-はい
-いいえ
-お願いします
-ごめんなさい
-失礼します
-良い
-悪い`;
-};
-
-if(Test_Index === 1){
-    this.data_a = `ぁ
-あぃい
-ぅうぇ
-えぉお
-かがき
-ぎくぐ
-けげこ
-ごさざ
-しじす
-ず`;
-    this.data_b = `ァ
-アィイ
-ゥウェ
-エォオ
-カガキ
-ギクグ
-ケゲコ
-ゴサザ
-シジス
-ズ`;
-}
-
-},
-
-
 auto_slide(){
     this.auto_slide_mode = true;
     setInterval(() => {
@@ -1753,13 +1267,19 @@ check_maru_batu(VAL, RESULT){
         VAL[3] = false;
     }
 },
+
+
+
+
+toggleSidebar() {
+    console.log("toggleSidebar");
+  const sidebar = document.querySelector('.column-1');
+  sidebar.classList.toggle('active');
+},
+
 },
 }).mount('.app');
 
-function toggleSidebar() {
-  const sidebar = document.querySelector('.column-1');
-  sidebar.classList.toggle('active');
-}
 
 // div.column-2とfixed_element以外を非表示にする
 // document.querySelectorAll('body :not(.fixed_element)').forEach(V=>V.style.display='none');

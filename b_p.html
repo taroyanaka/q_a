@@ -778,35 +778,6 @@ online_data_B_connector(online_data_B_param){
 
 
 
-
-
-
-
-truncateText(text, id) {
-    if (text === undefined) { return };
-    if (text.length > this.truncate_text_length && !this.untruncate_text_array.includes(id)) {
-        return text.substring(0, this.truncate_text_length) + '...';
-    } else {
-        return text;
-    }
-},
-short_or_long(id) {
-    // untruncate_text_arrayにidが含まれていない場合は追加する。含まれている場合は削除する
-    const is_include_id = this.untruncate_text_array.includes(id);
-    is_include_id ? this.untruncate_text_array.splice(this.untruncate_text_array.indexOf(id), 1) : this.untruncate_text_array.push(id);
-},
-
-go_to_any_service_page(Service='portal'){
-    switch (Service) {
-        case 'portal': window.location.href = 'portal.html';break;
-        case 'q_a': window.location.href = 'q_a.html';break;
-        case 'f_i_b': window.location.href = 'f_i_b.html';break;
-        case 'i_t_n': window.location.href = 'i_t_n.html';break;
-        default: break;
-    }
-},
-
-
 async download_data_from_web_data_id(){
     const id = (new URL(window.location.href).searchParams.get("id")) ? Number(new URL(window.location.href).searchParams.get("id")) : null;
     if(id === null){return};
@@ -972,66 +943,6 @@ async fetch_delete_tag(LINK_ID, TAG_ID){
     await this.fetch_read_all();
 },
 
-
-
-
-show_all_user(){
-    this.show_user = '';
-},
-show_all_tag(){
-    this.show_tag = '';
-},
-change_show_order_by(){
-    this.show_order_by = this.show_order_by === 'DESC' ? 'ASC' : 'DESC';
-},
-
-simple_funtionable() {
-    this.simple_funtionable_flag = !this.simple_funtionable_flag;
-    function simple(){
-        // cssのsimple_mode1クラスを含む要素以外を全て非表示にする
-        const simple_mode1_ary_not = document.querySelectorAll('body :not(.simple_mode2)');
-        const simple_mode1_ary_not_ary = Array.from(simple_mode1_ary_not);
-        simple_mode1_ary_not_ary.forEach((V) => {
-            V.classList.add('display_none');
-        });
-        document.querySelectorAll('.minimum, .column-2').forEach((V) => {
-            V.classList.add('maximum');
-        });
-    }
-    function funtionable(){
-        // cssのsimple_mode1クラスを含む要素以外を全て表示にする
-        const simple_mode1_ary_not = document.querySelectorAll('body :not(.simple_mode2)');
-        const simple_mode1_ary_not_ary = Array.from(simple_mode1_ary_not);
-        simple_mode1_ary_not_ary.forEach((V) => {
-            V.classList.remove('display_none');
-        });
-        document.querySelectorAll('.minimum, .column-2').forEach((V) => {
-            V.classList.remove('maximum');
-        });
-    }
-    this.simple_funtionable_flag === true ? simple() : funtionable();
-},
-
-// simple_funtionable() {
-//     this.simple_funtionable_flag = !this.simple_funtionable_flag;
-//     function simple(){
-//         document.querySelectorAll('body :not(.simple_mode2)').forEach((V) => {
-//             V.classList.add('display_none');
-//         });
-//         document.querySelectorAll('.minimum, .column-2').forEach((V) => {
-//             V.classList.add('maximum');
-//         });
-//     }
-//     function funtionable(){
-//         document.querySelectorAll('body :not(.simple_mode2)').forEach((V) => {
-//             V.classList.remove('display_none');
-//         });
-//         document.querySelectorAll('.minimum, .column-2').forEach((V) => {
-//             V.classList.remove('maximum');
-//         });
-//     }
-//     this.simple_funtionable_flag === true ? simple() : funtionable();
-// },
 
 apply_inline_block_styles_all_at_once(Simple=false) {
     // simple_mode1が本来のinline-block指定のCSS指定と競合するため、

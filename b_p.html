@@ -39,9 +39,44 @@
         background-color: gray;
         z-index: 1;
     }
+.column-2-when-display-none-column-1 {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: calc(100%);
+        height: 100vh;
+        /* background-color: #f1f1f1; */
+        background-color: gray;
+        z-index: 1;
+}
+    .display-none-column-1{
+        display: none;
+        /* 非表示にして要素が無いものとする */
+        width: 0;
+        height: 0;
+    }
 
     .disable_temporary{
         display: none;
+    }
+
+
+    .slide_mode_color{
+        /* 薄い緑色 */
+        background-color: #DDFFDD;
+    }
+    /* スライドの表示を設定 qは左寄せ, aは右寄せ */
+    .q{
+        text-align: left;
+    }
+    .a{
+        text-align: right;
+    }
+
+    /* 2択最速回答(時間決めてor時間測定) */
+    .black-paint {
+        color: black;
+        background-color: black;
     }
 </style>
 
@@ -49,7 +84,9 @@
 </head>
 <body class="app">
 
-<div class="column-1">
+<!-- toggle_sidebar()でdisplay-none-column-1で表示/非表示を切り替える -->
+<!-- <div class="column-1"> -->
+<div :class="column_1_none ? 'display-none-column-1' : 'column-1'">
     <div class="optional_function">
         <button @click="reverse_q_a">🔃</button>
         <button @click="shuffle_q_a">🌪️</button>
@@ -208,17 +245,13 @@
     <button @click="go_to_f_i_b" class="font_sizing">go_to_f_i_b</button>
     <button @click="go_to_i_t_n" class="font_sizing">go_to_i_t_n</button>
     <button @click="go_to_t_q_a" class="font_sizing">go_to_t_q_a</button>
-    <!-- <button @click="data_change_to_q_a" class="font_sizing">data_change_to_q_a</button> -->
-    <!-- <button @click="data_change_to_f_i_b" class="font_sizing">data_change_to_f_i_b</button> -->
-    <!-- <button @click="data_change_to_i_t_n" class="font_sizing">data_change_to_i_t_n</button>     -->
 </div>
 
-<div class="column-2">
-<!-- <button @click="q_a_change_only_one_q_a_mode" class="check_button">📏</button> -->
+<div :class="column_1_none ? 'column-2-when-display-none-column-1' : 'column-2'">
                 <button @click="q_a_change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
 
 <div class="quiz_section">
-    <button onclick="toggleSidebar()">Toggle Sidebar</button>
+    <button @click="toggle_sidebar">Toggle Sidebar</button>
 
     <button @click="mode = 'choose'">選択モード</button>
     <button @click="mode = 'maru_batu'">⭕️❎問題モード</button>
@@ -257,8 +290,10 @@
 
         <!-- 現在のスライドを表示 -->
         <!-- <div @click="next_slide">{{ slides[currentIndex] }}</div> -->
-        <div v-if="slides[currentIndex].q" class="q" @click="next_slide">{{ slides[currentIndex].q }}</div>
-        <div v-if="slides[currentIndex].a" class="a" @click="next_slide">{{ slides[currentIndex].a }}</div>
+        <div v-if="slides.length > 0">
+            <div v-if="slides[currentIndex].q" class="q" @click="next_slide">{{ slides[currentIndex].q }}</div>
+            <div v-if="slides[currentIndex].a" class="a" @click="next_slide">{{ slides[currentIndex].a }}</div>
+        </div>
         <!-- 最初のスライドに -->
         <button @click="first_slide">最初へ</button>
         <!-- 前のスライドに移動するボタン -->
@@ -380,6 +415,8 @@
 const app = Vue.createApp({
 data() {
 return {
+column_1_none: false,
+
 slides: [],
 currentIndex: 0,
 auto_slide_mode: false,
@@ -510,14 +547,12 @@ watch: {
 
 data_b: {
     handler() {
-    this.all_error_check();
     this.q_a_processing();
     },
     deep: true
 },
 data_a: {
     handler() {
-    this.all_error_check();
     this.q_a_processing();
     },
     deep: true
@@ -643,7 +678,6 @@ async save_data_delete(INDEX){
 },
 
 save_data_set(INDEX){
-    this.scrollToTarget('local');
     this.data_a = this.all_save[INDEX][0];
     this.data_b = this.all_save[INDEX][1];
 },
@@ -733,9 +767,7 @@ download_data(Data_Id){
     this.online_data_A_connector(pre_online_data_A);
     // this.data_b = pre_online_data_B;
     this.online_data_B_connector(pre_online_data_B);
-    this.all_error_check();
     this.q_a_processing();
-    this.scrollToTarget('web');
 },
 date_time_form(DATE_TIME){
     // const date = new Date('2023-09-22T16:40:19.249Z');
@@ -944,24 +976,8 @@ async fetch_delete_tag(LINK_ID, TAG_ID){
 },
 
 
-apply_inline_block_styles_all_at_once(Simple=false) {
-    // simple_mode1が本来のinline-block指定のCSS指定と競合するため、
-    // インラインスタイルを優先適用させるための関数
-    // .simple_mode1配下の場合はdisplay: none;を適用する
-    this.simple_funtionable_flag === true ? Simple = true : Simple = false;
-    let style = Simple === true ? 'display: none;' : 'display: inline-block;' ;
-    return style;
-},
 textarea_opener() {
     this.textarea_visible = !this.textarea_visible;
-},
-scrollToTarget(For='local') {
-    this.textarea_visible = true;
-    document.getElementById('target').scrollIntoView(
-        {behavior: 'instant', block: 'end', inline: 'nearest'}
-    );
-    For ==='local' ? this.$refs.save_data_set_list_parent1.style.display = 'none' : null;
-    For ==='web' ? this.$refs.save_data_set_list_parent2.style.display = 'none' : null;
 },
 
 
@@ -1182,10 +1198,11 @@ check_maru_batu(VAL, RESULT){
 
 
 
-toggleSidebar() {
-    console.log("toggleSidebar");
-  const sidebar = document.querySelector('.column-1');
-  sidebar.classList.toggle('active');
+toggle_sidebar() {
+    console.log("toggle_sidebar");
+    // this.column_1_noneのtrue/falseでcolumn-1の表示/非表示を切り替える
+    this.column_1_none = !this.column_1_none;
+
 },
 
 },

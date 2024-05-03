@@ -144,6 +144,22 @@
 <div class="quiz_section">
     <button @click="toggle_sidebar">Toggle Sidebar</button>
 
+                <div>
+                    <button @click="fn18" class="result_opener">📖</button>
+                    <template v-for="(DATAVAL, DATAIDX) in online_data_A">
+                        <div class="textarea-column-2">
+                        <div class="a">
+                            <button @click="fn9(DATAIDX)" class="a-1">↩️</button>
+                            <button @click="fn16(DATAIDX)" class="a-2">🗑️</button>
+                            <button @click="fn17(DATAIDX)" class="a-3">📚</button>
+                        </div>
+                    <textarea name="" cols="30" rows="10" class="b" style='display: block;' ref="results">{{ DATAVAL[0] }}</textarea>
+                    <textarea name="" cols="30" rows="10" class="c" style='display: block;' ref="results">{{ DATAVAL[1] }}</textarea>
+                        </div>
+                    </template>
+                </div>
+
+
     <button @click="mode = 'choose'">選択モード</button>
     <button @click="mode = 'maru_batu'">⭕️❎問題モード</button>
     <button @click="mode = 'black_paint'">黒塗りモード</button>
@@ -221,69 +237,6 @@
 
 
 
-
-            <!-- <div v-if="data_type=== 'f_i_b'">
-                <span v-for="(DATAVAL, DATAIDX) in f_i_b_data9" class="simple_mode2 minimum">
-                    <span @click="" v-if="typeof DATAVAL === 'string'" ref="core" class="simple_mode2">{{ DATAVAL }}</span>
-                    <template v-if="typeof DATAVAL === 'object'" class="simple_mode2">
-                    <select name="" id="A" @change="f_i_b_check_option(DATAIDX)" style="background-color: ''" ref="core" class="simple_mode2">
-                        <option v-for="(FOO, BAR) in DATAVAL[1]" :value="FOO" class="simple_mode2">
-                            {{ FOO }}
-                        </option>
-                    </select>
-                    </template>
-                </span>
-                <button @click="f_i_b_fn5" class="check_button">🎮</button>
-            </div> -->
-
-
-
-
-
-            <!-- <div v-if="data_type=== 'i_t_n'">
-                <ul class="centering simple_mode2 minimum">
-                <li v-for="(item, IDX) in i_t_n_data5" :key="item" class="result_color simple_mode2" :style="{display: i_t_n_data5_result ? 'block' : 'none'}">
-                <div class="simple_mode2" v-if="only_one_q_a_mode ? IDX === current_index : true">
-                <span class="OK_or_NG simple_mode2">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</span>    
-                <span class="answer simple_mode2">{{ item[0] }}</span>
-                <span class="any simple_mode2">
-                <img :src="item2" :alt="item[0]" class="png_image png_image_back simple_mode2" @click="i_t_n_check_image_to_name(item[1][0], item2, IDX)"  v-for="item2 in item[1][1]" >
-                </span>
-                </div>
-                </li>
-
-                <div v-for="(item, IDX) in i_t_n_data9_x" :key="item" :style="{display: i_t_n_data9_result ? 'block' : 'none'}">
-                <div class="i_t_n_data9_x_parent">
-                <div class="OK_or_NG">{{ i_t_n_true_or_false_to_emoji(item[2]) }}</div>
-                <img :src="item[0]" :alt="item[0]" class="png_image" >
-                <button v-for="(item2,item2_IDX) in item[1][1]" 
-                :class="'common_choose_the_answer_image choose_the_answer_image_'+item2_IDX"
-                @click="i_t_n_check_name_to_image(item[1][0], item2, IDX)">
-                {{ item2 }}
-                </button>
-                </div>
-                </div>
-
-                <button @click="i_t_n_filter_image_and_name" class="check_button">🎮</button>
-                </ul>
-            </div> -->
-
-
-
-            <div>
-                <button @click="fn18" class="result_opener">📖</button>
-                <template v-for="(DATAVAL, DATAIDX) in online_data_A">
-                    <div class="textarea-column-2">
-                    <div class="a">
-                        <button @click="fn9(DATAIDX)" class="a-1">↩️</button>
-                        <button @click="fn16(DATAIDX)" class="a-2">🗑️</button>
-                        <button @click="fn17(DATAIDX)" class="a-3">📚</button>
-                    </div>
-                <textarea name="" cols="30" rows="10" class="b" style='display: block;' ref="results">{{ DATAVAL[0] }}</textarea>
-                <textarea name="" cols="30" rows="10" class="c" style='display: block;' ref="results">{{ DATAVAL[1] }}</textarea>
-                    </div>
-                </template>
-            </div>
 </div>
 
 
@@ -357,7 +310,7 @@ current_index: 0,
 only_one_q_a_mode: false,
 
 
-
+textarea_visible: false,
 }},
 watch: {
 
@@ -714,6 +667,12 @@ toggle_sidebar() {
     // this.column_1_noneのtrue/falseでcolumn-1の表示/非表示を切り替える
     this.column_1_none = !this.column_1_none;
 
+},
+
+
+
+textarea_opener() {
+    this.textarea_visible = !this.textarea_visible;
 },
 
 },

@@ -450,43 +450,6 @@ sample_array_obj: [],
 
 
 
-// for f_i_b
-f_i_b_all_save: [],
-f_i_b_data1: '',
-f_i_b_data2: '',
-f_i_b_data3: [],
-f_i_b_data4: [],
-f_i_b_data5: '',
-f_i_b_data6: [],
-f_i_b_data7: [],
-f_i_b_data8: [],
-f_i_b_data9: [],
-
-// Xはリファクタリング時に他のナンバリングの変数と被らないようにするためのもの
-f_i_b_data_X_1: [],
-f_i_b_data_X_2: [],
-f_i_b_data_X_3: [],
-f_i_b_data_X_4: [],
-f_i_b_data_X_5: [],
-// for f_i_b
-
-
-// for i_t_n
-i_t_n_all_save: [],
-
-i_t_n_data2:'',
-i_t_n_ary_data2: [],
-i_t_n_data3:'',
-i_t_n_ary_data3: [],
-i_t_n_data4:[],
-i_t_n_data5:[],
-i_t_n_data8:[],
-i_t_n_data9:[],
-i_t_n_data9_x: [],
-
-i_t_n_data5_result: true,
-i_t_n_data9_result: false,
-// for i_t_n
 
 
 all_save: [],
@@ -497,15 +460,6 @@ q_a_data5: [],
 data_a: '',
 online_data_A: [],
 test_mode: false,
-column_1_none: false,
-column_2_none: false,
-column_3_none: false,
-
-DATA_TYPE_ARRAY: [
-    'q_a',
-    'f_i_b',
-    'i_t_n',
-],
 
 
 current_index: 0,
@@ -636,18 +590,8 @@ q_a_change_only_one_q_a_mode(){
 },
 
 
-async throw_error_for_local_save_data() {
-    // this.data_typeが空か、
-    // DATA_TYPE_ARRAYに含まれていない場合は処理を中断する
-    if(this.data_type === '' || this.data_type === null || this.data_type === undefined
-        || !this.DATA_TYPE_ARRAY.includes(this.data_type)){
-            // エラーをreturnで返す
-            return (new Error('en: this.data_type is not correct, ja: this.data_typeが正しくありません'));
-    };
-},
 async save_data_to_all_save(){
     try {
-    await this.throw_error_for_local_save_data();
     const item_key = this.data_type;
     this.all_save.push(to_ary([this.data_a, this.data_b]));
     await localforage.setItem(item_key, JSON.stringify(this.all_save));
@@ -657,7 +601,6 @@ async save_data_to_all_save(){
 },
 async save_data_load() {
     try {
-    await this.throw_error_for_local_save_data();
     const item_key = this.data_type;
     this.all_save = JSON.parse(await localforage.getItem(item_key)) || [];
     } catch (error) {
@@ -666,7 +609,6 @@ async save_data_load() {
 },
 async save_data_delete(INDEX){
     try {
-    await this.throw_error_for_local_save_data();
     const item_key = this.data_type;
     if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
         this.all_save.splice(INDEX, 1);
@@ -753,22 +695,7 @@ online_data_A = to_ary(this.online_data_A);
 data_json_parse_online_data_A_online_data_B(JSON_STR_online_data_A_online_data_B){
     return JSON.parse(JSON_STR_online_data_A_online_data_B);
 },
-download_data(Data_Id){
-    console.log(Data_Id);
-    // const pre_online_data_A_2 = this.temporary_list[0].filter(V=>V.data_type === this.data_type).filter(V=> V.id === Data_Id )[0];
-    const pre_online_data_A_2 = this.return_current_temporary_list().filter(V=>V.data_type === this.data_type).filter(V=> V.id === Data_Id )[0];
-    // console.log(pre_online_data_A_2);
-    const pre_online_data_A = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['data1'];
-    const pre_online_data_B = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['data2'];
-    // const pre_online_data_A = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['online_data_A'];
-    // const pre_online_data_B = this.data_json_parse_online_data_A_online_data_B(pre_online_data_A_2.data_json_str)['online_data_B'];
-    // this.data_a = pre_online_data_A;
-    // console.log(pre_online_data_A);
-    this.online_data_A_connector(pre_online_data_A);
-    // this.data_b = pre_online_data_B;
-    this.online_data_B_connector(pre_online_data_B);
-    this.q_a_processing();
-},
+
 date_time_form(DATE_TIME){
     // const date = new Date('2023-09-22T16:40:19.249Z');
     const date = new Date(DATE_TIME);
@@ -821,36 +748,6 @@ async download_data_from_web_data_id(){
 },
 
 
-
-separate_each_list(){
-    this.only_q_a_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'q_a');
-    this.only_f_i_b_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'f_i_b');
-    this.only_i_t_n_list = this.web_data['message'].filter((DATA_VAL) => DATA_VAL['data_type'] === 'i_t_n');
-    this.temporary_list = [
-            this.only_q_a_list,
-            this.only_f_i_b_list,
-            this.only_i_t_n_list,
-        ];
-},
-other_data_type(DATA_TYPE){
-    return this.DATA_TYPE_ARRAY.filter(V=>V !== DATA_TYPE);
-},
-comment_and_tag_toggle() {
-    this.comment_and_tag_visible = !this.comment_and_tag_visible;
-},
-choice_emoji(Service) {
-    return Service === 'q_a' ? '🟰' : Service === 'f_i_b' ? '🕳️' : Service === 'i_t_n' ? '🖼️' : '📝';
-},
-showDialog() {
-    // showDialogをクリックしたら.synapseを表示/非表示の切り替えをする
-    this.synapse_visible = !this.synapse_visible;
-},
-show_comment_button() {
-    this.comment_button_visible = !this.comment_button_visible;
-},
-show_tag_more_button() {
-    this.tag_more_visible = !this.tag_more_visible;
-},
 
 
 async fetch_read_all(){
@@ -1156,13 +1053,12 @@ exe1(){
 },
 make_slide(Ary_Param){
     function flattenAndExtract(ary) {
-        return ary.flatMap((val, idx) => {
-                if(idx % 2 === 0){
-                    return {q: val[0]};
-                }else{
-                    return {a: val[1]};
-                }
-            });
+        let res = [];
+        ary.forEach((val, idx) => {
+            res.push({q: val[0]});
+            res.push({a: val[1]});
+        });
+        return res;
     }
     return flattenAndExtract(Ary_Param);
 },

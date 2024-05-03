@@ -312,13 +312,12 @@ exe1(){
 },
 make_slide(Ary_Param){
     function flattenAndExtract(ary) {
-        return ary.flatMap((val, idx) => {
-                if(idx % 2 === 0){
-                    return {q: val[0]};
-                }else{
-                    return {a: val[1]};
-                }
-            });
+        let res = [];
+        ary.forEach((val, idx) => {
+            res.push({q: val[0]});
+            res.push({a: val[1]});
+        });
+        return res;
     }
     return flattenAndExtract(Ary_Param);
 },

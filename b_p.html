@@ -143,6 +143,8 @@
 
 <div class="quiz_section">
     <button @click="toggle_sidebar">Toggle Sidebar</button>
+    <!-- change only_one_q_a_mode -->
+    <button @click="q_a_change_only_one_q_a_mode">Change only_one_q_a_mode</button>
 
                 <div>
                     <button @click="fn18" class="result_opener">📖</button>
@@ -168,25 +170,60 @@
     <textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
     <textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
     </div>
-    <template v-for="(DATA_VAL, DATA_IDX) in exe1_data">
-    <div v-if="mode === 'maru_batu'">
-    <div v-if="DATA_VAL[3] === false">
-        <span>{{ DATA_VAL[0] }}</span>
-        <span> = </span>
-        <span>{{ DATA_VAL[2][0] }}</span>
-        <div>
-            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0])">⭕️</button>
-            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1])">❎</button>
-        </div>
-    </div>
-    </div>
 
-    <div v-if="mode === 'black_paint'">
-        <div>{{ DATA_VAL[0] }}</div>
-        <div @click="change_paint_or_raw(DATA_IDX)" :class="DATA_VAL[4] ? 'black-paint' : ''">{{ DATA_VAL[2][0] }}</div>
-    </div>
 
-    </template>
+
+
+
+
+<div v-if="only_one_q_a_mode === false">
+                    <template v-for="(DATA_VAL, DATA_IDX) in exe1_data">
+                    <div v-if="mode === 'maru_batu'">
+                    <div v-if="DATA_VAL[3] === false">
+                        <span>{{ DATA_VAL[0] }}</span>
+                        <span> = </span>
+                        <span>{{ DATA_VAL[2][0] }}</span>
+                        <div>
+                            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0])">⭕️</button>
+                            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1])">❎</button>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div v-if="mode === 'black_paint'">
+                        <div>{{ DATA_VAL[0] }}</div>
+                        <div @click="change_paint_or_raw(DATA_IDX)" :class="DATA_VAL[4] ? 'black-paint' : ''">{{ DATA_VAL[2][0] }}</div>
+                    </div>
+                    </template>
+</div>
+<div v-if="only_one_q_a_mode === true">
+                    <template v-for="(DATA_VAL, DATA_IDX) in [exe1_data[only_one_q_a_mode_COUNTER]]">
+                    <div v-if="mode === 'maru_batu'">
+                    <div v-if="DATA_VAL[3] === false">
+                        <span>{{ DATA_VAL[0] }}</span>
+                        <span> = </span>
+                        <span>{{ DATA_VAL[2][0] }}</span>
+                        <div>
+                            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0]);only_one_q_a_mode_COUNTER++">⭕️</button>
+                            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1]);only_one_q_a_mode_COUNTER++">❎</button>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div v-if="mode === 'black_paint'">
+                        <div>{{ DATA_VAL[0] }}</div>
+                        <div @click="change_paint_or_raw(DATA_IDX);only_one_q_a_mode_COUNTER++" :class="DATA_VAL[4] ? 'black-paint' : ''">{{ DATA_VAL[2][0] }}</div>
+                    </div>
+                    </template>
+</div>
+
+
+
+
+
+
+
+
     <div v-if="mode === 'slide'" class="slide_mode_color">
         <!-- slidesの全部の長さと現在のスライドのインデックスを表示 -->
         <div>{{ currentIndex }} / {{ slides.length }}</div>
@@ -259,15 +296,19 @@
 const app = Vue.createApp({
 data() {
 return {
-column_1_none: false,
+only_one_q_a_mode: false,
+only_one_q_a_mode_COUNTER: 0,
+
+
+column_1_none: true,
 
 slides: [],
 currentIndex: 0,
 auto_slide_mode: false,
 time_interval: 0.5,
 // mode: 'maru_batu',
-// mode: 'black_paint',
-mode: 'slide',
+mode: 'black_paint',
+// mode: 'slide',
 file_name_ary: [],
 textContent_ary_1: [],
 textContent_ary_2: [],
@@ -307,7 +348,7 @@ test_mode: false,
 
 
 current_index: 0,
-only_one_q_a_mode: false,
+
 
 
 textarea_visible: false,
@@ -343,24 +384,24 @@ methods: {
 async set_up(){
     const text_url_ary_1 = [
         './asset/txt_dir/res_2_ary_1.txt',
-        './asset/txt_dir/res_2_2_ary_1.txt',
-        './asset/txt_dir/res_3_ary_1.txt',
-        './asset/txt_dir/res_4_ary_1.txt',
-        './asset/txt_dir/res_5_ary_1.txt',
+        // './asset/txt_dir/res_2_2_ary_1.txt',
+        // './asset/txt_dir/res_3_ary_1.txt',
+        // './asset/txt_dir/res_4_ary_1.txt',
+        // './asset/txt_dir/res_5_ary_1.txt',
     ];
     const text_url_ary_2 = [
         './asset/txt_dir/res_2_ary_3.txt',
-        './asset/txt_dir/res_2_2_ary_3.txt',
-        './asset/txt_dir/res_3_ary_3.txt',
-        './asset/txt_dir/res_4_ary_3.txt',
-        './asset/txt_dir/res_5_ary_3.txt',
+        // './asset/txt_dir/res_2_2_ary_3.txt',
+        // './asset/txt_dir/res_3_ary_3.txt',
+        // './asset/txt_dir/res_4_ary_3.txt',
+        // './asset/txt_dir/res_5_ary_3.txt',
     ];
     const global_file_name_ary = [
         '英検2級',
-        '英検準2級',
-        '英検3級',
-        '英検4級',
-        '英検5級',
+        // '英検準2級',
+        // '英検3級',
+        // '英検4級',
+        // '英検5級',
     ];
     this.file_name_ary = global_file_name_ary;
     for(let i = 0; i < text_url_ary_1.length; i++){
@@ -617,6 +658,7 @@ exe1(){
         return [data_0, val, ok_or_ng_answer_str_ary, false, true];
     });
     this.exe1_data = d3;
+
     this.slides = this.make_slide(this.exe1_data);
 },
 make_slide(Ary_Param){
@@ -663,10 +705,10 @@ check_maru_batu(VAL, RESULT){
 
 
 toggle_sidebar() {
-    console.log("toggle_sidebar");
-    // this.column_1_noneのtrue/falseでcolumn-1の表示/非表示を切り替える
     this.column_1_none = !this.column_1_none;
-
+},
+q_a_change_only_one_q_a_mode(){
+    this.only_one_q_a_mode = !this.only_one_q_a_mode;
 },
 
 

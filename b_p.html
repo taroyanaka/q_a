@@ -113,112 +113,6 @@
 
 
 
-<div class="disable_temporary">
-    <!-- <button @click="fn19_1" class="save_opener">🌐</button>
-    <div ref="save_data_set_list_parent2">
-    <div v-if="return_current_temporary_list()" class="simple_mode1">
-        <div class="additional_parent">
-            <div class="additional_child">👥 <button v-if="show_user" @click="show_all_user">{{ show_user }}</button></div>
-            <div class="additional_child">🏷️ <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button></div>
-            <div class="additional_child">⬆️⬇️ <button @click="change_show_order_by">{{ show_order_by }}</button></div>
-            <div class="additional_child_small">
-                <input type="radio" id="option1" value="advanced" v-model="advanced_visible">
-                <label for="option1"></label>
-                <input type="radio" id="option2" value="not_advanced" v-model="advanced_visible">
-                <label for="option2"></label>
-            </div>
-        </div>
-        <div class="flex_child q_a_data" ref="flex_child_display_q_a_data">
-        <ul class="simple_mode1">
-        <li v-for="(DATA_VAL, DATA_IDX) in return_current_temporary_list()" class="block_of_one simple_mode1">
-            <div class="data_type" v-if="DATA_VAL['data_type']">{{ DATA_VAL['data_type'] }}</div>
-            <div :style="apply_inline_block_styles_all_at_once(false, true)" class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div>
-            <span v-if="DATA_VAL['likes'].length === 0"
-                @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
-                {{ '♡' }}</span>
-            <span
-                v-for="(like, like_i) in DATA_VAL['likes']"
-                @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
-                {{ '❤️' }}</span>
-            <ul class="tags_parent">
-                <li v-for="(Tag, Tag_I) in DATA_VAL['tags']" class="tags">
-                    <button @click="change_show_tag(Tag['tag'])">{{ Tag['tag'] }}</button>
-                    <button
-                        v-if="DATA_VAL['tags'].length >0"
-                        @click="fetch_delete_tag(DATA_VAL['id'], Tag['id'])"
-                        :style="{ display: tag_more_visible ? 'inline' : 'none' }"
-                        >🗑️</button>
-                </li>
-            </ul>
-            <button @click="show_tag_more_button" class="show_tag_more_button">🏷️→</button>
-            <div :style="{ display: tag_more_visible ? 'block' : 'none' }">
-                <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
-                <datalist id="tag-options" @click>
-                    <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
-                </datalist>
-                <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
-            </div>
-            <div class="top_right advanced">
-                <ul class="dialog_ul">
-                <li class="dialog_li" v-for="(Other_Of_One, Other_Of_One_I) in other_data_type(DATA_VAL['data_type'])">
-                    <span class="synapse" @click="synapse(DATA_VAL['data_type'], Other_Of_One,
-                        data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data1'],
-                        data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data2'],
-                    )" :style="{ display: synapse_visible ? 'block' : 'none' }">{{ choice_emoji(Other_Of_One) }}</span>
-                </li>
-                </ul>
-                <div @click="showDialog" class="showDialog">⚙️</div>
-            </div>
-            <div class="bottom_right">
-                <div class="created_at">{{ date_time_form(DATA_VAL['created_at']) }}</div>
-                <button @click="change_show_user(DATA_VAL['username'])">{{ DATA_VAL['username'] }}</button>
-                <div class="id">{{ DATA_VAL['id'] }}</div>
-            </div>
-            <div class="clickable_for_short_or_long simple_mode1 " @click="short_or_long( DATA_VAL['id'] )" ref="exception">
-                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data1'], DATA_VAL['id'] ) }}</div>
-                <div class="simple_mode1 data_a_b_text">{{ truncateText( data_json_parse_online_data_A_online_data_B(DATA_VAL['data_json_str'])['data2'], DATA_VAL['id'] ) }}</div>
-            </div>
-            <div class="bottom_middle" @click="comment_and_tag_toggle">💬␡</div>
-                <div class="comment_and_tag" @click="comment_and_tag_toggle" :style="{ display: comment_and_tag_visible ? 'block' : 'none' }">
-                <ul>
-                <li v-for="(COMMENT_AND_REPLIES, COMMENT_IDX) in DATA_VAL['comments_and_replies']">
-                    {{ COMMENT_AND_REPLIES[COMMENT_IDX]['comment'] }}
-                    <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
-                        <button @click.stop="change_show_user(COMMENT_AND_REPLIES[COMMENT_IDX]['username'])">{{ COMMENT_AND_REPLIES[COMMENT_IDX]['username'] }}</button>
-                        <button class="advanced" @click.stop="fetch_delete_comment(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">🗑️</button>
-                    </span>
-                        <input class="advanced" type="text" v-model="comment_reply" placeholder="comment_reply" @click.stop>
-                        <button class="advanced" @click.stop="fetch_insert_comment_reply(COMMENT_AND_REPLIES[COMMENT_IDX]['id'])">💬</button>
-                    <ul>
-                        <li v-for="(REPLIES, REPLIES_PROP) in COMMENT_AND_REPLIES['comment_replies'] ">
-                        <span style="margin-left: 1rem;"></span>{{ REPLIES['reply'] }}
-                        <span :style="{ display: comment_button_visible ? 'inline-block' : 'none' }">
-                            <button @click.stop="change_show_user(REPLIES['username'])">{{ REPLIES['username'] }}</button>
-                            <button class="advanced" @click.stop="fetch_delete_comment_reply(REPLIES['id'])">🗑️</button>
-                        </span>
-                        </li>
-                    </ul>
-                </li>
-                </ul>
-                <input class="advanced" type="text" v-model="comment" placeholder="comment" @click.stop>
-                <button class="advanced" @click.stop="fetch_insert_comment(DATA_VAL['id'])">💬💬💬</button>
-                <div style="margin-top: 0.5rem" @click.stop>
-                    <button @click.stop="fetch_delete_link(DATA_VAL['id'])" class="bigger_font">␡</button>
-                    <button class="advanced" @click.stop="show_comment_button" class="bigger_font">💬→</button>
-                </div>
-            </div>
-        </li>
-        </ul>
-        </div>
-    </div>
-    </div>
-    <div>
-        <button @click="fetch_insert_link" class="fetch_insert_link">📲🛫📲🚀📲</button>
-        <input type="text" v-model="name" placeholder="name" class="name">
-        <input type="password" v-model="password" placeholder="password" class="password">
-    </div> -->
-</div>
-
 
 
 
@@ -242,9 +136,6 @@
     <button @click="fn21" class="font_sizing">◎</button> -->
 
 
-    <button @click="go_to_f_i_b" class="font_sizing">go_to_f_i_b</button>
-    <button @click="go_to_i_t_n" class="font_sizing">go_to_i_t_n</button>
-    <button @click="go_to_t_q_a" class="font_sizing">go_to_t_q_a</button>
 </div>
 
 <div :class="column_1_none ? 'column-2-when-display-none-column-1' : 'column-2'">
@@ -453,7 +344,7 @@ sample_array_obj: [],
 
 
 all_save: [],
-online_data_B: [],
+split_data_b: [],
 data_b: '',
 q_a_data4: [],
 q_a_data5: [],
@@ -466,35 +357,6 @@ current_index: 0,
 only_one_q_a_mode: false,
 
 
-// for_online_function
-name: 'user1',
-password: 'user_pass1',
-tags: [],
-search_tag: '',
-web_data: {},
-show_user: '',
-show_tag: '',
-show_order_by: 'DESC',
-data_type: 'q_a',
-link: '',
-truncate_text_length: 100,
-untruncate_text_array: [],
-// endpoint: 'http://localhost:8000',
-endpoint: 'https://cotton-concrete-catsup.glitch.me',
-only_q_a_list: [],
-only_f_i_b_list: [],
-only_i_t_n_list: [],
-temporary_list: [],
-simple_funtionable_flag: false,
-only_show_flag: false,
-tag_more_visible: false,
-comment_button_visible: false,
-synapse_visible: false,
-comment_and_tag_visible: false,
-textarea_visible: false,
-
-advanced_visible: 'not_advanced',
-// for_online_function
 
 }},
 watch: {
@@ -573,16 +435,6 @@ set_data_sample_array_obj(IDX){
     this.data_b = this.textContent_ary_2[IDX];
     this.exe1();
 },
-go_to_f_i_b(){
-    window.location.href = './f_i_b.html';
-},
-go_to_i_t_n(){
-    window.location.href = './i_t_n.html';
-},
-// <!-- go to t_q_a.html -->
-go_to_t_q_a(){
-    window.location.href = './t_q_a.html';
-},
 
 // q_a_change_only_one_q_a_modeとは、q_aの問題を一つずつ表示するか、全て表示するかを切り替える関数
 q_a_change_only_one_q_a_mode(){
@@ -625,11 +477,8 @@ save_data_set(INDEX){
 },
 
 
-
-
-
-
 fn9(IDX){
+    console.log("fn9");
 this.data_a = this.online_data_A[IDX][0];
 this.data_b = this.online_data_A[IDX][1];
 },
@@ -679,250 +528,24 @@ fn19_1(){
 
 
 
-for_debug(){
-online_data_B = to_ary(this.online_data_B);
-data_b = to_ary(this.data_b);
-q_a_data5 = to_ary(this.q_a_data5);
-data_a = to_ary(this.data_a);
-online_data_A = to_ary(this.online_data_A);
-},
-
-
-// for_online_function
-// only_service_data(){
-//     this.temporary_list[0] = this.web_data.message.filter(V=> V.data_type === this.data_type);
-// },
-data_json_parse_online_data_A_online_data_B(JSON_STR_online_data_A_online_data_B){
-    return JSON.parse(JSON_STR_online_data_A_online_data_B);
-},
-
-date_time_form(DATE_TIME){
-    // const date = new Date('2023-09-22T16:40:19.249Z');
-    const date = new Date(DATE_TIME);
-    const formattedDate = date.toLocaleString('ja-JP', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false});
-    return formattedDate;
-},
-change_show_user(USER){
-    this.show_user = USER;
-},
-show_all_user(){
-    this.show_user = '';
-},
-change_show_tag(TAG){
-    this.show_tag = TAG;
-},
-show_all_tag(){
-    this.show_tag = '';
-},
-change_show_order_by(){
-    this.show_order_by = this.show_order_by === 'DESC' ? 'ASC' : 'DESC';
-},
-async fetch_get_tags_for_autocomplete(){
-    const res = await fetch(this.endpoint + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, search_tag: this.search_tag }),
-    });
-    const data = await res.json();
-    this.tags = data['message'];
-},
-
-// this.online_data_A_connector()とthis.online_data_B_connector()によって、webのonline_data_Aとonline_data_Bは変換される。
-online_data_A_connector(online_data_A_param){
-    if(online_data_A_param){this.data_a = online_data_A_param};
-    return this.data_a;
-},
-online_data_B_connector(online_data_B_param){
-    if(online_data_B_param){this.data_b = online_data_B_param};
-    return this.data_b;
-},
-
-
-
-async download_data_from_web_data_id(){
-    const id = (new URL(window.location.href).searchParams.get("id")) ? Number(new URL(window.location.href).searchParams.get("id")) : null;
-    if(id === null){return};
-    const result = await this.web_data.message
-        .filter(V=> V['id'] === id && V['data_type'] === this.data_type)
-        [0];
-    if(result === undefined){return};
-    this.download_data(result['id']);
-},
-
-
-
-
-async fetch_read_all(){
-    try {
-    this.show_user = this.show_user === '' ? '' : this.show_user;
-    this.show_tag = this.show_tag === '' ? '' : this.show_tag;
-    const params_for_get = {
-        user: this.show_user,
-        tag: this.show_tag,
-        order_by: this.show_order_by,
-    };
-    const url = new URL(this.endpoint + '/' + 'read_all');
-    url.search = new URLSearchParams(params_for_get).toString();
-    const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
-    this.web_data = await res.json(); console.log(this.web_data);
-    } catch (error) {
-        console.log(error);
-    }
-},
-async fetch_insert_link(){
-try {
-    const error_check_online_data_A_online_data_B = (online_data_A, online_data_B) => {
-        switch (true) {
-            case online_data_A === undefined || online_data_A === null || online_data_A.length === 0: return 'online_data_Aが空です'; break;
-            case online_data_B === undefined || online_data_B === null || online_data_B.length === 0: return 'online_data_Bが空です'; break;
-            default: return 'OK'; break;
-        }
-    };
-    const error_check_insert_data = (data_type, data_json_str) => {
-        const is_include_DATA_TYPE = (target_data_type_str) => this.DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
-        switch (true) {
-            case data_json_str === undefined: return 'dataが空です'; break;
-            case data_json_str.length > 10000: return 'dataが長すぎます'; break;
-            case !is_include_DATA_TYPE(data_type): return '許可されていないdata_typeです'; break;
-            default: return 'OK'; break;
-        }
-    };
-    error_check_online_data_A_online_data_B(this.online_data_A_connector(), this.online_data_B_connector()) === 'OK' ? null : (()=>{throw new Error(error_check_online_data_A_online_data_B(this.online_data_A, this.online_data_B))})();
-    const data_convert_jsonstr = (online_data_A, online_data_B) => JSON.stringify({'data1': online_data_A, 'data2': online_data_B});
-    const data_json_str = data_convert_jsonstr(this.online_data_A_connector(), this.online_data_B_connector());
-    error_check_insert_data(this.data_type, data_json_str) === 'OK' ? null : (()=>{throw new Error(error_check_insert_data(this.data_type, data_json_str))})();
-    const res = await fetch(this.endpoint + '/insert_link', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, link: this.link,
-            data_type: this.data_type,
-            data_json_str: data_json_str,
-        }),
-    });
-    const data = await res.json(); console.log(data);
-} catch (error) {
-    console.log(error);
-}
-},
-async fetch_delete_link(LINK_ID){
-    if (window.confirm('Are you sure you want to delete this link?')) {
-        const res = await fetch(this.endpoint + '/delete_link', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json',},
-            body: JSON.stringify({ name: this.name, password: this.password, id: LINK_ID }),
-        });
-        const data = await res.json(); 
-        await this.fetch_read_all();
-    } else {
-        console.log('Delete operation cancelled by the user.');
-    }
-},
-async fetch_like_increment_or_decrement(LINK_ID){
-    const res = await fetch(this.endpoint + '/like_increment_or_decrement', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID }),
-    });
-    const data = await res.json(); console.log(data);
-    await this.fetch_read_all();
-},
-async fetch_insert_comment(LINK_ID){
-    const res = await fetch(this.endpoint + '/insert_comment', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, comment: this.comment }),
-    });
-    const data = await res.json(); console.log(data);
-    await this.fetch_read_all();
-},
-async fetch_delete_comment(COMMENT_ID){
-    console.log(COMMENT_ID);
-    const res = await fetch(this.endpoint + '/delete_comment', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, comment_id: COMMENT_ID }),
-    });
-    const data = await res.json(); console.log(data);
-    await this.fetch_read_all();
-},
-async fetch_insert_comment_reply(COMMENT_ID){
-    console.log(COMMENT_ID);
-    const res = await fetch(this.endpoint + '/insert_comment_reply', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, comment_id: COMMENT_ID, comment_reply: this.comment_reply }),
-    });
-    const data = await res.json(); console.log(data);
-    await this.fetch_read_all();
-},
-async fetch_delete_comment_reply(COMMENT_REPLY_ID){
-    const res = await fetch(this.endpoint + '/delete_comment_reply', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, comment_reply_id: COMMENT_REPLY_ID }),
-    });
-    this.data = await res.json(); console.log(this.data);
-    await this.fetch_read_all();
-},
-async fetch_insert_tag(LINK_ID){
-    const res = await fetch(this.endpoint + '/insert_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, link_id: LINK_ID, new_tag: this.search_tag }),
-    });
-    const data = await res.json(); console.log(data);
-    await this.fetch_read_all();
-},
-async fetch_get_tags_for_autocomplete(){
-    const res = await fetch(this.endpoint + '/get_tags_for_autocomplete', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, search_tag: this.search_tag }),
-    });
-    const data = await res.json();
-    this.tags = data['message'];
-},
-async fetch_delete_tag(LINK_ID, TAG_ID){
-    const res = await fetch(this.endpoint + '/delete_tag', {method: 'POST',headers: {'Content-Type': 'application/json',},
-        body: JSON.stringify({ name: this.name, password: this.password, id: TAG_ID, link_id: LINK_ID, }),
-    });
-    const data = await res.json(); console.log(data);
-    await this.fetch_read_all();
-},
-
-
-textarea_opener() {
-    this.textarea_visible = !this.textarea_visible;
-},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// for_online_function
-
-
-
-
-
-
-
-
-
-
 
 
 
 
 
 q_a_fn2_1() {
-return this.online_data_B.map((V, IDX)=>{
-    return shuffle(shuffle(R.without(this.online_data_B[IDX], this.online_data_B)).slice(0, 2).concat(this.online_data_B[IDX]));
+return this.split_data_b.map((V, IDX)=>{
+    return shuffle(shuffle(R.without(this.split_data_b[IDX], this.split_data_b)).slice(0, 2).concat(this.split_data_b[IDX]));
 });
 },
-// fn2_2() {
 q_a_fn2_2() {
-return R.zip(this.online_data_B, this.q_a_fn2_1()).map((V,IDX)=>[V[0], V[1], this.data_a.split("\n")[IDX]]);
+return R.zip(this.split_data_b, this.q_a_fn2_1()).map((V,IDX)=>[V[0], V[1], this.data_a.split("\n")[IDX]]);
 },
-// processing() {
 q_a_processing() {
-this.online_data_B = this.data_b.split("\n");
+this.split_data_b = this.data_b.split("\n");
 this.q_a_data4 = this.q_a_fn2_2();
 this.q_a_data5 = R.repeat(undefined, this.q_a_data4.length);
-this.for_debug();
 },
-// fn3(correct, answer, INDEX) {
 q_a_fn3(correct, answer, INDEX) {
 this.q_a_data5[INDEX] = answer === correct ? "⭕️" : "❎";
 this.q_a_fn3_1();
@@ -940,7 +563,6 @@ const progress_bar_value_array_per = progress_bar_value_array_length / progress_
 console.log(progress_bar_value_array_per);
 prgr.value = progress_bar_value_array_per;
 },
-// fn4_1() {
 q_a_fn4_1() {
 a = R.zip(this.q_a_data4, this.q_a_data5);
 b = R.collectBy(
@@ -950,22 +572,18 @@ b = R.collectBy(
 c = b[0][0][1] === '⭕️' ? b[1] : b[0];
 this.q_a_data4 = c.map(V=>V[0]);
 },
-// fn4_2() {
 q_a_fn4_2() {
 this.q_a_data5 = [];
 },
-// fn4_3() {
 q_a_fn4_3() {
 this.online_data_A.push([
     R.transpose(this.q_a_data4)[2].join("\n"),
     R.transpose(this.q_a_data4)[0].join("\n"),
 ]);
 },
-// fn4_4() {
 q_a_fn4_4() {
 return to_ary(this.q_a_data5).every(V=>V === '⭕️')
 },
-// fn4() {
 q_a_fn4() {
 if(this.q_a_fn4_4()){
     this.q_a_data4 = this.q_a_data5 = [];
@@ -976,18 +594,15 @@ this.q_a_fn4_2();
 this.q_a_fn4_3();
 document.getElementById('prgr').value = 0;
 },
-// test_index(Test_index) {
 q_a_test_index(Test_index) {
 this.q_a_data4.forEach((V,IDX)=>this.q_a_fn3(V[0], V[1][Test_index], IDX));
 this.q_a_fn4();
 },
-// change_current_index(ONE_UP_OR_ONE_DOWN=1) {
 q_a_change_current_index(ONE_UP_OR_ONE_DOWN=1) {
     this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
     this.current_index < 0 ? this.current_index = this.q_a_data4.length - 1 : null;
     this.current_index > this.q_a_data4.length - 1 ? this.current_index = 0 : null;
 },
-// ge_only_one_mode() {
 q_a_fn20(INDEX){
 this.q_a_data5[INDEX] = null;
 },

@@ -74,10 +74,48 @@
     }
 
     /* 2択最速回答(時間決めてor時間測定) */
-    .black-paint {
+    .black-paint-it {
         color: black;
         background-color: black;
     }
+
+.maru_batu, .maru_batu *, .black_paint, .slide_mode_color{
+    font-size: 10vw;
+    white-space: word-wrap;
+}
+.parent_full_screen{
+    position: relative;
+}
+.front_of_full_screen{
+    z-index: 10;
+    position: absolute;
+    top: 0;
+}
+/* back_full_screenとfront_of_full_screenをz-indexで同じ位置に表示する */
+.back_full_screen{
+    z-index: 1;
+    position: absolute;
+    top: 0;
+
+    display: flex;
+    /* width 100% */
+    width: 100%;
+
+    justify-content: space-around;
+}
+.maru{
+    /* display: flex; */
+    justify-content: center;
+    width: 50%;
+    height: 50vh;
+}
+.batu{
+    /* display: flex; */
+    justify-content: center;
+    width: 50%;
+    height: 50vh;
+}
+
 </style>
 
 
@@ -87,6 +125,11 @@
 <!-- toggle_sidebar()でdisplay-none-column-1で表示/非表示を切り替える -->
 <!-- <div class="column-1"> -->
 <div :class="column_1_none ? 'display-none-column-1' : 'column-1'">
+    <button @click="mode = 'choose'">選択モード</button>
+    <button @click="mode = 'maru_batu'">⭕️❎問題モード</button>
+    <button @click="mode = 'black_paint'">黒塗りモード</button>
+    <button @click="mode = 'slide'">スライドモード</button>
+
     <div class="optional_function">
         <button @click="reverse_q_a">🔃</button>
         <button @click="shuffle_q_a">🌪️</button>
@@ -127,10 +170,29 @@
 
 
 <button @click="textarea_opener" class="textarea_opener">📝</button>
-    <div class="textarea-column-1" id="target">
+<div class="textarea-column-1" id="target">
     <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data_a" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
     <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data_b" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
-    </div>
+</div>
+<div>
+    <button @click="fn18" class="result_opener">📖</button>
+    <template v-for="(DATAVAL, DATAIDX) in online_data_A">
+        <div class="textarea-column-2">
+        <div class="a">
+            <button @click="fn9(DATAIDX)" class="a-1">↩️</button>
+            <button @click="fn16(DATAIDX)" class="a-2">🗑️</button>
+            <button @click="fn17(DATAIDX)" class="a-3">📚</button>
+        </div>
+    <textarea name="" cols="30" rows="10" class="b" style='display: block;' ref="results">{{ DATAVAL[0] }}</textarea>
+    <textarea name="" cols="30" rows="10" class="c" style='display: block;' ref="results">{{ DATAVAL[1] }}</textarea>
+        </div>
+    </template>
+</div>
+<div v-if="show_textarea">
+    <textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
+    <textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
+</div>
+
     <!-- <button @click="fn21(1)" class="font_sizing">◉</button>
     <button @click="fn21(-1)" class="font_sizing">⦿</button>
     <button @click="fn21" class="font_sizing">◎</button> -->
@@ -139,82 +201,78 @@
 </div>
 
 <div :class="column_1_none ? 'column-2-when-display-none-column-1' : 'column-2'">
-                <button @click="q_a_change_current_index(-1)" class="check_button" v-if="only_one_q_a_mode">⬆️</button>
 
 <div class="quiz_section">
     <button @click="toggle_sidebar">Toggle Sidebar</button>
-    <!-- change only_one_q_a_mode -->
-    <button @click="q_a_change_only_one_q_a_mode">Change only_one_q_a_mode</button>
-
-                <div>
-                    <button @click="fn18" class="result_opener">📖</button>
-                    <template v-for="(DATAVAL, DATAIDX) in online_data_A">
-                        <div class="textarea-column-2">
-                        <div class="a">
-                            <button @click="fn9(DATAIDX)" class="a-1">↩️</button>
-                            <button @click="fn16(DATAIDX)" class="a-2">🗑️</button>
-                            <button @click="fn17(DATAIDX)" class="a-3">📚</button>
-                        </div>
-                    <textarea name="" cols="30" rows="10" class="b" style='display: block;' ref="results">{{ DATAVAL[0] }}</textarea>
-                    <textarea name="" cols="30" rows="10" class="c" style='display: block;' ref="results">{{ DATAVAL[1] }}</textarea>
-                        </div>
-                    </template>
-                </div>
 
 
-    <button @click="mode = 'choose'">選択モード</button>
-    <button @click="mode = 'maru_batu'">⭕️❎問題モード</button>
-    <button @click="mode = 'black_paint'">黒塗りモード</button>
-    <button @click="mode = 'slide'">スライドモード</button>
-    <div v-if="show_textarea">
-    <textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
-    <textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
+
+
+
+<!-- <div v-if="only_one_q_a_mode === true"> -->
+<template v-for="(DATA_VAL, DATA_IDX) in [exe1_data[only_one_q_a_mode_COUNTER]]">
+<div v-if="mode === 'maru_batu'" class="maru_batu">
+<div v-if="DATA_VAL[3] === false" class="parent_full_screen">
+    <div class="front_of_full_screen">
+        <span>{{ DATA_VAL[0] }}</span>
+        <span> = </span>
+        <span>{{ DATA_VAL[2][0] }}</span>    
     </div>
-
-
-
-
-
-
-<div v-if="only_one_q_a_mode === false">
-                    <template v-for="(DATA_VAL, DATA_IDX) in exe1_data">
-                    <div v-if="mode === 'maru_batu'">
-                    <div v-if="DATA_VAL[3] === false">
-                        <span>{{ DATA_VAL[0] }}</span>
-                        <span> = </span>
-                        <span>{{ DATA_VAL[2][0] }}</span>
-                        <div>
-                            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0])">⭕️</button>
-                            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1])">❎</button>
-                        </div>
-                    </div>
-                    </div>
-
-                    <div v-if="mode === 'black_paint'">
-                        <div>{{ DATA_VAL[0] }}</div>
-                        <div @click="change_paint_or_raw(DATA_IDX)" :class="DATA_VAL[4] ? 'black-paint' : ''">{{ DATA_VAL[2][0] }}</div>
-                    </div>
-                    </template>
+    <div class="back_full_screen">
+        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0]);only_one_q_a_mode_COUNTER++" class="maru">⭕️</button>
+        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1]);only_one_q_a_mode_COUNTER++" class="batu">❎</button>
+    </div>
 </div>
-<div v-if="only_one_q_a_mode === true">
-                    <template v-for="(DATA_VAL, DATA_IDX) in [exe1_data[only_one_q_a_mode_COUNTER]]">
-                    <div v-if="mode === 'maru_batu'">
-                    <div v-if="DATA_VAL[3] === false">
-                        <span>{{ DATA_VAL[0] }}</span>
-                        <span> = </span>
-                        <span>{{ DATA_VAL[2][0] }}</span>
-                        <div>
-                            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0]);only_one_q_a_mode_COUNTER++">⭕️</button>
-                            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1]);only_one_q_a_mode_COUNTER++">❎</button>
-                        </div>
-                    </div>
-                    </div>
+</div>
 
-                    <div v-if="mode === 'black_paint'">
-                        <div>{{ DATA_VAL[0] }}</div>
-                        <div @click="change_paint_or_raw(DATA_IDX);only_one_q_a_mode_COUNTER++" :class="DATA_VAL[4] ? 'black-paint' : ''">{{ DATA_VAL[2][0] }}</div>
-                    </div>
-                    </template>
+<div v-if="mode === 'black_paint'" class="black_paint">
+    <div>{{ DATA_VAL[0] }}</div>
+    <div @click="change_paint_or_raw(DATA_IDX);only_one_q_a_mode_COUNTER++" :class="DATA_VAL[4] ? 'black-paint-it' : ''">{{ DATA_VAL[2][0] }}</div>
+</div>
+</template>
+<!-- </div> -->
+
+<div v-if="mode === 'slide'" class="slide_mode_color">
+    <!-- slidesの全部の長さと現在のスライドのインデックスを表示 -->
+    <div>{{ currentIndex }} / {{ slides.length }}</div>
+    <br>
+    <br>
+    <br>
+    <!-- 現在のスライドを表示 -->
+    <!-- <div @click="next_slide">{{ slides[currentIndex] }}</div> -->
+    <div v-if="slides.length > 0">
+        <div v-if="slides[currentIndex].q" class="q" @click="next_slide">{{ slides[currentIndex].q }}</div>
+        <div v-if="slides[currentIndex].a" class="a" @click="next_slide">{{ slides[currentIndex].a }}</div>
+    </div>
+    <!-- 最初のスライドに -->
+    <button @click="first_slide">最初へ</button>
+    <!-- 前のスライドに移動するボタン -->
+    <button @click="prev_slide">前へ</button>
+    <!-- 次のスライドに移動するボタン -->
+    <button @click="next_slide">次へ</button>
+    <!-- auto slide mode button(auto slide状態の時にクリックするとstop_autoslide) -->
+    <div v-if="!auto_slide_mode">
+        <button @click="auto_slide">auto slide</button>
+            <!-- input numberでtime_intervalを設定 100刻みで変更できて最低値を100とする -->
+            <input type="number" v-model="time_interval" min="0.1" step="0.1">秒
+    </div>
+    <div v-if="auto_slide_mode">
+        <button @click="stop_auto_slide">stop auto slide</button>
+    </div>
+</div>
+
+<div v-if="mode === 'choose'">
+    <div><progress value="0" max="100" id="prgr"></progress></div>
+    <!-- <template v-for="(DATAVAL, DATAIDX) in q_a_data4" class="simple_mode2"> -->
+    <template v-for="(DATAVAL, DATAIDX) in [q_a_data4[only_one_q_a_mode_COUNTER]]" class="simple_mode2">
+    <div class="q_and_a simple_mode2 minimum" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
+        <span class="text_right simple_mode2" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span>
+        <button class="simple_mode2" v-for="item in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
+        <span class="text_center simple_mode2">{{ DATAVAL[2] }}</span>
+    </div>
+    </template>
+    <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
+    <button @click="q_a_fn4" class="check_button">🎮</button>
 </div>
 
 
@@ -222,52 +280,6 @@
 
 
 
-
-
-    <div v-if="mode === 'slide'" class="slide_mode_color">
-        <!-- slidesの全部の長さと現在のスライドのインデックスを表示 -->
-        <div>{{ currentIndex }} / {{ slides.length }}</div>
-
-        <br>
-        <br>
-        <br>
-
-        <!-- 現在のスライドを表示 -->
-        <!-- <div @click="next_slide">{{ slides[currentIndex] }}</div> -->
-        <div v-if="slides.length > 0">
-            <div v-if="slides[currentIndex].q" class="q" @click="next_slide">{{ slides[currentIndex].q }}</div>
-            <div v-if="slides[currentIndex].a" class="a" @click="next_slide">{{ slides[currentIndex].a }}</div>
-        </div>
-        <!-- 最初のスライドに -->
-        <button @click="first_slide">最初へ</button>
-        <!-- 前のスライドに移動するボタン -->
-        <button @click="prev_slide">前へ</button>
-        <!-- 次のスライドに移動するボタン -->
-        <button @click="next_slide">次へ</button>
-        <!-- auto slide mode button(auto slide状態の時にクリックするとstop_autoslide) -->
-        <div v-if="!auto_slide_mode">
-            <button @click="auto_slide">auto slide</button>
-                <!-- input numberでtime_intervalを設定 100刻みで変更できて最低値を100とする -->
-                <input type="number" v-model="time_interval" min="0.1" step="0.1">秒
-        </div>
-        <div v-if="auto_slide_mode">
-            <button @click="stop_auto_slide">stop auto slide</button>
-        </div>
-
-    </div>
-
-    <div v-if="mode === 'choose'">
-        <div><progress value="0" max="100" id="prgr"></progress></div>
-        <template v-for="(DATAVAL, DATAIDX) in q_a_data4" class="simple_mode2">
-        <div class="q_and_a simple_mode2 minimum" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
-            <span class="text_right simple_mode2" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span>
-            <button class="simple_mode2" v-for="item in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
-            <span class="text_center simple_mode2">{{ DATAVAL[2] }}</span>
-        </div>
-        </template>
-        <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
-        <button @click="q_a_fn4" class="check_button">🎮</button>
-    </div>
 </div>
 
 
@@ -296,7 +308,7 @@
 const app = Vue.createApp({
 data() {
 return {
-only_one_q_a_mode: false,
+only_one_q_a_mode: true,
 only_one_q_a_mode_COUNTER: 0,
 
 
@@ -430,10 +442,6 @@ set_data_sample_array_obj(IDX){
     this.exe1();
 },
 
-// q_a_change_only_one_q_a_modeとは、q_aの問題を一つずつ表示するか、全て表示するかを切り替える関数
-q_a_change_only_one_q_a_mode(){
-    this.only_one_q_a_mode = !this.only_one_q_a_mode;
-},
 
 
 async save_data_to_all_save(){
@@ -706,9 +714,6 @@ check_maru_batu(VAL, RESULT){
 
 toggle_sidebar() {
     this.column_1_none = !this.column_1_none;
-},
-q_a_change_only_one_q_a_mode(){
-    this.only_one_q_a_mode = !this.only_one_q_a_mode;
 },
 
 

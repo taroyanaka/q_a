@@ -18,6 +18,20 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
 
 <style>
+    @keyframes flash {
+        0%   {opacity: 1;}
+        50%  {opacity: 0;}
+        100% {opacity: 1;}
+    }
+
+    .flash-button {
+        /* 点滅するCSS */
+        animation: flash 1s infinite;
+    }
+    .flash_incorrect{
+        /* 点滅するCSS */
+        animation: flash 0.5s infinite;
+    }
     /* not_quiz_sectionをサイドバーで表示/非表示を切り替え */
     .column-1 {
         position: fixed;
@@ -219,15 +233,15 @@
         <span>{{ DATA_VAL[2][0] }}</span>    
     </div>
     <div class="back_full_screen">
-        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0]);only_one_q_a_mode_COUNTER++" class="maru">⭕️</button>
-        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1]);only_one_q_a_mode_COUNTER++" class="batu">❎</button>
+        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0], 'maru')" :class="flash_incorrect === 'maru' || flash_incorrect === null ? 'flash_incorrect maru' : 'maru'" ref="maru">⭕️</button>
+        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1], 'batu')" :class="flash_incorrect === 'batu' || flash_incorrect === null ? 'flash_incorrect batu' : 'batu'" ref="batu">❎</button>
     </div>
 </div>
 </div>
 
-<div v-if="mode === 'black_paint'" class="black_paint">
+<div v-if="mode === 'black_paint'" class="black_paint" @click="change_paint_or_raw(DATA_IDX)">
     <div>{{ DATA_VAL[0] }}</div>
-    <div @click="change_paint_or_raw(DATA_IDX);only_one_q_a_mode_COUNTER++" :class="DATA_VAL[4] ? 'black-paint-it' : ''">{{ DATA_VAL[2][0] }}</div>
+    <div :class="DATA_VAL[4] ? 'black-paint-it' : ''">{{ DATA_VAL[2][0] }}</div>
 </div>
 </template>
 <!-- </div> -->
@@ -308,6 +322,8 @@
 const app = Vue.createApp({
 data() {
 return {
+flash_incorrect: '',
+
 only_one_q_a_mode: true,
 only_one_q_a_mode_COUNTER: 0,
 
@@ -644,8 +660,15 @@ next_slide(){
         this.currentIndex = 0;
     }
 },
-change_paint_or_raw(RAW_IDX){
-    this.exe1_data[RAW_IDX][4] = !this.exe1_data[RAW_IDX][4];
+async change_paint_or_raw(RAW_IDX){
+    const waitAndExecute = async () => {
+        this.exe1_data[this.only_one_q_a_mode_COUNTER][4] = false;
+        // 待機
+        await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
+        console.log("n秒経過しました");
+        this.only_one_q_a_mode_COUNTER++
+    }
+    await waitAndExecute();
 },
 exe1(){
     const data_0_ary = this.data_a.split('\n');
@@ -697,15 +720,22 @@ set_data_sample_array_obj(IDX){
     this.data_b = this.textContent_ary_2[IDX];
     this.exe1();
 },
-check_maru_batu(VAL, RESULT){
+check_maru_batu(VAL, RESULT, Maru_Or_Batu){
+    // 不正解のボタンを押した時に正解の問題が一瞬点灯する処理の関数
+        const maru = this.$refs.maru;
+        const batu = this.$refs.batu;
+
     console.log(VAL);
     console.log(RESULT);
     if(VAL[1] === RESULT){
         console.log('正解');
         VAL[3] = true;
+        this.only_one_q_a_mode_COUNTER++
     }else{
         console.log('不正解');
         VAL[3] = false;
+        this.flash_incorrect = Maru_Or_Batu === 'maru' ? 'batu' : 'maru';
+
     }
 },
 

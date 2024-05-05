@@ -304,17 +304,16 @@
 </div>
 
 <div v-if="mode === 'choose'">
-    <div><progress value="0" max="100" id="prgr"></progress></div>
-    <!-- <template v-for="(DATAVAL, DATAIDX) in q_a_data4" class="simple_mode2"> -->
     <template v-for="(DATAVAL, DATAIDX) in [q_a_data4[only_one_q_a_mode_COUNTER]]" class="simple_mode2">
+    <!-- <template v-for="(DATAVAL, DATAIDX) in [exe1_data[only_one_q_a_mode_COUNTER]]" class="simple_mode2"> -->
     <div class="q_and_a simple_mode2 minimum" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
         <span class="text_right simple_mode2" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span>
         <button class="simple_mode2" v-for="item in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
         <span class="text_center simple_mode2">{{ DATAVAL[2] }}</span>
     </div>
     </template>
-    <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button>
-    <button @click="q_a_fn4" class="check_button">🎮</button>
+    <!-- <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button> -->
+    <!-- <button @click="q_a_fn4" class="check_button">🎮</button> -->
 </div>
 
 
@@ -365,8 +364,9 @@ currentIndex: 0,
 auto_slide_mode: false,
 time_interval: 0.5,
 // mode: 'maru_batu',
-mode: 'black_paint',
+// mode: 'black_paint',
 // mode: 'slide',
+mode: 'choose',
 file_name_ary: [],
 textContent_ary_1: [],
 textContent_ary_2: [],
@@ -599,61 +599,48 @@ this.q_a_data5 = R.repeat(undefined, this.q_a_data4.length);
 },
 q_a_fn3(correct, answer, INDEX) {
 this.q_a_data5[INDEX] = answer === correct ? "⭕️" : "❎";
-this.q_a_fn3_1();
-this.q_a_change_current_index(+1);
-this.current_index === this.q_a_data4.length ? this.current_index = 0 : null;
+this.only_one_q_a_mode_COUNTER++;
 },
-q_a_fn3_1(){
-const prgr = document.getElementById('prgr');
-// progress_bar_value_arrayの値を設定する
-const progress_bar_value_array = to_ary(this.q_a_data5);
-// => ['❎', '❎', '⭕️', null]
-// progress_bar_value_arrayの'⭕️'の割合を求める
-const progress_bar_value_array_length = progress_bar_value_array.filter(V=>V==='⭕️').length;
-const progress_bar_value_array_per = progress_bar_value_array_length / progress_bar_value_array.length * 100;
-console.log(progress_bar_value_array_per);
-prgr.value = progress_bar_value_array_per;
-},
-q_a_fn4_1() {
-a = R.zip(this.q_a_data4, this.q_a_data5);
-b = R.collectBy(
-        (V)=> ( V[1] === '❎' || V[1] === undefined ) ,
-        a
-    );
-c = b[0][0][1] === '⭕️' ? b[1] : b[0];
-this.q_a_data4 = c.map(V=>V[0]);
-},
-q_a_fn4_2() {
-this.q_a_data5 = [];
-},
-q_a_fn4_3() {
-this.online_data_A.push([
-    R.transpose(this.q_a_data4)[2].join("\n"),
-    R.transpose(this.q_a_data4)[0].join("\n"),
-]);
-},
-q_a_fn4_4() {
-return to_ary(this.q_a_data5).every(V=>V === '⭕️')
-},
-q_a_fn4() {
-if(this.q_a_fn4_4()){
-    this.q_a_data4 = this.q_a_data5 = [];
-    return;
-};
-this.q_a_fn4_1();
-this.q_a_fn4_2();
-this.q_a_fn4_3();
-document.getElementById('prgr').value = 0;
-},
+// q_a_fn4_1() {
+// a = R.zip(this.q_a_data4, this.q_a_data5);
+// b = R.collectBy(
+//         (V)=> ( V[1] === '❎' || V[1] === undefined ) ,
+//         a
+//     );
+// c = b[0][0][1] === '⭕️' ? b[1] : b[0];
+// this.q_a_data4 = c.map(V=>V[0]);
+// },
+// q_a_fn4_2() {
+// this.q_a_data5 = [];
+// },
+// q_a_fn4_3() {
+// this.online_data_A.push([
+//     R.transpose(this.q_a_data4)[2].join("\n"),
+//     R.transpose(this.q_a_data4)[0].join("\n"),
+// ]);
+// },
+// q_a_fn4_4() {
+// return to_ary(this.q_a_data5).every(V=>V === '⭕️')
+// },
+// q_a_fn4() {
+// if(this.q_a_fn4_4()){
+//     this.q_a_data4 = this.q_a_data5 = [];
+//     return;
+// };
+// this.q_a_fn4_1();
+// this.q_a_fn4_2();
+// this.q_a_fn4_3();
+// document.getElementById('prgr').value = 0;
+// },
 q_a_test_index(Test_index) {
 this.q_a_data4.forEach((V,IDX)=>this.q_a_fn3(V[0], V[1][Test_index], IDX));
 this.q_a_fn4();
 },
-q_a_change_current_index(ONE_UP_OR_ONE_DOWN=1) {
-    this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
-    this.current_index < 0 ? this.current_index = this.q_a_data4.length - 1 : null;
-    this.current_index > this.q_a_data4.length - 1 ? this.current_index = 0 : null;
-},
+// q_a_change_current_index(ONE_UP_OR_ONE_DOWN=1) {
+//     this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
+//     this.current_index < 0 ? this.current_index = this.q_a_data4.length - 1 : null;
+//     this.current_index > this.q_a_data4.length - 1 ? this.current_index = 0 : null;
+// },
 q_a_fn20(INDEX){
 this.q_a_data5[INDEX] = null;
 },

@@ -18,19 +18,28 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
 
 <style>
+    .toggle_sidebar{
+        /* toggle_sidebarを常に画面右下に表示 */
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        /* wdith 10rem */
+        width: 10rem;
+        /* height 3rem */
+        height: 3rem;
+
+    }
+
     @keyframes flash {
         0%   {opacity: 1;}
         50%  {opacity: 0;}
         100% {opacity: 1;}
     }
 
-    .flash-button {
-        /* 点滅するCSS */
-        animation: flash 1s infinite;
-    }
     .flash_incorrect{
         /* 点滅するCSS */
-        animation: flash 0.5s infinite;
+        animation: flash 1s 1;
+        /* animation: flash 0.5s infinite; */
     }
     /* not_quiz_sectionをサイドバーで表示/非表示を切り替え */
     .column-1 {
@@ -217,7 +226,7 @@
 <div :class="column_1_none ? 'column-2-when-display-none-column-1' : 'column-2'">
 
 <div class="quiz_section">
-    <button @click="toggle_sidebar">Toggle Sidebar</button>
+    <button @click="toggle_sidebar" class="toggle_sidebar">Toggle Sidebar</button>
 
 
 
@@ -411,20 +420,23 @@ async updated() {},
 methods: {
 async set_up(){
     const text_url_ary_1 = [
-        './asset/txt_dir/res_2_ary_1.txt',
+'./asset/txt_dir/sample_ary_1.txt',
+'./asset/txt_dir/res_2_ary_1.txt',
         // './asset/txt_dir/res_2_2_ary_1.txt',
         // './asset/txt_dir/res_3_ary_1.txt',
         // './asset/txt_dir/res_4_ary_1.txt',
         // './asset/txt_dir/res_5_ary_1.txt',
     ];
     const text_url_ary_2 = [
-        './asset/txt_dir/res_2_ary_3.txt',
+'./asset/txt_dir/sample_ary_3.txt',
+'./asset/txt_dir/res_2_ary_3.txt',
         // './asset/txt_dir/res_2_2_ary_3.txt',
         // './asset/txt_dir/res_3_ary_3.txt',
         // './asset/txt_dir/res_4_ary_3.txt',
         // './asset/txt_dir/res_5_ary_3.txt',
     ];
     const global_file_name_ary = [
+    'サンプル問題集5問',
         '英検2級',
         // '英検準2級',
         // '英検3級',
@@ -731,6 +743,7 @@ check_maru_batu(VAL, RESULT, Maru_Or_Batu){
         console.log('正解');
         VAL[3] = true;
         this.only_one_q_a_mode_COUNTER++
+        this.flash_incorrect = '';
     }else{
         console.log('不正解');
         VAL[3] = false;

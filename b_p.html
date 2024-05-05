@@ -18,6 +18,37 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
 
 <style>
+.choose_question{
+    font-size: 5rem;
+}
+.parent_choose{
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    justify-content: space-around;
+}
+.choose_button{
+    font-size: 5rem;
+}
+.choose_button_num0{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 33%;
+}
+.choose_button_num1{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 33%;
+}
+.choose_button_num2{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 33%;
+}
+
     .prgr_bar{
         /* 線を細くする */
         height: 0.7rem;
@@ -306,10 +337,10 @@
 <div v-if="mode === 'choose'">
     <template v-for="(DATAVAL, DATAIDX) in [q_a_data4[only_one_q_a_mode_COUNTER]]" class="simple_mode2">
     <!-- <template v-for="(DATAVAL, DATAIDX) in [exe1_data[only_one_q_a_mode_COUNTER]]" class="simple_mode2"> -->
-    <div class="q_and_a simple_mode2 minimum" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
-        <span class="text_right simple_mode2" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span>
-        <button class="simple_mode2" v-for="item in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item)">{{ item }}</button>
-        <span class="text_center simple_mode2">{{ DATAVAL[2] }} {{ DATAVAL[3] }}</span>
+    <div class="parent_choose" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
+        <span class="choose_question">{{ DATAVAL[2] }} {{ DATAVAL[3] }}</span>
+        <!-- <span class="" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span> -->
+        <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item)">{{ item }}</button>
     </div>
     </template>
     <!-- <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button> -->
@@ -363,10 +394,10 @@ slides: [],
 currentIndex: 0,
 auto_slide_mode: false,
 time_interval: 0.5,
-mode: 'maru_batu',
+// mode: 'maru_batu',
 // mode: 'black_paint',
 // mode: 'slide',
-// mode: 'choose',
+mode: 'choose',
 file_name_ary: [],
 textContent_ary_1: [],
 textContent_ary_2: [],

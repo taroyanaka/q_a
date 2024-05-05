@@ -308,7 +308,7 @@
     <!-- <template v-for="(DATAVAL, DATAIDX) in [exe1_data[only_one_q_a_mode_COUNTER]]" class="simple_mode2"> -->
     <div class="q_and_a simple_mode2 minimum" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
         <span class="text_right simple_mode2" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span>
-        <button class="simple_mode2" v-for="item in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item, DATAIDX)">{{ item }}</button>
+        <button class="simple_mode2" v-for="item in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item)">{{ item }}</button>
         <span class="text_center simple_mode2">{{ DATAVAL[2] }} {{ DATAVAL[3] }}</span>
     </div>
     </template>
@@ -602,17 +602,24 @@ this.split_data_b = this.data_b.split("\n");
 this.q_a_data4 = this.q_a_fn2_2();
 // this.q_a_data5 = R.repeat(undefined, this.q_a_data4.length);
 },
-async q_a_fn3(correct, answer, INDEX) {
-    this.q_a_data4[INDEX][3] = answer === correct ? "⭕️" : "❎";
+async q_a_fn3(correct, answer) {
+    console.log('q_a_fn3', correct, answer);
+    this.q_a_data4[this.only_one_q_a_mode_COUNTER][3] = answer === correct ? "⭕️" : "❎";
     const done_result = async () => {
             // this.paint_result = '全問完了';
             // 待機
             await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
             // this.paint_result = '';
     };
-    if(this.q_a_data4[INDEX][3] === '⭕️'){
+    // this.q_a_data4初期化
+    const init_data = () => this.q_a_data4 = this.q_a_fn2_2();
+    if(this.q_a_data4[this.only_one_q_a_mode_COUNTER][3] === '⭕️'){
         await done_result();
         this.only_one_q_a_mode_COUNTER++;
+        this.q_a_data4.length - 1 === this.only_one_q_a_mode_COUNTER
+            ?
+            (this.only_one_q_a_mode_COUNTER = 0, init_data()) :
+            null;
     }
 },
 // q_a_fn4_1() {

@@ -351,18 +351,9 @@
 
 
 <div v-if="mode === 'qr'">
-    <div id="qrcode"></div>
-<script type="text/javascript">
-    var qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: "https://taroyanaka.github.io/q_a/b_p.html",
-        width: 256,
-        height: 256,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
-    });
-    </script>
-
+<!-- <div id="qrcode" ref="qrcode"></div> -->
+<button @click="show_qr">show_qr</button>
+<div ref="qrcode"></div>
 </div>
 
 
@@ -485,6 +476,16 @@ await this.set_up();
 
 this.q_a_processing();
 this.save_data_load();
+
+// new QRCode(this.$refs.qrcode, {
+//       text: "https://taroyanaka.github.io/q_a/b_p.html",
+//       width: 256,
+//       height: 256,
+//       colorDark : "#000000",
+//       colorLight : "#ffffff",
+//       correctLevel : QRCode.CorrectLevel.H
+// });
+
 },
 beforeUpdate() {},
 async updated() {},
@@ -494,7 +495,7 @@ async set_up(){
 './asset/txt_dir/sample_ary_1.txt',
 './asset/txt_dir/res_2_ary_1.txt',
         './asset/txt_dir/res_2_2_ary_1.txt',
-        './asset/txt_dir/res_3_ary_1.txt',
+        // './asset/txt_dir/res_3_ary_1.txt',
         // './asset/txt_dir/res_4_ary_1.txt',
         // './asset/txt_dir/res_5_ary_1.txt',
     ];
@@ -502,7 +503,7 @@ async set_up(){
 './asset/txt_dir/sample_ary_3.txt',
 './asset/txt_dir/res_2_ary_3.txt',
         './asset/txt_dir/res_2_2_ary_3.txt',
-        './asset/txt_dir/res_3_ary_3.txt',
+        // './asset/txt_dir/res_3_ary_3.txt',
         // './asset/txt_dir/res_4_ary_3.txt',
         // './asset/txt_dir/res_5_ary_3.txt',
     ];
@@ -510,7 +511,7 @@ async set_up(){
     'サンプル問題集5問',
         '英検2級',
         '英検準2級',
-        '英検3級',
+        // '英検3級',
         // '英検4級',
         // '英検5級',
     ];
@@ -882,6 +883,23 @@ toggle_sidebar() {
 textarea_opener() {
     this.textarea_visible = !this.textarea_visible;
 },
+
+
+
+
+
+show_qr(){
+    new QRCode(this.$refs.qrcode, {
+        text: "https://taroyanaka.github.io/q_a/b_p.html",
+        width: 256,
+        height: 256,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+},
+
+
 
 },
 }).mount('.app');

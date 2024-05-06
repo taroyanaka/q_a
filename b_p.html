@@ -73,7 +73,13 @@
         width: 10rem;
         /* height 3rem */
         height: 3rem;
-
+    }
+    .column-2-when-display-toggle_sidebar{
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: calc(100% - 10rem);
+        height: 3rem;
     }
 
     @keyframes flash {
@@ -273,7 +279,7 @@
 <div :class="column_1_none ? 'column-2-when-display-none-column-1' : 'column-2'">
 
 <div class="quiz_section">
-    <button @click="toggle_sidebar" class="toggle_sidebar">Toggle Sidebar</button>
+<button @click="toggle_sidebar" :class="column_1_none ? 'toggle_sidebar' : 'column-2-when-display-toggle_sidebar'">Toggle Sidebar</button>
 
 
 

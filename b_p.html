@@ -11,6 +11,7 @@
 <script src="./lib/vue@3.2.36.global.prod.js"></script>
 <script src="./lib/ramda.@0.28.0.js"></script>
 <script src="./lib/shuffle.js"></script>
+<script src="./lib/qrcode.js"></script>
 <!-- <script src="./lib/my_global_function_for_q_a.js"></script> -->
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script> -->
@@ -197,6 +198,7 @@
     <button @click="mode = 'maru_batu'">⭕️❎問題モード</button>
     <button @click="mode = 'black_paint'">黒塗りモード</button>
     <button @click="mode = 'slide'">スライドモード</button>
+    <button @click="mode = 'qr'">QRコード</button>
 
     <div class="optional_function">
         <button @click="reverse_q_a">🔃</button>
@@ -348,6 +350,21 @@
 </div>
 
 
+<div v-if="mode === 'qr'">
+    <div id="qrcode"></div>
+<script type="text/javascript">
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: "https://taroyanaka.github.io/q_a/b_p.html",
+        width: 256,
+        height: 256,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+    </script>
+
+</div>
+
 
 
 
@@ -398,6 +415,8 @@ time_interval: 0.5,
 // mode: 'black_paint',
 // mode: 'slide',
 mode: 'choose',
+// mode: 'qr',
+
 file_name_ary: [],
 textContent_ary_1: [],
 textContent_ary_2: [],

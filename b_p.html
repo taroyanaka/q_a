@@ -350,7 +350,7 @@
     <!-- <template v-for="(DATAVAL, DATAIDX) in " class="simple_mode2"> -->
     <!-- <template v-for="(DATAVAL, DATAIDX) in [hoge_ary[only_one_q_a_mode_COUNTER]]" class="simple_mode2"> -->
     <!-- <template v-for="(DATAVAL, DATAIDX) in [exe1_data[only_one_q_a_mode_COUNTER]]" class="simple_mode2"> -->
-    <template v-for="(DATAVAL, DATAIDX) in hoge_ary" class="simple_mode2">
+    <template v-for="(DATAVAL, DATAIDX) in [hoge_ary[only_one_q_a_mode_COUNTER]]" class="simple_mode2">
     <div class="parent_choose" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
         <span class="choose_question">{{ DATAVAL[2] }} {{ DATAVAL[3] }}</span>
         <!-- <span class="" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span> -->
@@ -452,7 +452,6 @@ sample_array_obj: [],
 all_save: [],
 split_data_b: [],
 data_b: '',
-hoge_ary: [],
 q_a_data5: [],
 data_a: '',
 online_data_A: [],
@@ -679,10 +678,6 @@ convertData2ToData1(data2){
 
     // return data2_1;
 },
-new_q_a_processing() {
-    this.exe1();
-    this.new_q_a_data_ary = this.convertData2ToData1(to_ary(app.exe1_data));
-},
 async q_a_fn3(correct, answer) {
     console.log('q_a_fn3', correct, answer);
     this.hoge_ary[this.only_one_q_a_mode_COUNTER][3] = answer === correct ? "⭕️" : "❎";
@@ -705,37 +700,6 @@ async q_a_fn3(correct, answer) {
             null;
     }
 },
-// q_a_fn4_1() {
-// a = R.zip(this.hoge_ary, this.q_a_data5);
-// b = R.collectBy(
-//         (V)=> ( V[1] === '❎' || V[1] === undefined ) ,
-//         a
-//     );
-// c = b[0][0][1] === '⭕️' ? b[1] : b[0];
-// this.hoge_ary = c.map(V=>V[0]);
-// },
-// q_a_fn4_2() {
-// this.q_a_data5 = [];
-// },
-// q_a_fn4_3() {
-// this.online_data_A.push([
-//     R.transpose(this.hoge_ary)[2].join("\n"),
-//     R.transpose(this.hoge_ary)[0].join("\n"),
-// ]);
-// },
-// q_a_fn4_4() {
-// return to_ary(this.q_a_data5).every(V=>V === '⭕️')
-// },
-// q_a_fn4() {
-// if(this.q_a_fn4_4()){
-//     this.hoge_ary = this.q_a_data5 = [];
-//     return;
-// };
-// this.q_a_fn4_1();
-// this.q_a_fn4_2();
-// this.q_a_fn4_3();
-// document.getElementById('prgr').value = 0;
-// },
 q_a_test_index(Test_index) {
 this.hoge_ary.forEach((V,IDX)=>this.q_a_fn3(V[0], V[1][Test_index], IDX));
 this.q_a_fn4();

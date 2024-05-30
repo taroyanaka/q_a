@@ -75,6 +75,7 @@
         height: 3rem;
     }
     .column-2-when-display-toggle_sidebar{
+        z-index: 20;
         position: fixed;
         top: 0;
         right: 0;
@@ -207,8 +208,11 @@
     <button @click="mode = 'qr'">QRコード</button>
 
     <div class="optional_function">
-        <button @click="reverse_q_a">🔃</button>
-        <button @click="shuffle_q_a">🌪️</button>
+        <!-- <button @click="reverse_q_a">🔃</button> -->
+        <!-- <button @click="exe1(true)">🔃</button> -->
+        <button @click="exe1('reverse')">🔃</button>
+        <!-- <button @click="shuffle_q_a">🌪️</button> -->
+        <button @click="exe1('shuffle')">🌪️</button>
         <button @click="swap_q_a">🔁</button>
         <button @click="save_data_to_all_save">🗂️</button>
     </div>
@@ -293,7 +297,7 @@
     <div class="front_of_full_screen">
         <span>{{ DATA_VAL[0] }}</span>
         <span> = </span>
-        <span>{{ DATA_VAL[2][0] }}</span>
+        <span>{{ DATA_VAL[1] }}</span>
         <div v-if="maru_batu_result !== '' ">{{ maru_batu_result }}</div>
     </div>
     <div class="back_full_screen">
@@ -343,8 +347,10 @@
 </div>
 
 <div v-if="mode === 'choose'">
-    <template v-for="(DATAVAL, DATAIDX) in [q_a_data4[only_one_q_a_mode_COUNTER]]" class="simple_mode2">
+    <!-- <template v-for="(DATAVAL, DATAIDX) in " class="simple_mode2"> -->
+    <!-- <template v-for="(DATAVAL, DATAIDX) in [hoge_ary[only_one_q_a_mode_COUNTER]]" class="simple_mode2"> -->
     <!-- <template v-for="(DATAVAL, DATAIDX) in [exe1_data[only_one_q_a_mode_COUNTER]]" class="simple_mode2"> -->
+    <template v-for="(DATAVAL, DATAIDX) in hoge_ary" class="simple_mode2">
     <div class="parent_choose" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
         <span class="choose_question">{{ DATAVAL[2] }} {{ DATAVAL[3] }}</span>
         <!-- <span class="" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span> -->
@@ -394,6 +400,7 @@
 const app = Vue.createApp({
 data() {
 return {
+hoge_ary: [],
 paint_result: '',
 maru_batu_result: '',
 flash_incorrect: '',
@@ -445,7 +452,7 @@ sample_array_obj: [],
 all_save: [],
 split_data_b: [],
 data_b: '',
-q_a_data4: [],
+hoge_ary: [],
 q_a_data5: [],
 data_a: '',
 online_data_A: [],
@@ -480,8 +487,10 @@ beforeMount(){},
 async mounted() {
 await this.set_up();
 
-this.q_a_processing();
+// this.q_a_processing();
+this.convertData2ToData1(to_ary(app.exe1_data));
 this.save_data_load();
+this.toggle_sidebar();
 
 // new QRCode(this.$refs.qrcode, {
 //       text: "https://taroyanaka.github.io/q_a/b_p.html",
@@ -591,6 +600,7 @@ this.data_a = this.online_data_A[IDX][0];
 this.data_b = this.online_data_A[IDX][1];
 },
 reverse_q_a(){
+    console.log("reverse_q_a");
 this.data_a = this.data_a.split("\n").reverse().join("\n");
 this.data_b = this.data_b.split("\n").reverse().join("\n");
 },
@@ -603,13 +613,6 @@ this.data_a = shuffled_data[0].join("\n");
 this.data_b = shuffled_data[1].join("\n");
 },
 swap_q_a(){
-if(this.data_type === 'i_t_n'){
-    // i_t_nにおいては実際にはdata_aとdata_bのスワップはせず、
-    // data_aとdata_bの表示のみをスワップする
-    this.i_t_n_change_result();
-    this.change_to_i_t_n();
-    return;
-};
 [tmp0, tmp1] = [this.data_a, this.data_b];
 [this.data_a, this.data_b] = [tmp1, tmp0];
 },
@@ -655,46 +658,69 @@ return R.zip(this.split_data_b, this.q_a_fn2_1()).map((V,IDX)=>[
                                                                 ]);
 },
 q_a_processing() {
-this.split_data_b = this.data_b.split("\n");
-this.q_a_data4 = this.q_a_fn2_2();
-// this.q_a_data5 = R.repeat(undefined, this.q_a_data4.length);
+// this.split_data_b = this.data_b.split("\n");
+// this.hoge_ary = this.q_a_fn2_2();
+// this.exe1();
+// this.hoge_ary = convertData2ToData1(to_ary(app.exe1_data));
+},
+convertData2ToData1(data2){
+    shuffled_data1_ary = shuffle(data2.map(V=>V[1]));
+    data2_1 = data2.map(V=>V[1]);
+    const without_same_str_data1_ary = (same_str) => data2_1.filter(V=> V !== same_str);
+    // return without_same_str_data1_ary(data2_1[0]);
+    this.hoge_ary = data2.map(item => [
+        item[1],
+        shuffle(
+            shuffle(without_same_str_data1_ary(item[1])).slice(0, 2).concat(item[1])
+        ),
+        item[0],
+        ""
+    ]);
+
+    // return data2_1;
+},
+new_q_a_processing() {
+    this.exe1();
+    this.new_q_a_data_ary = this.convertData2ToData1(to_ary(app.exe1_data));
 },
 async q_a_fn3(correct, answer) {
     console.log('q_a_fn3', correct, answer);
-    this.q_a_data4[this.only_one_q_a_mode_COUNTER][3] = answer === correct ? "⭕️" : "❎";
+    this.hoge_ary[this.only_one_q_a_mode_COUNTER][3] = answer === correct ? "⭕️" : "❎";
     const done_result = async () => {
             // this.paint_result = '全問完了';
             // 待機
             await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
             // this.paint_result = '';
     };
-    // this.q_a_data4初期化
-    const init_data = () => this.q_a_data4 = this.q_a_fn2_2();
-    if(this.q_a_data4[this.only_one_q_a_mode_COUNTER][3] === '⭕️'){
+    // this.hoge_ary初期化
+    // const init_data = () => this.hoge_ary = this.q_a_fn2_2();
+    const init_data = () => this.convertData2ToData1(to_ary(app.exe1_data));
+    if(this.hoge_ary[this.only_one_q_a_mode_COUNTER][3] === '⭕️'){
+        console.log("maru");
         await done_result();
         this.only_one_q_a_mode_COUNTER++;
-        this.q_a_data4.length - 1 === this.only_one_q_a_mode_COUNTER
+        this.hoge_ary.length - 1 === this.only_one_q_a_mode_COUNTER
             ?
             (this.only_one_q_a_mode_COUNTER = 0, init_data()) :
             null;
     }
 },
 // q_a_fn4_1() {
-// a = R.zip(this.q_a_data4, this.q_a_data5);
+// a = R.zip(this.hoge_ary, this.q_a_data5);
 // b = R.collectBy(
 //         (V)=> ( V[1] === '❎' || V[1] === undefined ) ,
 //         a
 //     );
 // c = b[0][0][1] === '⭕️' ? b[1] : b[0];
-// this.q_a_data4 = c.map(V=>V[0]);
+// this.hoge_ary = c.map(V=>V[0]);
 // },
 // q_a_fn4_2() {
 // this.q_a_data5 = [];
 // },
 // q_a_fn4_3() {
 // this.online_data_A.push([
-//     R.transpose(this.q_a_data4)[2].join("\n"),
-//     R.transpose(this.q_a_data4)[0].join("\n"),
+//     R.transpose(this.hoge_ary)[2].join("\n"),
+//     R.transpose(this.hoge_ary)[0].join("\n"),
 // ]);
 // },
 // q_a_fn4_4() {
@@ -702,7 +728,7 @@ async q_a_fn3(correct, answer) {
 // },
 // q_a_fn4() {
 // if(this.q_a_fn4_4()){
-//     this.q_a_data4 = this.q_a_data5 = [];
+//     this.hoge_ary = this.q_a_data5 = [];
 //     return;
 // };
 // this.q_a_fn4_1();
@@ -711,13 +737,13 @@ async q_a_fn3(correct, answer) {
 // document.getElementById('prgr').value = 0;
 // },
 q_a_test_index(Test_index) {
-this.q_a_data4.forEach((V,IDX)=>this.q_a_fn3(V[0], V[1][Test_index], IDX));
+this.hoge_ary.forEach((V,IDX)=>this.q_a_fn3(V[0], V[1][Test_index], IDX));
 this.q_a_fn4();
 },
 // q_a_change_current_index(ONE_UP_OR_ONE_DOWN=1) {
 //     this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
-//     this.current_index < 0 ? this.current_index = this.q_a_data4.length - 1 : null;
-//     this.current_index > this.q_a_data4.length - 1 ? this.current_index = 0 : null;
+//     this.current_index < 0 ? this.current_index = this.hoge_ary.length - 1 : null;
+//     this.current_index > this.hoge_ary.length - 1 ? this.current_index = 0 : null;
 // },
 q_a_fn20(INDEX){
 this.q_a_data5[INDEX] = null;
@@ -789,9 +815,9 @@ async change_paint_or_raw(RAW_IDX){
         await done_result();
     }
 },
-exe1(){
-    const data_0_ary = this.data_a.split('\n');
-    const data_1_ary = this.data_b.split('\n');
+exe1(Param_Str){
+    let data_0_ary = this.data_a.split('\n');
+    let data_1_ary = this.data_b.split('\n');
     const res = data_0_ary.map((val, idx) => {
         return {
             data_0: val,
@@ -808,8 +834,17 @@ exe1(){
         return [data_0, val, ok_or_ng_answer_str_ary, false, true];
     });
     this.exe1_data = d3;
+    if(Param_Str === "reverse"){
+        console.log("reverse");
+        this.exe1_data = R.reverse(to_ary(this.exe1_data));
+    }
+    if(Param_Str === "shuffle"){
+        console.log("shuffle");
+        this.exe1_data = shuffle(to_ary(this.exe1_data));
+    }
 
     this.slides = this.make_slide(this.exe1_data);
+    // this.q_a_processing();
 },
 make_slide(Ary_Param){
     function flattenAndExtract(ary) {
@@ -910,8 +945,15 @@ show_qr(){
 },
 }).mount('.app');
 
-
+function to_ary(it){
+    return JSON.parse(JSON.stringify(it));
+};
 // div.column-2とfixed_element以外を非表示にする
 // document.querySelectorAll('body :not(.fixed_element)').forEach(V=>V.style.display='none');
+
+
+
+
+
 </script>
 </html>

@@ -213,7 +213,8 @@
         <button @click="exe1('reverse')">🔃</button>
         <!-- <button @click="shuffle_q_a">🌪️</button> -->
         <button @click="exe1('shuffle')">🌪️</button>
-        <button @click="swap_q_a">🔁</button>
+        <!-- <button @click="swap_q_a">🔁</button> -->
+        <button @click="exe1('swap')">🔁</button>
         <button @click="save_data_to_all_save">🗂️</button>
     </div>
     <button @click="fn19_0" class="save_opener">📂</button>
@@ -273,10 +274,6 @@
     <textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
 </div>
 
-    <!-- <button @click="fn21(1)" class="font_sizing">◉</button>
-    <button @click="fn21(-1)" class="font_sizing">⦿</button>
-    <button @click="fn21" class="font_sizing">◎</button> -->
-
 
 </div>
 
@@ -289,7 +286,6 @@
 
 
 
-<!-- <div v-if="only_one_q_a_mode === true"> -->
 <template v-for="(DATA_VAL, DATA_IDX) in [exe1_data[only_one_q_a_mode_COUNTER]]">
 <div v-if="mode === 'maru_batu'" class="maru_batu">
 <progress :value="only_one_q_a_mode_COUNTER" :max="exe1_data.length" id="prgr" class="prgr_bar"></progress>
@@ -308,37 +304,28 @@
 </div>
 
 <div v-if="mode === 'black_paint'" class="black_paint" @click="change_paint_or_raw(DATA_IDX)">
-
     <progress :value="only_one_q_a_mode_COUNTER" :max="exe1_data[only_one_q_a_mode_COUNTER].length" id="prgr" class="prgr_bar"></progress>
-
     <div>{{ DATA_VAL[0] }}</div>
     <div :class="DATA_VAL[4] ? 'black-paint-it' : ''">{{ DATA_VAL[1] }}</div>
     <div v-if="paint_result !== '' ">{{ paint_result }}</div>
 </div>
 </template>
-<!-- </div> -->
+
 
 <div v-if="mode === 'slide'" class="slide_mode_color">
     <progress :value="currentIndex" :max="slides.length" id="prgr" class="prgr_bar"></progress>
     <br>
     <br>
     <br>
-    <!-- 現在のスライドを表示 -->
-    <!-- <div @click="next_slide">{{ slides[currentIndex] }}</div> -->
     <div v-if="slides.length > 0">
         <div v-if="slides[currentIndex].q" class="q" @click="next_slide">{{ slides[currentIndex].q }}</div>
         <div v-if="slides[currentIndex].a" class="a" @click="next_slide">{{ slides[currentIndex].a }}</div>
     </div>
-    <!-- 最初のスライドに -->
     <button @click="first_slide">最初へ</button>
-    <!-- 前のスライドに移動するボタン -->
     <button @click="prev_slide">前へ</button>
-    <!-- 次のスライドに移動するボタン -->
     <button @click="next_slide">次へ</button>
-    <!-- auto slide mode button(auto slide状態の時にクリックするとstop_autoslide) -->
     <div v-if="!auto_slide_mode">
         <button @click="auto_slide">auto slide</button>
-            <!-- input numberでtime_intervalを設定 100刻みで変更できて最低値を100とする -->
             <input type="number" v-model="time_interval" min="0.1" step="0.1">秒
     </div>
     <div v-if="auto_slide_mode">
@@ -347,23 +334,16 @@
 </div>
 
 <div v-if="mode === 'choose'">
-    <!-- <template v-for="(DATAVAL, DATAIDX) in " class="simple_mode2"> -->
-    <!-- <template v-for="(DATAVAL, DATAIDX) in [hoge_ary[only_one_q_a_mode_COUNTER]]" class="simple_mode2"> -->
-    <!-- <template v-for="(DATAVAL, DATAIDX) in [exe1_data[only_one_q_a_mode_COUNTER]]" class="simple_mode2"> -->
     <template v-for="(DATAVAL, DATAIDX) in [hoge_ary[only_one_q_a_mode_COUNTER]]" class="simple_mode2">
     <div class="parent_choose" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
         <span class="choose_question">{{ DATAVAL[2] }} {{ DATAVAL[3] }}</span>
-        <!-- <span class="" @click="q_a_fn20(DATAIDX)">{{ q_a_data5[DATAIDX] }}</span> -->
         <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item)">{{ item }}</button>
     </div>
     </template>
-    <!-- <button @click="q_a_change_current_index(+1)" class="check_button" v-if="only_one_q_a_mode">⬇️</button> -->
-    <!-- <button @click="q_a_fn4" class="check_button">🎮</button> -->
 </div>
 
 
 <div v-if="mode === 'qr'">
-<!-- <div id="qrcode" ref="qrcode"></div> -->
 <button @click="show_qr">show_qr</button>
 <div ref="qrcode"></div>
 </div>
@@ -468,13 +448,11 @@ watch: {
 
 data_b: {
     handler() {
-    this.q_a_processing();
     },
     deep: true
 },
 data_a: {
     handler() {
-    this.q_a_processing();
     },
     deep: true
 },
@@ -486,8 +464,7 @@ beforeMount(){},
 async mounted() {
 await this.set_up();
 
-// this.q_a_processing();
-this.convertData2ToData1(to_ary(app.exe1_data));
+this.init_data_for_choose_mode(to_ary(this.exe1_data));
 this.save_data_load();
 this.toggle_sidebar();
 
@@ -642,27 +619,7 @@ fn19_1(){
 
 
 
-
-q_a_fn2_1() {
-return this.split_data_b.map((V, IDX)=>{
-    return shuffle(shuffle(R.without(this.split_data_b[IDX], this.split_data_b)).slice(0, 2).concat(this.split_data_b[IDX]));
-});
-},
-q_a_fn2_2() {
-return R.zip(this.split_data_b, this.q_a_fn2_1()).map((V,IDX)=>[
-                                                                    V[0],
-                                                                    V[1],
-                                                                    this.data_a.split("\n")[IDX],
-                                                                    '',
-                                                                ]);
-},
-q_a_processing() {
-// this.split_data_b = this.data_b.split("\n");
-// this.hoge_ary = this.q_a_fn2_2();
-// this.exe1();
-// this.hoge_ary = convertData2ToData1(to_ary(app.exe1_data));
-},
-convertData2ToData1(data2){
+init_data_for_choose_mode(data2){
     shuffled_data1_ary = shuffle(data2.map(V=>V[1]));
     data2_1 = data2.map(V=>V[1]);
     const without_same_str_data1_ary = (same_str) => data2_1.filter(V=> V !== same_str);
@@ -675,42 +632,30 @@ convertData2ToData1(data2){
         item[0],
         ""
     ]);
-
-    // return data2_1;
 },
 async q_a_fn3(correct, answer) {
-    console.log('q_a_fn3', correct, answer);
     this.hoge_ary[this.only_one_q_a_mode_COUNTER][3] = answer === correct ? "⭕️" : "❎";
     const done_result = async () => {
-            // this.paint_result = '全問完了';
             // 待機
             await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
-            // this.paint_result = '';
     };
-    // this.hoge_ary初期化
-    // const init_data = () => this.hoge_ary = this.q_a_fn2_2();
-    const init_data = () => this.convertData2ToData1(to_ary(app.exe1_data));
+
     if(this.hoge_ary[this.only_one_q_a_mode_COUNTER][3] === '⭕️'){
         console.log("maru");
         await done_result();
         this.only_one_q_a_mode_COUNTER++;
         this.hoge_ary.length - 1 === this.only_one_q_a_mode_COUNTER
             ?
-            (this.only_one_q_a_mode_COUNTER = 0, init_data()) :
+            (this.only_one_q_a_mode_COUNTER = 0, this.init_data_for_choose_mode(to_ary(this.exe1_data))) :
             null;
     }
 },
 q_a_test_index(Test_index) {
-this.hoge_ary.forEach((V,IDX)=>this.q_a_fn3(V[0], V[1][Test_index], IDX));
-this.q_a_fn4();
+    this.hoge_ary.forEach((V,IDX)=>this.q_a_fn3(V[0], V[1][Test_index], IDX));
+    this.q_a_fn4();
 },
-// q_a_change_current_index(ONE_UP_OR_ONE_DOWN=1) {
-//     this.current_index = this.current_index + (ONE_UP_OR_ONE_DOWN);
-//     this.current_index < 0 ? this.current_index = this.hoge_ary.length - 1 : null;
-//     this.current_index > this.hoge_ary.length - 1 ? this.current_index = 0 : null;
-// },
 q_a_fn20(INDEX){
-this.q_a_data5[INDEX] = null;
+    this.q_a_data5[INDEX] = null;
 },
 
 
@@ -782,6 +727,10 @@ async change_paint_or_raw(RAW_IDX){
 exe1(Param_Str){
     let data_0_ary = this.data_a.split('\n');
     let data_1_ary = this.data_b.split('\n');
+    if(Param_Str === 'swap'){
+        console.log("swap");
+        [data_0_ary, data_1_ary] = [data_1_ary, data_0_ary];
+    }
     const res = data_0_ary.map((val, idx) => {
         return {
             data_0: val,
@@ -806,6 +755,8 @@ exe1(Param_Str){
         console.log("shuffle");
         this.exe1_data = shuffle(to_ary(this.exe1_data));
     }
+
+    this.init_data_for_choose_mode(to_ary(this.exe1_data));
 
     this.slides = this.make_slide(this.exe1_data);
     // this.q_a_processing();

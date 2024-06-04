@@ -19,6 +19,9 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
 
 <style>
+.optional_function button{
+    font-size: 2rem;
+}
 .choose_question{
     font-size: 5rem;
 }
@@ -212,8 +215,8 @@
         <button @click="exe1('shuffle')">🌪️</button>
         <button @click="exe1('swap')">🔁</button>
         <button @click="save_data_to_all_save">🗂️</button>
+        <button @click="fn19_0" class="save_opener">📂</button>
     </div>
-    <button @click="fn19_0" class="save_opener">📂</button>
     <ul style='display: block' ref="save_data_set_list_parent1">
     <li v-for="(DATAVAL, DATAIDX) in all_save" class="save_data_set_list">
         <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span>
@@ -318,7 +321,6 @@
 
 <div v-if="mode === 'slide'" class="slide_mode_color">
     <progress :value="currentIndex" :max="slides.length" id="prgr" class="prgr_bar"></progress>
-    <br>
     <br>
     <br>
     <div v-if="slides.length > 0">
@@ -463,7 +465,7 @@ await this.set_up();
 
 this.init_data_for_choose_mode(to_ary(this.exe1_data));
 this.save_data_load();
-this.toggle_sidebar();
+// this.toggle_sidebar();
 
 // new QRCode(this.$refs.qrcode, {
 //       text: "https://taroyanaka.github.io/q_a/b_p.html",

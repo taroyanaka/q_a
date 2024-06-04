@@ -227,7 +227,7 @@
 
 
 <div>
-    <button @click="show_tag_more_button" class="show_tag_more_button_all">🏷️→</button>
+    <!-- <button @click="show_tag_more_button" class="show_tag_more_button_all">🏷️→</button> -->
     <ul :style="{ display: tag_more_visible ? 'inline' : 'none' }">
         <li v-for="(tag, tag_i) in tags" :style="apply_inline_block_styles_all_at_once(false)" class="all_tags">
             <button @click="change_show_tag(tag['tag'])">{{ tag['tag'] }}</button>
@@ -292,13 +292,13 @@
                 >🗑️</button>
         </li>
     </ul>
-    <button @click="show_tag_more_button" class="show_tag_more_button">🏷️→</button>
+    <!-- <button @click="show_tag_more_button" class="show_tag_more_button">🏷️→</button> -->
     <div :style="{ display: tag_more_visible ? 'block' : 'none' }">
         <input list="tag-options" v-model="search_tag" @input="fetch_get_tags_for_autocomplete" @change="fetch_get_tags_for_autocomplete">
         <datalist id="tag-options" @click>
             <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
         </datalist>
-        <button @click="fetch_insert_tag(DATA_VAL['id'])">🏷️🏷️🏷️</button>
+        <button @click="fetch_insert_tag(DATA_VAL['id'])">タグ</button>
     </div>
     <div class="top_right">
         <ul class="dialog_ul">
@@ -623,7 +623,8 @@ data() {
 
         data_text_area_visible: false,
 
-        tag_more_visible: false,
+        // tag_more_visible: false,
+        tag_more_visible: true,
         // comment_button_visible: false,
         // tag_more_visible: true,
         comment_button_visible: true,

@@ -208,12 +208,8 @@
     <button @click="mode = 'qr'">QRコード</button>
 
     <div class="optional_function">
-        <!-- <button @click="reverse_q_a">🔃</button> -->
-        <!-- <button @click="exe1(true)">🔃</button> -->
         <button @click="exe1('reverse')">🔃</button>
-        <!-- <button @click="shuffle_q_a">🌪️</button> -->
         <button @click="exe1('shuffle')">🌪️</button>
-        <!-- <button @click="swap_q_a">🔁</button> -->
         <button @click="exe1('swap')">🔁</button>
         <button @click="save_data_to_all_save">🗂️</button>
     </div>
@@ -255,7 +251,7 @@
     <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data_a" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
     <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data_b" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
 </div>
-<div>
+<!-- <div>
     <button @click="fn18" class="result_opener">📖</button>
     <template v-for="(DATAVAL, DATAIDX) in online_data_A">
         <div class="textarea-column-2">
@@ -272,7 +268,7 @@
 <div v-if="show_textarea">
     <textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
     <textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
-</div>
+</div> -->
 
 
 </div>
@@ -284,33 +280,41 @@
 
 
 
-
-
-<template v-for="(DATA_VAL, DATA_IDX) in [exe1_data[only_one_q_a_mode_COUNTER]]">
-<div v-if="mode === 'maru_batu'" class="maru_batu">
-<progress :value="only_one_q_a_mode_COUNTER" :max="exe1_data.length" id="prgr" class="prgr_bar"></progress>
-<div v-if="DATA_VAL[3] === false" class="parent_full_screen">
-    <div class="front_of_full_screen">
-        <span>{{ DATA_VAL[0] }}</span>
-        <span> = </span>
-        <span>{{ DATA_VAL[1] }}</span>
-        <div v-if="maru_batu_result !== '' ">{{ maru_batu_result }}</div>
+<div v-if="mode === 'choose'">
+    <template v-for="(DATAVAL, DATAIDX) in [exe1_data[only_one_q_a_mode_COUNTER]]" class="simple_mode2">
+    <div class="parent_choose" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
+        <span class="choose_question">{{ DATAVAL[0] }} {{ DATAVAL[5] }}</span>
+        <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ item }}</button>
     </div>
-    <div class="back_full_screen">
-        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0], 'maru')" :class="flash_incorrect === 'maru' || flash_incorrect === null ? 'flash_incorrect maru' : 'maru'" ref="maru">⭕️</button>
-        <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1], 'batu')" :class="flash_incorrect === 'batu' || flash_incorrect === null ? 'flash_incorrect batu' : 'batu'" ref="batu">❎</button>
-    </div>
+    </template>
 </div>
+
+<div v-if="mode === 'maru_batu'" class="maru_batu">
+    <template v-for="(DATA_VAL, DATA_IDX) in [exe1_data[only_one_q_a_mode_COUNTER]]">
+    <progress :value="only_one_q_a_mode_COUNTER" :max="exe1_data.length" id="prgr" class="prgr_bar"></progress>
+    <div v-if="DATA_VAL[3] === false" class="parent_full_screen">
+        <div class="front_of_full_screen">
+            <span>{{ DATA_VAL[0] }}</span>
+            <span> = </span>
+            <span>{{ DATA_VAL[1] }}</span>
+            <div v-if="maru_batu_result !== '' ">{{ maru_batu_result }}</div>
+        </div>
+        <div class="back_full_screen">
+            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0], 'maru')" :class="flash_incorrect === 'maru' || flash_incorrect === null ? 'flash_incorrect maru' : 'maru'" ref="maru">⭕️</button>
+            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1], 'batu')" :class="flash_incorrect === 'batu' || flash_incorrect === null ? 'flash_incorrect batu' : 'batu'" ref="batu">❎</button>
+        </div>
+    </div>
+    </template>
 </div>
 
 <div v-if="mode === 'black_paint'" class="black_paint" @click="change_paint_or_raw(DATA_IDX)">
+    <template v-for="(DATA_VAL, DATA_IDX) in [exe1_data[only_one_q_a_mode_COUNTER]]">
     <progress :value="only_one_q_a_mode_COUNTER" :max="exe1_data[only_one_q_a_mode_COUNTER].length" id="prgr" class="prgr_bar"></progress>
     <div>{{ DATA_VAL[0] }}</div>
     <div :class="DATA_VAL[4] ? 'black-paint-it' : ''">{{ DATA_VAL[1] }}</div>
     <div v-if="paint_result !== '' ">{{ paint_result }}</div>
+    </template>
 </div>
-</template>
-
 
 <div v-if="mode === 'slide'" class="slide_mode_color">
     <progress :value="currentIndex" :max="slides.length" id="prgr" class="prgr_bar"></progress>
@@ -333,14 +337,6 @@
     </div>
 </div>
 
-<div v-if="mode === 'choose'">
-    <template v-for="(DATAVAL, DATAIDX) in [hoge_ary[only_one_q_a_mode_COUNTER]]" class="simple_mode2">
-    <div class="parent_choose" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
-        <span class="choose_question">{{ DATAVAL[2] }} {{ DATAVAL[3] }}</span>
-        <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[1]" @click="q_a_fn3(DATAVAL[0], item)">{{ item }}</button>
-    </div>
-    </template>
-</div>
 
 
 <div v-if="mode === 'qr'">
@@ -380,7 +376,6 @@
 const app = Vue.createApp({
 data() {
 return {
-hoge_ary: [],
 paint_result: '',
 maru_batu_result: '',
 flash_incorrect: '',
@@ -404,7 +399,10 @@ mode: 'choose',
 file_name_ary: [],
 textContent_ary_1: [],
 textContent_ary_2: [],
+
 exe1_data: [],
+hoge_ary: [],
+
 data_0: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 ccccccccccccccccccccccccccccccccccc
@@ -432,7 +430,6 @@ sample_array_obj: [],
 all_save: [],
 split_data_b: [],
 data_b: '',
-q_a_data5: [],
 data_a: '',
 online_data_A: [],
 test_mode: false,
@@ -481,185 +478,75 @@ this.toggle_sidebar();
 beforeUpdate() {},
 async updated() {},
 methods: {
-async set_up(){
-    const text_url_ary_1 = [
-'./asset/txt_dir/sample_ary_1.txt',
-'./asset/txt_dir/res_2_ary_1.txt',
-        './asset/txt_dir/res_2_2_ary_1.txt',
-        // './asset/txt_dir/res_3_ary_1.txt',
-        // './asset/txt_dir/res_4_ary_1.txt',
-        // './asset/txt_dir/res_5_ary_1.txt',
-    ];
-    const text_url_ary_2 = [
-'./asset/txt_dir/sample_ary_3.txt',
-'./asset/txt_dir/res_2_ary_3.txt',
-        './asset/txt_dir/res_2_2_ary_3.txt',
-        // './asset/txt_dir/res_3_ary_3.txt',
-        // './asset/txt_dir/res_4_ary_3.txt',
-        // './asset/txt_dir/res_5_ary_3.txt',
-    ];
-    const global_file_name_ary = [
-    'サンプル問題集5問',
-        '英検2級',
-        '英検準2級',
-        // '英検3級',
-        // '英検4級',
-        // '英検5級',
-    ];
-    this.file_name_ary = global_file_name_ary;
-    for(let i = 0; i < text_url_ary_1.length; i++){
-        const response = await fetch(text_url_ary_1[i]);
-        this.textContent_ary_1.push(await response.text());
+exe1(Param_Str){
+    let data_0_ary = this.data_a.split('\n');
+    let data_1_ary = this.data_b.split('\n');
+    if(Param_Str === 'swap'){
+        [data_0_ary, data_1_ary] = [data_1_ary, data_0_ary];
     }
-    for(let i = 0; i < text_url_ary_2.length; i++){
-        const response = await fetch(text_url_ary_2[i]);
-        this.textContent_ary_2.push(await response.text());
+    const res = data_0_ary.map((val, idx) => {
+        return {
+            data_0: val,
+            data_1: data_1_ary[idx],
+        };
+    });
+    d1 = res;
+    d2 = d1.map((val, idx) => val.data_1 );
+    d3 = d2.map((val, idx) => {
+        const filter_d2 = d2.filter((val2, idx2) => val2 !== d2[idx]);
+        const only_filter_data = shuffle(filter_d2)[0];
+        const ok_or_ng_answer_str_ary = shuffle([d2[idx], only_filter_data]);
+        const data_0 = d1[idx].data_0;
+        return [data_0, val, ok_or_ng_answer_str_ary, false, true, ''];
+    });
+    this.exe1_data = d3;
+    if(Param_Str === "reverse"){
+        this.exe1_data = R.reverse(to_ary(this.exe1_data));
     }
-    if(this.textContent_ary_1.length !== this.textContent_ary_2.length){
-        console.error('textContent_ary_1とtextContent_ary_2のlengthが異なります');
+    if(Param_Str === "shuffle"){
+        this.exe1_data = shuffle(to_ary(this.exe1_data));
     }
-
-    this.set_data_sample_array_obj(0);
-},
-
-// sample_array_objからIDX指定してsample_array_objのdata_0とdata_1をtextareaに格納する関数
-set_data_sample_array_obj(IDX){
-    if(this.text_attacher(IDX) === true){
-        this.exe1();
-        return;
-    }
-    this.data_a = this.textContent_ary_1[IDX];
-    this.data_b = this.textContent_ary_2[IDX];
-    this.exe1();
+    // this.init_data_for_choose_mode(to_ary(this.exe1_data));
+    this.slides = this.make_slide(this.exe1_data);
+    // this.q_a_processing();
 },
 
 
+// init_data_for_choose_mode(data2){
+//     shuffled_data1_ary = shuffle(data2.map(V=>V[1]));
+//     data2_1 = data2.map(V=>V[1]);
+//     const without_same_str_data1_ary = (same_str) => data2_1.filter(V=> V !== same_str);
+//     // return without_same_str_data1_ary(data2_1[0]);
+//     this.hoge_ary = data2.map(item => [
+//         item[1],
+//         shuffle(
+//             shuffle(without_same_str_data1_ary(item[1])).slice(0, 2).concat(item[1])
+//         ),
+//         item[0],
+//         ""
+//     ]);
+// },
 
-async save_data_to_all_save(){
-    try {
-    const item_key = this.data_type;
-    this.all_save.push(to_ary([this.data_a, this.data_b]));
-    await localforage.setItem(item_key, JSON.stringify(this.all_save));
-    } catch (error) {
-        console.log(error);
-    };
-},
-async save_data_load() {
-    try {
-    const item_key = this.data_type;
-    this.all_save = JSON.parse(await localforage.getItem(item_key)) || [];
-    } catch (error) {
-        console.log(error);
-    }
-},
-async save_data_delete(INDEX){
-    try {
-    const item_key = this.data_type;
-    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
-        this.all_save.splice(INDEX, 1);
-        await localforage.setItem(item_key, JSON.stringify(this.all_save));
-    };
-    } catch (error) {
-        console.log(error);
-    }
-},
-
-save_data_set(INDEX){
-    this.data_a = this.all_save[INDEX][0];
-    this.data_b = this.all_save[INDEX][1];
-},
-
-
-fn9(IDX){
-    console.log("fn9");
-this.data_a = this.online_data_A[IDX][0];
-this.data_b = this.online_data_A[IDX][1];
-},
-reverse_q_a(){
-    console.log("reverse_q_a");
-this.data_a = this.data_a.split("\n").reverse().join("\n");
-this.data_b = this.data_b.split("\n").reverse().join("\n");
-},
-shuffle_q_a(){
-shuffled_data = R.transpose(shuffle(R.zip(
-    this.data_a.split("\n"),
-    this.data_b.split("\n")
-)));
-this.data_a = shuffled_data[0].join("\n");
-this.data_b = shuffled_data[1].join("\n");
-},
-swap_q_a(){
-[tmp0, tmp1] = [this.data_a, this.data_b];
-[this.data_a, this.data_b] = [tmp1, tmp0];
-},
-fn16(INDEX){
-this.online_data_A.splice(INDEX, 1);
-},
-fn18(){
-    const RESULTS = this.$refs.results;
-        RESULTS.map(ELM=>ELM.style.display).some(DISPLAY=>DISPLAY==='block' || DISPLAY==='') ?
-            RESULTS.map(ELM=>ELM.style.display = 'none') :
-            RESULTS.map(ELM=>ELM.style.display = 'block');
-},
-fn19_0(){
-    const THE_STYLE_DISPLAY1 = this.$refs.save_data_set_list_parent1.style.display;
-    this.$refs.save_data_set_list_parent1.style.display = (THE_STYLE_DISPLAY1 === 'block' || THE_STYLE_DISPLAY1 === '') ? 'none' : 'block';
-},
-fn19_1(){
-    const THE_STYLE_DISPLAY2 = this.$refs.save_data_set_list_parent2.style.display;
-    this.$refs.save_data_set_list_parent2.style.display = (THE_STYLE_DISPLAY2 === 'block' || THE_STYLE_DISPLAY2 === '') ? 'none' : 'block';
-},
-
-
-
-
-
-
-
-
-
-
-init_data_for_choose_mode(data2){
-    shuffled_data1_ary = shuffle(data2.map(V=>V[1]));
-    data2_1 = data2.map(V=>V[1]);
-    const without_same_str_data1_ary = (same_str) => data2_1.filter(V=> V !== same_str);
-    // return without_same_str_data1_ary(data2_1[0]);
-    this.hoge_ary = data2.map(item => [
-        item[1],
-        shuffle(
-            shuffle(without_same_str_data1_ary(item[1])).slice(0, 2).concat(item[1])
-        ),
-        item[0],
-        ""
-    ]);
-},
-async q_a_fn3(correct, answer) {
-    this.hoge_ary[this.only_one_q_a_mode_COUNTER][3] = answer === correct ? "⭕️" : "❎";
+async check_q_a_for_choose_mode(correct, answer) {
+    this.exe1_data[this.only_one_q_a_mode_COUNTER][5] = answer === correct ? "⭕️" : "❎";
     const done_result = async () => {
             // 待機
             await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
     };
-
-    if(this.hoge_ary[this.only_one_q_a_mode_COUNTER][3] === '⭕️'){
+    if(this.exe1_data[this.only_one_q_a_mode_COUNTER][5] === '⭕️'){
         console.log("maru");
         await done_result();
         this.only_one_q_a_mode_COUNTER++;
-        this.hoge_ary.length - 1 === this.only_one_q_a_mode_COUNTER
+        this.exe1_data.length - 1 === this.only_one_q_a_mode_COUNTER
             ?
-            (this.only_one_q_a_mode_COUNTER = 0, this.init_data_for_choose_mode(to_ary(this.exe1_data))) :
+            (
+            this.only_one_q_a_mode_COUNTER = 0,
+            this.exe1_data.forEach((val, idx) => val[5] = '')
+            ) :
             null;
     }
 },
-q_a_test_index(Test_index) {
-    this.hoge_ary.forEach((V,IDX)=>this.q_a_fn3(V[0], V[1][Test_index], IDX));
-    this.q_a_fn4();
-},
-q_a_fn20(INDEX){
-    this.q_a_data5[INDEX] = null;
-},
 
-
-// core of q_a
 
 
 
@@ -724,43 +611,7 @@ async change_paint_or_raw(RAW_IDX){
         await done_result();
     }
 },
-exe1(Param_Str){
-    let data_0_ary = this.data_a.split('\n');
-    let data_1_ary = this.data_b.split('\n');
-    if(Param_Str === 'swap'){
-        console.log("swap");
-        [data_0_ary, data_1_ary] = [data_1_ary, data_0_ary];
-    }
-    const res = data_0_ary.map((val, idx) => {
-        return {
-            data_0: val,
-            data_1: data_1_ary[idx],
-        };
-    });
-    d1 = res;
-    d2 = d1.map((val, idx) => val.data_1 );
-    d3 = d2.map((val, idx) => {
-        const filter_d2 = d2.filter((val2, idx2) => val2 !== d2[idx]);
-        const only_filter_data = shuffle(filter_d2)[0];
-        const ok_or_ng_answer_str_ary = shuffle([d2[idx], only_filter_data]);
-        const data_0 = d1[idx].data_0;
-        return [data_0, val, ok_or_ng_answer_str_ary, false, true];
-    });
-    this.exe1_data = d3;
-    if(Param_Str === "reverse"){
-        console.log("reverse");
-        this.exe1_data = R.reverse(to_ary(this.exe1_data));
-    }
-    if(Param_Str === "shuffle"){
-        console.log("shuffle");
-        this.exe1_data = shuffle(to_ary(this.exe1_data));
-    }
 
-    this.init_data_for_choose_mode(to_ary(this.exe1_data));
-
-    this.slides = this.make_slide(this.exe1_data);
-    // this.q_a_processing();
-},
 make_slide(Ary_Param){
     function flattenAndExtract(ary) {
         let res = [];
@@ -772,23 +623,7 @@ make_slide(Ary_Param){
     }
     return flattenAndExtract(Ary_Param);
 },
-text_attacher(IDX){
-    if(this.textContent_ary_1){
-        this.data_a = this.textContent_ary_1[IDX];
-        this.data_b = this.textContent_ary_2[IDX];
-        return true;
-    }
-},
-// sample_array_objからIDX指定してsample_array_objのdata_0とdata_1をtextareaに格納する関数
-set_data_sample_array_obj(IDX){
-    if(this.text_attacher(IDX) === true){
-        this.exe1();
-        return;
-    }
-    this.data_a = this.textContent_ary_1[IDX];
-    this.data_b = this.textContent_ary_2[IDX];
-    this.exe1();
-},
+
 async check_maru_batu(VAL, RESULT, Maru_Or_Batu){
     // 不正解のボタンを押した時に正解の問題が一瞬点灯する処理の関数
         const maru = this.$refs.maru;
@@ -803,11 +638,9 @@ async check_maru_batu(VAL, RESULT, Maru_Or_Batu){
         await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
         this.maru_batu_result = '';
     }
-if(this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER){
+    if(this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER){
     await waitAndExecute()
 };
-
-
     if(VAL[1] === RESULT){
         console.log('正解');
         VAL[3] = true;
@@ -830,20 +663,117 @@ if(this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q
 
 
 
+
+
+
+
+
+
+
+
+
+
+async set_up(){
+    const text_url_ary_1 = [
+'./asset/txt_dir/sample_ary_1.txt',
+'./asset/txt_dir/res_2_ary_1.txt',
+        './asset/txt_dir/res_2_2_ary_1.txt',
+        // './asset/txt_dir/res_3_ary_1.txt',
+        // './asset/txt_dir/res_4_ary_1.txt',
+        // './asset/txt_dir/res_5_ary_1.txt',
+    ];
+    const text_url_ary_2 = [
+'./asset/txt_dir/sample_ary_3.txt',
+'./asset/txt_dir/res_2_ary_3.txt',
+        './asset/txt_dir/res_2_2_ary_3.txt',
+        // './asset/txt_dir/res_3_ary_3.txt',
+        // './asset/txt_dir/res_4_ary_3.txt',
+        // './asset/txt_dir/res_5_ary_3.txt',
+    ];
+    const global_file_name_ary = [
+    'サンプル問題集5問',
+        '英検2級',
+        '英検準2級',
+        // '英検3級',
+        // '英検4級',
+        // '英検5級',
+    ];
+    this.file_name_ary = global_file_name_ary;
+    for(let i = 0; i < text_url_ary_1.length; i++){
+        const response = await fetch(text_url_ary_1[i]);
+        this.textContent_ary_1.push(await response.text());
+    }
+    for(let i = 0; i < text_url_ary_2.length; i++){
+        const response = await fetch(text_url_ary_2[i]);
+        this.textContent_ary_2.push(await response.text());
+    }
+    if(this.textContent_ary_1.length !== this.textContent_ary_2.length){
+        console.error('textContent_ary_1とtextContent_ary_2のlengthが異なります');
+    }
+
+    this.set_data_sample_array_obj(0);
+},
+text_attacher(IDX){
+    if(this.textContent_ary_1){
+        this.data_a = this.textContent_ary_1[IDX];
+        this.data_b = this.textContent_ary_2[IDX];
+        return true;
+    }
+},
+set_data_sample_array_obj(IDX){
+    if(this.text_attacher(IDX) === true){
+        this.exe1();
+        return;
+    }
+    this.data_a = this.textContent_ary_1[IDX];
+    this.data_b = this.textContent_ary_2[IDX];
+    this.exe1();
+},
+async save_data_to_all_save(){
+    try {
+    const item_key = this.data_type;
+    this.all_save.push(to_ary([this.data_a, this.data_b]));
+    await localforage.setItem(item_key, JSON.stringify(this.all_save));
+    } catch (error) {
+        console.log(error);
+    };
+},
+async save_data_load() {
+    try {
+    const item_key = this.data_type;
+    this.all_save = JSON.parse(await localforage.getItem(item_key)) || [];
+    } catch (error) {
+        console.log(error);
+    }
+},
+async save_data_delete(INDEX){
+    try {
+    const item_key = this.data_type;
+    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
+        this.all_save.splice(INDEX, 1);
+        await localforage.setItem(item_key, JSON.stringify(this.all_save));
+    };
+    } catch (error) {
+        console.log(error);
+    }
+},
+save_data_set(INDEX){
+    this.data_a = this.all_save[INDEX][0];
+    this.data_b = this.all_save[INDEX][1];
+},
+fn19_0(){
+    const THE_STYLE_DISPLAY1 = this.$refs.save_data_set_list_parent1.style.display;
+    this.$refs.save_data_set_list_parent1.style.display = (THE_STYLE_DISPLAY1 === 'block' || THE_STYLE_DISPLAY1 === '') ? 'none' : 'block';
+},
+
+
+
 toggle_sidebar() {
     this.column_1_none = !this.column_1_none;
 },
-
-
-
 textarea_opener() {
     this.textarea_visible = !this.textarea_visible;
 },
-
-
-
-
-
 show_qr(){
     new QRCode(this.$refs.qrcode, {
         text: "https://taroyanaka.github.io/q_a/b_p.html",
@@ -856,6 +786,23 @@ show_qr(){
 },
 
 
+// fn9(IDX){
+// this.data_a = this.online_data_A[IDX][0];
+// this.data_b = this.online_data_A[IDX][1];
+// },
+// fn16(INDEX){
+// this.online_data_A.splice(INDEX, 1);
+// },
+// fn18(){
+//     const RESULTS = this.$refs.results;
+//         RESULTS.map(ELM=>ELM.style.display).some(DISPLAY=>DISPLAY==='block' || DISPLAY==='') ?
+//             RESULTS.map(ELM=>ELM.style.display = 'none') :
+//             RESULTS.map(ELM=>ELM.style.display = 'block');
+// },
+// q_a_test_index(Test_index) {
+//     this.hoge_ary.forEach((V,IDX)=>this.check_q_a_for_choose_mode(V[0], V[1][Test_index], IDX));
+//     this.q_a_fn4();
+// },
 
 },
 }).mount('.app');

@@ -19,6 +19,9 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
 
 <style>
+.username{
+    width: 90%;
+}
 .optional_function button{
     font-size: 2rem;
 }
@@ -217,13 +220,32 @@
         <button @click="save_data_to_all_save">🗂️</button>
         <button @click="fn19_0" class="save_opener">📂</button>
     </div>
+    <div v-if="web_data">
+        <!-- input:text v-model=username -->
+    <input type="text" v-model="username" class="username" placeholder="username">
+
     <ul style='display: block' ref="save_data_set_list_parent1">
+        <!-- res = to_ary(app.web_data.message).filter(V=>V.username === 'user1');
+        res2 = res[0].data_json_str;
+        res3 = JSON.parse(res2).data1; -->
+        <!-- <li v-for="(DATAVAL, DATAIDX) in to_ary(web_data.message).filter(V=>V.username === 'user1')" class="save_data_set_list"> -->
+        <li v-for="(DATAVAL, DATAIDX) in users_web_data" class="save_data_set_list">
+            {{ JSON.parse(DATAVAL.data_json_str).data1.split("\n")[0] }}
+            <!-- {{ JSON.parse(DATAVAL.data_json_str).data2.split("\n")[0] }} -->
+            <!-- <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span> -->
+            <!-- <button @click="save_data_set(DATAIDX)" class="save_data_set">📂</button> -->
+            <!-- <button @click="save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button> -->
+        </li>
+    </ul>
+    </div>
+
+    <!-- <ul style='display: block' ref="save_data_set_list_parent1">
     <li v-for="(DATAVAL, DATAIDX) in all_save" class="save_data_set_list">
         <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span>
         <button @click="save_data_set(DATAIDX)" class="save_data_set">📂</button>
         <button @click="save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button>
     </li>
-    </ul>
+    </ul> -->
     <div v-for="(DATA_VAL, DATA_IDX) in textContent_ary_1">
         <div>
             <button @click="set_data_sample_array_obj(DATA_IDX)">{{ file_name_ary[DATA_IDX] }}</button>
@@ -378,6 +400,8 @@
 const app = Vue.createApp({
 data() {
 return {
+users_web_data: [],
+username: 'user1',
 show_user: '',
 show_tag: '',
 show_order_by: 'DESC',
@@ -453,7 +477,12 @@ current_index: 0,
 textarea_visible: false,
 }},
 watch: {
-
+username: {
+    handler() {
+        this.get_users_web_data();
+    },
+    deep: true
+},
 data_b: {
     handler() {
     },
@@ -492,11 +521,14 @@ beforeMount(){},
 async mounted() {
 await this.fetch_read_all();
 
+// this.toggle_sidebar();
+this.column_1_none = false;
+
+
 await this.set_up();
 
 this.init_data_for_choose_mode(to_ary(this.exe1_data));
 this.save_data_load();
-// this.toggle_sidebar();
 
 
 // new QRCode(this.$refs.qrcode, {
@@ -512,6 +544,9 @@ this.save_data_load();
 beforeUpdate() {},
 async updated() {},
 methods: {
+get_users_web_data(){
+    this.users_web_data = to_ary(this.web_data.message).filter(V=>V.username === this.username);
+},
 async fetch_read_all(){
     try {
     this.show_user = this.show_user === '' ? '' : this.show_user;
@@ -525,6 +560,7 @@ async fetch_read_all(){
     url.search = new URLSearchParams(params_for_get).toString();
     const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
     this.web_data = await res.json(); console.log(this.web_data);
+    this.get_users_web_data();
     } catch (error) {
         console.log(error);
     }
@@ -867,12 +903,6 @@ function to_ary(it){
 
 
 
-JSON.parse(to_ary(app.web_data.message)[0].data_json_str).data1
-JSON.parse(to_ary(app.web_data.message))
-res = to_ary(app.web_data.message).filter(V=>V.username === 'user1');
-res2 = res[0].data_json_str;
-res3 = JSON.parse(res2).data1;
-// this.name: 'user1',
 
 </script>
 </html>

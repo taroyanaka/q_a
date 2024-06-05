@@ -35,11 +35,16 @@
 .data_text_area_toggle {
     font-size: 1.3rem;
 }
+.parent_data_text_area{
+    display: flex;
+    width: 100vw;
+
+}
 .data_text_area {
-    width: 90vw;
-    height: 30vh;
+    width: 50vw;
+    /* height: 10vh; */
     font-size: 1.2rem;
-    margin-left: 5vw;
+    /* margin-left: 5vw; */
 }
 .fixed_element {
     z-index: 10;
@@ -206,11 +211,15 @@
 -->
 
 
-<!-- <button @click="data_text_area_toggle" class="data_text_area_toggle" :style="{ marginLeft: data_text_area_visible ? '40vw' : '' }">🎁📦🥡</button>
-<textarea name="data1" class="data_text_area data_text_area_1" v-model="data1" :style="{ display: data_text_area_visible ? 'block' : 'none' }"></textarea>
-<button @click="data_text_area_toggle" class="data_text_area_toggle" :style="{ marginLeft: data_text_area_visible ? '40vw' : '' }">🎁📦🥡</button>
-<textarea name="data2" class="data_text_area data_text_area_2" v-model="data2" :style="{ display: data_text_area_visible ? 'block' : 'none' }"></textarea>
-<button @click="data_text_area_toggle" class="data_text_area_toggle" :style="{ marginLeft: data_text_area_visible ? '40vw' : '' }">🎁📦🥡</button> -->
+<button @click="data_text_area_toggle" class="data_text_area_toggle" :style="{ marginLeft: data_text_area_visible ? '40vw' : '' }">Edit</button>
+<div class="parent_data_text_area">
+    <textarea name="data1" class="data_text_area data_text_area_1" v-model="data1" :style="{ display: data_text_area_visible ? 'block' : 'none' }"></textarea>
+    <!-- <button @click="data_text_area_toggle" class="data_text_area_toggle" :style="{ marginLeft: data_text_area_visible ? '40vw' : '' }">🎁📦🥡</button> -->
+    <textarea name="data2" class="data_text_area data_text_area_2" v-model="data2" :style="{ display: data_text_area_visible ? 'block' : 'none' }"></textarea>
+    <!-- <button @click="data_text_area_toggle" class="data_text_area_toggle" :style="{ marginLeft: data_text_area_visible ? '40vw' : '' }">🎁📦🥡</button> -->
+</div>
+    <button @click="fetch_insert_link" class="fetch_insert_link" :style="{ display: data_text_area_visible ? 'block' : 'none' }">Upload</button>
+
 
 
 <div class="insert_option">
@@ -221,7 +230,7 @@
     <!-- </select> -->
     <input type="text" v-model="name" placeholder="name" class="name">
     <input type="password" v-model="password" placeholder="password" class="placeholder">
-    <button @click="fetch_insert_link" class="fetch_insert_link">📲🛫📲🚀📲</button>
+    <!-- <button @click="fetch_insert_link" class="fetch_insert_link">📲🛫📲🚀📲</button> -->
     <!-- <button @click="fetch_test_db_init">fetch_test_db_init</button> -->
 </div>
 
@@ -237,9 +246,12 @@
 
 
 <div class="additional_parent">
-    <div class="additional_child">👥 <button v-if="show_user" @click="show_all_user">{{ show_user }}</button></div>
+    <div class="additional_child"> <button v-if="show_user" @click="show_all_user">{{ show_user }}</button></div>
+    <div class="additional_child"> <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button></div>
+    <div class="additional_child"> <button @click="change_show_order_by">{{ show_order_by }}</button></div>
+    <!-- <div class="additional_child">👥 <button v-if="show_user" @click="show_all_user">{{ show_user }}</button></div>
     <div class="additional_child">🏷️ <button v-if="show_tag" @click="show_all_tag">{{ show_tag }}</button></div>
-    <div class="additional_child">⬆️⬇️ <button @click="change_show_order_by">{{ show_order_by }}</button></div>
+    <div class="additional_child">⬆️⬇️ <button @click="change_show_order_by">{{ show_order_by }}</button></div> -->
 </div>
 
 
@@ -273,7 +285,8 @@
 <li v-for="(DATA_VAL, DATA_IDX) in web_data['message']" class="block_of_one simple_mode">
     <!-- <div class="data_type" v-if="DATA_VAL['data_type']" @click="go_to_any_service_page(DATA_VAL['data_type'])" >{{ DATA_VAL['data_type'] }}</div> -->
     <!-- <div :style="apply_inline_block_styles_all_at_once(false)" class="download_data" @click="download_data(DATA_VAL['id'])">⬆️</div> -->
-    <div :style="apply_inline_block_styles_all_at_once(false)" class="download_data" @click="copy(DATA_VAL['id'])">COPY</div>
+<!-- <div :style="apply_inline_block_styles_all_at_once(false)" class="download_data" @click="copy(DATA_VAL['id'])">COPY</div> -->
+<button :style="apply_inline_block_styles_all_at_once(false)" class="download_data" @click="copy(DATA_VAL['id'])">COPY</button>
     <!-- <div :style="apply_inline_block_styles_all_at_once(false)" class="go_to_any_service_page_with_id" @click="go_to_any_service_page_with_id(DATA_VAL['data_type'], DATA_VAL['id'])">📂</div> -->
     <span v-if="DATA_VAL['likes'].length === 0"
         @click="fetch_like_increment_or_decrement(DATA_VAL['id'])">
@@ -298,7 +311,7 @@
         <datalist id="tag-options" @click>
             <option v-for="(tag_option, tag_option_i) in tags" :value="tag_option.tag">{{ tag_option.tag }}</option>
         </datalist>
-        <button @click="fetch_insert_tag(DATA_VAL['id'])">タグ</button>
+        <button @click="fetch_insert_tag(DATA_VAL['id'])">Tag</button>
     </div>
     <div class="top_right">
         <ul class="dialog_ul">

@@ -225,11 +225,10 @@ button {
         <button @click="exe1('reverse')">🔃</button>
         <button @click="exe1('shuffle')">🌪️</button>
         <button @click="exe1('swap')">🔁</button>
-        <button @click="save_data_to_all_save">🗂️</button>
-        <button @click="fn19_0" class="save_opener">📂</button>
+        <!-- <button @click="save_data_to_all_save">🗂️</button> -->
+        <!-- <button @click="fn19_0" class="save_opener">📂</button> -->
+        <button @click="redirect_to_share">📝</button>
     </div>
-    <!-- 同じディレクトリの./share.htmlへのリダイレクトのa:hrefリンク(comfirmがある) -->
-    <a href="./share.html" onclick="return confirm('Do you really want to leave this page?🦖\n本当にこのページを離れますか？🦕')">share</a>
 
     <div v-if="web_data">
         <!-- input:text v-model=username -->
@@ -269,7 +268,7 @@ button {
     </div>
 
 <!-- version情報 -->
-<p>version 0.0.0.3</p>
+<p>version 0.0.0.4</p>
 
 
 
@@ -898,6 +897,12 @@ save_data_set(INDEX){
 fn19_0(){
     const THE_STYLE_DISPLAY1 = this.$refs.save_data_set_list_parent1.style.display;
     this.$refs.save_data_set_list_parent1.style.display = (THE_STYLE_DISPLAY1 === 'block' || THE_STYLE_DISPLAY1 === '') ? 'none' : 'block';
+},
+redirect_to_share(){
+    // <a href="./share.html" onclick="return confirm('Do you really want to leave this page?🦖\n本当にこのページを離れますか？🦕')">share</a>
+    if(window.confirm('Do you really want to leave this page to share page?🦖\n本当にこのページを離れてシェアページに飛びますか？🦕')){
+        location.href = './share.html';
+    }
 },
 
 

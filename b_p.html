@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>black paint q_a</title>
 
+
 <link rel="stylesheet" href="./lib/reset.css">
 <script src="./lib/localforage@1.10.0.js"></script>
 <script src="./lib/vue@3.2.36.global.prod.js"></script>
@@ -267,6 +268,8 @@ button {
         <button @click="set_data_sample_array_obj(DATA_IDX)">set_data_sample_array_obj({{ DATA_IDX }})</button>
     </div>
 
+<!-- version情報 -->
+<p>version 0.0.0.1</p>
 
 
 
@@ -283,11 +286,17 @@ button {
 
 
 
-<button @click="textarea_opener" class="textarea_opener">📝</button>
+
+
+<!-- <button @click="textarea_opener" class="textarea_opener">📝</button>
 <div class="textarea-column-1" id="target">
     <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data_a" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
     <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data_b" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
-</div>
+</div> -->
+
+
+
+
 <!-- <div>
     <button @click="fn18" class="result_opener">📖</button>
     <template v-for="(DATAVAL, DATAIDX) in online_data_A">

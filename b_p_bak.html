@@ -271,7 +271,7 @@ button {
     </div> -->
 
 <!-- version情報 -->
-<p class="version">version 0.0.0.6</p>
+<p>version 0.0.0.5</p>
 
 
 
@@ -384,6 +384,8 @@ button {
     </div>
 </div>
 
+
+
 <div v-if="mode === 'qr'">
 <button @click="show_qr">show_qr</button>
 <div ref="qrcode"></div>
@@ -457,21 +459,7 @@ file_name_ary: [],
 textContent_ary_1: [],
 textContent_ary_2: [],
 
-// exe1_data: [],
-// mountedの際にexe1_dataが空だとエラーが出るので適当な初期値を設定
-exe1_data: [
-    [
-        "こんにちは",
-        "hello",
-        [
-            "food",
-            "hello"
-        ],
-        false,
-        true,
-        ""
-    ]
-],
+exe1_data: [],
 hoge_ary: [],
 
 data_0: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -571,8 +559,8 @@ beforeCreate(){},
 created(){},
 beforeMount(){},
 async mounted() {
-this.exe1();
 await this.fetch_read_all();
+this.exe1();
 
 // this.toggle_sidebar();
 // this.column_1_none = false;

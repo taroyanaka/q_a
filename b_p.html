@@ -8,11 +8,11 @@
 
 
 <link rel="stylesheet" href="./lib/reset.css">
-<script src="./lib/localforage@1.10.0.js"></script>
+<!-- <script src="./lib/localforage@1.10.0.js"></script> -->
 <script src="./lib/vue@3.2.36.global.prod.js"></script>
 <script src="./lib/ramda.@0.28.0.js"></script>
 <script src="./lib/shuffle.js"></script>
-<script src="./lib/qrcode.js"></script>
+<!-- <script src="./lib/qrcode.js"></script> -->
 <!-- <script src="./lib/my_global_function_for_q_a.js"></script> -->
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script> -->
@@ -230,25 +230,25 @@ button {
         <button @click="redirect_to_share">📝</button>
     </div>
 
-    <div v-if="web_data">
-        <!-- input:text v-model=username -->
-    <input type="text" v-model="username" class="username" placeholder="username">
+    <div v-if="web_data.message">
+            <!-- input:text v-model=username -->
+        <input type="text" v-model="username" class="username" placeholder="username">
 
-    <ul style='display: block' ref="save_data_set_list_parent1">
-        <!-- res = to_ary(app.web_data.message).filter(V=>V.username === 'user1');
-        res2 = res[0].data_json_str;
-        res3 = JSON.parse(res2).data1; -->
-        <!-- <li v-for="(DATAVAL, DATAIDX) in to_ary(web_data.message).filter(V=>V.username === 'user1')" class="save_data_set_list"> -->
-        <li v-for="(DATAVAL, DATAIDX) in users_web_data" class="save_data_set_list">
-            <button @click="set_data_from_web_data(DATAIDX)">
-            {{ JSON.parse(DATAVAL.data_json_str).data1.split("\n")[0].slice(0, 5) }}
-            </button>
-            <!-- {{ JSON.parse(DATAVAL.data_json_str).data2.split("\n")[0] }} -->
-            <!-- <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span> -->
-            <!-- <button @click="save_data_set(DATAIDX)" class="save_data_set">📂</button> -->
-            <!-- <button @click="save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button> -->
-        </li>
-    </ul>
+        <ul style='display: block' ref="save_data_set_list_parent1">
+            <!-- res = to_ary(app.web_data.message).filter(V=>V.username === 'user1');
+            res2 = res[0].data_json_str;
+            res3 = JSON.parse(res2).data1; -->
+            <!-- <li v-for="(DATAVAL, DATAIDX) in to_ary(web_data.message).filter(V=>V.username === 'user1')" class="save_data_set_list"> -->
+            <li v-for="(DATAVAL, DATAIDX) in users_web_data" class="save_data_set_list">
+                <button @click="set_data_from_web_data(DATAIDX)">
+                {{ JSON.parse(DATAVAL.data_json_str).data1.split("\n")[0].slice(0, 5) }}
+                </button>
+                <!-- {{ JSON.parse(DATAVAL.data_json_str).data2.split("\n")[0] }} -->
+                <!-- <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span> -->
+                <!-- <button @click="save_data_set(DATAIDX)" class="save_data_set">📂</button> -->
+                <!-- <button @click="save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button> -->
+            </li>
+        </ul>
     </div>
 
     <!-- <ul style='display: block' ref="save_data_set_list_parent1">
@@ -258,17 +258,20 @@ button {
         <button @click="save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button>
     </li>
     </ul> -->
-    <div v-for="(DATA_VAL, DATA_IDX) in textContent_ary_1">
+
+
+
+    <!-- <div v-for="(DATA_VAL, DATA_IDX) in textContent_ary_1">
         <div>
             <button @click="set_data_sample_array_obj(DATA_IDX)">{{ file_name_ary[DATA_IDX] }}</button>
         </div>
     </div>
     <div v-for="(DATA_VAL, DATA_IDX) in sample_array_obj">
         <button @click="set_data_sample_array_obj(DATA_IDX)">set_data_sample_array_obj({{ DATA_IDX }})</button>
-    </div>
+    </div> -->
 
 <!-- version情報 -->
-<p>version 0.0.0.4</p>
+<p>version 0.0.0.5</p>
 
 
 
@@ -428,7 +431,7 @@ show_tag: '',
 show_order_by: 'DESC',
 // endpoint: 'http://localhost:8000',
 endpoint: 'https://cotton-concrete-catsup.glitch.me',
-web_data: {},
+web_data: [],
 
 
 
@@ -485,8 +488,24 @@ sample_array_obj: [],
 
 all_save: [],
 split_data_b: [],
-data_b: '',
-data_a: '',
+data_b: `hello
+hi
+good
+yes
+dog
+cat
+food
+sleep`,
+data_a: `こんにちは
+やあ
+いい
+はい
+犬
+猫
+食事
+眠り`,
+
+
 online_data_A: [],
 test_mode: false,
 
@@ -541,15 +560,15 @@ created(){},
 beforeMount(){},
 async mounted() {
 await this.fetch_read_all();
+this.exe1();
 
 // this.toggle_sidebar();
 // this.column_1_none = false;
 
 
-await this.set_up();
+// await this.set_up();
 
-this.init_data_for_choose_mode(to_ary(this.exe1_data));
-this.save_data_load();
+// this.save_data_load();
 
 
 // new QRCode(this.$refs.qrcode, {

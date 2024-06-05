@@ -650,6 +650,21 @@ async fetch_read_all(){
     this.get_users_web_data();
     } catch (error) {
         console.log(error);
+        this.only_one_q_a_mode_COUNTER = 0;
+        this.exe1_data = [
+            [
+                "こんにちは",
+                "hello(or any error)",
+                [
+                    "food",
+                    "hello"
+                ],
+                false,
+                true,
+                ""
+            ]
+        ];
+        this.exe1();
     }
 },
 

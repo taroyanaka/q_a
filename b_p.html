@@ -220,6 +220,9 @@
         <button @click="save_data_to_all_save">🗂️</button>
         <button @click="fn19_0" class="save_opener">📂</button>
     </div>
+    <!-- 同じディレクトリの./share.htmlへのリダイレクトのa:hrefリンク(comfirmがある) -->
+    <a href="./share.html" onclick="return confirm('Do you really want to leave this page?🦖\n本当にこのページを離れますか？🦕')">share</a>
+
     <div v-if="web_data">
         <!-- input:text v-model=username -->
     <input type="text" v-model="username" class="username" placeholder="username">

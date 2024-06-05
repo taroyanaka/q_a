@@ -19,6 +19,10 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
 
 <style>
+button {
+    white-space: wrap;
+    overflow: visible;
+}
 .username{
     width: 90%;
 }
@@ -35,7 +39,10 @@
     justify-content: space-around;
 }
 .choose_button{
-    font-size: 5rem;
+    font-size: 4rem;
+    white-space: nowrap;
+    overflow: visible;
+
 }
 .choose_button_num0{
     display: flex;
@@ -233,7 +240,9 @@
         res3 = JSON.parse(res2).data1; -->
         <!-- <li v-for="(DATAVAL, DATAIDX) in to_ary(web_data.message).filter(V=>V.username === 'user1')" class="save_data_set_list"> -->
         <li v-for="(DATAVAL, DATAIDX) in users_web_data" class="save_data_set_list">
-            {{ JSON.parse(DATAVAL.data_json_str).data1.split("\n")[0] }}
+            <button @click="set_data_from_web_data(DATAIDX)">
+            {{ JSON.parse(DATAVAL.data_json_str).data1.split("\n")[0].slice(0, 5) }}
+            </button>
             <!-- {{ JSON.parse(DATAVAL.data_json_str).data2.split("\n")[0] }} -->
             <!-- <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span> -->
             <!-- <button @click="save_data_set(DATAIDX)" class="save_data_set">📂</button> -->
@@ -311,8 +320,8 @@
 <div v-if="mode === 'choose'">
     <template v-for="(DATAVAL, DATAIDX) in [exe1_data[only_one_q_a_mode_COUNTER]]" class="simple_mode2">
     <div class="parent_choose" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
-        <span class="choose_question">{{ DATAVAL[0] }} {{ DATAVAL[5] }}</span>
-        <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ item }}</button>
+        <span class="choose_question">{{ DATAVAL[0] }} {{ truncateText( DATAVAL[5] ) }}</span>
+        <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ truncateText( item ) }}</button>
     </div>
     </template>
 </div>
@@ -403,6 +412,7 @@
 const app = Vue.createApp({
 data() {
 return {
+truncate_text_length: 10,
 users_web_data: [],
 username: 'user1',
 show_user: '',
@@ -547,6 +557,30 @@ this.save_data_load();
 beforeUpdate() {},
 async updated() {},
 methods: {
+truncateText(text) {
+    // this.truncate_text_array.push(id);
+    // if (text.length > this.truncate_text_length && !this.untruncate_text_array.includes(id)) {
+    if (text.length > this.truncate_text_length) {
+        return text.substring(0, this.truncate_text_length) + '...';
+    } else {
+        return text;
+    }
+},
+set_data_from_web_data(DATAIDX){
+try {
+    if(window.confirm('Really??')){
+        const data1 = JSON.parse(this.users_web_data[DATAIDX].data_json_str).data1;
+        const data2 = JSON.parse(this.users_web_data[DATAIDX].data_json_str).data2;
+        this.data_a = data1;
+        this.data_b = data2;
+        this.exe1();
+
+
+    };
+} catch (error) {
+    console.log(error);
+}
+},
 get_users_web_data(){
     this.users_web_data = to_ary(this.web_data.message).filter(V=>V.username === this.username);
 },

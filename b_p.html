@@ -378,6 +378,15 @@
 const app = Vue.createApp({
 data() {
 return {
+show_user: '',
+show_tag: '',
+show_order_by: 'DESC',
+// endpoint: 'http://localhost:8000',
+endpoint: 'https://cotton-concrete-catsup.glitch.me',
+web_data: {},
+
+
+
 paint_result: '',
 maru_batu_result: '',
 flash_incorrect: '',
@@ -456,16 +465,39 @@ data_a: {
     deep: true
 },
 
+show_user: {
+    async handler(newVal, oldVal) {
+        await this.fetch_read_all();
+    },
+    deep: true,
+},
+show_tag: {
+    async handler(newVal, oldVal) {
+        await this.fetch_read_all();
+    },
+    deep: true,
+},
+show_order_by: {
+    async handler(newVal, oldVal) {
+        await this.fetch_read_all();
+    },
+    deep: true,
+},
+
+
 },
 beforeCreate(){},
 created(){},
 beforeMount(){},
 async mounted() {
+await this.fetch_read_all();
+
 await this.set_up();
 
 this.init_data_for_choose_mode(to_ary(this.exe1_data));
 this.save_data_load();
 // this.toggle_sidebar();
+
 
 // new QRCode(this.$refs.qrcode, {
 //       text: "https://taroyanaka.github.io/q_a/b_p.html",
@@ -480,6 +512,24 @@ this.save_data_load();
 beforeUpdate() {},
 async updated() {},
 methods: {
+async fetch_read_all(){
+    try {
+    this.show_user = this.show_user === '' ? '' : this.show_user;
+    this.show_tag = this.show_tag === '' ? '' : this.show_tag;
+    const params_for_get = {
+        user: this.show_user,
+        tag: this.show_tag,
+        order_by: this.show_order_by,
+    };
+    const url = new URL(this.endpoint + '/' + 'read_all');
+    url.search = new URLSearchParams(params_for_get).toString();
+    const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
+    this.web_data = await res.json(); console.log(this.web_data);
+    } catch (error) {
+        console.log(error);
+    }
+},
+
 exe1(Param_Str){
     let data_0_ary = this.data_a.split('\n');
     let data_1_ary = this.data_b.split('\n');
@@ -817,7 +867,12 @@ function to_ary(it){
 
 
 
-
+JSON.parse(to_ary(app.web_data.message)[0].data_json_str).data1
+JSON.parse(to_ary(app.web_data.message))
+res = to_ary(app.web_data.message).filter(V=>V.username === 'user1');
+res2 = res[0].data_json_str;
+res3 = JSON.parse(res2).data1;
+// this.name: 'user1',
 
 </script>
 </html>

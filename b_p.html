@@ -277,7 +277,7 @@ button {
     </div> -->
 
 <!-- version情報 -->
-<p class="version">version 0.0.0.8</p>
+<p class="version">version 0.0.0.9</p>
 
 
 
@@ -342,7 +342,8 @@ button {
         <!-- <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ truncateText( item ) }}</button> -->
         <!-- truncateしない場合 -->
         <span class="choose_question">{{ DATAVAL[0] }} {{ DATAVAL[5] }}</span>
-        <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ item }}</button>
+        <!-- <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ item }}</button> -->
+        <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ truncateText( item ) }}</button>
     </div>
     </template>
 </div>
@@ -431,7 +432,7 @@ button {
 const app = Vue.createApp({
 data() {
 return {
-truncate_text_length: 10,
+truncate_text_length: 20,
 users_web_data: [],
 username: 'user1',
 show_user: '',

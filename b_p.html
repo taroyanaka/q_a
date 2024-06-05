@@ -206,6 +206,11 @@ button {
     height: 50vh;
 }
 
+.choose_button {
+    white-space: nowrap;
+    overflow: visible;
+    padding: 0.5rem 0.5rem; /* 必要に応じてパディングを調整 */
+}
 </style>
 
 
@@ -271,7 +276,7 @@ button {
     </div> -->
 
 <!-- version情報 -->
-<p class="version">version 0.0.0.6</p>
+<p class="version">version 0.0.0.7</p>
 
 
 
@@ -331,8 +336,12 @@ button {
 <div v-if="mode === 'choose'">
     <template v-for="(DATAVAL, DATAIDX) in [exe1_data[only_one_q_a_mode_COUNTER]]" class="simple_mode2">
     <div class="parent_choose" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
-        <span class="choose_question">{{ DATAVAL[0] }} {{ truncateText( DATAVAL[5] ) }}</span>
-        <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ truncateText( item ) }}</button>
+        <!-- truncateする場合 -->
+        <!-- <span class="choose_question">{{ DATAVAL[0] }} {{ truncateText( DATAVAL[5] ) }}</span> -->
+        <!-- <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ truncateText( item ) }}</button> -->
+        <!-- truncateしない場合 -->
+        <span class="choose_question">{{ DATAVAL[0] }} {{ DATAVAL[5] }}</span>
+        <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ item }}</button>
     </div>
     </template>
 </div>

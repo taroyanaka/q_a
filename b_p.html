@@ -805,40 +805,45 @@ make_slide(Ary_Param){
 },
 
 async check_maru_batu(VAL, RESULT, Maru_Or_Batu){
-    // 不正解のボタンを押した時に正解の問題が一瞬点灯する処理の関数
+try {
+        // 不正解のボタンを押した時に正解の問題が一瞬点灯する処理の関数
         const maru = this.$refs.maru;
         const batu = this.$refs.batu;
 
-    console.log(VAL[1]);
-    console.log("RESULT");
-    console.log(RESULT);
-    // n秒だけmaru_batu_resultに全問完了と表示する関数
-const waitAndExecute = async () => {
-        this.maru_batu_result = '全問完了';
-        // 待機
-        await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
-        this.maru_batu_result = '';
+        console.log(VAL[1]);
+        console.log("RESULT");
+        console.log(RESULT);
+        // n秒だけmaru_batu_resultに全問完了と表示する関数
+    const waitAndExecute = async () => {
+            this.maru_batu_result = '全問完了';
+            // 待機
+            await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
+            this.maru_batu_result = '';
+    }
+    if(VAL[1] === RESULT){
+        console.log('正解');
+        VAL[3] = true;
+        // 正解の場合は次の問題に進む
+        this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER
+            ?
+            (this.only_one_q_a_mode_COUNTER = 0, this.exe1_data.forEach(V=>V[3] = false)) :
+            this.only_one_q_a_mode_COUNTER++;
+        this.flash_incorrect = '';
+    }else{
+        console.log('不正解');
+        VAL[3] = false;
+        this.flash_incorrect = Maru_Or_Batu === 'maru' ? 'batu' : 'maru';
+    }
+
+    if(this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER){
+        await waitAndExecute()
+    };
+
+} catch (error) {
+    console.log(error);
+    this.only_one_q_a_mode_COUNTER = 0;
+    this.exe1();
 }
-if(VAL[1] === RESULT){
-    console.log('正解');
-    VAL[3] = true;
-    // 正解の場合は次の問題に進む
-    this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER
-        ?
-        (this.only_one_q_a_mode_COUNTER = 0, this.exe1_data.forEach(V=>V[3] = false)) :
-        this.only_one_q_a_mode_COUNTER++;
-    this.flash_incorrect = '';
-}else{
-    console.log('不正解');
-    VAL[3] = false;
-    this.flash_incorrect = Maru_Or_Batu === 'maru' ? 'batu' : 'maru';
-}
-
-if(this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER){
-    await waitAndExecute()
-};
-
-
 },
 
 

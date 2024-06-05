@@ -277,7 +277,7 @@ button {
     </div> -->
 
 <!-- version情報 -->
-<p class="version">version 0.0.1.1</p>
+<p class="version">version 0.0.1.2</p>
 
 
 
@@ -654,6 +654,7 @@ async fetch_read_all(){
 },
 
 exe1(Param_Str){
+    this.only_one_q_a_mode_COUNTER = 0;
     let data_0_ary = this.data_a.split('\n');
     let data_1_ary = this.data_b.split('\n');
     if(Param_Str === 'swap'){

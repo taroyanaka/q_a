@@ -770,20 +770,24 @@ async change_paint_or_raw(RAW_IDX){
         // 待機
         await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
         console.log("n秒経過しました");
-        this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER
-            ?
-            this.only_one_q_a_mode_COUNTER = 0 :
+
+        // this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER
+        //     ?
+        //     this.only_one_q_a_mode_COUNTER = 0 :
             this.only_one_q_a_mode_COUNTER++;
-            // 全て実行したら[4]を全てtrueにする
-        this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER
-            ?
-            this.exe1_data.forEach((val, idx) => val[4] = true) :
-            null;
-        console.log(this.exe1_data[this.only_one_q_a_mode_COUNTER]);
+
+        // this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER
+        //     ?
+        //     this.exe1_data.forEach((val, idx) => val[4] = true) :
+        //     null;
+        // console.log(this.exe1_data[this.only_one_q_a_mode_COUNTER]);
     }
     await waitAndExecute();
+    
     if(this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER){
         await done_result();
+        this.exe1_data.forEach((val, idx) => val[4] = true);
+        this.only_one_q_a_mode_COUNTER = 0;
     }
 },
 

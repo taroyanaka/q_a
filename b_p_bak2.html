@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<!-- ./p3.html でログイン -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>black paint q_a</title>
+
+
+<link rel="stylesheet" href="./lib/reset.css">
+<!-- <script src="./lib/localforage@1.10.0.js"></script> -->
+<script src="./lib/vue@3.2.36.global.prod.js"></script>
+<script src="./lib/ramda.@0.28.0.js"></script>
+<script src="./lib/shuffle.js"></script>
+<!-- <script src="./lib/qrcode.js"></script> -->
+<!-- <script src="./lib/my_global_function_for_q_a.js"></script> -->
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.prod.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
+
+<style>
+button {
+    white-space: wrap;
+    overflow: visible;
+}
+.username{
+    width: 90%;
+}
+.optional_function button{
+    font-size: 2rem;
+}
+.choose_question{
+    font-size: 5rem;
+}
+.parent_choose{
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    justify-content: space-around;
+}
+.choose_button{
+    font-size: 4rem;
+    white-space: wrap;
+    overflow: visible;
+
+}
+.choose_button_num0{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 33%;
+}
+.choose_button_num1{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 33%;
+}
+.choose_button_num2{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 33%;
+}
+.prgr_bar{
+    /* 線を細くする */
+    height: 0.7rem;
+    width: calc(100% - 12rem);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    /* margin-top: 0; */
+    /* margin-bottom: 0; */
+    /* 上部の隙間をなくす */
+    /* padding-top: 0; */
+    /* padding-bottom: 0; */
+
+}
+.toggle_sidebar{
+    /* toggle_sidebarを常に画面右下に表示 */
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    /* wdith 10rem */
+    width: 10rem;
+    /* height 3rem */
+    height: 3rem;
+}
+.column-2-when-display-toggle_sidebar{
+    z-index: 20;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 10rem;
+    height: 3rem;
+}
+
+@keyframes flash {
+    0%   {opacity: 1;}
+    50%  {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+.flash_incorrect{
+    /* 点滅するCSS */
+    animation: flash 1s 1;
+    /* animation: flash 0.5s infinite; */
+}
+/* not_quiz_sectionをサイドバーで表示/非表示を切り替え */
+.column-1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 5rem;
+    height: 100vh;
+    background-color: #f1f1f1;
+    z-index: 100;
+}
+/* quiz_sectionをnot_quiz_sectionの分横にずらす */
+.column-2 {
+    position: relative;
+    top: 0;
+    left: 5rem;
+    width: calc(100% - 5rem);
+    height: 100vh;
+    /* background-color: #f1f1f1; */
+    background-color: gray;
+    z-index: 1;
+}
+.column-2-when-display-none-column-1 {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: calc(100%);
+        height: 100vh;
+        /* background-color: #f1f1f1; */
+        background-color: gray;
+        z-index: 1;
+}
+.display-none-column-1{
+    display: none;
+    /* 非表示にして要素が無いものとする */
+    width: 0;
+    height: 0;
+}
+
+.disable_temporary{
+    display: none;
+}
+
+
+.slide_mode_color{
+    /* 薄い緑色 */
+    background-color: #DDFFDD;
+}
+/* スライドの表示を設定 qは左寄せ, aは右寄せ */
+.q{
+    text-align: left;
+}
+.a{
+    text-align: right;
+}
+
+/* 2択最速回答(時間決めてor時間測定) */
+.black-paint-it {
+    color: black;
+    background-color: black;
+}
+
+.maru_batu, .maru_batu *, .black_paint, .slide_mode_color{
+    font-size: 10vw;
+    white-space: word-wrap;
+}
+.parent_full_screen{
+    position: relative;
+}
+.front_of_full_screen{
+    z-index: 10;
+    position: absolute;
+    top: 0;
+}
+/* back_full_screenとfront_of_full_screenをz-indexで同じ位置に表示する */
+.back_full_screen{
+    z-index: 1;
+    position: absolute;
+    top: 0;
+
+    display: flex;
+    /* width 100% */
+    width: 100%;
+
+    justify-content: space-around;
+}
+.maru{
+    /* display: flex; */
+    justify-content: center;
+    width: 50%;
+    height: 50vh;
+}
+.batu{
+    /* display: flex; */
+    justify-content: center;
+    width: 50%;
+    height: 50vh;
+}
+
+.choose_button {
+    /* 折り返す */
+    white-space: normal;
+    /* overflow: visible; */
+    padding: 0.5rem 0.5rem; /* 必要に応じてパディングを調整 */
+}
+</style>
+
+
+</head>
+<body class="app">
+
+<!-- toggle_sidebar()でdisplay-none-column-1で表示/非表示を切り替える -->
+<!-- <div class="column-1"> -->
+<div :class="column_1_none ? 'display-none-column-1' : 'column-1'">
+    <button @click="change_mode('choose')">選択モード</button>
+    <button @click="change_mode('maru_batu')">⭕️❎問題モード</button>
+    <button @click="change_mode('black_paint')">黒塗りモード</button>
+    <button @click="change_mode('slide')">スライドモード</button>
+    <button @click="change_mode('qr')">QRコード</button>
+
+    <div class="optional_function">
+        <button @click="exe1('reverse')">🔃</button>
+        <button @click="exe1('shuffle')">🌪️</button>
+        <button @click="exe1('swap')">🔁</button>
+        <button @click="redirect_to_share">📝</button>
+    </div>
+
+    <div v-if="web_data.message">
+        <input type="text" v-model="username" class="username" placeholder="username">
+
+        <ul style='display: block' ref="save_data_set_list_parent1">
+            <li v-for="(DATAVAL, DATAIDX) in users_web_data" class="save_data_set_list">
+                <button @click="set_data_from_web_data(DATAIDX)">
+                {{ JSON.parse(DATAVAL.data_json_str).data1.split("\n")[0].slice(0, 5) }}
+                </button>
+            </li>
+        </ul>
+    </div>
+
+
+<!-- version情報 -->
+<p class="version">version 0.0.1.4</p>
+
+
+
+</div>
+
+<div :class="column_1_none ? 'column-2-when-display-none-column-1' : 'column-2'">
+
+<div class="quiz_section">
+<button @click="toggle_sidebar" :class="column_1_none ? 'toggle_sidebar' : 'column-2-when-display-toggle_sidebar'">Toggle Sidebar</button>
+
+
+<!-- exe1_data -->
+<template v-for="(DATA_VAL, DATA_IDX) in exe1_data ">
+    <div>{{ DATA_VAL }}</div>
+</template>
+
+
+<div v-if="mode === 'choose'">
+    <template v-for="(DATAVAL, DATAIDX) in [exe1_data[only_one_q_a_mode_COUNTER]]" class="simple_mode2">
+    <div class="parent_choose" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
+        <!-- truncateする場合 -->
+        <!-- <span class="choose_question">{{ DATAVAL[0] }} {{ truncateText( DATAVAL[5] ) }}</span> -->
+        <!-- <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ truncateText( item ) }}</button> -->
+        <!-- truncateしない場合 -->
+        <span class="choose_question">{{ DATAVAL[0] }} {{ DATAVAL[5] }}</span>
+        <!-- <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ item }}</button> -->
+        <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ truncateText( item ) }}</button>
+    </div>
+    </template>
+</div>
+
+<div v-if="mode === 'maru_batu'" class="maru_batu">
+    <template v-for="(DATA_VAL, DATA_IDX) in [exe1_data[only_one_q_a_mode_COUNTER]]">
+    <progress :value="only_one_q_a_mode_COUNTER" :max="exe1_data.length" id="prgr" class="prgr_bar"></progress>
+    <div v-if="DATA_VAL[3] === false" class="parent_full_screen">
+        <div class="front_of_full_screen">
+            <span>{{ DATA_VAL[0] }}</span>
+            <span> = </span>
+            <span>{{ DATA_VAL[2][0] }}</span>
+            <div v-if="maru_batu_result !== '' ">{{ maru_batu_result }}</div>
+        </div>
+        <div class="back_full_screen">
+            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0], 'maru')" :class="flash_incorrect === 'maru' || flash_incorrect === null ? 'flash_incorrect maru' : 'maru'" ref="maru">⭕️</button>
+            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1], 'batu')" :class="flash_incorrect === 'batu' || flash_incorrect === null ? 'flash_incorrect batu' : 'batu'" ref="batu">❎</button>
+        </div>
+    </div>
+    </template>
+</div>
+
+<div v-if="mode === 'black_paint'" class="black_paint" @click="change_paint_or_raw(DATA_IDX)">
+    <template v-for="(DATA_VAL, DATA_IDX) in [exe1_data[only_one_q_a_mode_COUNTER]]">
+    <progress :value="only_one_q_a_mode_COUNTER" :max="exe1_data[only_one_q_a_mode_COUNTER].length" id="prgr" class="prgr_bar"></progress>
+    <div>{{ DATA_VAL[0] }}</div>
+    <div :class="DATA_VAL[4] ? 'black-paint-it' : ''">{{ DATA_VAL[1] }}</div>
+    <div v-if="paint_result !== '' ">{{ paint_result }}</div>
+    </template>
+</div>
+
+<div v-if="mode === 'slide'" class="slide_mode_color">
+    <progress :value="currentIndex" :max="slides.length" id="prgr" class="prgr_bar"></progress>
+    <br>
+    <br>
+    <div v-if="slides.length > 0">
+        <div v-if="slides[currentIndex].q" class="q" @click="next_slide">{{ slides[currentIndex].q }}</div>
+        <div v-if="slides[currentIndex].a" class="a" @click="next_slide">{{ slides[currentIndex].a }}</div>
+    </div>
+    <button @click="first_slide">最初へ</button>
+    <button @click="prev_slide">前へ</button>
+    <button @click="next_slide">次へ</button>
+    <div v-if="!auto_slide_mode">
+        <button @click="auto_slide">auto slide</button>
+            <input type="number" v-model="time_interval" min="0.1" step="0.1">秒
+    </div>
+    <div v-if="auto_slide_mode">
+        <button @click="stop_auto_slide">stop auto slide</button>
+    </div>
+</div>
+
+<div v-if="mode === 'qr'">
+<button @click="show_qr">show_qr</button>
+<div ref="qrcode"></div>
+</div>
+
+
+
+</div>
+</div>
+</body>
+<script>
+const app = Vue.createApp({
+data() {
+return {
+truncate_text_length: 20,
+users_web_data: [],
+username: 'user1',
+show_user: '',
+show_tag: '',
+show_order_by: 'DESC',
+// endpoint: 'http://localhost:8000',
+endpoint: 'https://cotton-concrete-catsup.glitch.me',
+web_data: [],
+paint_result: '',
+maru_batu_result: '',
+flash_incorrect: '',
+only_one_q_a_mode: true,
+only_one_q_a_mode_COUNTER: 0,
+column_1_none: true,
+slides: [],
+currentIndex: 0,
+auto_slide_mode: false,
+time_interval: 0.5,
+// mode: 'maru_batu',
+// mode: 'black_paint',
+// mode: 'slide',
+mode: 'choose',
+// mode: 'qr',
+file_name_ary: [],
+textContent_ary_1: [],
+textContent_ary_2: [],
+// exe1_data: [],
+// mountedの際にexe1_dataが空だとエラーが出るので適当な初期値を設定
+exe1_data: [
+    [
+        "こんにちは",
+        "hello",
+        [
+            "food",
+            "hello"
+        ],
+        false,
+        true,
+        ""
+    ]
+],
+hoge_ary: [],
+
+data_0: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+ccccccccccccccccccccccccccccccccccc
+ddddddddddddddddddddddddddddddddddddddddddddd
+eeeeeeeeeeeeeeeeeeeeeeee`,
+data_1: `AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+EEEEEEEEEEEEEEEEEEEEEEEE`,
+sample_array_obj: [],
+
+all_save: [],
+split_data_b: [],
+data_b: `hello
+hi
+good
+yes
+dog
+cat
+food
+sleep`,
+data_a: `こんにちは
+やあ
+いい
+はい
+犬
+猫
+食事
+眠り`,
+online_data_A: [],
+test_mode: false,
+current_index: 0,
+textarea_visible: false,
+}},
+watch: {
+username: {
+    handler() {
+        this.get_users_web_data();
+    },
+    deep: true
+},
+data_b: {
+    handler() {
+    },
+    deep: true
+},
+data_a: {
+    handler() {
+    },
+    deep: true
+},
+
+show_user: {
+    async handler(newVal, oldVal) {
+        await this.fetch_read_all();
+    },
+    deep: true,
+},
+show_tag: {
+    async handler(newVal, oldVal) {
+        await this.fetch_read_all();
+    },
+    deep: true,
+},
+show_order_by: {
+    async handler(newVal, oldVal) {
+        await this.fetch_read_all();
+    },
+    deep: true,
+},
+
+
+},
+beforeCreate(){},
+created(){},
+beforeMount(){},
+async mounted() {
+this.exe1();
+await this.fetch_read_all();
+
+// this.toggle_sidebar();
+// this.column_1_none = false;
+
+
+// await this.set_up();
+
+// this.save_data_load();
+
+
+// new QRCode(this.$refs.qrcode, {
+//       text: "https://taroyanaka.github.io/q_a/b_p.html",
+//       width: 256,
+//       height: 256,
+//       colorDark : "#000000",
+//       colorLight : "#ffffff",
+//       correctLevel : QRCode.CorrectLevel.H
+// });
+
+},
+beforeUpdate() {},
+async updated() {},
+methods: {
+change_mode(Mode){
+    this.only_one_q_a_mode_COUNTER = 0;
+    this.mode = Mode;
+    this.exe1();
+},
+truncateText(text) {
+    // this.truncate_text_array.push(id);
+    // if (text.length > this.truncate_text_length && !this.untruncate_text_array.includes(id)) {
+    if (text.length > this.truncate_text_length) {
+        return text.substring(0, this.truncate_text_length) + '...';
+    } else {
+        return text;
+    }
+},
+set_data_from_web_data(DATAIDX){
+try {
+    if(window.confirm('Really??')){
+        const data1 = JSON.parse(this.users_web_data[DATAIDX].data_json_str).data1;
+        const data2 = JSON.parse(this.users_web_data[DATAIDX].data_json_str).data2;
+        this.data_a = data1;
+        this.data_b = data2;
+        this.exe1();
+
+
+    };
+} catch (error) {
+    console.log(error);
+}
+},
+get_users_web_data(){
+    this.users_web_data = to_ary(this.web_data.message).filter(V=>V.username === this.username);
+},
+async fetch_read_all(){
+    try {
+    this.show_user = this.show_user === '' ? '' : this.show_user;
+    this.show_tag = this.show_tag === '' ? '' : this.show_tag;
+    const params_for_get = {
+        user: this.show_user,
+        tag: this.show_tag,
+        order_by: this.show_order_by,
+    };
+    const url = new URL(this.endpoint + '/' + 'read_all');
+    url.search = new URLSearchParams(params_for_get).toString();
+    const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
+    this.web_data = await res.json(); console.log(this.web_data);
+    this.get_users_web_data();
+    } catch (error) {
+        console.log(error);
+        this.only_one_q_a_mode_COUNTER = 0;
+        this.exe1_data = [
+            [
+                "こんにちは",
+                "hello(or any error)",
+                [
+                    "food",
+                    "hello"
+                ],
+                false,
+                true,
+                ""
+            ]
+        ];
+        this.exe1();
+    }
+},
+
+exe1(Param_Str){
+    console.log("exe1", Param_Str);
+    // this.only_one_q_a_mode_COUNTER = 0;
+    // let data_0_ary = this.data_a.split('\n');
+    // let data_1_ary = this.data_b.split('\n');
+    // if(Param_Str === 'swap'){
+    //     [data_0_ary, data_1_ary] = [data_1_ary, data_0_ary];
+    // }
+    // const res = data_0_ary.map((val, idx) => {
+    //     return {
+    //         data_0: val,
+    //         data_1: data_1_ary[idx],
+    //     };
+    // });
+    // d1 = res;
+    // d2 = d1.map((val, idx) => val.data_1 );
+    // d3 = d2.map((val, idx) => {
+    //     const filter_d2 = d2.filter((val2, idx2) => val2 !== d2[idx]);
+    //     const only_filter_data = shuffle(filter_d2)[0];
+    //     const ok_or_ng_answer_str_ary = shuffle([d2[idx], only_filter_data]);
+    //     const data_0 = d1[idx].data_0;
+    //     return [data_0, val, ok_or_ng_answer_str_ary, false, true, ''];
+    // });
+    // this.exe1_data = d3;
+    // if(Param_Str === "reverse"){
+    //     this.exe1_data = R.reverse(to_ary(this.exe1_data));
+    // }
+    // if(Param_Str === "shuffle"){
+    //     this.exe1_data = shuffle(to_ary(this.exe1_data));
+    // }
+    // this.slides = this.make_slide(this.exe1_data);
+
+    this.only_one_q_a_mode_COUNTER = 0;
+    let [data_0_ary, data_1_ary] = Param_Str === 'swap' ?
+        [this.data_b.split('\n'), this.data_a.split('\n')] :
+        [this.data_a.split('\n'), this.data_b.split('\n')];
+    const processData = (data0, data1) => data0.map((val, idx) => {
+        const otherAnswers = data1.filter((_, filterIdx) => filterIdx !== idx);
+        const shuffledAnswers = shuffle([data1[idx], shuffle(otherAnswers)[0]]);
+        return [val, data1[idx], shuffledAnswers, false, true, ''];
+    });
+    this.exe1_data = processData(data_0_ary, data_1_ary);
+    const applyParamStr = (data, param) => {
+        if (param === "reverse") return R.reverse(to_ary(data));
+        if (param === "shuffle") return shuffle(to_ary(data));
+        return data;
+    };
+
+    this.exe1_data = applyParamStr(this.exe1_data, Param_Str);
+    this.slides = this.make_slide(this.exe1_data); 
+},
+
+
+// init_data_for_choose_mode(data2){
+//     shuffled_data1_ary = shuffle(data2.map(V=>V[1]));
+//     data2_1 = data2.map(V=>V[1]);
+//     const without_same_str_data1_ary = (same_str) => data2_1.filter(V=> V !== same_str);
+//     // return without_same_str_data1_ary(data2_1[0]);
+//     this.hoge_ary = data2.map(item => [
+//         item[1],
+//         shuffle(
+//             shuffle(without_same_str_data1_ary(item[1])).slice(0, 2).concat(item[1])
+//         ),
+//         item[0],
+//         ""
+//     ]);
+// },
+
+async check_q_a_for_choose_mode(correct, answer) {
+    this.exe1_data[this.only_one_q_a_mode_COUNTER][5] = answer === correct ? "⭕️" : "❎";
+    const done_result = async () => {
+            // 待機
+            await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
+    };
+    if(this.exe1_data[this.only_one_q_a_mode_COUNTER][5] === '⭕️'){
+        console.log("maru");
+        await done_result();
+        this.only_one_q_a_mode_COUNTER++;
+        this.exe1_data.length - 1 === this.only_one_q_a_mode_COUNTER
+            ?
+            (
+            this.only_one_q_a_mode_COUNTER = 0,
+            this.exe1_data.forEach((val, idx) => val[5] = '')
+            ) :
+            null;
+    }
+},
+
+
+
+
+auto_slide(){
+    this.auto_slide_mode = true;
+    setInterval(() => {
+        this.next_slide();
+        // 0.5であれば1000倍して500msごとにスライドを進める
+    }, this.time_interval * 1000);
+},
+stop_auto_slide(){
+    this.auto_slide_mode = false;
+    // 全てのsetIntervalを停止する
+    for (let i = 1; i < 99999; i++) window.clearInterval(i);
+},
+// 最初へ戻す関数
+first_slide(){
+    this.currentIndex = 0;
+},
+prev_slide(){
+    if (this.currentIndex > 0) {
+        this.currentIndex--;
+    } else {
+        this.currentIndex = this.slides.length - 1;
+    }
+},
+next_slide(){
+    if (this.currentIndex < this.slides.length - 1) {
+        this.currentIndex++;
+    } else {
+        this.currentIndex = 0;
+    }
+},
+async change_paint_or_raw(RAW_IDX){
+    if(this.exe1_data[this.only_one_q_a_mode_COUNTER] === undefined){
+        this.exe1_data.forEach((val, idx) => val[4] = true);
+        this.only_one_q_a_mode_COUNTER = 0;
+        return;
+    }
+    // 全問完了したらn秒全問完了と表示する関数
+    const done_result = async () => {
+        this.paint_result = '全問完了';
+        // 待機
+        await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
+        this.paint_result = '';
+    };
+
+    const waitAndExecute = async () => {
+        this.exe1_data[this.only_one_q_a_mode_COUNTER][4] = false;
+        // 待機
+        await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
+        console.log("n秒経過しました");
+            this.only_one_q_a_mode_COUNTER++;
+    }
+    await waitAndExecute();
+    
+    if(this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER){
+        await done_result();
+        this.exe1_data.forEach((val, idx) => val[4] = true);
+        this.only_one_q_a_mode_COUNTER = 0;
+    }
+},
+
+make_slide(Ary_Param){
+    function flattenAndExtract(ary) {
+        let res = [];
+        ary.forEach((val, idx) => {
+            res.push({q: val[0]});
+            res.push({a: val[1]});
+        });
+        return res;
+    }
+    return flattenAndExtract(Ary_Param);
+},
+
+async check_maru_batu(VAL, RESULT, Maru_Or_Batu){
+try {
+        // 不正解のボタンを押した時に正解の問題が一瞬点灯する処理の関数
+        const maru = this.$refs.maru;
+        const batu = this.$refs.batu;
+
+        console.log(VAL[1]);
+        console.log("RESULT");
+        console.log(RESULT);
+        // n秒だけmaru_batu_resultに全問完了と表示する関数
+    const waitAndExecute = async () => {
+            this.maru_batu_result = '全問完了';
+            // 待機
+            await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
+            this.maru_batu_result = '';
+    }
+    if(VAL[1] === RESULT){
+        console.log('正解');
+        VAL[3] = true;
+        // 正解の場合は次の問題に進む
+        this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER
+            ?
+            (this.only_one_q_a_mode_COUNTER = 0, this.exe1_data.forEach(V=>V[3] = false)) :
+            this.only_one_q_a_mode_COUNTER++;
+        this.flash_incorrect = '';
+    }else{
+        console.log('不正解');
+        VAL[3] = false;
+        this.flash_incorrect = Maru_Or_Batu === 'maru' ? 'batu' : 'maru';
+    }
+
+    if(this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER){
+        await waitAndExecute()
+    };
+
+} catch (error) {
+    console.log(error);
+    this.only_one_q_a_mode_COUNTER = 0;
+    this.exe1();
+}
+},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async set_up(){
+    const text_url_ary_1 = [
+'./asset/txt_dir/sample_ary_1.txt',
+'./asset/txt_dir/res_2_ary_1.txt',
+        './asset/txt_dir/res_2_2_ary_1.txt',
+        // './asset/txt_dir/res_3_ary_1.txt',
+        // './asset/txt_dir/res_4_ary_1.txt',
+        // './asset/txt_dir/res_5_ary_1.txt',
+    ];
+    const text_url_ary_2 = [
+'./asset/txt_dir/sample_ary_3.txt',
+'./asset/txt_dir/res_2_ary_3.txt',
+        './asset/txt_dir/res_2_2_ary_3.txt',
+        // './asset/txt_dir/res_3_ary_3.txt',
+        // './asset/txt_dir/res_4_ary_3.txt',
+        // './asset/txt_dir/res_5_ary_3.txt',
+    ];
+    const global_file_name_ary = [
+    'サンプル問題集5問',
+        '英検2級',
+        '英検準2級',
+        // '英検3級',
+        // '英検4級',
+        // '英検5級',
+    ];
+    this.file_name_ary = global_file_name_ary;
+    for(let i = 0; i < text_url_ary_1.length; i++){
+        const response = await fetch(text_url_ary_1[i]);
+        this.textContent_ary_1.push(await response.text());
+    }
+    for(let i = 0; i < text_url_ary_2.length; i++){
+        const response = await fetch(text_url_ary_2[i]);
+        this.textContent_ary_2.push(await response.text());
+    }
+    if(this.textContent_ary_1.length !== this.textContent_ary_2.length){
+        console.error('textContent_ary_1とtextContent_ary_2のlengthが異なります');
+    }
+
+    this.set_data_sample_array_obj(0);
+},
+text_attacher(IDX){
+    if(this.textContent_ary_1){
+        this.data_a = this.textContent_ary_1[IDX];
+        this.data_b = this.textContent_ary_2[IDX];
+        return true;
+    }
+},
+set_data_sample_array_obj(IDX){
+    if(this.text_attacher(IDX) === true){
+        this.exe1();
+        return;
+    }
+    this.data_a = this.textContent_ary_1[IDX];
+    this.data_b = this.textContent_ary_2[IDX];
+    this.exe1();
+},
+async save_data_to_all_save(){
+    try {
+    const item_key = this.data_type;
+    this.all_save.push(to_ary([this.data_a, this.data_b]));
+    await localforage.setItem(item_key, JSON.stringify(this.all_save));
+    } catch (error) {
+        console.log(error);
+    };
+},
+async save_data_load() {
+    try {
+    const item_key = this.data_type;
+    this.all_save = JSON.parse(await localforage.getItem(item_key)) || [];
+    } catch (error) {
+        console.log(error);
+    }
+},
+async save_data_delete(INDEX){
+    try {
+    const item_key = this.data_type;
+    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
+        this.all_save.splice(INDEX, 1);
+        await localforage.setItem(item_key, JSON.stringify(this.all_save));
+    };
+    } catch (error) {
+        console.log(error);
+    }
+},
+save_data_set(INDEX){
+    this.data_a = this.all_save[INDEX][0];
+    this.data_b = this.all_save[INDEX][1];
+},
+fn19_0(){
+    const THE_STYLE_DISPLAY1 = this.$refs.save_data_set_list_parent1.style.display;
+    this.$refs.save_data_set_list_parent1.style.display = (THE_STYLE_DISPLAY1 === 'block' || THE_STYLE_DISPLAY1 === '') ? 'none' : 'block';
+},
+redirect_to_share(){
+    // <a href="./share.html" onclick="return confirm('Do you really want to leave this page?🦖\n本当にこのページを離れますか？🦕')">share</a>
+    if(window.confirm('Do you really want to leave this page to share page?🦖\n本当にこのページを離れてシェアページに飛びますか？🦕')){
+        location.href = './share.html';
+    }
+},
+
+
+
+toggle_sidebar() {
+    this.column_1_none = !this.column_1_none;
+},
+textarea_opener() {
+    this.textarea_visible = !this.textarea_visible;
+},
+show_qr(){
+    new QRCode(this.$refs.qrcode, {
+        text: "https://taroyanaka.github.io/q_a/b_p.html",
+        width: 256,
+        height: 256,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+},
+
+
+// fn9(IDX){
+// this.data_a = this.online_data_A[IDX][0];
+// this.data_b = this.online_data_A[IDX][1];
+// },
+// fn16(INDEX){
+// this.online_data_A.splice(INDEX, 1);
+// },
+// fn18(){
+//     const RESULTS = this.$refs.results;
+//         RESULTS.map(ELM=>ELM.style.display).some(DISPLAY=>DISPLAY==='block' || DISPLAY==='') ?
+//             RESULTS.map(ELM=>ELM.style.display = 'none') :
+//             RESULTS.map(ELM=>ELM.style.display = 'block');
+// },
+// q_a_test_index(Test_index) {
+//     this.hoge_ary.forEach((V,IDX)=>this.check_q_a_for_choose_mode(V[0], V[1][Test_index], IDX));
+//     this.q_a_fn4();
+// },
+
+},
+}).mount('.app');
+
+function to_ary(it){
+    return JSON.parse(JSON.stringify(it));
+};
+// div.column-2とfixed_element以外を非表示にする
+// document.querySelectorAll('body :not(.fixed_element)').forEach(V=>V.style.display='none');
+
+
+
+
+</script>
+</html>

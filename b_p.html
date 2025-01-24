@@ -1,1038 +1,238 @@
 <!DOCTYPE html>
-<!-- ./p3.html でログイン -->
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>black paint q_a</title>
-
-
 <link rel="stylesheet" href="./lib/reset.css">
-<!-- <script src="./lib/localforage@1.10.0.js"></script> -->
 <script src="./lib/vue@3.2.36.global.prod.js"></script>
-<script src="./lib/ramda.@0.28.0.js"></script>
 <script src="./lib/shuffle.js"></script>
-<!-- <script src="./lib/qrcode.js"></script> -->
-<!-- <script src="./lib/my_global_function_for_q_a.js"></script> -->
-
-<!-- <script src="https://cdn.jsdelivr.net/npm/localforage@1.10.0/dist/localforage.min.js"></script> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.global.prod.js"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"></script> -->
-
+<!-- optional_function → opFnchoose_question → chQnparent_choose → paChchoose_button → chBtchoose_button_num0 → chBt0choose_button_num1 → chBt1choose_button_num2 → chBt2prgr_bar → prBrtoggle_sidebar → tgSbcolumn-2-when-display-toggle_sidebar → co2TgSflash_incorrect → flIccolumn-1 → co1column-2 → co2column-2-when-display-none-column-1 → co2D1display-none-column-1 → dnCo1slide_mode_color → slMcblack-paint-it → bpItmaru_batu → mrBtparent_full_screen → paFSfront_of_full_screen → frFSback_full_screen → baFSusername → uNam-->
 <style>
-button {
-    white-space: wrap;
-    overflow: visible;
-}
-.username{
-    width: 90%;
-}
-.optional_function button{
-    font-size: 2rem;
-}
-.choose_question{
-    font-size: 5rem;
-}
-.parent_choose{
-    display: flex;
-    flex-direction: column;
-    height: 50vh;
-    justify-content: space-around;
-}
-.choose_button{
-    font-size: 4rem;
-    white-space: wrap;
-    overflow: visible;
-
-}
-.choose_button_num0{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 33%;
-}
-.choose_button_num1{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 33%;
-}
-.choose_button_num2{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 33%;
-}
-
-    .prgr_bar{
-        /* 線を細くする */
-        height: 0.7rem;
-        width: calc(100% - 12rem);
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        /* margin-top: 0; */
-        /* margin-bottom: 0; */
-        /* 上部の隙間をなくす */
-        /* padding-top: 0; */
-        /* padding-bottom: 0; */
-
-    }
-    .toggle_sidebar{
-        /* toggle_sidebarを常に画面右下に表示 */
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        /* wdith 10rem */
-        width: 10rem;
-        /* height 3rem */
-        height: 3rem;
-    }
-    .column-2-when-display-toggle_sidebar{
-        z-index: 20;
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 10rem;
-        height: 3rem;
-    }
-
-    @keyframes flash {
-        0%   {opacity: 1;}
-        50%  {opacity: 0;}
-        100% {opacity: 1;}
-    }
-
-    .flash_incorrect{
-        /* 点滅するCSS */
-        animation: flash 1s 1;
-        /* animation: flash 0.5s infinite; */
-    }
-    /* not_quiz_sectionをサイドバーで表示/非表示を切り替え */
-    .column-1 {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 5rem;
-        height: 100vh;
-        background-color: #f1f1f1;
-        z-index: 100;
-    }
-    /* quiz_sectionをnot_quiz_sectionの分横にずらす */
-    .column-2 {
-        position: relative;
-        top: 0;
-        left: 5rem;
-        width: calc(100% - 5rem);
-        height: 100vh;
-        /* background-color: #f1f1f1; */
-        background-color: gray;
-        z-index: 1;
-    }
-.column-2-when-display-none-column-1 {
-        position: relative;
-        top: 0;
-        left: 0;
-        width: calc(100%);
-        height: 100vh;
-        /* background-color: #f1f1f1; */
-        background-color: gray;
-        z-index: 1;
-}
-    .display-none-column-1{
-        display: none;
-        /* 非表示にして要素が無いものとする */
-        width: 0;
-        height: 0;
-    }
-
-    .disable_temporary{
-        display: none;
-    }
-
-
-    .slide_mode_color{
-        /* 薄い緑色 */
-        background-color: #DDFFDD;
-    }
-    /* スライドの表示を設定 qは左寄せ, aは右寄せ */
-    .q{
-        text-align: left;
-    }
-    .a{
-        text-align: right;
-    }
-
-    /* 2択最速回答(時間決めてor時間測定) */
-    .black-paint-it {
-        color: black;
-        background-color: black;
-    }
-
-.maru_batu, .maru_batu *, .black_paint, .slide_mode_color{
-    font-size: 10vw;
-    white-space: word-wrap;
-}
-.parent_full_screen{
-    position: relative;
-}
-.front_of_full_screen{
-    z-index: 10;
-    position: absolute;
-    top: 0;
-}
-/* back_full_screenとfront_of_full_screenをz-indexで同じ位置に表示する */
-.back_full_screen{
-    z-index: 1;
-    position: absolute;
-    top: 0;
-
-    display: flex;
-    /* width 100% */
-    width: 100%;
-
-    justify-content: space-around;
-}
-.maru{
-    /* display: flex; */
-    justify-content: center;
-    width: 50%;
-    height: 50vh;
-}
-.batu{
-    /* display: flex; */
-    justify-content: center;
-    width: 50%;
-    height: 50vh;
-}
-
-.choose_button {
-    /* 折り返す */
-    white-space: normal;
-    /* overflow: visible; */
-    padding: 0.5rem 0.5rem; /* 必要に応じてパディングを調整 */
-}
+button{white-space:wrap;overflow:visible}
+.uNam{width:90%}
+.opFn button{font-size:2rem}
+.chQn{font-size:5rem}
+.paCh{display:flex;flex-direction:column;height:50vh;justify-content:space-around}
+.chBt{font-size:4rem;white-space:wrap;overflow:visible}
+.chBt0,.chBt1,.chBt2{display:flex;justify-content:center;width:100%;height:33%}
+.prBr{height:.7rem;width:calc(100% - 12rem);position:fixed;bottom:0;left:0}
+.tgSb{position:fixed;bottom:0;right:0;width:10rem;height:3rem}
+.co2TgS{z-index:20;position:fixed;top:0;right:0;width:10rem;height:3rem}
+@keyframes flash{0%{opacity:1}50%{opacity:0}100%{opacity:1}}
+.flIc{animation:flash 1s 1}
+.co1{position:fixed;top:0;left:0;width:5rem;height:100vh;background:#f1f1f1;z-index:100}
+.co2{position:relative;top:0;left:5rem;width:calc(100% - 5rem);height:100vh;background:gray;z-index:1}
+.co2D1{position:relative;top:0;left:0;width:100%;height:100vh;background:gray;z-index:1}
+.dnCo1{display:none;width:0;height:0}
+.slMc{background:#DDFFDD}
+.q{text-align:left}
+.a{text-align:right}
+.bpIt{color:#000;background:#000}
+.mrBt,.mrBt*,.blPt,.slMc{font-size:10vw;white-space:word-wrap}
+.paFS{position:relative}
+.frFS{z-index:10;position:absolute;top:0}
+.baFS{z-index:1;position:absolute;top:0;width:100%;display:flex;justify-content:space-around}
+.maru,.batu{justify-content:center;width:50%;height:50vh}
+.chBt{white-space:normal;padding:.5rem}
 </style>
-
-
 </head>
 <body class="app">
+<div :class="co1Non?'dnCo1':'co1'">
+  <button @click="chMode('choose')">選択モード</button>
+  <button @click="chMode('maru_batu')">⭕️❎問題モード</button>
+  <button @click="chMode('black_paint')">黒塗りモード</button>
+  <button @click="chMode('slide')">スライドモード</button>
+  <button @click="chMode('qr')">QRコード</button>
+  <div class="opFn">
+    <button @click="ex1('reverse')">🔃</button>
+    <button @click="ex1('shuffle')">🌪️</button>
+    <button @click="ex1('swap')">🔁</button>
+    <button @click="rdShre">📝</button>
+  </div>
+  <div v-if="wbDat.message">
+    <input type="text" v-model="usrNam" class="uNam">
+    <ul style="display:block" ref="save_data_set_list_parent1">
+      <li v-for="(d,i) in usWDat">
+        <button @click="stDaWD(i)">
+          {{ JSON.parse(d.data_json_str).data1.split('\n')[0].slice(0,5) }}
+        </button>
+      </li>
+    </ul>
+  </div>
+  <p>version 0.0.1.4</p>
+</div>
+<div :class="co1Non?'co2D1':'co2'">
+  <div>
+    <button @click="tgSide" :class="co1Non?'tgSb':'co2TgS'">Toggle Sidebar</button>
+    <!-- デバッグ用: 現在の問題データを出力 -->
+    <template v-for="dv in ex1Dat"><div>{{ dv }}</div></template>
 
-<!-- toggle_sidebar()でdisplay-none-column-1で表示/非表示を切り替える -->
-<!-- <div class="column-1"> -->
-<div :class="column_1_none ? 'display-none-column-1' : 'column-1'">
-    <button @click="change_mode('choose')">選択モード</button>
-    <button @click="change_mode('maru_batu')">⭕️❎問題モード</button>
-    <button @click="change_mode('black_paint')">黒塗りモード</button>
-    <button @click="change_mode('slide')">スライドモード</button>
-    <button @click="change_mode('qr')">QRコード</button>
-
-    <div class="optional_function">
-        <button @click="exe1('reverse')">🔃</button>
-        <button @click="exe1('shuffle')">🌪️</button>
-        <button @click="exe1('swap')">🔁</button>
-        <!-- <button @click="save_data_to_all_save">🗂️</button> -->
-        <!-- <button @click="fn19_0" class="save_opener">📂</button> -->
-        <button @click="redirect_to_share">📝</button>
-    </div>
-
-    <div v-if="web_data.message">
-            <!-- input:text v-model=username -->
-        <input type="text" v-model="username" class="username" placeholder="username">
-
-        <ul style='display: block' ref="save_data_set_list_parent1">
-            <!-- res = to_ary(app.web_data.message).filter(V=>V.username === 'user1');
-            res2 = res[0].data_json_str;
-            res3 = JSON.parse(res2).data1; -->
-            <!-- <li v-for="(DATAVAL, DATAIDX) in to_ary(web_data.message).filter(V=>V.username === 'user1')" class="save_data_set_list"> -->
-            <li v-for="(DATAVAL, DATAIDX) in users_web_data" class="save_data_set_list">
-                <button @click="set_data_from_web_data(DATAIDX)">
-                {{ JSON.parse(DATAVAL.data_json_str).data1.split("\n")[0].slice(0, 5) }}
-                </button>
-                <!-- {{ JSON.parse(DATAVAL.data_json_str).data2.split("\n")[0] }} -->
-                <!-- <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span> -->
-                <!-- <button @click="save_data_set(DATAIDX)" class="save_data_set">📂</button> -->
-                <!-- <button @click="save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button> -->
-            </li>
-        </ul>
-    </div>
-
-    <!-- <ul style='display: block' ref="save_data_set_list_parent1">
-    <li v-for="(DATAVAL, DATAIDX) in all_save" class="save_data_set_list">
-        <span @click="save_data_set(DATAIDX)">{{ [DATAVAL[0].split("\n")[0], DATAVAL[1].split("\n")[0]] }}</span>
-        <button @click="save_data_set(DATAIDX)" class="save_data_set">📂</button>
-        <button @click="save_data_delete(DATAIDX)" class="save_data_delete">🗑️</button>
-    </li>
-    </ul> -->
-
-
-
-    <!-- <div v-for="(DATA_VAL, DATA_IDX) in textContent_ary_1">
-        <div>
-            <button @click="set_data_sample_array_obj(DATA_IDX)">{{ file_name_ary[DATA_IDX] }}</button>
+    <!-- 選択モード -->
+    <div v-if="md==='choose'">
+      <template v-for="dv in [ex1Dat[ooQAMC]]">
+        <div class="paCh">
+          <span class="chQn">{{ dv[0] }} {{ dv[5] }}</span>
+          <button v-for="(item,ix) in dv[2]" :class="'chBt chBt'+ix" @click="chQACh(dv[1], item)">
+            {{ trText(item) }}
+          </button>
         </div>
+      </template>
     </div>
-    <div v-for="(DATA_VAL, DATA_IDX) in sample_array_obj">
-        <button @click="set_data_sample_array_obj(DATA_IDX)">set_data_sample_array_obj({{ DATA_IDX }})</button>
-    </div> -->
 
-<!-- version情報 -->
-<p class="version">version 0.0.1.4</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <button @click="textarea_opener" class="textarea_opener">📝</button>
-<div class="textarea-column-1" id="target">
-    <textarea name="" id="textarea-column-1-1" rows="30" cols="" v-model="data_a" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
-    <textarea name="" id="textarea-column-1-2" rows="30" cols="" v-model="data_b" :style="{ display: textarea_visible ? 'block' : 'none' }"></textarea>
-</div> -->
-
-
-
-
-<!-- <div>
-    <button @click="fn18" class="result_opener">📖</button>
-    <template v-for="(DATAVAL, DATAIDX) in online_data_A">
-        <div class="textarea-column-2">
-        <div class="a">
-            <button @click="fn9(DATAIDX)" class="a-1">↩️</button>
-            <button @click="fn16(DATAIDX)" class="a-2">🗑️</button>
-            <button @click="fn17(DATAIDX)" class="a-3">📚</button>
+    <!-- まるばつモード -->
+    <div v-if="md==='maru_batu'" class="mrBt">
+      <template v-for="dv in [ex1Dat[ooQAMC]]">
+        <progress :value="ooQAMC" :max="ex1Dat.length" class="prBr"></progress>
+        <div v-if="dv[3]===false" class="paFS">
+          <div class="frFS">
+            <span>{{ dv[0] }}</span><span> = </span><span>{{ dv[2][0] }}</span>
+            <div v-if="mbRslt!==''">{{ mbRslt }}</div>
+          </div>
+          <div class="baFS">
+            <button @click="chMaBa(dv,dv[2][0],'maru')" :class="flInco==='maru'||flInco===null?'flIc maru':'maru'">⭕️</button>
+            <button @click="chMaBa(dv,dv[2][1],'batu')" :class="flInco==='batu'||flInco===null?'flIc batu':'batu'">❎</button>
+          </div>
         </div>
-    <textarea name="" cols="30" rows="10" class="b" style='display: block;' ref="results">{{ DATAVAL[0] }}</textarea>
-    <textarea name="" cols="30" rows="10" class="c" style='display: block;' ref="results">{{ DATAVAL[1] }}</textarea>
-        </div>
-    </template>
-</div>
-<div v-if="show_textarea">
-    <textarea name="" id="" cols="30" rows="10" v-model="data_0"></textarea>
-    <textarea name="" id="" cols="30" rows="10" v-model="data_1"></textarea>
-</div> -->
-
-
-</div>
-
-<div :class="column_1_none ? 'column-2-when-display-none-column-1' : 'column-2'">
-
-<div class="quiz_section">
-<button @click="toggle_sidebar" :class="column_1_none ? 'toggle_sidebar' : 'column-2-when-display-toggle_sidebar'">Toggle Sidebar</button>
-
-
-
-<div v-if="mode === 'choose'">
-    <template v-for="(DATAVAL, DATAIDX) in [exe1_data[only_one_q_a_mode_COUNTER]]" class="simple_mode2">
-    <div class="parent_choose" v-if="only_one_q_a_mode ? DATAIDX === current_index : true">
-        <!-- truncateする場合 -->
-        <!-- <span class="choose_question">{{ DATAVAL[0] }} {{ truncateText( DATAVAL[5] ) }}</span> -->
-        <!-- <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ truncateText( item ) }}</button> -->
-        <!-- truncateしない場合 -->
-        <span class="choose_question">{{ DATAVAL[0] }} {{ DATAVAL[5] }}</span>
-        <!-- <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ item }}</button> -->
-        <button :class="'choose_button choose_button_num' + item_idx" v-for="(item, item_idx) in DATAVAL[2]" @click="check_q_a_for_choose_mode(DATAVAL[1], item)">{{ truncateText( item ) }}</button>
+      </template>
     </div>
-    </template>
-</div>
 
-<div v-if="mode === 'maru_batu'" class="maru_batu">
-    <template v-for="(DATA_VAL, DATA_IDX) in [exe1_data[only_one_q_a_mode_COUNTER]]">
-    <progress :value="only_one_q_a_mode_COUNTER" :max="exe1_data.length" id="prgr" class="prgr_bar"></progress>
-    <div v-if="DATA_VAL[3] === false" class="parent_full_screen">
-        <div class="front_of_full_screen">
-            <span>{{ DATA_VAL[0] }}</span>
-            <span> = </span>
-            <span>{{ DATA_VAL[2][0] }}</span>
-            <div v-if="maru_batu_result !== '' ">{{ maru_batu_result }}</div>
-        </div>
-        <div class="back_full_screen">
-            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][0], 'maru')" :class="flash_incorrect === 'maru' || flash_incorrect === null ? 'flash_incorrect maru' : 'maru'" ref="maru">⭕️</button>
-            <button @click="check_maru_batu(DATA_VAL, DATA_VAL[2][1], 'batu')" :class="flash_incorrect === 'batu' || flash_incorrect === null ? 'flash_incorrect batu' : 'batu'" ref="batu">❎</button>
-        </div>
+    <!-- 黒塗りモード -->
+    <div v-if="md==='black_paint'" class="blPt" @click="chPaRw">
+      <template v-for="dv in [ex1Dat[ooQAMC]]">
+        <progress :value="ooQAMC" :max="ex1Dat[ooQAMC].length" class="prBr"></progress>
+        <div>{{ dv[0] }}</div>
+        <div :class="dv[4]?'bpIt':''">{{ dv[1] }}</div>
+        <div v-if="paRslt!==''">{{ paRslt }}</div>
+      </template>
     </div>
-    </template>
-</div>
 
-<div v-if="mode === 'black_paint'" class="black_paint" @click="change_paint_or_raw(DATA_IDX)">
-    <template v-for="(DATA_VAL, DATA_IDX) in [exe1_data[only_one_q_a_mode_COUNTER]]">
-    <progress :value="only_one_q_a_mode_COUNTER" :max="exe1_data[only_one_q_a_mode_COUNTER].length" id="prgr" class="prgr_bar"></progress>
-    <div>{{ DATA_VAL[0] }}</div>
-    <div :class="DATA_VAL[4] ? 'black-paint-it' : ''">{{ DATA_VAL[1] }}</div>
-    <div v-if="paint_result !== '' ">{{ paint_result }}</div>
-    </template>
-</div>
-
-<div v-if="mode === 'slide'" class="slide_mode_color">
-    <progress :value="currentIndex" :max="slides.length" id="prgr" class="prgr_bar"></progress>
-    <br>
-    <br>
-    <div v-if="slides.length > 0">
-        <div v-if="slides[currentIndex].q" class="q" @click="next_slide">{{ slides[currentIndex].q }}</div>
-        <div v-if="slides[currentIndex].a" class="a" @click="next_slide">{{ slides[currentIndex].a }}</div>
+    <!-- スライドモード -->
+    <div v-if="md==='slide'" class="slMc">
+      <progress :value="curIdx" :max="sldes.length" class="prBr"></progress><br><br>
+      <div v-if="sldes.length>0">
+        <div v-if="sldes[curIdx].q" class="q" @click="nxSlid">{{ sldes[curIdx].q }}</div>
+        <div v-if="sldes[curIdx].a" class="a" @click="nxSlid">{{ sldes[curIdx].a }}</div>
+      </div>
+      <button @click="frSlid">最初へ</button>
+      <button @click="prSlid">前へ</button>
+      <button @click="nxSlid">次へ</button>
+      <div v-if="!auSlMd">
+        <button @click="auSlid">auto slide</button>
+        <input type="number" v-model="tmIntv" min="0.1" step="0.1">秒
+      </div>
+      <div v-if="auSlMd"><button @click="stAuSl">stop auto slide</button></div>
     </div>
-    <button @click="first_slide">最初へ</button>
-    <button @click="prev_slide">前へ</button>
-    <button @click="next_slide">次へ</button>
-    <div v-if="!auto_slide_mode">
-        <button @click="auto_slide">auto slide</button>
-            <input type="number" v-model="time_interval" min="0.1" step="0.1">秒
+
+    <!-- QR表示モード -->
+    <div v-if="md==='qr'">
+      <button @click="shQr">show_qr</button>
+      <div ref="qrcode"></div>
     </div>
-    <div v-if="auto_slide_mode">
-        <button @click="stop_auto_slide">stop auto slide</button>
-    </div>
+  </div>
 </div>
-
-<div v-if="mode === 'qr'">
-<button @click="show_qr">show_qr</button>
-<div ref="qrcode"></div>
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-</body>
-
-
-
 <script>
-const app = Vue.createApp({
-data() {
-return {
-truncate_text_length: 20,
-users_web_data: [],
-username: 'user1',
-show_user: '',
-show_tag: '',
-show_order_by: 'DESC',
-// endpoint: 'http://localhost:8000',
-endpoint: 'https://cotton-concrete-catsup.glitch.me',
-web_data: [],
-
-
-
-paint_result: '',
-maru_batu_result: '',
-flash_incorrect: '',
-
-only_one_q_a_mode: true,
-only_one_q_a_mode_COUNTER: 0,
-
-
-column_1_none: true,
-
-slides: [],
-currentIndex: 0,
-auto_slide_mode: false,
-time_interval: 0.5,
-// mode: 'maru_batu',
-// mode: 'black_paint',
-// mode: 'slide',
-mode: 'choose',
-// mode: 'qr',
-
-file_name_ary: [],
-textContent_ary_1: [],
-textContent_ary_2: [],
-
-// exe1_data: [],
-// mountedの際にexe1_dataが空だとエラーが出るので適当な初期値を設定
-exe1_data: [
-    [
-        "こんにちは",
-        "hello",
-        [
-            "food",
-            "hello"
-        ],
-        false,
-        true,
-        ""
-    ]
-],
-hoge_ary: [],
-
-data_0: `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-ccccccccccccccccccccccccccccccccccc
-ddddddddddddddddddddddddddddddddddddddddddddd
-eeeeeeeeeeeeeeeeeeeeeeee`,
-data_1: `AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-EEEEEEEEEEEEEEEEEEEEEEEE`,
-sample_array_obj: [],
-
-
-
-
-
-
-
-
-
-
-
-
-
-all_save: [],
-split_data_b: [],
-data_b: `hello
-hi
-good
-yes
-dog
-cat
-food
-sleep`,
-data_a: `こんにちは
-やあ
-いい
-はい
-犬
-猫
-食事
-眠り`,
-
-
-online_data_A: [],
-test_mode: false,
-
-
-current_index: 0,
-
-
-
-textarea_visible: false,
+const app=Vue.createApp({
+data(){return{
+  trTeLn:20,usWDat:[],usrNam:'user1',
+  shUsr:'',shTag:'',shOrBy:'DESC',
+  enpnt:'https://cotton-concrete-catsup.glitch.me',wbDat:[],
+  paRslt:'',mbRslt:'',flInco:'',
+  ooQAMD:true,ooQAMC:0,co1Non:true,
+  sldes:[],curIdx:0,auSlMd:false,tmIntv:.5,md:'choose',
+  dtA:`こんにちは\nやあ\nいい\nはい\n犬\n猫\n食事\n眠り`,
+  dtB:`hello\nhi\ngood\nyes\ndog\ncat\nfood\nsleep`,
+  ex1Dat:[["こんにちは","hello",["food","hello"],false,true,""]]
 }},
-watch: {
-username: {
-    handler() {
-        this.get_users_web_data();
-    },
-    deep: true
+watch:{
+  usrNam(){this.gtUsWD()},
+  shUsr(){this.ftRdAl()},shTag(){this.ftRdAl()},shOrBy(){this.ftRdAl()}
 },
-data_b: {
-    handler() {
-    },
-    deep: true
+async mounted(){
+  this.ex1();
+  await this.ftRdAl();
 },
-data_a: {
-    handler() {
-    },
-    deep: true
-},
-
-show_user: {
-    async handler(newVal, oldVal) {
-        await this.fetch_read_all();
-    },
-    deep: true,
-},
-show_tag: {
-    async handler(newVal, oldVal) {
-        await this.fetch_read_all();
-    },
-    deep: true,
-},
-show_order_by: {
-    async handler(newVal, oldVal) {
-        await this.fetch_read_all();
-    },
-    deep: true,
-},
-
-
-},
-beforeCreate(){},
-created(){},
-beforeMount(){},
-async mounted() {
-this.exe1();
-await this.fetch_read_all();
-
-// this.toggle_sidebar();
-// this.column_1_none = false;
-
-
-// await this.set_up();
-
-// this.save_data_load();
-
-
-// new QRCode(this.$refs.qrcode, {
-//       text: "https://taroyanaka.github.io/q_a/b_p.html",
-//       width: 256,
-//       height: 256,
-//       colorDark : "#000000",
-//       colorLight : "#ffffff",
-//       correctLevel : QRCode.CorrectLevel.H
-// });
-
-},
-beforeUpdate() {},
-async updated() {},
-methods: {
-change_mode(Mode){
-    this.only_one_q_a_mode_COUNTER = 0;
-    this.mode = Mode;
-    this.exe1();
-},
-truncateText(text) {
-    // this.truncate_text_array.push(id);
-    // if (text.length > this.truncate_text_length && !this.untruncate_text_array.includes(id)) {
-    if (text.length > this.truncate_text_length) {
-        return text.substring(0, this.truncate_text_length) + '...';
-    } else {
-        return text;
+methods:{
+  trText(t){return t.length>this.trTeLn?t.slice(0,this.trTeLn)+'...':t},
+  stDaWD(i){
+    if(confirm('Really??')){
+      let j=JSON.parse(this.usWDat[i].data_json_str);
+      this.dtA=j.data1;this.dtB=j.data2;this.ex1();
     }
-},
-set_data_from_web_data(DATAIDX){
-try {
-    if(window.confirm('Really??')){
-        const data1 = JSON.parse(this.users_web_data[DATAIDX].data_json_str).data1;
-        const data2 = JSON.parse(this.users_web_data[DATAIDX].data_json_str).data2;
-        this.data_a = data1;
-        this.data_b = data2;
-        this.exe1();
-
-
+  },
+  gtUsWD(){this.usWDat=toAry(this.wbDat.message).filter(v=>v.username===this.usrNam)},
+  async ftRdAl(){
+    try{
+      let p={user:this.shUsr,tag:this.shTag,order_by:this.shOrBy},
+          u=new URL(this.enpnt+'/read_all');
+      u.search=new URLSearchParams(p).toString();
+      let r=await fetch(u,{method:'GET',headers:{'Content-Type':'application/json'}});
+      this.wbDat=await r.json();this.gtUsWD();
+    }catch(e){
+      this.ooQAMC=0;
+      this.ex1Dat=[["こんにちは","hello(or any error)",["food","hello"],false,true,""]];
+      this.ex1();
+    }
+  },
+  chMode(m){this.ooQAMC=0;this.md=m;this.ex1()},
+  ex1(p){
+    this.ooQAMC=0;
+    let[a,b]=p==='swap'
+      ?[this.dtB.split('\n'),this.dtA.split('\n')]
+      :[this.dtA.split('\n'),this.dtB.split('\n')];
+    let f=(d0,d1)=>d0.map((v,i)=>[v,d1[i],shuffle([d1[i],shuffle(d1.filter((_,x)=>x!==i))[0]]),false,true,'']);
+    this.ex1Dat=f(a,b);
+    if(p==="reverse")this.ex1Dat=R.reverse(toAry(this.ex1Dat));
+    if(p==="shuffle")this.ex1Dat=shuffle(toAry(this.ex1Dat));
+    this.sldes=this.mkSlid(this.ex1Dat);
+  },
+  chQACh(c,a){
+    let d=this.ex1Dat[this.ooQAMC];
+    d[5]=(a===c)?'⭕️':'❎';
+    const fn=()=>{
+      this.ooQAMC++;
+      this.ooQAMC===this.ex1Dat.length?(this.ooQAMC=0,this.ex1Dat.forEach(x=>x[5]='')):null;
     };
-} catch (error) {
-    console.log(error);
+    d[5]==='⭕️'?setTimeout(fn,this.tmIntv*1000):null;
+  },
+  async chMaBa(v,r,m){
+    const fn=()=>{
+      this.ooQAMC++;
+      this.ooQAMC===this.ex1Dat.length?(this.ooQAMC=0,this.ex1Dat.forEach(x=>x[3]=false)):null;
+    };
+    const cmpl=async()=>{
+      this.mbRslt='全問完了';
+      await new Promise(rs=>setTimeout(rs,this.tmIntv*1000));
+      this.mbRslt='';
+    };
+    v[1]===r?(v[3]=true,fn(),this.flInco=''):(v[3]=false,this.flInco=(m==='maru'?'batu':'maru'));
+    this.ooQAMC===this.ex1Dat.length-1?await cmpl():null;
+  },
+  mkSlid(a){return a.flatMap(v=>[{q:v[0]},{a:v[1]}])},
+  async chPaRw(){
+    let d=this.ex1Dat[this.ooQAMC];
+    const rs=async()=>{
+      this.ex1Dat.forEach(x=>x[4]=true);
+      this.ooQAMC=0;
+    };
+    const cmpl=async()=>{
+      this.paRslt='全問完了';
+      await new Promise(r=>setTimeout(r,this.tmIntv*1000));
+      this.paRslt='';rs();
+    };
+    d?(d[4]=false,await new Promise(r=>setTimeout(r,this.tmIntv*1000)),this.ooQAMC++):rs();
+    this.ex1Dat[this.ooQAMC]?.length-1===this.ooQAMC?await cmpl():null;
+  },
+  frSlid(){this.curIdx=0},
+  prSlid(){this.curIdx>0?this.curIdx--:this.curIdx=this.sldes.length-1},
+  nxSlid(){this.curIdx<this.sldes.length-1?this.curIdx++:this.curIdx=0},
+  auSlid(){this.auSlMd=true;setInterval(()=>{this.nxSlid()},this.tmIntv*1000)},
+  stAuSl(){this.auSlMd=false;for(let i=1;i<99999;i++)clearInterval(i)},
+  rdShre(){if(confirm('Leave this page?'))location.href='./share.html'},
+  tgSide(){this.co1Non=!this.co1Non},
+  shQr(){new QRCode(this.$refs.qrcode,{text:"https://taroyanaka.github.io/q_a/b_p.html",width:256,height:256,colorDark:"#000",colorLight:"#fff",correctLevel:QRCode.CorrectLevel.H})}
 }
-},
-get_users_web_data(){
-    this.users_web_data = to_ary(this.web_data.message).filter(V=>V.username === this.username);
-},
-async fetch_read_all(){
-    try {
-    this.show_user = this.show_user === '' ? '' : this.show_user;
-    this.show_tag = this.show_tag === '' ? '' : this.show_tag;
-    const params_for_get = {
-        user: this.show_user,
-        tag: this.show_tag,
-        order_by: this.show_order_by,
-    };
-    const url = new URL(this.endpoint + '/' + 'read_all');
-    url.search = new URLSearchParams(params_for_get).toString();
-    const res = await fetch(url, {method: 'GET', headers: {'Content-Type': 'application/json',},});
-    this.web_data = await res.json(); console.log(this.web_data);
-    this.get_users_web_data();
-    } catch (error) {
-        console.log(error);
-        this.only_one_q_a_mode_COUNTER = 0;
-        this.exe1_data = [
-            [
-                "こんにちは",
-                "hello(or any error)",
-                [
-                    "food",
-                    "hello"
-                ],
-                false,
-                true,
-                ""
-            ]
-        ];
-        this.exe1();
-    }
-},
-
-exe1(Param_Str){
-    this.only_one_q_a_mode_COUNTER = 0;
-    let data_0_ary = this.data_a.split('\n');
-    let data_1_ary = this.data_b.split('\n');
-    if(Param_Str === 'swap'){
-        [data_0_ary, data_1_ary] = [data_1_ary, data_0_ary];
-    }
-    const res = data_0_ary.map((val, idx) => {
-        return {
-            data_0: val,
-            data_1: data_1_ary[idx],
-        };
-    });
-    d1 = res;
-    d2 = d1.map((val, idx) => val.data_1 );
-    d3 = d2.map((val, idx) => {
-        const filter_d2 = d2.filter((val2, idx2) => val2 !== d2[idx]);
-        const only_filter_data = shuffle(filter_d2)[0];
-        const ok_or_ng_answer_str_ary = shuffle([d2[idx], only_filter_data]);
-        const data_0 = d1[idx].data_0;
-        return [data_0, val, ok_or_ng_answer_str_ary, false, true, ''];
-    });
-    this.exe1_data = d3;
-    if(Param_Str === "reverse"){
-        this.exe1_data = R.reverse(to_ary(this.exe1_data));
-    }
-    if(Param_Str === "shuffle"){
-        this.exe1_data = shuffle(to_ary(this.exe1_data));
-    }
-    // this.init_data_for_choose_mode(to_ary(this.exe1_data));
-    this.slides = this.make_slide(this.exe1_data);
-    // this.q_a_processing();
-},
-
-
-// init_data_for_choose_mode(data2){
-//     shuffled_data1_ary = shuffle(data2.map(V=>V[1]));
-//     data2_1 = data2.map(V=>V[1]);
-//     const without_same_str_data1_ary = (same_str) => data2_1.filter(V=> V !== same_str);
-//     // return without_same_str_data1_ary(data2_1[0]);
-//     this.hoge_ary = data2.map(item => [
-//         item[1],
-//         shuffle(
-//             shuffle(without_same_str_data1_ary(item[1])).slice(0, 2).concat(item[1])
-//         ),
-//         item[0],
-//         ""
-//     ]);
-// },
-
-async check_q_a_for_choose_mode(correct, answer) {
-    this.exe1_data[this.only_one_q_a_mode_COUNTER][5] = answer === correct ? "⭕️" : "❎";
-    const done_result = async () => {
-            // 待機
-            await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
-    };
-    if(this.exe1_data[this.only_one_q_a_mode_COUNTER][5] === '⭕️'){
-        console.log("maru");
-        await done_result();
-        this.only_one_q_a_mode_COUNTER++;
-        this.exe1_data.length - 1 === this.only_one_q_a_mode_COUNTER
-            ?
-            (
-            this.only_one_q_a_mode_COUNTER = 0,
-            this.exe1_data.forEach((val, idx) => val[5] = '')
-            ) :
-            null;
-    }
-},
-
-
-
-
-auto_slide(){
-    this.auto_slide_mode = true;
-    setInterval(() => {
-        this.next_slide();
-        // 0.5であれば1000倍して500msごとにスライドを進める
-    }, this.time_interval * 1000);
-},
-stop_auto_slide(){
-    this.auto_slide_mode = false;
-    // 全てのsetIntervalを停止する
-    for (let i = 1; i < 99999; i++) window.clearInterval(i);
-},
-// 最初へ戻す関数
-first_slide(){
-    this.currentIndex = 0;
-},
-prev_slide(){
-    if (this.currentIndex > 0) {
-        this.currentIndex--;
-    } else {
-        this.currentIndex = this.slides.length - 1;
-    }
-},
-next_slide(){
-    if (this.currentIndex < this.slides.length - 1) {
-        this.currentIndex++;
-    } else {
-        this.currentIndex = 0;
-    }
-},
-async change_paint_or_raw(RAW_IDX){
-    if(this.exe1_data[this.only_one_q_a_mode_COUNTER] === undefined){
-        this.exe1_data.forEach((val, idx) => val[4] = true);
-        this.only_one_q_a_mode_COUNTER = 0;
-        return;
-    }
-    // 全問完了したらn秒全問完了と表示する関数
-    const done_result = async () => {
-        this.paint_result = '全問完了';
-        // 待機
-        await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
-        this.paint_result = '';
-    };
-
-
-    const waitAndExecute = async () => {
-        this.exe1_data[this.only_one_q_a_mode_COUNTER][4] = false;
-        // 待機
-        await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
-        console.log("n秒経過しました");
-
-        // this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER
-        //     ?
-        //     this.only_one_q_a_mode_COUNTER = 0 :
-            this.only_one_q_a_mode_COUNTER++;
-
-        // this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER
-        //     ?
-        //     this.exe1_data.forEach((val, idx) => val[4] = true) :
-        //     null;
-        // console.log(this.exe1_data[this.only_one_q_a_mode_COUNTER]);
-    }
-    await waitAndExecute();
-    
-    if(this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER){
-        await done_result();
-        this.exe1_data.forEach((val, idx) => val[4] = true);
-        this.only_one_q_a_mode_COUNTER = 0;
-    }
-},
-
-make_slide(Ary_Param){
-    function flattenAndExtract(ary) {
-        let res = [];
-        ary.forEach((val, idx) => {
-            res.push({q: val[0]});
-            res.push({a: val[1]});
-        });
-        return res;
-    }
-    return flattenAndExtract(Ary_Param);
-},
-
-async check_maru_batu(VAL, RESULT, Maru_Or_Batu){
-try {
-        // 不正解のボタンを押した時に正解の問題が一瞬点灯する処理の関数
-        const maru = this.$refs.maru;
-        const batu = this.$refs.batu;
-
-        console.log(VAL[1]);
-        console.log("RESULT");
-        console.log(RESULT);
-        // n秒だけmaru_batu_resultに全問完了と表示する関数
-    const waitAndExecute = async () => {
-            this.maru_batu_result = '全問完了';
-            // 待機
-            await new Promise(resolve => setTimeout(resolve, this.time_interval * 1000));
-            this.maru_batu_result = '';
-    }
-    if(VAL[1] === RESULT){
-        console.log('正解');
-        VAL[3] = true;
-        // 正解の場合は次の問題に進む
-        this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER
-            ?
-            (this.only_one_q_a_mode_COUNTER = 0, this.exe1_data.forEach(V=>V[3] = false)) :
-            this.only_one_q_a_mode_COUNTER++;
-        this.flash_incorrect = '';
-    }else{
-        console.log('不正解');
-        VAL[3] = false;
-        this.flash_incorrect = Maru_Or_Batu === 'maru' ? 'batu' : 'maru';
-    }
-
-    if(this.exe1_data[this.only_one_q_a_mode_COUNTER].length - 1 === this.only_one_q_a_mode_COUNTER){
-        await waitAndExecute()
-    };
-
-} catch (error) {
-    console.log(error);
-    this.only_one_q_a_mode_COUNTER = 0;
-    this.exe1();
-}
-},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-async set_up(){
-    const text_url_ary_1 = [
-'./asset/txt_dir/sample_ary_1.txt',
-'./asset/txt_dir/res_2_ary_1.txt',
-        './asset/txt_dir/res_2_2_ary_1.txt',
-        // './asset/txt_dir/res_3_ary_1.txt',
-        // './asset/txt_dir/res_4_ary_1.txt',
-        // './asset/txt_dir/res_5_ary_1.txt',
-    ];
-    const text_url_ary_2 = [
-'./asset/txt_dir/sample_ary_3.txt',
-'./asset/txt_dir/res_2_ary_3.txt',
-        './asset/txt_dir/res_2_2_ary_3.txt',
-        // './asset/txt_dir/res_3_ary_3.txt',
-        // './asset/txt_dir/res_4_ary_3.txt',
-        // './asset/txt_dir/res_5_ary_3.txt',
-    ];
-    const global_file_name_ary = [
-    'サンプル問題集5問',
-        '英検2級',
-        '英検準2級',
-        // '英検3級',
-        // '英検4級',
-        // '英検5級',
-    ];
-    this.file_name_ary = global_file_name_ary;
-    for(let i = 0; i < text_url_ary_1.length; i++){
-        const response = await fetch(text_url_ary_1[i]);
-        this.textContent_ary_1.push(await response.text());
-    }
-    for(let i = 0; i < text_url_ary_2.length; i++){
-        const response = await fetch(text_url_ary_2[i]);
-        this.textContent_ary_2.push(await response.text());
-    }
-    if(this.textContent_ary_1.length !== this.textContent_ary_2.length){
-        console.error('textContent_ary_1とtextContent_ary_2のlengthが異なります');
-    }
-
-    this.set_data_sample_array_obj(0);
-},
-text_attacher(IDX){
-    if(this.textContent_ary_1){
-        this.data_a = this.textContent_ary_1[IDX];
-        this.data_b = this.textContent_ary_2[IDX];
-        return true;
-    }
-},
-set_data_sample_array_obj(IDX){
-    if(this.text_attacher(IDX) === true){
-        this.exe1();
-        return;
-    }
-    this.data_a = this.textContent_ary_1[IDX];
-    this.data_b = this.textContent_ary_2[IDX];
-    this.exe1();
-},
-async save_data_to_all_save(){
-    try {
-    const item_key = this.data_type;
-    this.all_save.push(to_ary([this.data_a, this.data_b]));
-    await localforage.setItem(item_key, JSON.stringify(this.all_save));
-    } catch (error) {
-        console.log(error);
-    };
-},
-async save_data_load() {
-    try {
-    const item_key = this.data_type;
-    this.all_save = JSON.parse(await localforage.getItem(item_key)) || [];
-    } catch (error) {
-        console.log(error);
-    }
-},
-async save_data_delete(INDEX){
-    try {
-    const item_key = this.data_type;
-    if (window.confirm("Do you really want to delete??🦖\n本当に削除する？?🦕\n" + R.zip(this.all_save[INDEX][0].split("\n"), this.all_save[INDEX][1].split("\n")).join("\n") )) {
-        this.all_save.splice(INDEX, 1);
-        await localforage.setItem(item_key, JSON.stringify(this.all_save));
-    };
-    } catch (error) {
-        console.log(error);
-    }
-},
-save_data_set(INDEX){
-    this.data_a = this.all_save[INDEX][0];
-    this.data_b = this.all_save[INDEX][1];
-},
-fn19_0(){
-    const THE_STYLE_DISPLAY1 = this.$refs.save_data_set_list_parent1.style.display;
-    this.$refs.save_data_set_list_parent1.style.display = (THE_STYLE_DISPLAY1 === 'block' || THE_STYLE_DISPLAY1 === '') ? 'none' : 'block';
-},
-redirect_to_share(){
-    // <a href="./share.html" onclick="return confirm('Do you really want to leave this page?🦖\n本当にこのページを離れますか？🦕')">share</a>
-    if(window.confirm('Do you really want to leave this page to share page?🦖\n本当にこのページを離れてシェアページに飛びますか？🦕')){
-        location.href = './share.html';
-    }
-},
-
-
-
-toggle_sidebar() {
-    this.column_1_none = !this.column_1_none;
-},
-textarea_opener() {
-    this.textarea_visible = !this.textarea_visible;
-},
-show_qr(){
-    new QRCode(this.$refs.qrcode, {
-        text: "https://taroyanaka.github.io/q_a/b_p.html",
-        width: 256,
-        height: 256,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
-    });
-},
-
-
-// fn9(IDX){
-// this.data_a = this.online_data_A[IDX][0];
-// this.data_b = this.online_data_A[IDX][1];
-// },
-// fn16(INDEX){
-// this.online_data_A.splice(INDEX, 1);
-// },
-// fn18(){
-//     const RESULTS = this.$refs.results;
-//         RESULTS.map(ELM=>ELM.style.display).some(DISPLAY=>DISPLAY==='block' || DISPLAY==='') ?
-//             RESULTS.map(ELM=>ELM.style.display = 'none') :
-//             RESULTS.map(ELM=>ELM.style.display = 'block');
-// },
-// q_a_test_index(Test_index) {
-//     this.hoge_ary.forEach((V,IDX)=>this.check_q_a_for_choose_mode(V[0], V[1][Test_index], IDX));
-//     this.q_a_fn4();
-// },
-
-},
 }).mount('.app');
-
-function to_ary(it){
-    return JSON.parse(JSON.stringify(it));
-};
-// div.column-2とfixed_element以外を非表示にする
-// document.querySelectorAll('body :not(.fixed_element)').forEach(V=>V.style.display='none');
-
-
-
-
+function toAry(i){return JSON.parse(JSON.stringify(i))}
 </script>
+</body>
 </html>

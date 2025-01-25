@@ -1,117 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>black paint q_a</title>
-<link rel="stylesheet" href="./lib/reset.css">
-<script src="./lib/vue@3.2.36.global.prod.js"></script>
-<script src="./lib/shuffle.js"></script>
-<!-- optional_function → opFnchoose_question → chQnparent_choose → paChchoose_button → chBtchoose_button_num0 → chBt0choose_button_num1 → chBt1choose_button_num2 → chBt2prgr_bar → prBrtoggle_sidebar → tgSbcolumn-2-when-display-toggle_sidebar → co2TgSflash_incorrect → flIccolumn-1 → co1column-2 → co2column-2-when-display-none-column-1 → co2D1display-none-column-1 → dnCo1slide_mode_color → slMcblack-paint-it → bpItmaru_batu → mrBtparent_full_screen → paFSfront_of_full_screen → frFSback_full_screen → baFSusername → uNam-->
-<style>
-button{white-space:wrap;overflow:visible}
-.uNam{width:90%}
-.opFn button{font-size:2rem}
-.chQn{font-size:5rem}
-.paCh{display:flex;flex-direction:column;height:50vh;justify-content:space-around}
-.chBt{font-size:4rem;white-space:wrap;overflow:visible}
-.chBt0,.chBt1,.chBt2{display:flex;justify-content:center;width:100%;height:33%}
-.prBr{height:.7rem;width:calc(100% - 12rem);position:fixed;bottom:0;left:0}
-.tgSb{position:fixed;bottom:0;right:0;width:10rem;height:3rem}
-.co2TgS{z-index:20;position:fixed;top:0;right:0;width:10rem;height:3rem}
-@keyframes flash{0%{opacity:1}50%{opacity:0}100%{opacity:1}}
-.flIc{animation:flash 1s 1}
-.co1{position:fixed;top:0;left:0;width:5rem;height:100vh;background:#f1f1f1;z-index:100}
-.co2{position:relative;top:0;left:5rem;width:calc(100% - 5rem);height:100vh;background:gray;z-index:1}
-.co2D1{position:relative;top:0;left:0;width:100%;height:100vh;background:gray;z-index:1}
-.dnCo1{display:none;width:0;height:0}
-.slMc{background:#DDFFDD}
-.q{text-align:left}
-.a{text-align:right}
-.bpIt{color:#000;background:#000}
-.mrBt,.mrBt*,.blPt,.slMc{font-size:10vw;white-space:word-wrap}
-.paFS{position:relative}
-.frFS{z-index:10;position:absolute;top:0}
-.baFS{z-index:1;position:absolute;top:0;width:100%;display:flex;justify-content:space-around}
-.maru,.batu{justify-content:center;width:50%;height:50vh}
-.chBt{white-space:normal;padding:.5rem}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>black paint q_a (Modern Design)</title>
+
+  <!-- Material Symbols -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+  <script src="./lib/vue@3.2.36.global.prod.js"></script>
+  <script src="./lib/shuffle.js"></script>
+
+  <style>
+    /* === Reset or minimal base === */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body, html {
+      font-family: sans-serif;
+      height: 100%;
+      background: #fafafa;
+      color: #333;
+    }
+
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* === Top Bar === */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      height: 56px;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      padding: 0 1rem;
+    }
+    .top-bar .menu-btn {
+      background: none;
+      border: none;
+      font-size: 0;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      margin-right: 1rem;
+    }
+    .top-bar .title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .material-symbols-outlined {
+      font-variation-settings:
+       'FILL' 0,
+       'wght' 400,
+       'GRAD' 0,
+       'opsz' 48
+    }
+    /* ドロワーを左からスライドイン */
+    .drawer {
+      position: fixed;
+      top: 56px; /* top-barの高さ */
+      left: 0;
+      width: 80%;
+      max-width: 300px;
+      height: calc(100% - 56px);
+      background: #fff;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+      z-index: 200;
+      padding: 1rem;
+    }
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer h3 {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: .5rem;
+    }
+
+    .drawer .uNam {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    /* メインコンテンツ */
+    .main-content {
+      flex: 1; 
+      overflow: auto; 
+      padding: 1rem;
+    }
+
+    /* ボトムナビゲーション */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 56px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      box-shadow: 0 -1px 3px rgba(0,0,0,0.1);
+    }
+
+    .bottom-nav button {
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #666;
+    }
+    .bottom-nav .material-symbols-outlined {
+      font-size: 24px;
+      margin-bottom: -2px; /* 微調整 */
+    }
+    .bottom-nav button.active {
+      color: #1976d2; /* Active color (blue) */
+    }
+
+    /* カードや進捗バーなど各モードの簡易表示例 */
+    .progress-bar {
+      width: 100%;
+      margin: 1rem 0;
+    }
+
+    /* 例: 黒塗りモードなど */
+    .black-paint {
+      background: #000; 
+      color: #000; 
+      user-select: none; 
+      width: 100%; 
+      text-align: center; 
+      margin: 1rem 0;
+    }
+    /* カンタンに既存要素のクラスに対応 */
+    .blPt { 
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    /* etc. */
+
+  </style>
 </head>
 <body class="app">
-<div :class="co1Non?'dnCo1':'co1'">
-  <button @click="chMode('choose')">選択モード</button>
-  <button @click="chMode('maru_batu')">⭕️❎問題モード</button>
-  <button @click="chMode('black_paint')">黒塗りモード</button>
-  <button @click="chMode('slide')">スライドモード</button>
-  <button @click="chMode('qr')">QRコード</button>
-  <div class="opFn">
-    <button @click="ex1('reverse')">🔃</button>
-    <button @click="ex1('shuffle')">🌪️</button>
-    <button @click="ex1('swap')">🔁</button>
-    <button @click="rdShre">📝</button>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <button class="menu-btn" @click="toggleDrawer">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <div class="title">Black Paint QA</div>
   </div>
-  <div v-if="wbDat.message">
-    <input type="text" v-model="usrNam" class="uNam">
-    <ul style="display:block" ref="save_data_set_list_parent1">
-      <li v-for="(d,i) in usWDat">
+
+  <!-- ドロワー -->
+  <div class="drawer" :class="{open: sideOpen}">
+    <h3>Data / User</h3>
+    <!-- もし wbDat.message があればユーザーリストを表示 -->
+    <input type="text" v-model="usrNam" class="uNam" placeholder="username" />
+    <ul>
+      <li v-for="(d,i) in usWDat" :key="i">
         <button @click="stDaWD(i)">
           {{ JSON.parse(d.data_json_str).data1.split('\n')[0].slice(0,5) }}
         </button>
       </li>
     </ul>
+    <p>version 0.0.1.5</p>
   </div>
-  <p>version 0.0.1.4</p>
-</div>
-<div :class="co1Non?'co2D1':'co2'">
-  <div>
-    <button @click="tgSide" :class="co1Non?'tgSb':'co2TgS'">Toggle Sidebar</button>
-    <!-- デバッグ用: 現在の問題データを出力 -->
-    <template v-for="dv in ex1Dat"><div>{{ dv }}</div></template>
 
-    <!-- 選択モード -->
+  <!-- メインコンテンツ -->
+  <div class="main-content">
+    <!-- 例: 現在のモードに応じた表示 -->
+    
+    <!-- chooseモード -->
     <div v-if="md==='choose'">
-      <template v-for="dv in [ex1Dat[ooQAMC]]">
-        <div class="paCh">
-          <span class="chQn">{{ dv[0] }} {{ dv[5] }}</span>
-          <button v-for="(item,ix) in dv[2]" :class="'chBt chBt'+ix" @click="chQACh(dv[1], item)">
-            {{ trText(item) }}
-          </button>
-        </div>
-      </template>
-    </div>
-
-    <!-- まるばつモード -->
-    <div v-if="md==='maru_batu'" class="mrBt">
-      <template v-for="dv in [ex1Dat[ooQAMC]]">
-        <progress :value="ooQAMC" :max="ex1Dat.length" class="prBr"></progress>
-        <div v-if="dv[3]===false" class="paFS">
-          <div class="frFS">
-            <span>{{ dv[0] }}</span><span> = </span><span>{{ dv[2][0] }}</span>
-            <div v-if="mbRslt!==''">{{ mbRslt }}</div>
-          </div>
-          <div class="baFS">
-            <button @click="chMaBa(dv,dv[2][0],'maru')" :class="flInco==='maru'||flInco===null?'flIc maru':'maru'">⭕️</button>
-            <button @click="chMaBa(dv,dv[2][1],'batu')" :class="flInco==='batu'||flInco===null?'flIc batu':'batu'">❎</button>
+      <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
+        <div>
+          <h2>{{ dv[0] }} {{ dv[5] }}</h2>
+          <div>
+            <button v-for="(item,ix) in dv[2]" :key="ix" @click="chQACh(dv[1], item)">
+              {{ trText(item) }}
+            </button>
           </div>
         </div>
       </template>
     </div>
 
-    <!-- 黒塗りモード -->
-    <div v-if="md==='black_paint'" class="blPt" @click="chPaRw">
-      <template v-for="dv in [ex1Dat[ooQAMC]]">
-        <progress :value="ooQAMC" :max="ex1Dat[ooQAMC].length" class="prBr"></progress>
+    <!-- maru_batuモード -->
+    <div v-if="md==='maru_batu'">
+      <progress :value="ooQAMC" :max="ex1Dat.length" class="progress-bar"></progress>
+      <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
+        <div v-if="dv[3] === false">
+          <h2>{{ dv[0] }} = {{ dv[2][0] }}</h2>
+          <p v-if="mbRslt!==''">{{ mbRslt }}</p>
+          <button @click="chMaBa(dv,dv[2][0],'maru')" :class="flInco==='maru'||flInco===null?'flIc':''">⭕️</button>
+          <button @click="chMaBa(dv,dv[2][1],'batu')" :class="flInco==='batu'||flInco===null?'flIc':''">❎</button>
+        </div>
+      </template>
+    </div>
+
+    <!-- black_paintモード -->
+    <div v-if="md==='black_paint'" class="blPt">
+      <progress :value="ooQAMC" :max="ex1Dat[ooQAMC].length" class="progress-bar"></progress>
+      <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
         <div>{{ dv[0] }}</div>
-        <div :class="dv[4]?'bpIt':''">{{ dv[1] }}</div>
+        <div :class="dv[4] ? 'black-paint' : ''" @click="chPaRw">{{ dv[1] }}</div>
         <div v-if="paRslt!==''">{{ paRslt }}</div>
       </template>
     </div>
 
-    <!-- スライドモード -->
-    <div v-if="md==='slide'" class="slMc">
-      <progress :value="curIdx" :max="sldes.length" class="prBr"></progress><br><br>
-      <div v-if="sldes.length>0">
-        <div v-if="sldes[curIdx].q" class="q" @click="nxSlid">{{ sldes[curIdx].q }}</div>
-        <div v-if="sldes[curIdx].a" class="a" @click="nxSlid">{{ sldes[curIdx].a }}</div>
+    <!-- slideモード -->
+    <div v-if="md==='slide'">
+      <progress :value="curIdx" :max="sldes.length" class="progress-bar"></progress>
+      <div>
+        <div v-if="sldes[curIdx]?.q" @click="nxSlid">{{ sldes[curIdx].q }}</div>
+        <div v-else-if="sldes[curIdx]?.a" @click="nxSlid">{{ sldes[curIdx].a }}</div>
       </div>
       <button @click="frSlid">最初へ</button>
       <button @click="prSlid">前へ</button>
@@ -120,119 +233,241 @@ button{white-space:wrap;overflow:visible}
         <button @click="auSlid">auto slide</button>
         <input type="number" v-model="tmIntv" min="0.1" step="0.1">秒
       </div>
-      <div v-if="auSlMd"><button @click="stAuSl">stop auto slide</button></div>
+      <div v-else>
+        <button @click="stAuSl">stop auto slide</button>
+      </div>
     </div>
 
-    <!-- QR表示モード -->
+    <!-- qrモード -->
     <div v-if="md==='qr'">
       <button @click="shQr">show_qr</button>
       <div ref="qrcode"></div>
     </div>
+    
   </div>
-</div>
-<script>
-const app=Vue.createApp({
-data(){return{
-  trTeLn:20,usWDat:[],usrNam:'user1',
-  shUsr:'',shTag:'',shOrBy:'DESC',
-  enpnt:'https://cotton-concrete-catsup.glitch.me',wbDat:[],
-  paRslt:'',mbRslt:'',flInco:'',
-  ooQAMD:true,ooQAMC:0,co1Non:true,
-  sldes:[],curIdx:0,auSlMd:false,tmIntv:.5,md:'choose',
-  dtA:`こんにちは\nやあ\nいい\nはい\n犬\n猫\n食事\n眠り`,
-  dtB:`hello\nhi\ngood\nyes\ndog\ncat\nfood\nsleep`,
-  ex1Dat:[["こんにちは","hello",["food","hello"],false,true,""]]
-}},
-watch:{
-  usrNam(){this.gtUsWD()},
-  shUsr(){this.ftRdAl()},shTag(){this.ftRdAl()},shOrBy(){this.ftRdAl()}
-},
-async mounted(){
-  this.ex1();
-  await this.ftRdAl();
-},
-methods:{
-  trText(t){return t.length>this.trTeLn?t.slice(0,this.trTeLn)+'...':t},
-  stDaWD(i){
-    if(confirm('Really??')){
-      let j=JSON.parse(this.usWDat[i].data_json_str);
-      this.dtA=j.data1;this.dtB=j.data2;this.ex1();
-    }
-  },
-  gtUsWD(){this.usWDat=toAry(this.wbDat.message).filter(v=>v.username===this.usrNam)},
-  async ftRdAl(){
-    try{
-      let p={user:this.shUsr,tag:this.shTag,order_by:this.shOrBy},
-          u=new URL(this.enpnt+'/read_all');
-      u.search=new URLSearchParams(p).toString();
-      let r=await fetch(u,{method:'GET',headers:{'Content-Type':'application/json'}});
-      this.wbDat=await r.json();this.gtUsWD();
-    }catch(e){
-      this.ooQAMC=0;
-      this.ex1Dat=[["こんにちは","hello(or any error)",["food","hello"],false,true,""]];
-      this.ex1();
-    }
-  },
-  chMode(m){this.ooQAMC=0;this.md=m;this.ex1()},
-  ex1(p){
-    this.ooQAMC=0;
-    let[a,b]=p==='swap'
-      ?[this.dtB.split('\n'),this.dtA.split('\n')]
-      :[this.dtA.split('\n'),this.dtB.split('\n')];
-    let f=(d0,d1)=>d0.map((v,i)=>[v,d1[i],shuffle([d1[i],shuffle(d1.filter((_,x)=>x!==i))[0]]),false,true,'']);
-    this.ex1Dat=f(a,b);
-    if(p==="reverse")this.ex1Dat=R.reverse(toAry(this.ex1Dat));
-    if(p==="shuffle")this.ex1Dat=shuffle(toAry(this.ex1Dat));
-    this.sldes=this.mkSlid(this.ex1Dat);
-  },
-  chQACh(c,a){
-    let d=this.ex1Dat[this.ooQAMC];
-    d[5]=(a===c)?'⭕️':'❎';
-    const fn=()=>{
-      this.ooQAMC++;
-      this.ooQAMC===this.ex1Dat.length?(this.ooQAMC=0,this.ex1Dat.forEach(x=>x[5]='')):null;
-    };
-    d[5]==='⭕️'?setTimeout(fn,this.tmIntv*1000):null;
-  },
-  async chMaBa(v,r,m){
-    const fn=()=>{
-      this.ooQAMC++;
-      this.ooQAMC===this.ex1Dat.length?(this.ooQAMC=0,this.ex1Dat.forEach(x=>x[3]=false)):null;
-    };
-    const cmpl=async()=>{
-      this.mbRslt='全問完了';
-      await new Promise(rs=>setTimeout(rs,this.tmIntv*1000));
-      this.mbRslt='';
-    };
-    v[1]===r?(v[3]=true,fn(),this.flInco=''):(v[3]=false,this.flInco=(m==='maru'?'batu':'maru'));
-    this.ooQAMC===this.ex1Dat.length-1?await cmpl():null;
-  },
-  mkSlid(a){return a.flatMap(v=>[{q:v[0]},{a:v[1]}])},
-  async chPaRw(){
-    let d=this.ex1Dat[this.ooQAMC];
-    const rs=async()=>{
-      this.ex1Dat.forEach(x=>x[4]=true);
-      this.ooQAMC=0;
-    };
-    const cmpl=async()=>{
-      this.paRslt='全問完了';
-      await new Promise(r=>setTimeout(r,this.tmIntv*1000));
-      this.paRslt='';rs();
-    };
-    d?(d[4]=false,await new Promise(r=>setTimeout(r,this.tmIntv*1000)),this.ooQAMC++):rs();
-    this.ex1Dat[this.ooQAMC]?.length-1===this.ooQAMC?await cmpl():null;
-  },
-  frSlid(){this.curIdx=0},
-  prSlid(){this.curIdx>0?this.curIdx--:this.curIdx=this.sldes.length-1},
-  nxSlid(){this.curIdx<this.sldes.length-1?this.curIdx++:this.curIdx=0},
-  auSlid(){this.auSlMd=true;setInterval(()=>{this.nxSlid()},this.tmIntv*1000)},
-  stAuSl(){this.auSlMd=false;for(let i=1;i<99999;i++)clearInterval(i)},
-  rdShre(){if(confirm('Leave this page?'))location.href='./share.html'},
-  tgSide(){this.co1Non=!this.co1Non},
-  shQr(){new QRCode(this.$refs.qrcode,{text:"https://taroyanaka.github.io/q_a/b_p.html",width:256,height:256,colorDark:"#000",colorLight:"#fff",correctLevel:QRCode.CorrectLevel.H})}
-}
-}).mount('.app');
-function toAry(i){return JSON.parse(JSON.stringify(i))}
-</script>
+
+  <!-- Bottom Navigation (Tab Bar) -->
+  <div class="bottom-nav">
+    <!-- 選択モード -->
+    <button 
+      :class="{active: md==='choose'}" 
+      @click="chMode('choose')">
+      <span class="material-symbols-outlined">list</span>
+      <span>選択</span>
+    </button>
+    <!-- まるばつ -->
+    <button 
+      :class="{active: md==='maru_batu'}"
+      @click="chMode('maru_batu')">
+      <span class="material-symbols-outlined">help</span>
+      <span>⭕️❎</span>
+    </button>
+    <!-- 黒塗り -->
+    <button 
+      :class="{active: md==='black_paint'}"
+      @click="chMode('black_paint')">
+      <span class="material-symbols-outlined">format_color_fill</span>
+      <span>黒塗り</span>
+    </button>
+    <!-- スライド -->
+    <button 
+      :class="{active: md==='slide'}"
+      @click="chMode('slide')">
+      <span class="material-symbols-outlined">slideshow</span>
+      <span>スライド</span>
+    </button>
+    <!-- QR -->
+    <button 
+      :class="{active: md==='qr'}"
+      @click="chMode('qr')">
+      <span class="material-symbols-outlined">qr_code_scanner</span>
+      <span>QR</span>
+    </button>
+  </div>
+
+  <script>
+    const { createApp, ref, watch, onMounted } = Vue;
+    function toAry(i){return JSON.parse(JSON.stringify(i))}
+
+    const app = createApp({
+      setup() {
+        const trTeLn=ref(20), usWDat=ref([]), usrNam=ref('user1'),
+              shUsr=ref(''), shTag=ref(''), shOrBy=ref('DESC'),
+              enpnt=ref('https://cotton-concrete-catsup.glitch.me'),
+              wbDat=ref([]), paRslt=ref(''), mbRslt=ref(''),
+              flInco=ref(''), ooQAMD=ref(true), ooQAMC=ref(0),
+              sideOpen=ref(false), // ドロワー開閉フラグ
+              sldes=ref([]), curIdx=ref(0), auSlMd=ref(false),
+              tmIntv=ref(.5), md=ref('choose'),
+
+              dtA=ref(`こんにちは\nやあ\nいい\nはい\n犬\n猫\n食事\n眠り`),
+              dtB=ref(`hello\nhi\ngood\nyes\ndog\ncat\nfood\nsleep`),
+              ex1Dat=ref([["こんにちは","hello",["food","hello"],false,true,""]]);
+
+        watch(usrNam, ()=> gtUsWD());
+        watch([shUsr, shTag, shOrBy], ()=> ftRdAl());
+
+        onMounted(async ()=>{
+          ex1();
+          await ftRdAl();
+        });
+
+        const toggleDrawer = ()=>{ sideOpen.value = !sideOpen.value; };
+
+        const trText = t => t.length>trTeLn.value ? t.slice(0,trTeLn.value)+'...' : t;
+
+        const stDaWD = i => {
+          if(confirm('Really??')){
+            const x = JSON.parse(usWDat.value[i].data_json_str);
+            dtA.value = x.data1;
+            dtB.value = x.data2;
+            ex1();
+            sideOpen.value = false; // 選択後ドロワー閉じてもOK
+          }
+        };
+
+        const gtUsWD = () => {
+          if(!wbDat.value.message) return;
+          usWDat.value = toAry(wbDat.value.message)
+            .filter(v=>v.username===usrNam.value);
+        };
+
+        const ftRdAl = async() => {
+          try{
+            const p = {user: shUsr.value, tag: shTag.value, order_by: shOrBy.value};
+            const u = new URL(enpnt.value + '/read_all');
+            u.search = new URLSearchParams(p).toString();
+            const r = await fetch(u, {method:'GET', headers:{'Content-Type':'application/json'}});
+            wbDat.value = await r.json();
+            gtUsWD();
+          }catch(e){
+            ooQAMC.value=0;
+            ex1Dat.value=[["こんにちは","hello(or any error)",["food","hello"],false,true,""]];
+            ex1();
+          }
+        };
+
+        const chMode = m => {
+          ooQAMC.value=0;
+          md.value=m;
+          ex1();
+        };
+
+        const ex1 = p => {
+          ooQAMC.value=0;
+          let A=dtA.value.split('\n'), B=dtB.value.split('\n');
+          if(p==='swap') [A,B] = [B,A];
+          const f = (d0,d1)=> d0.map((v,i)=>[
+            v, d1[i],
+            shuffle([ d1[i], shuffle(d1.filter((_,x)=>x!==i))[0] ]),
+            false,true,''
+          ]);
+          let newData = f(A,B);
+          if(p==="reverse") newData = R.reverse(toAry(newData));
+          if(p==="shuffle") newData = shuffle(toAry(newData));
+          ex1Dat.value = newData;
+          sldes.value = mkSlid(newData);
+        };
+
+        const chQACh=(correct, ans)=>{
+          const d=ex1Dat.value[ooQAMC.value];
+          d[5]=(ans===correct)?'⭕️':'❎';
+          if(d[5]==='⭕️'){
+            setTimeout(()=>{
+              ooQAMC.value++;
+              if(ooQAMC.value===ex1Dat.value.length){
+                ooQAMC.value=0; ex1Dat.value.forEach(x=>x[5]='');
+              }
+            },tmIntv.value*1000);
+          }
+        };
+
+        const chMaBa=async(v,r,m)=>{
+          const fn=()=>{
+            ooQAMC.value++;
+            if(ooQAMC.value===ex1Dat.value.length){
+              ooQAMC.value=0; ex1Dat.value.forEach(x=>x[3]=false);
+            }
+          };
+          const cmpl=async()=>{
+            mbRslt.value='全問完了';
+            await new Promise(rs=>setTimeout(rs, tmIntv.value*1000));
+            mbRslt.value='';
+          };
+          if(v[1]===r){ v[3]=true; fn(); flInco.value=''; }
+          else{ v[3]=false; flInco.value=(m==='maru'?'batu':'maru'); }
+          if(ooQAMC.value===ex1Dat.value.length-1) await cmpl();
+        };
+
+        const mkSlid = a => a.flatMap(v=>[{q:v[0]}, {a:v[1]}]);
+
+        const chPaRw=async()=>{
+          const d=ex1Dat.value[ooQAMC.value];
+          const rs=()=>{
+            ex1Dat.value.forEach(x=>x[4]=true);
+            ooQAMC.value=0;
+          };
+          const cmpl=async()=>{
+            paRslt.value='全問完了';
+            await new Promise(r=>setTimeout(r, tmIntv.value*1000));
+            paRslt.value='';
+            rs();
+          };
+          if(d){
+            d[4]=false;
+            await new Promise(r=>setTimeout(r, tmIntv.value*1000));
+            ooQAMC.value++;
+          } else {
+            rs();
+          }
+          if(ex1Dat.value[ooQAMC.value]?.length-1===ooQAMC.value){
+            await cmpl();
+          }
+        };
+
+        const frSlid=()=> curIdx.value=0;
+        const prSlid=()=> curIdx.value>0 ? curIdx.value-- : curIdx.value=sldes.value.length-1;
+        const nxSlid=()=> curIdx.value<sldes.value.length-1 ? curIdx.value++ : curIdx.value=0;
+
+        const auSlid=()=>{
+          auSlMd.value=true;
+          setInterval(()=>nxSlid(), tmIntv.value*1000);
+        };
+        const stAuSl=()=>{
+          auSlMd.value=false;
+          for(let i=1;i<99999;i++){
+            clearInterval(i);
+          }
+        };
+
+        const rdShre=()=>{
+          if(confirm('Leave this page?')) location.href='./share.html';
+        };
+
+        const shQr=()=>{
+          const e=document.querySelector('[ref="qrcode"]');
+          if(e)new QRCode(e,{
+            text:"https://taroyanaka.github.io/q_a/b_p.html",
+            width:256,height:256,
+            colorDark:"#000",colorLight:"#fff",
+            correctLevel:QRCode.CorrectLevel.H
+          });
+        };
+
+        return {
+          // state
+          trTeLn, usWDat, usrNam, shUsr, shTag, shOrBy, enpnt, wbDat,
+          paRslt, mbRslt, flInco, ooQAMD, ooQAMC, sideOpen,
+          sldes, curIdx, auSlMd, tmIntv, md, dtA, dtB, ex1Dat,
+          // methods
+          toggleDrawer, trText, stDaWD, gtUsWD, ftRdAl, chMode,
+          ex1, chQACh, chMaBa, mkSlid, chPaRw, frSlid, prSlid,
+          nxSlid, auSlid, stAuSl, rdShre, shQr
+        };
+      }
+    });
+
+    window.myApp = app.mount('body');
+  </script>
 </body>
 </html>

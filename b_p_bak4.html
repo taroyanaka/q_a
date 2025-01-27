@@ -1,137 +1,6 @@
 <!DOCTYPE html>
-<!-- apiKeyは自分のものに修正が必要 -->
 <html lang="en">
 <head>
-  <style>
-    .gsi-material-button {
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  -webkit-appearance: none;
-  background-color: WHITE;
-  background-image: none;
-  border: 1px solid #747775;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  color: #1f1f1f;
-  cursor: pointer;
-  font-family: 'Roboto', arial, sans-serif;
-  font-size: 14px;
-  height: 40px;
-  letter-spacing: 0.25px;
-  outline: none;
-  overflow: hidden;
-  padding: 0 12px;
-  position: relative;
-  text-align: center;
-  -webkit-transition: background-color .218s, border-color .218s, box-shadow .218s;
-  transition: background-color .218s, border-color .218s, box-shadow .218s;
-  vertical-align: middle;
-  white-space: nowrap;
-  width: auto;
-  max-width: 400px;
-  min-width: min-content;
-}
-
-.gsi-material-button .gsi-material-button-icon {
-  height: 20px;
-  margin-right: 12px;
-  min-width: 20px;
-  width: 20px;
-}
-
-.gsi-material-button .gsi-material-button-content-wrapper {
-  -webkit-align-items: center;
-  align-items: center;
-  display: flex;
-  -webkit-flex-direction: row;
-  flex-direction: row;
-  -webkit-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  height: 100%;
-  justify-content: space-between;
-  position: relative;
-  width: 100%;
-}
-
-.gsi-material-button .gsi-material-button-contents {
-  -webkit-flex-grow: 1;
-  flex-grow: 1;
-  font-family: 'Roboto', arial, sans-serif;
-  font-weight: 500;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  vertical-align: top;
-}
-
-.gsi-material-button .gsi-material-button-state {
-  -webkit-transition: opacity .218s;
-  transition: opacity .218s;
-  bottom: 0;
-  left: 0;
-  opacity: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.gsi-material-button:disabled {
-  cursor: default;
-  background-color: #ffffff61;
-  border-color: #1f1f1f1f;
-}
-
-.gsi-material-button:disabled .gsi-material-button-contents {
-  opacity: 38%;
-}
-
-.gsi-material-button:disabled .gsi-material-button-icon {
-  opacity: 38%;
-}
-
-.gsi-material-button:not(:disabled):active .gsi-material-button-state, 
-.gsi-material-button:not(:disabled):focus .gsi-material-button-state {
-  background-color: #303030;
-  opacity: 12%;
-}
-
-.gsi-material-button:not(:disabled):hover {
-  -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
-  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
-}
-
-.gsi-material-button:not(:disabled):hover .gsi-material-button-state {
-  background-color: #303030;
-  opacity: 8%;
-}
-
-
-
-
-.signout-button {
-  background-color: #ff4b5c;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.signout-button:hover {
-  background-color: #ff1f3a;
-  transform: scale(1.05);
-}
-
-.signout-button:active {
-  background-color: #e60029;
-  transform: scale(0.95);
-}
-
-  </style>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>black paint q_a (Modern Design)</title>
@@ -152,13 +21,13 @@
     // 1. Firebase 初期化 (Config)
     //============================
     const firebaseConfig = {
-      apiKey: "AIzaSyBcOlIDP2K...",
-      authDomain: "p2auth-ea50a.firebaseapp.com",
-      projectId: "p2auth-ea50a",
-      storageBucket: "p2auth-ea50a.appspot.com",
-      messagingSenderId: "796225429484",
-      appId: "1:796225429484:web:ece56ef2fc0be28cd6eac9"
-    };
+            apiKey: "AIzaSyBcOlIDP2KWbJuKM0WeMHNp-WvjTVfLt9Y",
+            authDomain: "p2auth-ea50a.firebaseapp.com",
+            projectId: "p2auth-ea50a",
+            storageBucket: "p2auth-ea50a.appspot.com",
+            messagingSenderId: "796225429484",
+            appId: "1:796225429484:web:ece56ef2fc0be28cd6eac9"
+        };
     firebase.initializeApp(firebaseConfig);
 
     // Googleプロバイダ
@@ -352,9 +221,6 @@
 
   <!-- ドロワー -->
   <div class="drawer" :class="{open: sideOpen}">
-    <a href="./insert_link.html" target="_blank" style="text-decoration: none;">
-      <button>アップロードモード</button>
-  </a>
     <h3>Data / User</h3>
     <!-- もし wbDat.message があればユーザーリストを表示 -->
     <input type="text" v-model="usrNam" class="uNam" placeholder="username" />
@@ -367,28 +233,17 @@
     </ul>
     <p>version 0.0.1.5</p>
 
-    <button class="gsi-material-button">
-      <div class="gsi-material-button-state"></div>
-      <div class="gsi-material-button-content-wrapper">
-        <div class="gsi-material-button-icon">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
-            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
-            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
-            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
-            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
-            <path fill="none" d="M0 0h48v48H0z"></path>
-          </svg>
-        </div>
-        <span class="gsi-material-button-contents">Sign in with Google</span>
-        <span style="display: none;">Sign in with Google</span>
-      </div>
+    <!-- Googleログイン: ログアウト時のみ表示 -->
+    <button class="google-btn" v-if="!user" @click="googleSignIn">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google G" />
+      <span>Sign in with Google</span>
     </button>
 
-
-    <!-- Googleログアウト -->
-<button @click="googleSignOut" class="signout-button">ログアウト</button>
-
-
+    <!-- Googleログアウト: ログイン時のみ表示 -->
+    <button class="google-btn" v-if="user" @click="googleSignOut">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google G" />
+      <span>Sign out</span>
+    </button>
   </div>
 
   <!-- メインコンテンツ -->
@@ -557,6 +412,7 @@ sleep`);
 
         // Firebase Auth関連
         const user = ref(null);
+        const userUid = ref(""); // UID格納用
 
         watch(usrNam, () => gtUsWD());
         watch([shUsr, shTag, shOrBy], () => ftRdAl());
@@ -595,32 +451,32 @@ sleep`);
             const p = {
               user: shUsr.value,
               tag: shTag.value,
-              order_by: shOrBy.value
+              order_by: shOrBy.value,
             };
             const u = new URL(enpnt.value + "/read_all");
             u.search = new URLSearchParams(p).toString();
             const r = await fetch(u, {
               method: "GET",
-              headers: { "Content-Type": "application/json" }
+              headers: { "Content-Type": "application/json" },
             });
             wbDat.value = await r.json();
             gtUsWD();
           } catch (e) {
             ooQAMC.value = 0;
             ex1Dat.value = [
-              ["こんにちは", "hello(or any error)", ["food", "hello"], false, true, ""]
+              ["こんにちは", "hello(or any error)", ["food", "hello"], false, true, ""],
             ];
             ex1();
           }
         };
 
-        const chMode = m => {
+        const chMode = (m) => {
           ooQAMC.value = 0;
           md.value = m;
           ex1();
         };
 
-        const ex1 = p => {
+        const ex1 = (p) => {
           ooQAMC.value = 0;
           let A = dtA.value.split("\n");
           let B = dtB.value.split("\n");
@@ -633,13 +489,10 @@ sleep`);
             d0.map((v, i) => [
               v,
               d1[i],
-              shuffle([
-                d1[i],
-                shuffle(d1.filter((_, x) => x !== i))[0]
-              ]),
+              shuffle([d1[i], shuffle(d1.filter((_, x) => x !== i))[0]]),
               false,
               true,
-              ""
+              "",
             ]);
 
           let newData = f(A, B);
@@ -659,110 +512,14 @@ sleep`);
               ooQAMC.value++;
               if (ooQAMC.value === ex1Dat.value.length) {
                 ooQAMC.value = 0;
-                ex1Dat.value.forEach(x => (x[5] = ""));
+                ex1Dat.value.forEach((x) => (x[5] = ""));
               }
             }, tmIntv.value * 1000);
           }
         };
 
-        const chMaBa = async (v, r, m) => {
-          const fn = () => {
-            ooQAMC.value++;
-            if (ooQAMC.value === ex1Dat.value.length) {
-              ooQAMC.value = 0;
-              ex1Dat.value.forEach(x => (x[3] = false));
-            }
-          };
+        const mkSlid = (a) => a.flatMap((v) => [{ q: v[0] }, { a: v[1] }]);
 
-          const cmpl = async () => {
-            mbRslt.value = "全問完了";
-            await new Promise(rs => setTimeout(rs, tmIntv.value * 1000));
-            mbRslt.value = "";
-          };
-
-          if (v[1] === r) {
-            v[3] = true;
-            fn();
-            flInco.value = "";
-          } else {
-            v[3] = false;
-            flInco.value = m === "maru" ? "batu" : "maru";
-          }
-
-          if (ooQAMC.value === ex1Dat.value.length - 1) {
-            await cmpl();
-          }
-        };
-
-        const mkSlid = a => a.flatMap(v => [{ q: v[0] }, { a: v[1] }]);
-
-        const chPaRw = async () => {
-          const d = ex1Dat.value[ooQAMC.value];
-          const rs = () => {
-            ex1Dat.value.forEach(x => (x[4] = true));
-            ooQAMC.value = 0;
-          };
-
-          const cmpl = async () => {
-            paRslt.value = "全問完了";
-            await new Promise(r => setTimeout(r, tmIntv.value * 1000));
-            paRslt.value = "";
-            rs();
-          };
-
-          if (d) {
-            d[4] = false;
-            await new Promise(r => setTimeout(r, tmIntv.value * 1000));
-            ooQAMC.value++;
-          } else {
-            rs();
-          }
-
-          if (ex1Dat.value[ooQAMC.value]?.length - 1 === ooQAMC.value) {
-            await cmpl();
-          }
-        };
-
-        const frSlid = () => (curIdx.value = 0);
-        const prSlid = () =>
-          curIdx.value > 0 ? (curIdx.value -= 1) : (curIdx.value = sldes.value.length - 1);
-        const nxSlid = () =>
-          curIdx.value < sldes.value.length - 1 ? (curIdx.value += 1) : (curIdx.value = 0);
-
-        const auSlid = () => {
-          auSlMd.value = true;
-          setInterval(() => nxSlid(), tmIntv.value * 1000);
-        };
-
-        const stAuSl = () => {
-          auSlMd.value = false;
-          for (let i = 1; i < 99999; i++) {
-            clearInterval(i);
-          }
-        };
-
-        const rdShre = () => {
-          if (confirm("Leave this page?")) {
-            location.href = "./share.html";
-          }
-        };
-
-        const shQr = () => {
-          const e = document.querySelector('[ref="qrcode"]');
-          if (e)
-            new QRCode(e, {
-              text: "https://taroyanaka.github.io/q_a/b_p.html",
-              width: 256,
-              height: 256,
-              colorDark: "#000",
-              colorLight: "#fff",
-              correctLevel: QRCode.CorrectLevel.H
-            });
-        };
-
-        //=============================
-        // 2. Googleログイン関数
-        //=============================
         const googleSignIn = async () => {
           try {
             const result = await firebase.auth().signInWithPopup(googleProvider);
@@ -771,9 +528,9 @@ sleep`);
               throw new Error("Firebaseログインに失敗し、ユーザーが取得できませんでした。");
             }
             user.value = currentUser;
+            userUid.value = currentUser.uid;
             console.log("ログイン完了:", currentUser.uid);
 
-            // p2_login のリクエスト
             const p2LoginUrl = `${enpnt.value}/p2_login?uid=${encodeURIComponent(
               currentUser.uid
             )}`;
@@ -790,13 +547,11 @@ sleep`);
           }
         };
 
-        //=============================
-        // 3. Googleログアウト関数
-        //=============================
         const googleSignOut = async () => {
           try {
             await firebase.auth().signOut();
             user.value = null;
+            userUid.value = "";
             console.log("ログアウトしました");
             alert("ログアウト完了");
           } catch (err) {
@@ -806,7 +561,6 @@ sleep`);
         };
 
         return {
-          // state
           trTeLn,
           usWDat,
           usrNam,
@@ -830,8 +584,7 @@ sleep`);
           dtB,
           ex1Dat,
           user,
-
-          // methods
+          userUid,
           toggleDrawer,
           trText,
           stDaWD,
@@ -840,24 +593,14 @@ sleep`);
           chMode,
           ex1,
           chQACh,
-          chMaBa,
           mkSlid,
-          chPaRw,
-          frSlid,
-          prSlid,
-          nxSlid,
-          auSlid,
-          stAuSl,
-          rdShre,
-          shQr,
           googleSignIn,
-          googleSignOut
+          googleSignOut,
         };
-      }
+      },
     });
 
     window.myApp = app.mount("body");
   </script>
 </body>
 </html>
-

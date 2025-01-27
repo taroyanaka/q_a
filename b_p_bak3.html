@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>black paint q_a (Modern Design)</title>
+
+  <!-- Material Symbols -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+  <script src="./lib/vue@3.2.36.global.prod.js"></script>
+  <script src="./lib/shuffle.js"></script>
+
+  <style>
+    /* === Reset or minimal base === */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body, html {
+      font-family: sans-serif;
+      height: 100%;
+      background: #fafafa;
+      color: #333;
+    }
+
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* === Top Bar === */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      height: 56px;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      padding: 0 1rem;
+    }
+    .top-bar .menu-btn {
+      background: none;
+      border: none;
+      font-size: 0;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      margin-right: 1rem;
+    }
+    .top-bar .title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .material-symbols-outlined {
+      font-variation-settings:
+       'FILL' 0,
+       'wght' 400,
+       'GRAD' 0,
+       'opsz' 48
+    }
+    /* ドロワーを左からスライドイン */
+    .drawer {
+      position: fixed;
+      top: 56px; /* top-barの高さ */
+      left: 0;
+      width: 80%;
+      max-width: 300px;
+      height: calc(100% - 56px);
+      background: #fff;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+      z-index: 200;
+      padding: 1rem;
+    }
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer h3 {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: .5rem;
+    }
+
+    .drawer .uNam {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    /* メインコンテンツ */
+    .main-content {
+      flex: 1; 
+      overflow: auto; 
+      padding: 1rem;
+    }
+
+    /* ボトムナビゲーション */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 56px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      box-shadow: 0 -1px 3px rgba(0,0,0,0.1);
+    }
+
+    .bottom-nav button {
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #666;
+    }
+    .bottom-nav .material-symbols-outlined {
+      font-size: 24px;
+      margin-bottom: -2px; /* 微調整 */
+    }
+    .bottom-nav button.active {
+      color: #1976d2; /* Active color (blue) */
+    }
+
+    /* カードや進捗バーなど各モードの簡易表示例 */
+    .progress-bar {
+      width: 100%;
+      margin: 1rem 0;
+    }
+
+    /* 例: 黒塗りモードなど */
+    .black-paint {
+      background: #000; 
+      color: #000; 
+      user-select: none; 
+      width: 100%; 
+      text-align: center; 
+      margin: 1rem 0;
+    }
+    /* カンタンに既存要素のクラスに対応 */
+    .blPt { 
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    /* etc. */
+
+  </style>
+</head>
+<body class="app">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <button class="menu-btn" @click="toggleDrawer">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <div class="title">Black Paint QA</div>
+  </div>
+
+  <!-- ドロワー -->
+  <div class="drawer" :class="{open: sideOpen}">
+    <h3>Data / User</h3>
+    <!-- もし wbDat.message があればユーザーリストを表示 -->
+    <input type="text" v-model="usrNam" class="uNam" placeholder="username" />
+    <ul>
+      <li v-for="(d,i) in usWDat" :key="i">
+        <button @click="stDaWD(i)">
+          {{ JSON.parse(d.data_json_str).data1.split('\n')[0].slice(0,5) }}
+        </button>
+      </li>
+    </ul>
+    <p>version 0.0.1.5</p>
+  </div>
+
+  <!-- メインコンテンツ -->
+  <div class="main-content">
+    <!-- 例: 現在のモードに応じた表示 -->
+    
+    <!-- chooseモード -->
+    <div v-if="md==='choose'">
+      <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
+        <div>
+          <h2>{{ dv[0] }} {{ dv[5] }}</h2>
+          <div>
+            <button v-for="(item,ix) in dv[2]" :key="ix" @click="chQACh(dv[1], item)">
+              {{ trText(item) }}
+            </button>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <!-- maru_batuモード -->
+    <div v-if="md==='maru_batu'">
+      <progress :value="ooQAMC" :max="ex1Dat.length" class="progress-bar"></progress>
+      <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
+        <div v-if="dv[3] === false">
+          <h2>{{ dv[0] }} = {{ dv[2][0] }}</h2>
+          <p v-if="mbRslt!==''">{{ mbRslt }}</p>
+          <button @click="chMaBa(dv,dv[2][0],'maru')" :class="flInco==='maru'||flInco===null?'flIc':''">⭕️</button>
+          <button @click="chMaBa(dv,dv[2][1],'batu')" :class="flInco==='batu'||flInco===null?'flIc':''">❎</button>
+        </div>
+      </template>
+    </div>
+
+    <!-- black_paintモード -->
+    <div v-if="md==='black_paint'" class="blPt">
+      <progress :value="ooQAMC" :max="ex1Dat[ooQAMC].length" class="progress-bar"></progress>
+      <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
+        <div>{{ dv[0] }}</div>
+        <div :class="dv[4] ? 'black-paint' : ''" @click="chPaRw">{{ dv[1] }}</div>
+        <div v-if="paRslt!==''">{{ paRslt }}</div>
+      </template>
+    </div>
+
+    <!-- slideモード -->
+    <div v-if="md==='slide'">
+      <progress :value="curIdx" :max="sldes.length" class="progress-bar"></progress>
+      <div>
+        <div v-if="sldes[curIdx]?.q" @click="nxSlid">{{ sldes[curIdx].q }}</div>
+        <div v-else-if="sldes[curIdx]?.a" @click="nxSlid">{{ sldes[curIdx].a }}</div>
+      </div>
+      <button @click="frSlid">最初へ</button>
+      <button @click="prSlid">前へ</button>
+      <button @click="nxSlid">次へ</button>
+      <div v-if="!auSlMd">
+        <button @click="auSlid">auto slide</button>
+        <input type="number" v-model="tmIntv" min="0.1" step="0.1">秒
+      </div>
+      <div v-else>
+        <button @click="stAuSl">stop auto slide</button>
+      </div>
+    </div>
+
+    <!-- qrモード -->
+    <div v-if="md==='qr'">
+      <button @click="shQr">show_qr</button>
+      <div ref="qrcode"></div>
+    </div>
+    
+  </div>
+
+  <!-- Bottom Navigation (Tab Bar) -->
+  <div class="bottom-nav">
+    <!-- 選択モード -->
+    <button 
+      :class="{active: md==='choose'}" 
+      @click="chMode('choose')">
+      <span class="material-symbols-outlined">list</span>
+      <span>選択</span>
+    </button>
+    <!-- まるばつ -->
+    <button 
+      :class="{active: md==='maru_batu'}"
+      @click="chMode('maru_batu')">
+      <span class="material-symbols-outlined">help</span>
+      <span>⭕️❎</span>
+    </button>
+    <!-- 黒塗り -->
+    <button 
+      :class="{active: md==='black_paint'}"
+      @click="chMode('black_paint')">
+      <span class="material-symbols-outlined">format_color_fill</span>
+      <span>黒塗り</span>
+    </button>
+    <!-- スライド -->
+    <button 
+      :class="{active: md==='slide'}"
+      @click="chMode('slide')">
+      <span class="material-symbols-outlined">slideshow</span>
+      <span>スライド</span>
+    </button>
+    <!-- QR -->
+    <button 
+      :class="{active: md==='qr'}"
+      @click="chMode('qr')">
+      <span class="material-symbols-outlined">qr_code_scanner</span>
+      <span>QR</span>
+    </button>
+  </div>
+
+  <script>
+    const { createApp, ref, watch, onMounted } = Vue;
+    function toAry(i){return JSON.parse(JSON.stringify(i))}
+
+    const app = createApp({
+      setup() {
+        const trTeLn=ref(20), usWDat=ref([]), usrNam=ref('user1'),
+              shUsr=ref(''), shTag=ref(''), shOrBy=ref('DESC'),
+              enpnt=ref('https://cotton-concrete-catsup.glitch.me'),
+              wbDat=ref([]), paRslt=ref(''), mbRslt=ref(''),
+              flInco=ref(''), ooQAMD=ref(true), ooQAMC=ref(0),
+              sideOpen=ref(false), // ドロワー開閉フラグ
+              sldes=ref([]), curIdx=ref(0), auSlMd=ref(false),
+              tmIntv=ref(.5), md=ref('choose'),
+
+              dtA=ref(`こんにちは\nやあ\nいい\nはい\n犬\n猫\n食事\n眠り`),
+              dtB=ref(`hello\nhi\ngood\nyes\ndog\ncat\nfood\nsleep`),
+              ex1Dat=ref([["こんにちは","hello",["food","hello"],false,true,""]]);
+
+        watch(usrNam, ()=> gtUsWD());
+        watch([shUsr, shTag, shOrBy], ()=> ftRdAl());
+
+        onMounted(async ()=>{
+          ex1();
+          await ftRdAl();
+        });
+
+        const toggleDrawer = ()=>{ sideOpen.value = !sideOpen.value; };
+
+        const trText = t => t.length>trTeLn.value ? t.slice(0,trTeLn.value)+'...' : t;
+
+        const stDaWD = i => {
+          if(confirm('Really??')){
+            const x = JSON.parse(usWDat.value[i].data_json_str);
+            dtA.value = x.data1;
+            dtB.value = x.data2;
+            ex1();
+            sideOpen.value = false; // 選択後ドロワー閉じてもOK
+          }
+        };
+
+        const gtUsWD = () => {
+          if(!wbDat.value.message) return;
+          usWDat.value = toAry(wbDat.value.message)
+            .filter(v=>v.username===usrNam.value);
+        };
+
+        const ftRdAl = async() => {
+          try{
+            const p = {user: shUsr.value, tag: shTag.value, order_by: shOrBy.value};
+            const u = new URL(enpnt.value + '/read_all');
+            u.search = new URLSearchParams(p).toString();
+            const r = await fetch(u, {method:'GET', headers:{'Content-Type':'application/json'}});
+            wbDat.value = await r.json();
+            gtUsWD();
+          }catch(e){
+            ooQAMC.value=0;
+            ex1Dat.value=[["こんにちは","hello(or any error)",["food","hello"],false,true,""]];
+            ex1();
+          }
+        };
+
+        const chMode = m => {
+          ooQAMC.value=0;
+          md.value=m;
+          ex1();
+        };
+
+        const ex1 = p => {
+          ooQAMC.value=0;
+          let A=dtA.value.split('\n'), B=dtB.value.split('\n');
+          if(p==='swap') [A,B] = [B,A];
+          const f = (d0,d1)=> d0.map((v,i)=>[
+            v, d1[i],
+            shuffle([ d1[i], shuffle(d1.filter((_,x)=>x!==i))[0] ]),
+            false,true,''
+          ]);
+          let newData = f(A,B);
+          if(p==="reverse") newData = R.reverse(toAry(newData));
+          if(p==="shuffle") newData = shuffle(toAry(newData));
+          ex1Dat.value = newData;
+          sldes.value = mkSlid(newData);
+        };
+
+        const chQACh=(correct, ans)=>{
+          const d=ex1Dat.value[ooQAMC.value];
+          d[5]=(ans===correct)?'⭕️':'❎';
+          if(d[5]==='⭕️'){
+            setTimeout(()=>{
+              ooQAMC.value++;
+              if(ooQAMC.value===ex1Dat.value.length){
+                ooQAMC.value=0; ex1Dat.value.forEach(x=>x[5]='');
+              }
+            },tmIntv.value*1000);
+          }
+        };
+
+        const chMaBa=async(v,r,m)=>{
+          const fn=()=>{
+            ooQAMC.value++;
+            if(ooQAMC.value===ex1Dat.value.length){
+              ooQAMC.value=0; ex1Dat.value.forEach(x=>x[3]=false);
+            }
+          };
+          const cmpl=async()=>{
+            mbRslt.value='全問完了';
+            await new Promise(rs=>setTimeout(rs, tmIntv.value*1000));
+            mbRslt.value='';
+          };
+          if(v[1]===r){ v[3]=true; fn(); flInco.value=''; }
+          else{ v[3]=false; flInco.value=(m==='maru'?'batu':'maru'); }
+          if(ooQAMC.value===ex1Dat.value.length-1) await cmpl();
+        };
+
+        const mkSlid = a => a.flatMap(v=>[{q:v[0]}, {a:v[1]}]);
+
+        const chPaRw=async()=>{
+          const d=ex1Dat.value[ooQAMC.value];
+          const rs=()=>{
+            ex1Dat.value.forEach(x=>x[4]=true);
+            ooQAMC.value=0;
+          };
+          const cmpl=async()=>{
+            paRslt.value='全問完了';
+            await new Promise(r=>setTimeout(r, tmIntv.value*1000));
+            paRslt.value='';
+            rs();
+          };
+          if(d){
+            d[4]=false;
+            await new Promise(r=>setTimeout(r, tmIntv.value*1000));
+            ooQAMC.value++;
+          } else {
+            rs();
+          }
+          if(ex1Dat.value[ooQAMC.value]?.length-1===ooQAMC.value){
+            await cmpl();
+          }
+        };
+
+        const frSlid=()=> curIdx.value=0;
+        const prSlid=()=> curIdx.value>0 ? curIdx.value-- : curIdx.value=sldes.value.length-1;
+        const nxSlid=()=> curIdx.value<sldes.value.length-1 ? curIdx.value++ : curIdx.value=0;
+
+        const auSlid=()=>{
+          auSlMd.value=true;
+          setInterval(()=>nxSlid(), tmIntv.value*1000);
+        };
+        const stAuSl=()=>{
+          auSlMd.value=false;
+          for(let i=1;i<99999;i++){
+            clearInterval(i);
+          }
+        };
+
+        const rdShre=()=>{
+          if(confirm('Leave this page?')) location.href='./share.html';
+        };
+
+        const shQr=()=>{
+          const e=document.querySelector('[ref="qrcode"]');
+          if(e)new QRCode(e,{
+            text:"https://taroyanaka.github.io/q_a/b_p.html",
+            width:256,height:256,
+            colorDark:"#000",colorLight:"#fff",
+            correctLevel:QRCode.CorrectLevel.H
+          });
+        };
+
+        return {
+          // state
+          trTeLn, usWDat, usrNam, shUsr, shTag, shOrBy, enpnt, wbDat,
+          paRslt, mbRslt, flInco, ooQAMD, ooQAMC, sideOpen,
+          sldes, curIdx, auSlMd, tmIntv, md, dtA, dtB, ex1Dat,
+          // methods
+          toggleDrawer, trText, stDaWD, gtUsWD, ftRdAl, chMode,
+          ex1, chQACh, chMaBa, mkSlid, chPaRw, frSlid, prSlid,
+          nxSlid, auSlid, stAuSl, rdShre, shQr
+        };
+      }
+    });
+
+    window.myApp = app.mount('body');
+  </script>
+</body>
+</html>

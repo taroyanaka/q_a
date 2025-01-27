@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- apiKeyは自分のものに修正が必要 -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -8,12 +9,39 @@
   <!-- Material Symbols -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
-  <script src="./lib/vue@3.2.36.global.prod.js"></script>
-  <script src="./lib/shuffle.js"></script>
+  <!-- Firebase v8 SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <script>
+    const shuffle = arr => arr.sort(() => Math.random() - 0.5);
+
+    //============================
+    // 1. Firebase 初期化 (Config)
+    //============================
+    const firebaseConfig = {
+      apiKey: "AIzaSyBcOlIDP2K...",
+      authDomain: "p2auth-ea50a.firebaseapp.com",
+      projectId: "p2auth-ea50a",
+      storageBucket: "p2auth-ea50a.appspot.com",
+      messagingSenderId: "796225429484",
+      appId: "1:796225429484:web:ece56ef2fc0be28cd6eac9"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    // Googleプロバイダ
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
+  </script>
 
   <style>
     /* === Reset or minimal base === */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body, html {
       font-family: sans-serif;
@@ -59,6 +87,7 @@
        'GRAD' 0,
        'opsz' 48
     }
+
     /* ドロワーを左からスライドイン */
     .drawer {
       position: fixed;
@@ -94,15 +123,17 @@
 
     /* メインコンテンツ */
     .main-content {
-      flex: 1; 
-      overflow: auto; 
+      flex: 1;
+      overflow: auto;
       padding: 1rem;
     }
 
     /* ボトムナビゲーション */
     .bottom-nav {
       position: fixed;
-      bottom: 0; left: 0; right: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
       height: 56px;
       background: #fff;
       display: flex;
@@ -138,20 +169,46 @@
 
     /* 例: 黒塗りモードなど */
     .black-paint {
-      background: #000; 
-      color: #000; 
-      user-select: none; 
-      width: 100%; 
-      text-align: center; 
+      background: #000;
+      color: #000;
+      user-select: none;
+      width: 100%;
+      text-align: center;
       margin: 1rem 0;
     }
+
     /* カンタンに既存要素のクラスに対応 */
-    .blPt { 
+    .blPt {
       text-align: center;
       font-size: 1.5rem;
     }
-    /* etc. */
 
+    /* === Make all <button> 5 times larger === */
+    button {
+      font-size: 500%;
+    }
+
+    /* ===============================
+       Google sign-in button styling
+       (override the 5x font-size etc.)
+       =============================== */
+    .google-btn {
+      font-size: initial !important; /* reset from 500% */
+      background-color: #fff;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 8px 16px;
+      color: #757575;
+      line-height: 1.2;
+    }
+    .google-btn img {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+    }
   </style>
 </head>
 <body class="app">
@@ -176,19 +233,31 @@
       </li>
     </ul>
     <p>version 0.0.1.5</p>
+
+    <!-- Googleログイン: 公式ガイドライン風 -->
+    <button class="google-btn" @click="googleSignIn">
+      <!-- 適宜ご自身で保存したロゴを参照 -->
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google G" />
+      <span>Sign in with Google</span>
+    </button>
+
+    <!-- Googleログアウト -->
+    <button @click="googleSignOut">ログアウト</button>
   </div>
 
   <!-- メインコンテンツ -->
   <div class="main-content">
-    <!-- 例: 現在のモードに応じた表示 -->
-    
     <!-- chooseモード -->
     <div v-if="md==='choose'">
       <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
         <div>
           <h2>{{ dv[0] }} {{ dv[5] }}</h2>
           <div>
-            <button v-for="(item,ix) in dv[2]" :key="ix" @click="chQACh(dv[1], item)">
+            <button
+              v-for="(item,ix) in dv[2]"
+              :key="ix"
+              @click="chQACh(dv[1], item)"
+            >
               {{ trText(item) }}
             </button>
           </div>
@@ -203,18 +272,34 @@
         <div v-if="dv[3] === false">
           <h2>{{ dv[0] }} = {{ dv[2][0] }}</h2>
           <p v-if="mbRslt!==''">{{ mbRslt }}</p>
-          <button @click="chMaBa(dv,dv[2][0],'maru')" :class="flInco==='maru'||flInco===null?'flIc':''">⭕️</button>
-          <button @click="chMaBa(dv,dv[2][1],'batu')" :class="flInco==='batu'||flInco===null?'flIc':''">❎</button>
+          <button
+            @click="chMaBa(dv,dv[2][0],'maru')"
+            :class="flInco==='maru'||flInco===null?'flIc':''"
+          >
+            ⭕️
+          </button>
+          <button
+            @click="chMaBa(dv,dv[2][1],'batu')"
+            :class="flInco==='batu'||flInco===null?'flIc':''"
+          >
+            ❎
+          </button>
         </div>
       </template>
     </div>
 
     <!-- black_paintモード -->
     <div v-if="md==='black_paint'" class="blPt">
-      <progress :value="ooQAMC" :max="ex1Dat[ooQAMC].length" class="progress-bar"></progress>
+      <progress
+        :value="ooQAMC"
+        :max="ex1Dat[ooQAMC].length"
+        class="progress-bar"
+      ></progress>
       <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
         <div>{{ dv[0] }}</div>
-        <div :class="dv[4] ? 'black-paint' : ''" @click="chPaRw">{{ dv[1] }}</div>
+        <div :class="dv[4] ? 'black-paint' : ''" @click="chPaRw">
+          {{ dv[1] }}
+        </div>
         <div v-if="paRslt!==''">{{ paRslt }}</div>
       </template>
     </div>
@@ -224,14 +309,16 @@
       <progress :value="curIdx" :max="sldes.length" class="progress-bar"></progress>
       <div>
         <div v-if="sldes[curIdx]?.q" @click="nxSlid">{{ sldes[curIdx].q }}</div>
-        <div v-else-if="sldes[curIdx]?.a" @click="nxSlid">{{ sldes[curIdx].a }}</div>
+        <div v-else-if="sldes[curIdx]?.a" @click="nxSlid">
+          {{ sldes[curIdx].a }}
+        </div>
       </div>
       <button @click="frSlid">最初へ</button>
       <button @click="prSlid">前へ</button>
       <button @click="nxSlid">次へ</button>
       <div v-if="!auSlMd">
         <button @click="auSlid">auto slide</button>
-        <input type="number" v-model="tmIntv" min="0.1" step="0.1">秒
+        <input type="number" v-model="tmIntv" min="0.1" step="0.1" />秒
       </div>
       <div v-else>
         <button @click="stAuSl">stop auto slide</button>
@@ -243,43 +330,31 @@
       <button @click="shQr">show_qr</button>
       <div ref="qrcode"></div>
     </div>
-    
   </div>
 
   <!-- Bottom Navigation (Tab Bar) -->
   <div class="bottom-nav">
-    <!-- 選択モード -->
-    <button 
-      :class="{active: md==='choose'}" 
-      @click="chMode('choose')">
+    <button :class="{ active: md==='choose' }" @click="chMode('choose')">
       <span class="material-symbols-outlined">list</span>
       <span>選択</span>
     </button>
-    <!-- まるばつ -->
-    <button 
-      :class="{active: md==='maru_batu'}"
-      @click="chMode('maru_batu')">
+
+    <button :class="{ active: md==='maru_batu' }" @click="chMode('maru_batu')">
       <span class="material-symbols-outlined">help</span>
       <span>⭕️❎</span>
     </button>
-    <!-- 黒塗り -->
-    <button 
-      :class="{active: md==='black_paint'}"
-      @click="chMode('black_paint')">
+
+    <button :class="{ active: md==='black_paint' }" @click="chMode('black_paint')">
       <span class="material-symbols-outlined">format_color_fill</span>
       <span>黒塗り</span>
     </button>
-    <!-- スライド -->
-    <button 
-      :class="{active: md==='slide'}"
-      @click="chMode('slide')">
+
+    <button :class="{ active: md==='slide' }" @click="chMode('slide')">
       <span class="material-symbols-outlined">slideshow</span>
       <span>スライド</span>
     </button>
-    <!-- QR -->
-    <button 
-      :class="{active: md==='qr'}"
-      @click="chMode('qr')">
+
+    <button :class="{ active: md==='qr' }" @click="chMode('qr')">
       <span class="material-symbols-outlined">qr_code_scanner</span>
       <span>QR</span>
     </button>
@@ -287,187 +362,355 @@
 
   <script>
     const { createApp, ref, watch, onMounted } = Vue;
-    function toAry(i){return JSON.parse(JSON.stringify(i))}
+
+    function toAry(i) {
+      return JSON.parse(JSON.stringify(i));
+    }
 
     const app = createApp({
       setup() {
-        const trTeLn=ref(20), usWDat=ref([]), usrNam=ref('user1'),
-              shUsr=ref(''), shTag=ref(''), shOrBy=ref('DESC'),
-              enpnt=ref('https://cotton-concrete-catsup.glitch.me'),
-              wbDat=ref([]), paRslt=ref(''), mbRslt=ref(''),
-              flInco=ref(''), ooQAMD=ref(true), ooQAMC=ref(0),
-              sideOpen=ref(false), // ドロワー開閉フラグ
-              sldes=ref([]), curIdx=ref(0), auSlMd=ref(false),
-              tmIntv=ref(.5), md=ref('choose'),
+        const trTeLn = ref(20);
+        const usWDat = ref([]);
+        const usrNam = ref("user1");
+        const shUsr = ref("");
+        const shTag = ref("");
+        const shOrBy = ref("DESC");
+        const enpnt = ref("https://cotton-concrete-catsup.glitch.me");
+        const wbDat = ref([]);
+        const paRslt = ref("");
+        const mbRslt = ref("");
+        const flInco = ref("");
+        const ooQAMD = ref(true);
+        const ooQAMC = ref(0);
+        const sideOpen = ref(false);
+        const sldes = ref([]);
+        const curIdx = ref(0);
+        const auSlMd = ref(false);
+        const tmIntv = ref(0.5);
+        const md = ref("choose");
 
-              dtA=ref(`こんにちは\nやあ\nいい\nはい\n犬\n猫\n食事\n眠り`),
-              dtB=ref(`hello\nhi\ngood\nyes\ndog\ncat\nfood\nsleep`),
-              ex1Dat=ref([["こんにちは","hello",["food","hello"],false,true,""]]);
+        const dtA = ref(`こんにちは
+やあ
+いい
+はい
+犬
+猫
+食事
+眠り`);
+        const dtB = ref(`hello
+hi
+good
+yes
+dog
+cat
+food
+sleep`);
+        const ex1Dat = ref([
+          ["こんにちは", "hello", ["food", "hello"], false, true, ""]
+        ]);
 
-        watch(usrNam, ()=> gtUsWD());
-        watch([shUsr, shTag, shOrBy], ()=> ftRdAl());
+        // Firebase Auth関連
+        const user = ref(null);
 
-        onMounted(async ()=>{
+        watch(usrNam, () => gtUsWD());
+        watch([shUsr, shTag, shOrBy], () => ftRdAl());
+
+        onMounted(async () => {
           ex1();
           await ftRdAl();
         });
 
-        const toggleDrawer = ()=>{ sideOpen.value = !sideOpen.value; };
+        const toggleDrawer = () => {
+          sideOpen.value = !sideOpen.value;
+        };
 
-        const trText = t => t.length>trTeLn.value ? t.slice(0,trTeLn.value)+'...' : t;
+        const trText = t =>
+          t.length > trTeLn.value ? t.slice(0, trTeLn.value) + "..." : t;
 
         const stDaWD = i => {
-          if(confirm('Really??')){
+          if (confirm("Really??")) {
             const x = JSON.parse(usWDat.value[i].data_json_str);
             dtA.value = x.data1;
             dtB.value = x.data2;
             ex1();
-            sideOpen.value = false; // 選択後ドロワー閉じてもOK
+            sideOpen.value = false;
           }
         };
 
         const gtUsWD = () => {
-          if(!wbDat.value.message) return;
-          usWDat.value = toAry(wbDat.value.message)
-            .filter(v=>v.username===usrNam.value);
+          if (!wbDat.value.message) return;
+          usWDat.value = toAry(wbDat.value.message).filter(
+            v => v.username === usrNam.value
+          );
         };
 
-        const ftRdAl = async() => {
-          try{
-            const p = {user: shUsr.value, tag: shTag.value, order_by: shOrBy.value};
-            const u = new URL(enpnt.value + '/read_all');
+        const ftRdAl = async () => {
+          try {
+            const p = {
+              user: shUsr.value,
+              tag: shTag.value,
+              order_by: shOrBy.value
+            };
+            const u = new URL(enpnt.value + "/read_all");
             u.search = new URLSearchParams(p).toString();
-            const r = await fetch(u, {method:'GET', headers:{'Content-Type':'application/json'}});
+            const r = await fetch(u, {
+              method: "GET",
+              headers: { "Content-Type": "application/json" }
+            });
             wbDat.value = await r.json();
             gtUsWD();
-          }catch(e){
-            ooQAMC.value=0;
-            ex1Dat.value=[["こんにちは","hello(or any error)",["food","hello"],false,true,""]];
+          } catch (e) {
+            ooQAMC.value = 0;
+            ex1Dat.value = [
+              ["こんにちは", "hello(or any error)", ["food", "hello"], false, true, ""]
+            ];
             ex1();
           }
         };
 
         const chMode = m => {
-          ooQAMC.value=0;
-          md.value=m;
+          ooQAMC.value = 0;
+          md.value = m;
           ex1();
         };
 
         const ex1 = p => {
-          ooQAMC.value=0;
-          let A=dtA.value.split('\n'), B=dtB.value.split('\n');
-          if(p==='swap') [A,B] = [B,A];
-          const f = (d0,d1)=> d0.map((v,i)=>[
-            v, d1[i],
-            shuffle([ d1[i], shuffle(d1.filter((_,x)=>x!==i))[0] ]),
-            false,true,''
-          ]);
-          let newData = f(A,B);
-          if(p==="reverse") newData = R.reverse(toAry(newData));
-          if(p==="shuffle") newData = shuffle(toAry(newData));
+          ooQAMC.value = 0;
+          let A = dtA.value.split("\n");
+          let B = dtB.value.split("\n");
+
+          if (p === "swap") {
+            [A, B] = [B, A];
+          }
+
+          const f = (d0, d1) =>
+            d0.map((v, i) => [
+              v,
+              d1[i],
+              shuffle([
+                d1[i],
+                shuffle(d1.filter((_, x) => x !== i))[0]
+              ]),
+              false,
+              true,
+              ""
+            ]);
+
+          let newData = f(A, B);
+          if (p === "shuffle") {
+            newData = shuffle(toAry(newData));
+          }
           ex1Dat.value = newData;
           sldes.value = mkSlid(newData);
         };
 
-        const chQACh=(correct, ans)=>{
-          const d=ex1Dat.value[ooQAMC.value];
-          d[5]=(ans===correct)?'⭕️':'❎';
-          if(d[5]==='⭕️'){
-            setTimeout(()=>{
+        const chQACh = (correct, ans) => {
+          const d = ex1Dat.value[ooQAMC.value];
+          d[5] = ans === correct ? "⭕️" : "❎";
+
+          if (d[5] === "⭕️") {
+            setTimeout(() => {
               ooQAMC.value++;
-              if(ooQAMC.value===ex1Dat.value.length){
-                ooQAMC.value=0; ex1Dat.value.forEach(x=>x[5]='');
+              if (ooQAMC.value === ex1Dat.value.length) {
+                ooQAMC.value = 0;
+                ex1Dat.value.forEach(x => (x[5] = ""));
               }
-            },tmIntv.value*1000);
+            }, tmIntv.value * 1000);
           }
         };
 
-        const chMaBa=async(v,r,m)=>{
-          const fn=()=>{
+        const chMaBa = async (v, r, m) => {
+          const fn = () => {
             ooQAMC.value++;
-            if(ooQAMC.value===ex1Dat.value.length){
-              ooQAMC.value=0; ex1Dat.value.forEach(x=>x[3]=false);
+            if (ooQAMC.value === ex1Dat.value.length) {
+              ooQAMC.value = 0;
+              ex1Dat.value.forEach(x => (x[3] = false));
             }
           };
-          const cmpl=async()=>{
-            mbRslt.value='全問完了';
-            await new Promise(rs=>setTimeout(rs, tmIntv.value*1000));
-            mbRslt.value='';
-          };
-          if(v[1]===r){ v[3]=true; fn(); flInco.value=''; }
-          else{ v[3]=false; flInco.value=(m==='maru'?'batu':'maru'); }
-          if(ooQAMC.value===ex1Dat.value.length-1) await cmpl();
-        };
 
-        const mkSlid = a => a.flatMap(v=>[{q:v[0]}, {a:v[1]}]);
+          const cmpl = async () => {
+            mbRslt.value = "全問完了";
+            await new Promise(rs => setTimeout(rs, tmIntv.value * 1000));
+            mbRslt.value = "";
+          };
 
-        const chPaRw=async()=>{
-          const d=ex1Dat.value[ooQAMC.value];
-          const rs=()=>{
-            ex1Dat.value.forEach(x=>x[4]=true);
-            ooQAMC.value=0;
-          };
-          const cmpl=async()=>{
-            paRslt.value='全問完了';
-            await new Promise(r=>setTimeout(r, tmIntv.value*1000));
-            paRslt.value='';
-            rs();
-          };
-          if(d){
-            d[4]=false;
-            await new Promise(r=>setTimeout(r, tmIntv.value*1000));
-            ooQAMC.value++;
+          if (v[1] === r) {
+            v[3] = true;
+            fn();
+            flInco.value = "";
           } else {
-            rs();
+            v[3] = false;
+            flInco.value = m === "maru" ? "batu" : "maru";
           }
-          if(ex1Dat.value[ooQAMC.value]?.length-1===ooQAMC.value){
+
+          if (ooQAMC.value === ex1Dat.value.length - 1) {
             await cmpl();
           }
         };
 
-        const frSlid=()=> curIdx.value=0;
-        const prSlid=()=> curIdx.value>0 ? curIdx.value-- : curIdx.value=sldes.value.length-1;
-        const nxSlid=()=> curIdx.value<sldes.value.length-1 ? curIdx.value++ : curIdx.value=0;
+        const mkSlid = a => a.flatMap(v => [{ q: v[0] }, { a: v[1] }]);
 
-        const auSlid=()=>{
-          auSlMd.value=true;
-          setInterval(()=>nxSlid(), tmIntv.value*1000);
+        const chPaRw = async () => {
+          const d = ex1Dat.value[ooQAMC.value];
+          const rs = () => {
+            ex1Dat.value.forEach(x => (x[4] = true));
+            ooQAMC.value = 0;
+          };
+
+          const cmpl = async () => {
+            paRslt.value = "全問完了";
+            await new Promise(r => setTimeout(r, tmIntv.value * 1000));
+            paRslt.value = "";
+            rs();
+          };
+
+          if (d) {
+            d[4] = false;
+            await new Promise(r => setTimeout(r, tmIntv.value * 1000));
+            ooQAMC.value++;
+          } else {
+            rs();
+          }
+
+          if (ex1Dat.value[ooQAMC.value]?.length - 1 === ooQAMC.value) {
+            await cmpl();
+          }
         };
-        const stAuSl=()=>{
-          auSlMd.value=false;
-          for(let i=1;i<99999;i++){
+
+        const frSlid = () => (curIdx.value = 0);
+        const prSlid = () =>
+          curIdx.value > 0 ? (curIdx.value -= 1) : (curIdx.value = sldes.value.length - 1);
+        const nxSlid = () =>
+          curIdx.value < sldes.value.length - 1 ? (curIdx.value += 1) : (curIdx.value = 0);
+
+        const auSlid = () => {
+          auSlMd.value = true;
+          setInterval(() => nxSlid(), tmIntv.value * 1000);
+        };
+
+        const stAuSl = () => {
+          auSlMd.value = false;
+          for (let i = 1; i < 99999; i++) {
             clearInterval(i);
           }
         };
 
-        const rdShre=()=>{
-          if(confirm('Leave this page?')) location.href='./share.html';
+        const rdShre = () => {
+          if (confirm("Leave this page?")) {
+            location.href = "./share.html";
+          }
         };
 
-        const shQr=()=>{
-          const e=document.querySelector('[ref="qrcode"]');
-          if(e)new QRCode(e,{
-            text:"https://taroyanaka.github.io/q_a/b_p.html",
-            width:256,height:256,
-            colorDark:"#000",colorLight:"#fff",
-            correctLevel:QRCode.CorrectLevel.H
-          });
+        const shQr = () => {
+          const e = document.querySelector('[ref="qrcode"]');
+          if (e)
+            new QRCode(e, {
+              text: "https://taroyanaka.github.io/q_a/b_p.html",
+              width: 256,
+              height: 256,
+              colorDark: "#000",
+              colorLight: "#fff",
+              correctLevel: QRCode.CorrectLevel.H
+            });
+        };
+
+        //=============================
+        // 2. Googleログイン関数
+        //=============================
+        const googleSignIn = async () => {
+          try {
+            const result = await firebase.auth().signInWithPopup(googleProvider);
+            const currentUser = result.user;
+            if (!currentUser) {
+              throw new Error("Firebaseログインに失敗し、ユーザーが取得できませんでした。");
+            }
+            user.value = currentUser;
+            console.log("ログイン完了:", currentUser.uid);
+
+            // p2_login のリクエスト
+            const p2LoginUrl = `${enpnt.value}/p2_login?uid=${encodeURIComponent(
+              currentUser.uid
+            )}`;
+            const response = await fetch(p2LoginUrl, { method: "GET" });
+            if (!response.ok) {
+              throw new Error(`p2_login error: ${response.status} ${response.statusText}`);
+            }
+            const data = await response.json();
+            console.log("p2_login =>", data);
+            alert(`p2_login成功: id=${data.message.id}, password=${data.message.password}`);
+          } catch (err) {
+            console.error("ログイン or p2_login失敗:", err);
+            alert(`ログイン失敗: ${err.message}`);
+          }
+        };
+
+        //=============================
+        // 3. Googleログアウト関数
+        //=============================
+        const googleSignOut = async () => {
+          try {
+            await firebase.auth().signOut();
+            user.value = null;
+            console.log("ログアウトしました");
+            alert("ログアウト完了");
+          } catch (err) {
+            console.error("ログアウト失敗:", err);
+            alert(`ログアウト失敗: ${err.message}`);
+          }
         };
 
         return {
           // state
-          trTeLn, usWDat, usrNam, shUsr, shTag, shOrBy, enpnt, wbDat,
-          paRslt, mbRslt, flInco, ooQAMD, ooQAMC, sideOpen,
-          sldes, curIdx, auSlMd, tmIntv, md, dtA, dtB, ex1Dat,
+          trTeLn,
+          usWDat,
+          usrNam,
+          shUsr,
+          shTag,
+          shOrBy,
+          enpnt,
+          wbDat,
+          paRslt,
+          mbRslt,
+          flInco,
+          ooQAMD,
+          ooQAMC,
+          sideOpen,
+          sldes,
+          curIdx,
+          auSlMd,
+          tmIntv,
+          md,
+          dtA,
+          dtB,
+          ex1Dat,
+          user,
+
           // methods
-          toggleDrawer, trText, stDaWD, gtUsWD, ftRdAl, chMode,
-          ex1, chQACh, chMaBa, mkSlid, chPaRw, frSlid, prSlid,
-          nxSlid, auSlid, stAuSl, rdShre, shQr
+          toggleDrawer,
+          trText,
+          stDaWD,
+          gtUsWD,
+          ftRdAl,
+          chMode,
+          ex1,
+          chQACh,
+          chMaBa,
+          mkSlid,
+          chPaRw,
+          frSlid,
+          prSlid,
+          nxSlid,
+          auSlid,
+          stAuSl,
+          rdShre,
+          shQr,
+          googleSignIn,
+          googleSignOut
         };
       }
     });
 
-    window.myApp = app.mount('body');
+    window.myApp = app.mount("body");
   </script>
 </body>
 </html>

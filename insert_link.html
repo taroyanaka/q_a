@@ -1,6 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--
+    // Chrome DevTools JS snippet to insert various test data into the textareas
+    const insertTestData = (type) => {
+        let testData1 = '';
+        let testData2 = '';
+
+        if (type === 'valid') {
+            testData1 = `Valid Line 1
+Valid Line 2
+Valid Line 3`;
+            testData2 = `Valid Line 1
+Valid Line 2
+Valid Line 3`;
+        } else if (type === 'emptyLines') {
+            testData1 = `Valid Line 1
+
+Valid Line 3`;
+            testData2 = `Valid Line 1
+
+Valid Line 3`;
+        } else if (type === 'longLines') {
+            testData1 = `This line has more than 100 characters: ${'a'.repeat(101)}
+Valid Line 2`;
+            testData2 = `This line has more than 100 characters: ${'b'.repeat(101)}
+Valid Line 2`;
+//         } else if (type === 'manyLines') {
+//             testData1 = Array(301).fill('Valid Line').join('
+// ');
+//             testData2 = Array(301).fill('Valid Line').join('
+// ');
+        } else {
+            console.error('Unknown test type');
+            return;
+        }
+
+        // Get Vue instance and update data1 and data2
+        const appInstance = window.myApp;
+        if (appInstance) {
+            appInstance.data1 = testData1;
+            appInstance.data2 = testData2;
+        } else {
+            console.error('Vue app instance not found. Make sure the page is fully loaded.');
+        }
+    };
+    
+    // Examples of usage:
+    // insertTestData('valid');       // Inserts valid data
+    // insertTestData('emptyLines');  // Inserts data with empty lines
+    // insertTestData('longLines');   // Inserts data with lines exceeding 100 characters
+    // insertTestData('manyLines');   // Inserts more than 300 lines
+    -->
+    <!--
+    // Chrome DevTools JS snippet to insert test data into the textareas
+    const insertTestData = () => {
+        const testData1 = `Test Line 1 in Data 1
+Test Line 2 in Data 1
+Test Line 3 in Data 1`;
+        const testData2 = `Test Line 1 in Data 2
+Test Line 2 in Data 2
+Test Line 3 in Data 2`;
+
+        // Get Vue instance and update data1 and data2
+        const appInstance = window.myApp;
+        if (appInstance) {
+            appInstance.data1 = testData1;
+            appInstance.data2 = testData2;
+        } else {
+            console.error('Vue app instance not found. Make sure the page is fully loaded.');
+        }
+    };
+    // Execute this function in DevTools console to insert test data
+    // insertTestData();
+    -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,25 +81,93 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-auth.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        #app {
+            max-width: 600px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .success {
+            color: green;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .top-button {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
-        <div style="margin-bottom: 20px;">
-            <a href="./b_p.html" target="_blank" style="text-decoration: none;">
-                <button>学習モード</button>
-            </a>
-            <input type="button" @click="replaceUrlToLocalhost" value="replaceUrlToLocalhost">
+        <div class="top-button">
+            <button @click="replaceUrlToLocalhost">Replace URL to Localhost</button>
         </div>
 
-        <h1>{{ uid || 'your uid' }}</h1>
+        <h1>{{ uid || 'Your UID' }}</h1>
         <h2>{{ loginResult }}</h2>
 
-        <input type="button" v-if="!loggedIn" @click="googleLogin" value="googleLogin">
-        <input type="button" v-if="!loggedIn" @click="googleSignUp" value="googleSignUp">
-        <input type="button" v-if="loggedIn" @click="signOut" value="logout">
+        <input type="button" v-if="!loggedIn" @click="googleLogin" value="Google Login">
+        <input type="button" v-if="!loggedIn" @click="googleSignUp" value="Google Sign Up">
+        <input type="button" v-if="loggedIn" @click="signOut" value="Logout">
 
-        <div v-if="loggedIn" style="margin-top: 20px;">
-            <form @submit.prevent="submitData">
+        <div v-if="loggedIn">
+            <form @submit.prevent="validateAndSubmit">
                 <label>
                     Data 1:
                     <textarea v-model="data1" placeholder="Enter data1 (e.g., 縄文時代\n弥生時代)" required></textarea>
@@ -36,8 +177,9 @@
                     <textarea v-model="data2" placeholder="Enter data2 (e.g., 日本の先史時代。\n日本の稲作農耕文化が発展した時代。)" required></textarea>
                 </label>
                 <button type="submit">Submit</button>
+                <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+                <div v-if="successMessage" class="success">{{ successMessage }}</div>
             </form>
-            <div style="margin-top: 20px;">{{ response }}</div>
         </div>
     </div>
 
@@ -56,49 +198,55 @@
         firebase.initializeApp(firebaseConfig);
         const google = new firebase.auth.GoogleAuthProvider();
 
-        function toAry(i) {
-            return JSON.parse(JSON.stringify(i));
-        }
-
         const app = createApp({
             setup() {
-                const endpoint = ref('https://cotton-concrete-catsup.glitch.me');
                 const uid = ref(null);
                 const loggedIn = ref(false);
                 const loginResult = ref('');
                 const data1 = ref('');
                 const data2 = ref('');
-                const response = ref('');
-                const id = ref('');
-                const password = ref('');
+                const errorMessage = ref('');
+                const successMessage = ref('');
 
-                const checkLogin = () => {
-                    firebase.auth().onAuthStateChanged(async user => {
-                        if (user) {
-                            uid.value = user.uid;
-                            loggedIn.value = true;
-                            loginResult.value = 'Login success';
+                const validateData = () => {
+                    const lines1 = data1.value.split('\n').filter(line => line.trim() !== '');
+                    const lines2 = data2.value.split('\n').filter(line => line.trim() !== '');
 
-                            // Fetch ID and password
-                            try {
-                                const res = await fetch(`${endpoint.value}/p2_login?uid=${uid.value}`);
-                                const result = await res.json();
-                                if (res.ok) {
-                                    id.value = result.message.id;
-                                    password.value = result.message.password;
-                                    console.log('ID:', id.value, 'Password:', password.value);
-                                } else {
-                                    console.error('Failed to fetch ID and password:', result.message);
-                                }
-                            } catch (error) {
-                                console.error('Error fetching ID and password:', error);
-                            }
-                        } else {
-                            uid.value = null;
-                            loggedIn.value = false;
-                            loginResult.value = 'Not logged in yet';
+                    // Check if line counts match
+                    if (lines1.length !== lines2.length) {
+                        return "Data1 and Data2 must have the same number of non-empty lines.";
+                    }
+
+                    // Check if the number of lines is within limits
+                    if (lines1.length > 300) {
+                        return "The maximum number of lines is 300.";
+                    }
+
+                    // Check each line's length
+                    for (let i = 0; i < lines1.length; i++) {
+                        if (lines1[i].length < 1 || lines1[i].length > 100) {
+                            return `Line ${i + 1} in Data1 exceeds length limits (1-100 characters).`;
                         }
-                    });
+                        if (lines2[i].length < 1 || lines2[i].length > 100) {
+                            return `Line ${i + 1} in Data2 exceeds length limits (1-100 characters).`;
+                        }
+                    }
+
+                    return null;
+                };
+
+                const validateAndSubmit = async () => {
+                    errorMessage.value = '';
+                    successMessage.value = '';
+
+                    const validationError = validateData();
+                    if (validationError) {
+                        errorMessage.value = validationError;
+                        return;
+                    }
+
+                    // Simulate successful submission
+                    successMessage.value = 'Data successfully validated and submitted.';
                 };
 
                 const googleLogin = () => {
@@ -112,85 +260,51 @@
                 const signOut = () => {
                     firebase.auth().signOut().then(() => {
                         loginResult.value = 'Signed out successfully';
-                        response.value = '';
-                        id.value = '';
-                        password.value = '';
+                        data1.value = '';
+                        data2.value = '';
+                        errorMessage.value = '';
+                        successMessage.value = '';
                     }).catch(error => {
                         console.error('Sign-out error:', error);
                         loginResult.value = 'Error signing out';
                     });
                 };
 
-                const submitData = async () => {
-                    if (!data1.value || !data2.value) {
-                        alert('Please fill out both data1 and data2 fields.');
-                        return;
-                    }
-
-                    if (!id.value || !password.value) {
-                        alert('ID and password are required to submit data. Please log in again.');
-                        return;
-                    }
-
-                    try {
-                        const dataJsonStr = JSON.stringify({ data1: data1.value, data2: data2.value });
-
-                        const res = await fetch(`${endpoint.value}/insert_link`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                data_type: 'q_a',
-                                data_json_str: dataJsonStr,
-                                link: '',
-                                tags: JSON.stringify([]),
-                                likes: JSON.stringify([]),
-                                comments_and_replies: JSON.stringify([]),
-                                name: id.value, // Include ID in the request body
-                                password: password.value // Include password in the request body
-                            })
-                        });
-
-                        const result = await res.json();
-
-                        if (res.ok) {
-                            response.value = `Success: ${JSON.stringify(result)}`;
-                        } else {
-                            response.value = `Error: ${result.message}`;
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                        response.value = `Error: ${error.message}`;
-                    }
-                };
-
                 const replaceUrlToLocalhost = () => {
-                    window.location.replace('http://localhost:3000/p2.html');
+                    window.location.replace('http://localhost:3000/Users/taroyanaka/Desktop/program/q_a/insert_link.html');
                 };
 
-                checkLogin();
+                firebase.auth().onAuthStateChanged(user => {
+                    if (user) {
+                        uid.value = user.uid;
+                        loggedIn.value = true;
+                        loginResult.value = 'Login success';
+                    } else {
+                        uid.value = null;
+                        loggedIn.value = false;
+                        loginResult.value = 'Not logged in';
+                    }
+                });
 
                 return {
-                    endpoint,
                     uid,
                     loggedIn,
                     loginResult,
                     data1,
                     data2,
-                    response,
-                    id,
-                    password,
+                    errorMessage,
+                    successMessage,
                     googleLogin,
                     googleSignUp,
                     signOut,
-                    submitData,
+                    validateAndSubmit,
                     replaceUrlToLocalhost
                 };
             }
         });
 
-        window.myApp = app.mount('#app');
+        app.mount('#app');
+        window.myApp = app;
     </script>
 </body>
 </html>

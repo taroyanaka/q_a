@@ -1,79 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!--
-    // Chrome DevTools JS snippet to insert various test data into the textareas
-    const insertTestData = (type) => {
-        let testData1 = '';
-        let testData2 = '';
-
-        if (type === 'valid') {
-            testData1 = `Valid Line 1
-Valid Line 2
-Valid Line 3`;
-            testData2 = `Valid Line 1
-Valid Line 2
-Valid Line 3`;
-        } else if (type === 'emptyLines') {
-            testData1 = `Valid Line 1
-
-Valid Line 3`;
-            testData2 = `Valid Line 1
-
-Valid Line 3`;
-        } else if (type === 'longLines') {
-            testData1 = `This line has more than 100 characters: ${'a'.repeat(101)}
-Valid Line 2`;
-            testData2 = `This line has more than 100 characters: ${'b'.repeat(101)}
-Valid Line 2`;
-//         } else if (type === 'manyLines') {
-//             testData1 = Array(301).fill('Valid Line').join('
-// ');
-//             testData2 = Array(301).fill('Valid Line').join('
-// ');
-        } else {
-            console.error('Unknown test type');
-            return;
-        }
-
-        // Get Vue instance and update data1 and data2
-        const appInstance = window.myApp;
-        if (appInstance) {
-            appInstance.data1 = testData1;
-            appInstance.data2 = testData2;
-        } else {
-            console.error('Vue app instance not found. Make sure the page is fully loaded.');
-        }
-    };
-    
-    // Examples of usage:
-    // insertTestData('valid');       // Inserts valid data
-    // insertTestData('emptyLines');  // Inserts data with empty lines
-    // insertTestData('longLines');   // Inserts data with lines exceeding 100 characters
-    // insertTestData('manyLines');   // Inserts more than 300 lines
-    -->
-    <!--
-    // Chrome DevTools JS snippet to insert test data into the textareas
-    const insertTestData = () => {
-        const testData1 = `Test Line 1 in Data 1
-Test Line 2 in Data 1
-Test Line 3 in Data 1`;
-        const testData2 = `Test Line 1 in Data 2
-Test Line 2 in Data 2
-Test Line 3 in Data 2`;
-
-        // Get Vue instance and update data1 and data2
-        const appInstance = window.myApp;
-        if (appInstance) {
-            appInstance.data1 = testData1;
-            appInstance.data2 = testData2;
-        } else {
-            console.error('Vue app instance not found. Make sure the page is fully loaded.');
-        }
-    };
-    // Execute this function in DevTools console to insert test data
-    // insertTestData();
-    -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -162,9 +89,9 @@ Test Line 3 in Data 2`;
         <h1>{{ uid || 'Your UID' }}</h1>
         <h2>{{ loginResult }}</h2>
 
-        <input type="button" v-if="!loggedIn" @click="googleLogin" value="Google Login">
-        <input type="button" v-if="!loggedIn" @click="googleSignUp" value="Google Sign Up">
-        <input type="button" v-if="loggedIn" @click="signOut" value="Logout">
+        <input type="button" v-if="!loggedIn" @click="googleSignIn" value="Google Login">
+        
+        <input type="button" v-if="loggedIn" @click="googleSignOut" value="Logout">
 
         <div v-if="loggedIn">
             <form @submit.prevent="validateAndSubmit">
@@ -198,113 +125,148 @@ Test Line 3 in Data 2`;
         firebase.initializeApp(firebaseConfig);
         const google = new firebase.auth.GoogleAuthProvider();
 
-        const app = createApp({
-            setup() {
-                const uid = ref(null);
-                const loggedIn = ref(false);
-                const loginResult = ref('');
-                const data1 = ref('');
-                const data2 = ref('');
-                const errorMessage = ref('');
-                const successMessage = ref('');
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+const app = createApp({
+    setup() {
+        const uid = ref(null);
+        const loggedIn = ref(false);
+        const loginResult = ref('');
+        const data1 = ref('');
+        const data2 = ref('');
+        const errorMessage = ref('');
+        const successMessage = ref('');
+        const user = ref(null);
+        const password = ref('');
+        const enpnt = ref('https://cotton-concrete-catsup.glitch.me');
 
-                const validateData = () => {
-                    const lines1 = data1.value.split('\n').filter(line => line.trim() !== '');
-                    const lines2 = data2.value.split('\n').filter(line => line.trim() !== '');
+        const validateData = () => {
+            const lines1 = data1.value.split('\n').filter(line => line.trim() !== '');
+            const lines2 = data2.value.split('\n').filter(line => line.trim() !== '');
 
-                    // Check if line counts match
-                    if (lines1.length !== lines2.length) {
-                        return "Data1 and Data2 must have the same number of non-empty lines.";
-                    }
+            if (lines1.length !== lines2.length) {
+                return "Data1 and Data2 must have the same number of non-empty lines.";
+            }
+            if (lines1.length > 300) {
+                return "The maximum number of lines is 300.";
+            }
+            for (let i = 0; i < lines1.length; i++) {
+                if (lines1[i].length < 1 || lines1[i].length > 100) {
+                    return `Line ${i + 1} in Data1 exceeds length limits (1-100 characters).`;
+                }
+                if (lines2[i].length < 1 || lines2[i].length > 100) {
+                    return `Line ${i + 1} in Data2 exceeds length limits (1-100 characters).`;
+                }
+            }
+            return null;
+        };
 
-                    // Check if the number of lines is within limits
-                    if (lines1.length > 300) {
-                        return "The maximum number of lines is 300.";
-                    }
+        const validateAndSubmit = async () => {
+            errorMessage.value = '';
+            successMessage.value = '';
 
-                    // Check each line's length
-                    for (let i = 0; i < lines1.length; i++) {
-                        if (lines1[i].length < 1 || lines1[i].length > 100) {
-                            return `Line ${i + 1} in Data1 exceeds length limits (1-100 characters).`;
-                        }
-                        if (lines2[i].length < 1 || lines2[i].length > 100) {
-                            return `Line ${i + 1} in Data2 exceeds length limits (1-100 characters).`;
-                        }
-                    }
+            const validationError = validateData();
+            if (validationError) {
+                errorMessage.value = validationError;
+                return;
+            }
 
-                    return null;
-                };
+            try {
+                const dataJsonStr = JSON.stringify({ data1: data1.value, data2: data2.value });
 
-                const validateAndSubmit = async () => {
-                    errorMessage.value = '';
-                    successMessage.value = '';
-
-                    const validationError = validateData();
-                    if (validationError) {
-                        errorMessage.value = validationError;
-                        return;
-                    }
-
-                    // Simulate successful submission
-                    successMessage.value = 'Data successfully validated and submitted.';
-                };
-
-                const googleLogin = () => {
-                    firebase.auth().signInWithRedirect(google);
-                };
-
-                const googleSignUp = () => {
-                    firebase.auth().signInWithRedirect(google);
-                };
-
-                const signOut = () => {
-                    firebase.auth().signOut().then(() => {
-                        loginResult.value = 'Signed out successfully';
-                        data1.value = '';
-                        data2.value = '';
-                        errorMessage.value = '';
-                        successMessage.value = '';
-                    }).catch(error => {
-                        console.error('Sign-out error:', error);
-                        loginResult.value = 'Error signing out';
-                    });
-                };
-
-                const replaceUrlToLocalhost = () => {
-                    window.location.replace('http://localhost:3000/Users/taroyanaka/Desktop/program/q_a/insert_link.html');
-                };
-
-                firebase.auth().onAuthStateChanged(user => {
-                    if (user) {
-                        uid.value = user.uid;
-                        loggedIn.value = true;
-                        loginResult.value = 'Login success';
-                    } else {
-                        uid.value = null;
-                        loggedIn.value = false;
-                        loginResult.value = 'Not logged in';
-                    }
+                const res = await fetch(`${enpnt.value}/insert_link`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        data_type: 'q_a',
+                        data_json_str: dataJsonStr,
+                        link: '',
+                        tags: [],
+                        likes: [],
+                        comments_and_replies: [],
+                        name: uid.value,
+                        password: password.value
+                    })
                 });
 
-                return {
-                    uid,
-                    loggedIn,
-                    loginResult,
-                    data1,
-                    data2,
-                    errorMessage,
-                    successMessage,
-                    googleLogin,
-                    googleSignUp,
-                    signOut,
-                    validateAndSubmit,
-                    replaceUrlToLocalhost
-                };
+                const result = await res.json();
+
+                if (res.ok) {
+                    successMessage.value = `Success: ${JSON.stringify(result)}`;
+                } else {
+                    errorMessage.value = `Error: ${result.message}`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorMessage.value = `Error: ${error.message}`;
             }
-        });
+        };
+
+        const googleSignIn = async () => {
+            try {
+                const result = await firebase.auth().signInWithPopup(googleProvider);
+                const currentUser = result.user;
+                if (!currentUser) {
+                    throw new Error("Firebaseログインに失敗し、ユーザーが取得できませんでした。");
+                }
+                user.value = currentUser;
+                uid.value = currentUser.uid;
+                loggedIn.value = true;
+                loginResult.value = 'Login success';
+
+                const p2LoginUrl = `${enpnt.value}/p2_login?uid=${encodeURIComponent(currentUser.uid)}`;
+                const response = await fetch(p2LoginUrl, { method: 'GET' });
+                if (!response.ok) {
+                    throw new Error(`p2_login error: ${response.status} ${response.statusText}`);
+                }
+                const data = await response.json();
+                console.log("p2_login =>", data);
+                uid.value = data.message.id;
+                password.value = data.message.password;
+                alert(`p2_login成功: id=${data.message.id}, password=${data.message.password}`);
+            } catch (err) {
+                console.error("ログイン or p2_login失敗:", err);
+                alert(`ログイン失敗: ${err.message}`);
+            }
+        };
+
+        const googleSignOut = async () => {
+            try {
+                await firebase.auth().signOut();
+                user.value = null;
+                uid.value = null;
+                loggedIn.value = false;
+                loginResult.value = 'Signed out successfully';
+                alert("ログアウト完了");
+            } catch (err) {
+                console.error("ログアウト失敗:", err);
+                alert(`ログアウト失敗: ${err.message}`);
+            }
+        };
+
+        const replaceUrlToLocalhost = () => {
+            window.location.replace('http://localhost:3000/Users/taroyanaka/Desktop/program/q_a/insert_link.html');
+        };
+
+        return {
+            uid,
+            loggedIn,
+            loginResult,
+            data1,
+            data2,
+            errorMessage,
+            successMessage,
+            googleSignIn,
+            googleSignOut,
+            validateAndSubmit,
+            replaceUrlToLocalhost
+        };
+    }
+});
 
         app.mount('#app');
-        window.myApp = app;
     </script>
 </body>
 </html>
+

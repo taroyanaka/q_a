@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>insert_link</title>
+    <title>p2</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-auth.js"></script>
@@ -84,10 +84,6 @@
     <div id="app">
         <div class="top-button">
             <button @click="replaceUrlToLocalhost">Replace URL to Localhost</button>
-            <button @click="insertTestData('valid')">Insert Valid Data</button>
-            <button @click="insertTestData('emptyLines')">Insert Data with Empty Lines</button>
-            <button @click="insertTestData('longLines')">Insert Data with Long Lines</button>
-            <button @click="insertTestData('manyLines')">Insert Over 300 Lines</button>
         </div>
 
         <h1>{{ uid || 'Your UID' }}</h1>
@@ -115,47 +111,45 @@
     </div>
 
     <script>
-        const app = Vue.createApp({
-            data() {
-                return {
-                    uid: null,
-                    loggedIn: false,
-                    loginResult: '',
-                    data1: '',
-                    data2: '',
-                    errorMessage: '',
-                    successMessage: '',
-                    endpoint: 'http://localhost:3000',
-                    id: '',
-                    password: ''
-                };
-            },
-            mounted() {
-                firebase.auth().onAuthStateChanged(user => {
-                    if (user) {
-                        this.uid = user.uid;
-                        this.loggedIn = true;
-                        this.loginResult = 'Login success';
-                    } else {
-                        this.uid = null;
-                        this.loggedIn = false;
-                        this.loginResult = 'Not logged in';
-                    }
-                });
-            },
-            methods: {
-                validateData() {
-                    const lines1 = this.data1.split('\n').filter(line => line.trim() !== '');
-                    const lines2 = this.data2.split('\n').filter(line => line.trim() !== '');
+        const { createApp, ref } = Vue;
 
+        const firebaseConfig = {
+            apiKey: "AIzaSyBcOlIDP2KWbJuKM0WeMHNp-WvjTVfLt9Y",
+            authDomain: "p2auth-ea50a.firebaseapp.com",
+            projectId: "p2auth-ea50a",
+            storageBucket: "p2auth-ea50a.appspot.com",
+            messagingSenderId: "796225429484",
+            appId: "1:796225429484:web:ece56ef2fc0be28cd6eac9"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const google = new firebase.auth.GoogleAuthProvider();
+
+        const app = createApp({
+            setup() {
+                const uid = ref(null);
+                const loggedIn = ref(false);
+                const loginResult = ref('');
+                const data1 = ref('');
+                const data2 = ref('');
+                const errorMessage = ref('');
+                const successMessage = ref('');
+
+                const validateData = () => {
+                    const lines1 = data1.value.split('\n').filter(line => line.trim() !== '');
+                    const lines2 = data2.value.split('\n').filter(line => line.trim() !== '');
+
+                    // Check if line counts match
                     if (lines1.length !== lines2.length) {
                         return "Data1 and Data2 must have the same number of non-empty lines.";
                     }
 
+                    // Check if the number of lines is within limits
                     if (lines1.length > 300) {
                         return "The maximum number of lines is 300.";
                     }
 
+                    // Check each line's length
                     for (let i = 0; i < lines1.length; i++) {
                         if (lines1[i].length < 1 || lines1[i].length > 100) {
                             return `Line ${i + 1} in Data1 exceeds length limits (1-100 characters).`;
@@ -166,21 +160,22 @@
                     }
 
                     return null;
-                },
-                async validateAndSubmit() {
-                    this.errorMessage = '';
-                    this.successMessage = '';
+                };
 
-                    const validationError = this.validateData();
+                const validateAndSubmit = async () => {
+                    errorMessage.value = '';
+                    successMessage.value = '';
+
+                    const validationError = validateData();
                     if (validationError) {
-                        this.errorMessage = validationError;
+                        errorMessage.value = validationError;
                         return;
                     }
 
                     try {
-                        const dataJsonStr = JSON.stringify({ data1: this.data1, data2: this.data2 });
+                        const dataJsonStr = JSON.stringify({ data1: data1.value, data2: data2.value });
 
-                        const res = await fetch(`${this.endpoint}/insert_link`, {
+                        const res = await fetch('https://cotton-concrete-catsup.glitch.me/insert_link', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -192,70 +187,78 @@
                                 tags: JSON.stringify([]),
                                 likes: JSON.stringify([]),
                                 comments_and_replies: JSON.stringify([]),
-                                name: this.id,
-                                password: this.password
+                                name: uid.value, // Include UID in the request body
+                                password: '' // Placeholder if password is needed
                             })
                         });
 
                         const result = await res.json();
 
                         if (res.ok) {
-                            this.successMessage = `Success: ${JSON.stringify(result)}`;
+                            console.log('Success:', result);
                         } else {
-                            this.errorMessage = `Error: ${result.message}`;
+                            console.error('Error:', result);
                         }
                     } catch (error) {
                         console.error('Error:', error);
-                        this.errorMessage = `Error: ${error.message}`;
                     }
-                },
-                googleLogin() {
-                    firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider());
-                },
-                googleSignUp() {
-                    firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider());
-                },
-                signOut() {
+                };
+
+                const googleLogin = () => {
+                    firebase.auth().signInWithRedirect(google);
+                };
+
+                const googleSignUp = () => {
+                    firebase.auth().signInWithRedirect(google);
+                };
+
+                const signOut = () => {
                     firebase.auth().signOut().then(() => {
-                        this.loginResult = 'Signed out successfully';
-                        this.data1 = '';
-                        this.data2 = '';
-                        this.errorMessage = '';
-                        this.successMessage = '';
+                        loginResult.value = 'Signed out successfully';
+                        data1.value = '';
+                        data2.value = '';
+                        errorMessage.value = '';
+                        successMessage.value = '';
                     }).catch(error => {
                         console.error('Sign-out error:', error);
-                        this.loginResult = 'Error signing out';
+                        loginResult.value = 'Error signing out';
                     });
-                },
-                replaceUrlToLocalhost() {
+                };
+
+                const replaceUrlToLocalhost = () => {
                     window.location.replace('http://localhost:3000/Users/taroyanaka/Desktop/program/q_a/insert_link.html');
-                },
-                insertTestData(type) {
-                    let testData1 = '';
-                    let testData2 = '';
+                };
 
-                    if (type === 'valid') {
-                        testData1 = `Valid Line 1\nValid Line 2\nValid Line 3`;
-                        testData2 = `Valid Line 1\nValid Line 2\nValid Line 3`;
-                    } else if (type === 'emptyLines') {
-                        testData1 = `Valid Line 1\n\nValid Line 3`;
-                        testData2 = `Valid Line 1\n\nValid Line 3`;
-                    } else if (type === 'longLines') {
-                        testData1 = `This line has more than 100 characters: ${'a'.repeat(101)}\nValid Line 2`;
-                        testData2 = `This line has more than 100 characters: ${'b'.repeat(101)}\nValid Line 2`;
-                    } else if (type === 'manyLines') {
-                        testData1 = Array(301).fill('Valid Line').join('\n');
-                        testData2 = Array(301).fill('Valid Line').join('\n');
+                firebase.auth().onAuthStateChanged(user => {
+                    if (user) {
+                        uid.value = user.uid;
+                        loggedIn.value = true;
+                        loginResult.value = 'Login success';
                     } else {
-                        console.error('Unknown test type');
-                        return;
+                        uid.value = null;
+                        loggedIn.value = false;
+                        loginResult.value = 'Not logged in';
                     }
+                });
 
-                    this.data1 = testData1;
-                    this.data2 = testData2;
-                }
+                return {
+                    uid,
+                    loggedIn,
+                    loginResult,
+                    data1,
+                    data2,
+                    errorMessage,
+                    successMessage,
+                    googleLogin,
+                    googleSignUp,
+                    signOut,
+                    validateAndSubmit,
+                    replaceUrlToLocalhost
+                };
             }
-        }).mount('#app');
+        });
+
+        app.mount('#app');
     </script>
 </body>
 </html>

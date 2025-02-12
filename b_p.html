@@ -1,562 +1,254 @@
-<!DOCTYPE html>
+.<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>black paint q_a (Modern Design)</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>p2</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-auth.js"></script>
+    </head>
+<body>
+    <div id="app">
+        <div>
+            <h3>All Links</h3>
+            <ul>
+                <li v-for="link in allLinks" :key="link.id">
+                    {{ link.data_json_str }} (ID: {{ link.id }})
+                </li>
+            </ul>
+        </div>
+        <div>
+            <h3>Your Data</h3>
+            <button @click="fetchUserData">Fetch User Data</button>
+            <ul>
+                <li v-for="link in userLinks" :key="link.id">
+                    {{ link.data_json_str }} (ID: {{ link.id }})
+                    <button @click="deleteLink(link.id)">Delete</button>
+                </li>
+            </ul>
+        </div>
+        <div class="top-button">
+            <button @click="replaceUrlToLocalhost">Replace URL to Localhost</button>
+        </div>
 
-  <!-- Reset CSS -->
-  <link rel="stylesheet" href="reset.css" />
+        <h1>{{ uid || 'Your UID' }}</h1>
+        <h2>{{ loginResult }}</h2>
 
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="main.css" />
+        <input type="button" v-if="!loggedIn" @click="googleSignIn" value="Google Login">
+        
+        <input type="button" v-if="loggedIn" @click="googleSignOut" value="Logout">
 
-  <!-- Material Symbols -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+        <div v-if="loggedIn">
+            <form @submit.prevent="validateAndSubmit">
+                <label>
+                    Data 1:
+                    <textarea v-model="data1" placeholder="Enter data1 (e.g., 縄文時代\n弥生時代)" required></textarea>
+                </label>
+                <label>
+                    Data 2:
+                    <textarea v-model="data2" placeholder="Enter data2 (e.g., 日本の先史時代。\n日本の稲作農耕文化が発展した時代。)" required></textarea>
+                </label>
+                <button type="submit">Submit</button>
+                <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+                <div v-if="successMessage" class="success">{{ successMessage }}</div>
+            </form>
+        </div>
+    </div>
 
-  <!-- Firebase v8 SDK -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-  <script>
-    const shuffle = arr => arr.sort(() => Math.random() - 0.5);
-
-    //============================
-    // 1. Firebase 初期化 (Config)
-    //============================
+<script>
+    // Firebase の設定
     const firebaseConfig = {
-      apiKey: "AIzaSyBcOlIDP2K...",
+      apiKey: "AIzaSyBcOlIDP2KWbJuKM0WeMHNp-WvjTVfLt9Y",
       authDomain: "p2auth-ea50a.firebaseapp.com",
       projectId: "p2auth-ea50a",
       storageBucket: "p2auth-ea50a.appspot.com",
       messagingSenderId: "796225429484",
       appId: "1:796225429484:web:ece56ef2fc0be28cd6eac9"
     };
+
+    // Firebase 初期化
     firebase.initializeApp(firebaseConfig);
 
-    // Googleプロバイダ
-    const googleProvider = new firebase.auth.GoogleAuthProvider();
-  </script>
-</head>
-<body class="app">
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <button class="menu-btn" @click="toggleDrawer">
-      <span class="material-symbols-outlined">menu</span>
-    </button>
-    <div class="title">Black Paint QA</div>
-  </div>
-
-  <!-- ドロワー -->
-  <div class="drawer" :class="{open: sideOpen}">
-    <a href="./insert_link.html" target="_blank" style="text-decoration: none;">
-      <button>アップロードモード</button>
-  </a>
-    <h3>Data / User</h3>
-    <!-- もし wbDat.message があればユーザーリストを表示 -->
-    <input type="text" v-model="usrNam" class="uNam" placeholder="username" />
-    <ul>
-      <li v-for="(d,i) in usWDat" :key="i">
-        <button @click="stDaWD(i)">
-          {{ JSON.parse(d.data_json_str).data1.split('\n')[0].slice(0,5) }}
-        </button>
-      </li>
-    </ul>
-    <p>version 0.0.1.5</p>
-
-    <button class="gsi-material-button">
-      <div class="gsi-material-button-state"></div>
-      <div class="gsi-material-button-content-wrapper">
-        <div class="gsi-material-button-icon">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
-            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
-            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
-            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
-            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
-            <path fill="none" d="M0 0h48v48H0z"></path>
-          </svg>
-        </div>
-        <span class="gsi-material-button-contents">Sign in with Google</span>
-        <span style="display: none;">Sign in with Google</span>
-      </div>
-    </button>
 
 
-    <!-- Googleログアウト -->
-<button @click="googleSignOut" class="signout-button">ログアウト</button>
 
-
-  </div>
-
-  <!-- メインコンテンツ -->
-  <div class="main-content">
-    <!-- chooseモード -->
-    <div v-if="md==='choose'">
-      <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
-        <div>
-          <h2>{{ dv[0] }} {{ dv[5] }}</h2>
-          <div>
-            <button
-              v-for="(item,ix) in dv[2]"
-              :key="ix"
-              @click="chQACh(dv[1], item)"
-            >
-              {{ trText(item) }}
-            </button>
-          </div>
-        </div>
-      </template>
-    </div>
-
-    <!-- maru_batuモード -->
-    <div v-if="md==='maru_batu'">
-      <progress :value="ooQAMC" :max="ex1Dat.length" class="progress-bar"></progress>
-      <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
-        <div v-if="dv[3] === false">
-          <h2>{{ dv[0] }} = {{ dv[2][0] }}</h2>
-          <p v-if="mbRslt!==''">{{ mbRslt }}</p>
-          <button
-            @click="chMaBa(dv,dv[2][0],'maru')"
-            :class="flInco==='maru'||flInco===null?'flIc':''"
-          >
-            ⭕️
-          </button>
-          <button
-            @click="chMaBa(dv,dv[2][1],'batu')"
-            :class="flInco==='batu'||flInco===null?'flIc':''"
-          >
-            ❎
-          </button>
-        </div>
-      </template>
-    </div>
-
-    <!-- black_paintモード -->
-    <div v-if="md==='black_paint'" class="blPt">
-      <progress
-        :value="ooQAMC"
-        :max="ex1Dat[ooQAMC].length"
-        class="progress-bar"
-      ></progress>
-      <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
-        <div>{{ dv[0] }}</div>
-        <div :class="dv[4] ? 'black-paint' : ''" @click="chPaRw">
-          {{ dv[1] }}
-        </div>
-        <div v-if="paRslt!==''">{{ paRslt }}</div>
-      </template>
-    </div>
-
-    <!-- slideモード -->
-    <div v-if="md==='slide'">
-      <progress :value="curIdx" :max="sldes.length" class="progress-bar"></progress>
-      <div>
-        <div v-if="sldes[curIdx]?.q" @click="nxSlid">{{ sldes[curIdx].q }}</div>
-        <div v-else-if="sldes[curIdx]?.a" @click="nxSlid">
-          {{ sldes[curIdx].a }}
-        </div>
-      </div>
-      <button @click="frSlid">最初へ</button>
-      <button @click="prSlid">前へ</button>
-      <button @click="nxSlid">次へ</button>
-      <div v-if="!auSlMd">
-        <button @click="auSlid">auto slide</button>
-        <input type="number" v-model="tmIntv" min="0.1" step="0.1" />秒
-      </div>
-      <div v-else>
-        <button @click="stAuSl">stop auto slide</button>
-      </div>
-    </div>
-
-    <!-- qrモード -->
-    <div v-if="md==='qr'">
-      <button @click="shQr">show_qr</button>
-      <div ref="qrcode"></div>
-    </div>
-  </div>
-
-  <!-- Bottom Navigation (Tab Bar) -->
-  <div class="bottom-nav">
-    <button :class="{ active: md==='choose' }" @click="chMode('choose')">
-      <span class="material-symbols-outlined">list</span>
-      <span>選択</span>
-    </button>
-
-    <button :class="{ active: md==='maru_batu' }" @click="chMode('maru_batu')">
-      <span class="material-symbols-outlined">help</span>
-      <span>⭕️❎</span>
-    </button>
-
-    <button :class="{ active: md==='black_paint' }" @click="chMode('black_paint')">
-      <span class="material-symbols-outlined">format_color_fill</span>
-      <span>黒塗り</span>
-    </button>
-
-    <button :class="{ active: md==='slide' }" @click="chMode('slide')">
-      <span class="material-symbols-outlined">slideshow</span>
-      <span>スライド</span>
-    </button>
-
-    <button :class="{ active: md==='qr' }" @click="chMode('qr')">
-      <span class="material-symbols-outlined">qr_code_scanner</span>
-      <span>QR</span>
-    </button>
-  </div>
-
-  <script>
-    const { createApp, ref, watch, onMounted } = Vue;
-
-    function toAry(i) {
-      return JSON.parse(JSON.stringify(i));
-    }
-
-    const app = createApp({
-      setup() {
-        const trTeLn = ref(20);
-        const usWDat = ref([]);
-        const usrNam = ref("user1");
-        const shUsr = ref("");
-        const shTag = ref("");
-        const shOrBy = ref("DESC");
-        const enpnt = ref("https://cotton-concrete-catsup.glitch.me");
-        const wbDat = ref([]);
-        const paRslt = ref("");
-        const mbRslt = ref("");
-        const flInco = ref("");
-        const ooQAMD = ref(true);
-        const ooQAMC = ref(0);
-        const sideOpen = ref(false);
-        const sldes = ref([]);
-        const curIdx = ref(0);
-        const auSlMd = ref(false);
-        const tmIntv = ref(0.5);
-        const md = ref("choose");
-
-        const dtA = ref(`こんにちは
-やあ
-いい
-はい
-犬
-猫
-食事
-眠り`);
-        const dtB = ref(`hello
-hi
-good
-yes
-dog
-cat
-food
-sleep`);
-        const ex1Dat = ref([
-          ["こんにちは", "hello", ["food", "hello"], false, true, ""]
-        ]);
-
-        // Firebase Auth関連
-        const user = ref(null);
-
-        watch(usrNam, () => gtUsWD());
-        watch([shUsr, shTag, shOrBy], () => ftRdAl());
-
-        onMounted(async () => {
-          ex1();
-          await ftRdAl();
-        });
-
-        const toggleDrawer = () => {
-          sideOpen.value = !sideOpen.value;
-        };
-
-        const trText = t =>
-          t.length > trTeLn.value ? t.slice(0, trTeLn.value) + "..." : t;
-
-        const stDaWD = i => {
-          if (confirm("Really??")) {
-            const x = JSON.parse(usWDat.value[i].data_json_str);
-            dtA.value = x.data1;
-            dtB.value = x.data2;
-            ex1();
-            sideOpen.value = false;
-          }
-        };
-
-        const gtUsWD = () => {
-          if (!wbDat.value.message) return;
-          usWDat.value = toAry(wbDat.value.message).filter(
-            v => v.username === usrNam.value
-          );
-        };
-
-        const ftRdAl = async () => {
-          try {
-            const p = {
-              user: shUsr.value,
-              tag: shTag.value,
-              order_by: shOrBy.value
+    const app = Vue.createApp({
+        data() {
+            return {
+                username: '',
+                uid: null,
+                loggedIn: false,
+                loginResult: '',
+                data1: '',
+                data2: '',
+                errorMessage: '',
+                successMessage: '',
+                user: null,
+                password: '',
+                enpnt: 'https://cotton-concrete-catsup.glitch.me',
+                userLinks: [],
+                allLinks: []
             };
-            const u = new URL(enpnt.value + "/read_all");
-            u.search = new URLSearchParams(p).toString();
-            const r = await fetch(u, {
-              method: "GET",
-              headers: { "Content-Type": "application/json" }
+        },
+        mounted() {
+          
+            const storedUsername = localStorage.getItem('username');
+            const storedPassword = localStorage.getItem('password');
+            if (storedUsername && storedPassword) {
+                this.username = storedUsername;
+                this.password = storedPassword;
+                this.loggedIn = true;
+                this.fetchUserData();
+            }
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    this.user = user;
+                    this.uid = user.uid;
+                    this.loggedIn = true;
+                    this.fetchUserData();
+                }
             });
-            wbDat.value = await r.json();
-            gtUsWD();
-          } catch (e) {
-            ooQAMC.value = 0;
-            ex1Dat.value = [
-              ["こんにちは", "hello(or any error)", ["food", "hello"], false, true, ""]
-            ];
-            ex1();
-          }
-        };
+        },
+        methods: {
+            async fetchUserData() {
+                try {
+                    const response = await fetch(`${this.enpnt}/read_all`);
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch user data: ${response.status} ${response.statusText}`);
+                    }
+                    const result = await response.json();
+                    this.allLinks = result.message;
+                    if (this.loggedIn && this.uid) {
+                      console.log(1);
+                        this.userLinks = this.allLinks.filter(link => {
+                                                console.log( link.username);
+                      console.log(this.username);
 
-        const chMode = m => {
-          ooQAMC.value = 0;
-          md.value = m;
-          ex1();
-        };
+                          return link.username === this.username});
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                    alert(`Error fetching user data: ${error.message}`);
+                }
+            },
+            async deleteLink(id) {
+                try {
+                    const response = await fetch(`${this.enpnt}/delete_link`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id: id,
+                            name: this.uid,
+                            password: this.password
+                        })
+                    });
 
-        const ex1 = p => {
-          ooQAMC.value = 0;
-          let A = dtA.value.split("\n");
-          let B = dtB.value.split("\n");
+                    if (!response.ok) {
+                        throw new Error(`Failed to delete link: ${response.status} ${response.statusText}`);
+                    }
 
-          if (p === "swap") {
-            [A, B] = [B, A];
-          }
+                    const result = await response.json();
+                    alert(`Link deleted successfully: ${result.message}`);
+                    this.fetchUserData();
+                } catch (error) {
+                    console.error('Error deleting link:', error);
+                    alert(`Error deleting link: ${error.message}`);
+                }
+            },
+            async validateAndSubmit() {
+                this.errorMessage = '';
+                this.successMessage = '';
 
-          const f = (d0, d1) =>
-            d0.map((v, i) => [
-              v,
-              d1[i],
-              shuffle([
-                d1[i],
-                shuffle(d1.filter((_, x) => x !== i))[0]
-              ]),
-              false,
-              true,
-              ""
-            ]);
+                if (!this.data1.trim() || !this.data2.trim()) {
+                    this.errorMessage = 'Data1 and Data2 cannot be empty';
+                    return;
+                }
 
-          let newData = f(A, B);
-          if (p === "shuffle") {
-            newData = shuffle(toAry(newData));
-          }
-          ex1Dat.value = newData;
-          sldes.value = mkSlid(newData);
-        };
+                try {
+                    const dataJsonStr = JSON.stringify({ data1: this.data1, data2: this.data2 });
 
-        const chQACh = (correct, ans) => {
-          const d = ex1Dat.value[ooQAMC.value];
-          d[5] = ans === correct ? "⭕️" : "❎";
+                    const res = await fetch(`${this.enpnt}/insert_link`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            data_type: 'q_a',
+                            data_json_str: dataJsonStr,
+                            link: '',
+                            tags: [],
+                            likes: [],
+                            comments_and_replies: [],
+                            name: this.uid,
+                            password: this.password
+                        })
+                    });
 
-          if (d[5] === "⭕️") {
-            setTimeout(() => {
-              ooQAMC.value++;
-              if (ooQAMC.value === ex1Dat.value.length) {
-                ooQAMC.value = 0;
-                ex1Dat.value.forEach(x => (x[5] = ""));
-              }
-            }, tmIntv.value * 1000);
-          }
-        };
+                    const result = await res.json();
 
-        const chMaBa = async (v, r, m) => {
-          const fn = () => {
-            ooQAMC.value++;
-            if (ooQAMC.value === ex1Dat.value.length) {
-              ooQAMC.value = 0;
-              ex1Dat.value.forEach(x => (x[3] = false));
+                    if (res.ok) {
+                        this.successMessage = `Success: ${JSON.stringify(result)}`;
+                    } else {
+                        this.errorMessage = `Error: ${result.message}`;
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    this.errorMessage = `Error: ${error.message}`;
+                }
+            },
+            async googleSignIn() {
+                try {
+                    const result = await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
+                    const currentUser = result.user;
+                    if (!currentUser) {
+                        throw new Error("Firebaseログインに失敗し、ユーザーが取得できませんでした。");
+                    }
+                    this.user = currentUser;
+                    this.uid = currentUser.uid;
+                    this.loggedIn = true;
+                    this.loginResult = 'Login success';
+
+                    const p2LoginUrl = `${this.enpnt}/p2_login?uid=${encodeURIComponent(currentUser.uid)}`;
+                    const response = await fetch(p2LoginUrl, { method: 'GET' });
+                    if (!response.ok) {
+                        throw new Error(`p2_login error: ${response.status} ${response.statusText}`);
+                    }
+                    const data = await response.json();
+                    this.username = data.message.id;
+                    localStorage.setItem('username', data.message.id);
+                    localStorage.setItem('password', data.message.password);
+                    this.password = data.message.password;
+                    alert(`p2_login成功: id=${data.message.id}, password=${data.message.password}`);
+                    this.fetchUserData();
+                } catch (err) {
+                    console.error("ログイン or p2_login失敗:", err);
+                    alert(`ログイン失敗: ${err.message}`);
+                }
+            },
+            async googleSignOut() {
+                try {
+                    await firebase.auth().signOut();
+                    this.user = null;
+                    this.uid = null;
+                    this.loggedIn = false;
+                    this.loginResult = 'Signed out successfully';
+                    alert("ログアウト完了");
+                } catch (err) {
+                    console.error("ログアウト失敗:", err);
+                    alert(`ログアウト失敗: ${err.message}`);
+                }
+            },
+            replaceUrlToLocalhost() {
+                window.location.replace('http://localhost:3000/Users/taroyanaka/Desktop/program/q_a/insert_link.html');
             }
-          };
+        }
+    }).mount('#app');
 
-          const cmpl = async () => {
-            mbRslt.value = "全問完了";
-            await new Promise(rs => setTimeout(rs, tmIntv.value * 1000));
-            mbRslt.value = "";
-          };
-
-          if (v[1] === r) {
-            v[3] = true;
-            fn();
-            flInco.value = "";
-          } else {
-            v[3] = false;
-            flInco.value = m === "maru" ? "batu" : "maru";
-          }
-
-          if (ooQAMC.value === ex1Dat.value.length - 1) {
-            await cmpl();
-          }
-        };
-
-        const mkSlid = a => a.flatMap(v => [{ q: v[0] }, { a: v[1] }]);
-
-        const chPaRw = async () => {
-          const d = ex1Dat.value[ooQAMC.value];
-          const rs = () => {
-            ex1Dat.value.forEach(x => (x[4] = true));
-            ooQAMC.value = 0;
-          };
-
-          const cmpl = async () => {
-            paRslt.value = "全問完了";
-            await new Promise(r => setTimeout(r, tmIntv.value * 1000));
-            paRslt.value = "";
-            rs();
-          };
-
-          if (d) {
-            d[4] = false;
-            await new Promise(r => setTimeout(r, tmIntv.value * 1000));
-            ooQAMC.value++;
-          } else {
-            rs();
-          }
-
-          if (ex1Dat.value[ooQAMC.value]?.length - 1 === ooQAMC.value) {
-            await cmpl();
-          }
-        };
-
-        const frSlid = () => (curIdx.value = 0);
-        const prSlid = () =>
-          curIdx.value > 0 ? (curIdx.value -= 1) : (curIdx.value = sldes.value.length - 1);
-        const nxSlid = () =>
-          curIdx.value < sldes.value.length - 1 ? (curIdx.value += 1) : (curIdx.value = 0);
-
-        const auSlid = () => {
-          auSlMd.value = true;
-          setInterval(() => nxSlid(), tmIntv.value * 1000);
-        };
-
-        const stAuSl = () => {
-          auSlMd.value = false;
-          for (let i = 1; i < 99999; i++) {
-            clearInterval(i);
-          }
-        };
-
-        const rdShre = () => {
-          if (confirm("Leave this page?")) {
-            location.href = "./share.html";
-          }
-        };
-
-        const shQr = () => {
-          const e = document.querySelector('[ref="qrcode"]');
-          if (e)
-            new QRCode(e, {
-              text: "https://taroyanaka.github.io/q_a/b_p.html",
-              width: 256,
-              height: 256,
-              colorDark: "#000",
-              colorLight: "#fff",
-              correctLevel: QRCode.CorrectLevel.H
-            });
-        };
-
-        //=============================
-        // 2. Googleログイン関数
-        //=============================
-        const googleSignIn = async () => {
-          try {
-            const result = await firebase.auth().signInWithPopup(googleProvider);
-            const currentUser = result.user;
-            if (!currentUser) {
-              throw new Error("Firebaseログインに失敗し、ユーザーが取得できませんでした。");
-            }
-            user.value = currentUser;
-            console.log("ログイン完了:", currentUser.uid);
-
-            // p2_login のリクエスト
-            const p2LoginUrl = `${enpnt.value}/p2_login?uid=${encodeURIComponent(
-              currentUser.uid
-            )}`;
-            const response = await fetch(p2LoginUrl, { method: "GET" });
-            if (!response.ok) {
-              throw new Error(`p2_login error: ${response.status} ${response.statusText}`);
-            }
-            const data = await response.json();
-            console.log("p2_login =>", data);
-            alert(`p2_login成功: id=${data.message.id}, password=${data.message.password}`);
-          } catch (err) {
-            console.error("ログイン or p2_login失敗:", err);
-            alert(`ログイン失敗: ${err.message}`);
-          }
-        };
-
-        //=============================
-        // 3. Googleログアウト関数
-        //=============================
-        const googleSignOut = async () => {
-          try {
-            await firebase.auth().signOut();
-            user.value = null;
-            console.log("ログアウトしました");
-            alert("ログアウト完了");
-          } catch (err) {
-            console.error("ログアウト失敗:", err);
-            alert(`ログアウト失敗: ${err.message}`);
-          }
-        };
-
-        return {
-          // state
-          trTeLn,
-          usWDat,
-          usrNam,
-          shUsr,
-          shTag,
-          shOrBy,
-          enpnt,
-          wbDat,
-          paRslt,
-          mbRslt,
-          flInco,
-          ooQAMD,
-          ooQAMC,
-          sideOpen,
-          sldes,
-          curIdx,
-          auSlMd,
-          tmIntv,
-          md,
-          dtA,
-          dtB,
-          ex1Dat,
-          user,
-
-          // methods
-          toggleDrawer,
-          trText,
-          stDaWD,
-          gtUsWD,
-          ftRdAl,
-          chMode,
-          ex1,
-          chQACh,
-          chMaBa,
-          mkSlid,
-          chPaRw,
-          frSlid,
-          prSlid,
-          nxSlid,
-          auSlid,
-          stAuSl,
-          rdShre,
-          shQr,
-          googleSignIn,
-          googleSignOut
-        };
-      }
-    });
-
-    window.myApp = app.mount("body");
-  </script>
+    const to_ary = (obj) => JSON.parse(JSON.stringify(obj));
+</script>
 </body>
 </html>
-

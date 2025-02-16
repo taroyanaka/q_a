@@ -1,14 +1,14 @@
-.<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>p2</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-auth.js"></script>
-    </head>
+    <title>insert link</title>
+    <script src="./lib/firebasejs_8.6.1_firebase-app.js"></script>
+    <script src="./lib/firebasejs_8.4.0_firebase-auth.js"></script>
+    <script src="./lib/vue@3.2.36.global.prod.js"></script>
+</head>
 <body>
     <div id="app">
         <div>
@@ -21,27 +21,27 @@
         </div>
         <div>
             <h3>Your Data</h3>
-            <button @click="fetchUserData">Fetch User Data</button>
+            <button @click="fetch_user_data">Fetch User Data</button>
             <ul>
                 <li v-for="link in userLinks" :key="link.id">
                     {{ link.data_json_str }} (ID: {{ link.id }})
-                    <button @click="deleteLink(link.id)">Delete</button>
+                    <button @click="delete_link(link.id)">Delete</button>
                 </li>
             </ul>
         </div>
         <div class="top-button">
-            <button @click="replaceUrlToLocalhost">Replace URL to Localhost</button>
+            <button @click="replace_url_to_localhost">Replace URL to Localhost</button>
         </div>
 
-        <h1>{{ uid || 'Your UID' }}</h1>
+        <h1>{{ username || 'Your Username' }}</h1>
         <h2>{{ loginResult }}</h2>
 
-        <input type="button" v-if="!loggedIn" @click="googleSignIn" value="Google Login">
+        <input type="button" v-if="!loggedIn" @click="google_sign_in" value="Google Login">
         
-        <input type="button" v-if="loggedIn" @click="googleSignOut" value="Logout">
+        <input type="button" v-if="loggedIn" @click="google_sign_out" value="Logout">
 
         <div v-if="loggedIn">
-            <form @submit.prevent="validateAndSubmit">
+            <form @submit.prevent="validate_and_submit">
                 <label>
                     Data 1:
                     <textarea v-model="data1" placeholder="Enter data1 (e.g., 縄文時代\n弥生時代)" required></textarea>
@@ -71,12 +71,10 @@
     // Firebase 初期化
     firebase.initializeApp(firebaseConfig);
 
-
-
-
     const app = Vue.createApp({
         data() {
             return {
+                username: '',
                 uid: null,
                 loggedIn: false,
                 loginResult: '',
@@ -91,8 +89,46 @@
                 allLinks: []
             };
         },
+        async mounted() {
+            await this.fetch_existing_user();
+            if (!this.uid) {
+                firebase.auth().onAuthStateChanged(async user => {
+                    if (user) {
+                        this.user = user;
+                        this.uid = user.uid;
+                        this.loggedIn = true;
+                        await this.fetch_existing_user();
+                        await this.fetch_user_data();
+                    }
+                });
+            }
+        },
         methods: {
-            async fetchUserData() {
+            async fetch_existing_user() {
+                try {
+                    if (!this.uid) {
+                        throw new Error('ログインしていません');
+                    }
+                    const response = await fetch(`${this.enpnt}/existing_user`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ uid: this.uid })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch user: ${response.status} ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    this.username = result.message.id;
+                    this.password = result.message.password;
+                } catch (error) {
+                    console.error('Error fetching existing user:', error);
+                }
+            },
+            async fetch_user_data() {
                 try {
                     const response = await fetch(`${this.enpnt}/read_all`);
                     if (!response.ok) {
@@ -100,15 +136,14 @@
                     }
                     const result = await response.json();
                     this.allLinks = result.message;
-                    if (this.loggedIn && this.uid) {
-                        this.userLinks = this.allLinks.filter(link => link.username === this.uid);
+                    if (this.loggedIn && this.username) {
+                        this.userLinks = this.allLinks.filter(link => link.username === this.username);
                     }
                 } catch (error) {
                     console.error('Error fetching user data:', error);
-                    alert(`Error fetching user data: ${error.message}`);
                 }
             },
-            async deleteLink(id) {
+            async delete_link(id) {
                 try {
                     const response = await fetch(`${this.enpnt}/delete_link`, {
                         method: 'POST',
@@ -117,7 +152,7 @@
                         },
                         body: JSON.stringify({
                             id: id,
-                            name: this.uid,
+                            name: this.username,
                             password: this.password
                         })
                     });
@@ -126,102 +161,16 @@
                         throw new Error(`Failed to delete link: ${response.status} ${response.statusText}`);
                     }
 
-                    const result = await response.json();
-                    alert(`Link deleted successfully: ${result.message}`);
-                    this.fetchUserData();
+                    await this.fetch_user_data();
                 } catch (error) {
                     console.error('Error deleting link:', error);
-                    alert(`Error deleting link: ${error.message}`);
                 }
             },
-            async validateAndSubmit() {
-                this.errorMessage = '';
-                this.successMessage = '';
-
-                if (!this.data1.trim() || !this.data2.trim()) {
-                    this.errorMessage = 'Data1 and Data2 cannot be empty';
-                    return;
-                }
-
-                try {
-                    const dataJsonStr = JSON.stringify({ data1: this.data1, data2: this.data2 });
-
-                    const res = await fetch(`${this.enpnt}/insert_link`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            data_type: 'q_a',
-                            data_json_str: dataJsonStr,
-                            link: '',
-                            tags: [],
-                            likes: [],
-                            comments_and_replies: [],
-                            name: this.uid,
-                            password: this.password
-                        })
-                    });
-
-                    const result = await res.json();
-
-                    if (res.ok) {
-                        this.successMessage = `Success: ${JSON.stringify(result)}`;
-                    } else {
-                        this.errorMessage = `Error: ${result.message}`;
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    this.errorMessage = `Error: ${error.message}`;
-                }
-            },
-            async googleSignIn() {
-                try {
-                    const result = await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
-                    const currentUser = result.user;
-                    if (!currentUser) {
-                        throw new Error("Firebaseログインに失敗し、ユーザーが取得できませんでした。");
-                    }
-                    this.user = currentUser;
-                    this.uid = currentUser.uid;
-                    this.loggedIn = true;
-                    this.loginResult = 'Login success';
-
-                    const p2LoginUrl = `${this.enpnt}/p2_login?uid=${encodeURIComponent(currentUser.uid)}`;
-                    const response = await fetch(p2LoginUrl, { method: 'GET' });
-                    if (!response.ok) {
-                        throw new Error(`p2_login error: ${response.status} ${response.statusText}`);
-                    }
-                    const data = await response.json();
-                    this.uid = data.message.id;
-                    this.password = data.message.password;
-                    alert(`p2_login成功: id=${data.message.id}, password=${data.message.password}`);
-                    this.fetchUserData();
-                } catch (err) {
-                    console.error("ログイン or p2_login失敗:", err);
-                    alert(`ログイン失敗: ${err.message}`);
-                }
-            },
-            async googleSignOut() {
-                try {
-                    await firebase.auth().signOut();
-                    this.user = null;
-                    this.uid = null;
-                    this.loggedIn = false;
-                    this.loginResult = 'Signed out successfully';
-                    alert("ログアウト完了");
-                } catch (err) {
-                    console.error("ログアウト失敗:", err);
-                    alert(`ログアウト失敗: ${err.message}`);
-                }
-            },
-            replaceUrlToLocalhost() {
-                window.location.replace('http://localhost:3000/Users/taroyanaka/Desktop/program/q_a/insert_link.html');
+            replace_url_to_localhost() {
+                window.location.replace('http://localhost:3000/q_a/insert_link.html');
             }
         }
     }).mount('#app');
-
-    const to_ary = (obj) => JSON.parse(JSON.stringify(obj));
 </script>
 </body>
 </html>

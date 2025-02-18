@@ -168,8 +168,68 @@
             },
             replace_url_to_localhost() {
                 window.location.replace('http://localhost:3000/q_a/insert_link.html');
-            }
-        }
+            },
+            // validate_and_submitはデータをinsertするための関数
+            error_check_insert_data(data_type, data_json_str) {
+                const DATA_TYPE_ARRAY = [
+                    'q_a',
+                    'f_i_b',
+                    'i_t_n',
+                ];
+                const is_include_DATA_TYPE = (target_data_type_str) => DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
+
+                switch (true) {
+                    case data_json_str === undefined: return 'dataが空です';
+                    case data_json_str.length > 10000: return 'dataが長すぎます';
+                    case !is_include_DATA_TYPE(data_type): return '許可されていないdata_typeです';
+                    default: return 'OK';
+                }
+            },
+            async validate_and_submit() {
+                this.errorMessage = '';
+                this.successMessage = '';
+
+                const dataJsonStr = JSON.stringify({ data1: this.data1, data2: this.data2 });
+                const validationError = this.error_check_insert_data('q_a', dataJsonStr);
+                if (validationError !== 'OK') {
+                    this.errorMessage = validationError;
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`${this.enpnt}/insert_link`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            data_type: 'q_a',
+                            data_json_str: dataJsonStr,
+                            link: '',
+                            tags: [],
+                            likes: [],
+                            comments_and_replies: [],
+                            name: this.username,
+                            password: this.password
+                        })
+                    });
+
+                    const result = await res.json();
+
+                    if (res.ok) {
+                        this.successMessage = `Success: ${JSON.stringify(result)}`;
+                        await this.fetch_user_data();
+                        this.data1 = '';
+                        this.data2 = '';
+                    } else {
+                        this.errorMessage = `Error: ${result.message}`;
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    this.errorMessage = `Error: ${error.message}`;
+                }
+            },
+        },
     }).mount('#app');
 </script>
 </body>

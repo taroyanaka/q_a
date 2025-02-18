@@ -16,6 +16,7 @@
             <ul>
                 <li v-for="link in allLinks" :key="link.id">
                     {{ link.data_json_str }} (ID: {{ link.id }})
+                    <button v-if="link.username !== username" @click="clone_link(link.id)">Clone</button>
                 </li>
             </ul>
         </div>
@@ -226,6 +227,32 @@
                     }
                 } catch (error) {
                     console.error('Error:', error);
+                    this.errorMessage = `Error: ${error.message}`;
+                }
+            },
+            async clone_link(id) {
+                try {
+                    const response = await fetch(`${this.enpnt}/clone_link`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id: id,
+                            name: this.username,
+                            password: this.password
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Failed to clone link: ${response.status} ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    this.successMessage = `Clone successful: ${result.message}`;
+                    await this.fetch_user_data();
+                } catch (error) {
+                    console.error('Error cloning link:', error);
                     this.errorMessage = `Error: ${error.message}`;
                 }
             },

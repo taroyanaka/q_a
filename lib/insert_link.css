@@ -1,0 +1,148 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.top-button {
+    text-align: right;
+    margin: 10px;
+}
+
+.top-button button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.top-button button:hover {
+    background-color: #45a049;
+}
+
+.side_bar {
+    width: 200px;
+    float: left;
+    background-color: #333;
+    color: white;
+    height: 100vh;
+    padding-top: 20px;
+}
+
+.side_bar .tablinks {
+    display: block;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: left;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+}
+
+.side_bar .tablinks:hover {
+    background-color: #575757;
+}
+
+.each_data {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+.each_data h3 {
+    color: #333;
+}
+
+.each_data ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.each_data li {
+    background-color: white;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.each_data button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.each_data button:hover {
+    background-color: #45a049;
+}
+
+.login h1, .login h2 {
+    color: #333;
+}
+
+.login input[type="button"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.login input[type="button"]:hover {
+    background-color: #45a049;
+}
+
+.insert form {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.insert label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.insert textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.insert button.submit {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.insert button.submit:hover {
+    background-color: #45a049;
+}
+
+.message .error {
+    color: red;
+    margin-top: 10px;
+}
+
+.message .success {
+    color: green;
+    margin-top: 10px;
+}

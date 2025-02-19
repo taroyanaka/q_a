@@ -20,10 +20,16 @@
             <div class="top-button">
                 <button @click="replace_url_to_localhost">Replace URL to Localhost</button>
             </div>
+            <!-- toggle_sidebar -->
+            <button @click="toggleSidebar" class="menu-button">
+                ☰ Menu
+            </button>
+
         </header>
 
-        <div class="side_bar">
-            <!-- each_dataのタブ -->
+        <div class="sidebar" :class="{ open: isSidebarOpen }">
+            <button @click="toggleSidebar" class="close-button">×</button>
+            <h2>Menu</h2>
             <div>
                 <button class="tablinks" @click="openCity('all_data')">All Data</button>
                 <button class="tablinks" @click="openCity('your_data')">Your Data</button>
@@ -32,7 +38,7 @@
             </div>
         </div>
 
-        <div class="each_data">
+        <div class="each_data content">
             <div v-show="currentTab === 'all_data'" class="all_data">
                 <h3>All Links</h3>
                 <ul>
@@ -96,6 +102,7 @@
         const app = Vue.createApp({
             data() {
                 return {
+                    isSidebarOpen: false,
                     username: '',
                     uid: null,
                     loggedIn: false,
@@ -283,7 +290,30 @@
                     if (element) {
                         element.scrollIntoView({ behavior: 'smooth' });
                     }
-                }
+                },
+                async google_sign_in() {
+                    try {
+                        const provider = new firebase.auth.GoogleAuthProvider();
+                        await firebase.auth().signInWithPopup(provider);
+                    } catch (error) {
+                        console.error('Error signing in:', error);
+                        this.loginResult = `Error: ${error.message}`;
+                    }
+                },
+                async google_sign_out() {
+                    try {
+                        await firebase.auth().signOut();
+                        this.loggedIn = false;
+                        this.loginResult = 'Logged out';
+                    } catch (error) {
+                        console.error('Error signing out:', error);
+                        this.loginResult = `Error: ${error.message}`;
+                    }
+                },
+                toggleSidebar() {
+                    this.isSidebarOpen = !this.isSidebarOpen;
+                },
+
             },
         }).mount('#app');
     </script>

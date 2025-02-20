@@ -27,18 +27,18 @@
 <script>
     const shuffle = arr => arr.sort(() => Math.random() - 0.5);
 
-    //============================
-    // 1. Firebase 初期化 (Config)
-    //============================
-    const firebaseConfig = {
-      apiKey: "API_KEY",
-      authDomain: "p2auth-ea50a.firebaseapp.com",
-      projectId: "p2auth-ea50a",
-      storageBucket: "p2auth-ea50a.appspot.com",
-      messagingSenderId: "796225429484",
-      appId: "1:796225429484:web:ece56ef2fc0be28cd6eac9"
-    };
-    firebase.initializeApp(firebaseConfig);
+// Firebase の設定
+const firebase_config = {
+    apiKey: "AIzaSyBcOlIDP2KWbJuKM0WeMHNp-WvjTVfLt9Y",
+    authDomain: "p2auth-ea50a.firebaseapp.com",
+    projectId: "p2auth-ea50a",
+    storageBucket: "p2auth-ea50a.appspot.com",
+    messagingSenderId: "796225429484",
+    appId: "1:796225429484:web:ece56ef2fc0be28cd6eac9"
+};
+
+// Firebase 初期化
+firebase.initializeApp(firebase_config);
 
     // Googleプロバイダ
     const googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -84,301 +84,509 @@
       <li v-for="link in user_links" :key="link.id">
         {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
         {{ truncate_text(JSON.parse(link.data_json_str).data2) }}
-        <button class="set-btn" @click="setMainContent(link)">Set</button>
+        <button class="set-btn" @click="set_data(link.data_json_str)">Set</button>
       </li>
     </ul>
 
-    <!-- All Links -->
-    <h3 @click="toggleAccordion('allLinks')">All Links</h3>
-    <ul v-show="accordionOpen.allLinks">
-      <li v-for="link in all_links" :key="link.id">
-        {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
-        {{ truncate_text(JSON.parse(link.data_json_str).data2) }}
-        <button class="set-btn" @click="setMainContent(link)">Set</button>
-      </li>
-    </ul>
+      <!-- All Links -->
+      <h3 @click="toggleAccordion('allLinks')">All Links</h3>
+      <ul v-show="accordionOpen.allLinks">
+        <li v-for="link in all_links" :key="link.id">
+          {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
+          {{ truncate_text(JSON.parse(link.data_json_str).data2) }}
+          <button class="set-btn" @click="set_data(link.data_json_str)">Set</button>
+        </li>
+      </ul>
     
   </div>
 
-  <!-- メインコンテンツ -->
+    <!-- メインコンテンツ -->
   <div class="main-content">
-    <div v-if="mainContent">
-      <h2>Main Content</h2>
-      <p>{{ mainContent.data1 }}</p>
-      <p>{{ mainContent.data2 }}</p>
+    <!-- chooseモード -->
+    <div v-if="md==='choose'">
+      <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
+        <div>
+          <h2>{{ dv[0] }} {{ dv[5] }}</h2>
+          <div>
+            <button
+              v-for="(item,ix) in dv[2]"
+              :key="ix"
+              @click="chQACh(dv[1], item)"
+            >
+              {{ trText(item) }}
+            </button>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <!-- maru_batuモード -->
+    <div v-if="md==='maru_batu'">
+      <progress :value="ooQAMC" :max="ex1Dat.length" class="progress-bar"></progress>
+      <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
+        <div v-if="dv[3] === false">
+          <h2>{{ dv[0] }} = {{ dv[2][0] }}</h2>
+          <p v-if="mbRslt!==''">{{ mbRslt }}</p>
+          <button
+            @click="chMaBa(dv,dv[2][0],'maru')"
+            :class="flInco==='maru'||flInco===null?'flIc':''"
+          >
+            ⭕️
+          </button>
+          <button
+            @click="chMaBa(dv,dv[2][1],'batu')"
+            :class="flInco==='batu'||flInco===null?'flIc':''"
+          >
+            ❎
+          </button>
+        </div>
+      </template>
+    </div>
+
+    <!-- black_paintモード -->
+    <div v-if="md==='black_paint'" class="blPt">
+      <progress
+        :value="ooQAMC"
+        :max="ex1Dat[ooQAMC].length"
+        class="progress-bar"
+      ></progress>
+      <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
+        <div>{{ dv[0] }}</div>
+        <div :class="dv[4] ? 'black-paint' : ''" @click="chPaRw">
+          {{ dv[1] }}
+        </div>
+        <div v-if="paRslt!==''">{{ paRslt }}</div>
+      </template>
+    </div>
+
+    <!-- slideモード -->
+    <div v-if="md==='slide'">
+      <progress :value="curIdx" :max="sldes.length" class="progress-bar"></progress>
+      <div>
+        <div v-if="sldes[curIdx]?.q" @click="nxSlid">{{ sldes[curIdx].q }}</div>
+        <div v-else-if="sldes[curIdx]?.a" @click="nxSlid">
+          {{ sldes[curIdx].a }}
+        </div>
+      </div>
+      <button @click="frSlid">最初へ</button>
+      <button @click="prSlid">前へ</button>
+      <button @click="nxSlid">次へ</button>
+      <div v-if="!auSlMd">
+        <button @click="auSlid">auto slide</button>
+        <input type="number" v-model="tmIntv" min="0.1" step="0.1" />秒
+      </div>
+      <div v-else>
+        <button @click="stAuSl">stop auto slide</button>
+      </div>
+    </div>
+
+    <!-- qrモード -->
+    <div v-if="md==='qr'">
+      <button @click="shQr">show_qr</button>
+      <div ref="qrcode"></div>
     </div>
   </div>
 
+  <!-- Bottom Navigation (Tab Bar) -->
+  <div class="bottom-nav">
+    <button :class="{ active: md==='choose' }" @click="chMode('choose')">
+      <span class="material-symbols-outlined">list</span>
+      <span>選択</span>
+    </button>
+
+    <button :class="{ active: md==='maru_batu' }" @click="chMode('maru_batu')">
+      <span class="material-symbols-outlined">help</span>
+      <span>⭕️❎</span>
+    </button>
+
+    <button :class="{ active: md==='black_paint' }" @click="chMode('black_paint')">
+      <span class="material-symbols-outlined">format_color_fill</span>
+      <span>黒塗り</span>
+    </button>
+
+    <button :class="{ active: md==='slide' }" @click="chMode('slide')">
+      <span class="material-symbols-outlined">slideshow</span>
+      <span>スライド</span>
+    </button>
+
+    <button :class="{ active: md==='qr' }" @click="chMode('qr')">
+      <span class="material-symbols-outlined">qr_code_scanner</span>
+      <span>QR</span>
+    </button>
+  </div>
+
   <script>
-    const { createApp, ref, watch, onMounted } = Vue;
-
-    function toAry(i) {
-      return JSON.parse(JSON.stringify(i));
-    }
-
-    function truncate_text(text, length = 20) {
-      return text.length > length ? text.slice(0, length) + "..." : text;
-    }
-
+    const { createApp } = Vue;
+  
     const app = createApp({
-      setup() {
-        const trTeLn = ref(20);
-        const usWDat = ref([]);
-        const usrNam = ref("user1");
-        const shUsr = ref("");
-        const shTag = ref("");
-        const shOrBy = ref("DESC");
-        const enpnt = ref("https://cotton-concrete-catsup.glitch.me");
-        const wbDat = ref([]);
-        const paRslt = ref("");
-        const mbRslt = ref("");
-        const flInco = ref("");
-        const ooQAMD = ref(true);
-        const ooQAMC = ref(0);
-        const sideOpen = ref(false);
-        const sldes = ref([]);
-        const curIdx = ref(0);
-        const auSlMd = ref(false);
-        const tmIntv = ref(0.5);
-        const md = ref("choose");
-
-        const dtA = ref(`こんにちは
-やあ
-いい
-はい
-犬
-猫
-食事
-眠り`);
-        const dtB = ref(`hello
-hi
-good
-yes
-dog
-cat
-food
-sleep`);
-        const ex1Dat = ref([
-          ["こんにちは", "hello", ["food", "hello"], false, true, ""]
-        ]);
-
-        // Firebase Auth関連
-        const user = ref(null);
-
-        const all_links = ref([]);
-        const user_links = ref([]);
-        const mainContent = ref(null);
-        const accordionOpen = ref({
-          allLinks: true,
-          userLinks: true
-        });
-
-        watch(usrNam, () => gtUsWD());
-        watch([shUsr, shTag, shOrBy], () => ftRdAl());
-
-        onMounted(async () => {
-          ex1();
-          await ftRdAl();
-        });
-
-        const set_data = (data_json_str) => {
+      data() {
+        return {
+          uid: null,
+          username: '',
+          password: '',
+          login_result: '',
+          logged_in: false,
+  
+          trTeLn: 20,
+          usWDat: [],
+          usrNam: "user1",
+          shUsr: "",
+          shTag: "",
+          shOrBy: "DESC",
+          enpnt: "https://cotton-concrete-catsup.glitch.me",
+          wbDat: [],
+          paRslt: "",
+          mbRslt: "",
+          flInco: "",
+          ooQAMD: true,
+          ooQAMC: 0,
+          sideOpen: false,
+          sldes: [],
+          curIdx: 0,
+          auSlMd: false,
+          tmIntv: 0.5,
+          md: "choose",
+  
+          dtA: `こんにちは
+  やあ
+  いい
+  はい
+  犬
+  猫
+  食事
+  眠り`,
+          dtB: `hello
+  hi
+  good
+  yes
+  dog
+  cat
+  food
+  sleep`,
+          ex1Dat: [
+            ["こんにちは", "hello", ["food", "hello"], false, true, ""]
+          ],
+  
+          user: null,
+          all_links: [],
+          user_links: [],
+          mainContent: null,
+          accordionOpen: {
+            allLinks: true,
+            userLinks: true
+          }
+        };
+      },
+      watch: {
+  usrNam() {
+    this.gtUsWD();
+  },
+  shUsr() {
+    this.ftRdAl();
+  },
+  shTag() {
+    this.ftRdAl();
+  },
+  shOrBy() {
+    this.ftRdAl();
+  }
+},
+      mounted() {
+        this.initApp();
+      },
+      methods: {
+        initApp() {
+          this.fetch_existing_user().catch(() => {}).finally(() => {
+            this.fetch_user_data();
+          });
+  
+          if (!this.uid) {
+            firebase.auth().onAuthStateChanged(async user => {
+              if (user) {
+                this.user = user;
+                this.uid = user.uid;
+                this.logged_in = true;
+                try {
+                  await this.fetch_existing_user();
+                } catch (error) {
+                  console.error('Error fetching existing user:', error);
+                }
+                await this.fetch_user_data();
+              }
+            });
+          }
+  
+          this.ex1();
+          this.ftRdAl();
+        },
+  
+        toAry(i) {
+          return JSON.parse(JSON.stringify(i));
+        },
+  
+        truncate_text(text, length = 20) {
+          return text.length > length ? text.slice(0, length) + "..." : text;
+        },
+  
+        async fetch_existing_user() {
+          if (!this.uid) {
+            throw new Error('ログインしていません');
+          }
+          const response = await fetch(`${this.enpnt}/existing_user`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ uid: this.uid })
+          });
+  
+          if (!response.ok) {
+            throw new Error(`Failed to fetch user: ${response.status} ${response.statusText}`);
+          }
+  
+          const result = await response.json();
+          this.username = result.message.id;
+          this.password = result.message.password;
+        },
+  
+        async fetch_user_data() {
+          try {
+            const response = await fetch(`${this.enpnt}/read_all`);
+            if (!response.ok) {
+              throw new Error(`Failed to fetch user data: ${response.status} ${response.statusText}`);
+            }
+            const result = await response.json();
+            this.all_links = result.message;
+            if (this.logged_in && this.username) {
+              this.user_links = this.all_links.filter(link => link.username === this.username);
+            }
+          } catch (error) {
+            console.error('Error fetching user data:', error);
+          }
+        },
+  
+        set_data(data_json_str) {
           try {
             const data = JSON.parse(data_json_str);
-          dtA.value = data.data1;
-          dtB.value = data.data2;
-          ex1();
-          sideOpen.value = false;
-          
+            this.dtA = data.data1;
+            this.dtB = data.data2;
+            this.ex1();
+            this.sideOpen = false;
           } catch (error) {
             console.error(error);
           }
-        };
-
-        const toggleDrawer = () => {
-          sideOpen.value = !sideOpen.value;
-        };
-
-        const toggleAccordion = section => {
-          accordionOpen.value[section] = !accordionOpen.value[section];
-        };
-
-        const trText = t =>
-          t.length > trTeLn.value ? t.slice(0, trTeLn.value) + "..." : t;
-
-        const stDaWD = i => {
+        },
+  
+        toggleDrawer() {
+          this.sideOpen = !this.sideOpen;
+        },
+  
+        toggleAccordion(section) {
+          this.accordionOpen[section] = !this.accordionOpen[section];
+        },
+  
+        trText(t) {
+          return t.length > this.trTeLn ? t.slice(0, this.trTeLn) + "..." : t;
+        },
+  
+        stDaWD(i) {
           if (confirm("Really??")) {
-            const x = JSON.parse(usWDat.value[i].data_json_str);
-            dtA.value = x.data1;
-            dtB.value = x.data2;
-            ex1();
-            sideOpen.value = false;
+            const x = JSON.parse(this.usWDat[i].data_json_str);
+            this.dtA = x.data1;
+            this.dtB = x.data2;
+            this.ex1();
+            this.sideOpen = false;
           }
-        };
-
-        const gtUsWD = () => {
-          if (!wbDat.value.message) return;
-          usWDat.value = toAry(wbDat.value.message).filter(
-            v => v.username === usrNam.value
+        },
+  
+        gtUsWD() {
+          if (!this.wbDat.message) return;
+          this.usWDat = this.toAry(this.wbDat.message).filter(
+            v => v.username === this.usrNam
           );
-        };
-
-        const ftRdAl = async () => {
+        },
+  
+        async ftRdAl() {
           try {
-            const u = new URL(enpnt.value + "/read_all");
+            const u = new URL(this.enpnt + "/read_all");
             const r = await fetch(u, {
               method: "GET",
               headers: { "Content-Type": "application/json" }
             });
             const data = await r.json();
-            wbDat.value = data;
-            all_links.value = data.message;
-            user_links.value = data.message.filter(link => link.username === usrNam.value);
-            gtUsWD();
+            this.wbDat = data;
+            this.all_links = data.message;
+            this.user_links = data.message.filter(link => link.username === this.usrNam);
+            this.gtUsWD();
           } catch (e) {
-            ooQAMC.value = 0;
-            ex1Dat.value = [
+            this.ooQAMC = 0;
+            this.ex1Dat = [
               ["こんにちは", "hello(or any error)", ["food", "hello"], false, true, ""]
             ];
-            ex1();
+            this.ex1();
           }
-        };
+        },
+  
+        chMode(m) {
+          this.ooQAMC = 0;
+          this.md = m;
+          this.ex1();
+        },
 
-        const chMode = m => {
-          ooQAMC.value = 0;
-          md.value = m;
-          ex1();
-        };
-
-        const ex1 = p => {
-          ooQAMC.value = 0;
-          let A = dtA.value.split("\n");
-          let B = dtB.value.split("\n");
-
+        shuffle(array) {
+          let currentIndex = array.length, randomIndex;
+          while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]; // ES6の配列の要素の入れ替え
+          }
+          return array;
+        },
+        
+        ex1(p) {
+          this.ooQAMC = 0;
+          let A = this.dtA.split("\n");
+          let B = this.dtB.split("\n");
+  
           if (p === "swap") {
             [A, B] = [B, A];
           }
-
+  
           const f = (d0, d1) =>
             d0.map((v, i) => [
               v,
               d1[i],
-              shuffle([
+              this.shuffle([
                 d1[i],
-                shuffle(d1.filter((_, x) => x !== i))[0]
+                this.shuffle(d1.filter((_, x) => x !== i))[0]
               ]),
               false,
               true,
               ""
             ]);
-
+  
           let newData = f(A, B);
           if (p === "shuffle") {
-            newData = shuffle(toAry(newData));
+            newData = this.shuffle(this.toAry(newData));
           }
-          ex1Dat.value = newData;
-          sldes.value = mkSlid(newData);
-        };
-
-        const chQACh = (correct, ans) => {
-          const d = ex1Dat.value[ooQAMC.value];
+          this.ex1Dat = newData;
+          this.sldes = this.mkSlid(newData);
+        },
+  
+        chQACh(correct, ans) {
+          const d = this.ex1Dat[this.ooQAMC];
           d[5] = ans === correct ? "⭕️" : "❎";
-
+  
           if (d[5] === "⭕️") {
             setTimeout(() => {
-              ooQAMC.value++;
-              if (ooQAMC.value === ex1Dat.value.length) {
-                ooQAMC.value = 0;
-                ex1Dat.value.forEach(x => (x[5] = ""));
+              this.ooQAMC++;
+              if (this.ooQAMC === this.ex1Dat.length) {
+                this.ooQAMC = 0;
+                this.ex1Dat.forEach(x => (x[5] = ""));
               }
-            }, tmIntv.value * 1000);
+            }, this.tmIntv * 1000);
           }
-        };
-
-        const chMaBa = async (v, r, m) => {
+        },
+  
+        chMaBa(v, r, m) {
           const fn = () => {
-            ooQAMC.value++;
-            if (ooQAMC.value === ex1Dat.value.length) {
-              ooQAMC.value = 0;
-              ex1Dat.value.forEach(x => (x[3] = false));
+            this.ooQAMC++;
+            if (this.ooQAMC === this.ex1Dat.length) {
+              this.ooQAMC = 0;
+              this.ex1Dat.forEach(x => (x[3] = false));
             }
           };
-
+  
           const cmpl = async () => {
-            mbRslt.value = "全問完了";
-            await new Promise(rs => setTimeout(rs, tmIntv.value * 1000));
-            mbRslt.value = "";
+            this.mbRslt = "全問完了";
+            await new Promise(rs => setTimeout(rs, this.tmIntv * 1000));
+            this.mbRslt = "";
           };
-
+  
           if (v[1] === r) {
             v[3] = true;
             fn();
-            flInco.value = "";
+            this.flInco = "";
           } else {
             v[3] = false;
-            flInco.value = m === "maru" ? "batu" : "maru";
+            this.flInco = m === "maru" ? "batu" : "maru";
           }
-
-          if (ooQAMC.value === ex1Dat.value.length - 1) {
-            await cmpl();
+  
+          if (this.ooQAMC === this.ex1Dat.length - 1) {
+            cmpl();
           }
-        };
-
-        const mkSlid = a => a.flatMap(v => [{ q: v[0] }, { a: v[1] }]);
-
-        const chPaRw = async () => {
-          const d = ex1Dat.value[ooQAMC.value];
+        },
+  
+        mkSlid(a) {
+          return a.flatMap(v => [{ q: v[0] }, { a: v[1] }]);
+        },
+  
+        async chPaRw() {
+          const d = this.ex1Dat[this.ooQAMC];
           const rs = () => {
-            ex1Dat.value.forEach(x => (x[4] = true));
-            ooQAMC.value = 0;
+            this.ex1Dat.forEach(x => (x[4] = true));
+            this.ooQAMC = 0;
           };
-
+  
           const cmpl = async () => {
-            paRslt.value = "全問完了";
-            await new Promise(r => setTimeout(r, tmIntv.value * 1000));
-            paRslt.value = "";
+            this.paRslt = "全問完了";
+            await new Promise(r => setTimeout(r, this.tmIntv * 1000));
+            this.paRslt = "";
             rs();
           };
-
+  
           if (d) {
             d[4] = false;
-            await new Promise(r => setTimeout(r, tmIntv.value * 1000));
-            ooQAMC.value++;
+            await new Promise(r => setTimeout(r, this.tmIntv * 1000));
+            this.ooQAMC++;
           } else {
             rs();
           }
-
-          if (ex1Dat.value[ooQAMC.value]?.length - 1 === ooQAMC.value) {
-            await cmpl();
+  
+          if (this.ex1Dat[this.ooQAMC]?.length - 1 === this.ooQAMC) {
+            cmpl();
           }
-        };
-
-        const frSlid = () => (curIdx.value = 0);
-        const prSlid = () =>
-          curIdx.value > 0 ? (curIdx.value -= 1) : (curIdx.value = sldes.value.length - 1);
-        const nxSlid = () =>
-          curIdx.value < sldes.value.length - 1 ? (curIdx.value += 1) : (curIdx.value = 0);
-
-        const auSlid = () => {
-          auSlMd.value = true;
-          setInterval(() => nxSlid(), tmIntv.value * 1000);
-        };
-
-        const stAuSl = () => {
-          auSlMd.value = false;
+        },
+  
+        frSlid() {
+          this.curIdx = 0;
+        },
+  
+        prSlid() {
+          if (this.curIdx > 0) {
+            this.curIdx -= 1;
+          } else {
+            this.curIdx = this.sldes.length - 1;
+          }
+        },
+  
+        nxSlid() {
+          if (this.curIdx < this.sldes.length - 1) {
+            this.curIdx += 1;
+          } else {
+            this.curIdx = 0;
+          }
+        },
+  
+        auSlid() {
+          this.auSlMd = true;
+          setInterval(() => this.nxSlid(), this.tmIntv * 1000);
+        },
+  
+        stAuSl() {
+          this.auSlMd = false;
           for (let i = 1; i < 99999; i++) {
             clearInterval(i);
           }
-        };
-
-        const rdShre = () => {
+        },
+  
+        rdShre() {
           if (confirm("Leave this page?")) {
             location.href = "./share.html";
           }
-        };
-
-        const shQr = () => {
+        },
+  
+        shQr() {
           const e = document.querySelector('[ref="qrcode"]');
-          if (e)
+          if (e) {
             new QRCode(e, {
               text: "https://taroyanaka.github.io/q_a/b_p.html",
               width: 256,
@@ -387,118 +595,39 @@ sleep`);
               colorLight: "#fff",
               correctLevel: QRCode.CorrectLevel.H
             });
-        };
-
-        const setMainContent = link => {
-          mainContent.value = JSON.parse(link.data_json_str);
-        };
-
-        //=============================
-        // 2. Googleログイン関数
-        //=============================
-        const googleSignIn = async () => {
-          try {
-            const result = await firebase.auth().signInWithPopup(googleProvider);
-            const currentUser = result.user;
-            if (!currentUser) {
-              throw new Error("Firebaseログインに失敗し、ユーザーが取得できませんでした。");
-            }
-            user.value = currentUser;
-            console.log("ログイン完了:", currentUser.uid);
-
-            // p2_login のリクエスト
-            const p2LoginUrl = `${enpnt.value}/p2_login?uid=${encodeURIComponent(
-              currentUser.uid
-            )}`;
-            const response = await fetch(p2LoginUrl, { method: "GET" });
-            if (!response.ok) {
-              throw new Error(`p2_login error: ${response.status} ${response.statusText}`);
-            }
-            const data = await response.json();
-            console.log("p2_login =>", data);
-            alert(`p2_login成功: id=${data.message.id}, password=${data.message.password}`);
-          } catch (err) {
-            console.error("ログイン or p2_login失敗:", err);
-            alert(`ログイン失敗: ${err.message}`);
           }
-        };
-
-        //=============================
-        // 3. Googleログアウト関数
-        //=============================
-        const googleSignOut = async () => {
+        },
+  
+        setMainContent(link) {
+          this.mainContent = JSON.parse(link.data_json_str);
+        },
+  
+        async googleSignIn() {
+          try {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            await firebase.auth().signInWithPopup(provider);
+          } catch (error) {
+            console.error('Error signing in:', error);
+            this.login_result = `Error: ${error.message}`;
+          }
+        },
+  
+        async googleSignOut() {
           try {
             await firebase.auth().signOut();
-            user.value = null;
-            console.log("ログアウトしました");
-            alert("ログアウト完了");
-          } catch (err) {
-            console.error("ログアウト失敗:", err);
-            alert(`ログアウト失敗: ${err.message}`);
+            this.logged_in = false;
+            this.login_result = 'Logged out';
+          } catch (error) {
+            console.error('Error signing out:', error);
+            this.login_result = `Error: ${error.message}`;
           }
-        };
-
-        return {
-          // state
-          trTeLn,
-          usWDat,
-          usrNam,
-          shUsr,
-          shTag,
-          shOrBy,
-          enpnt,
-          wbDat,
-          paRslt,
-          mbRslt,
-          flInco,
-          ooQAMD,
-          ooQAMC,
-          sideOpen,
-          sldes,
-          curIdx,
-          auSlMd,
-          tmIntv,
-          md,
-          dtA,
-          dtB,
-          ex1Dat,
-          user,
-          all_links,
-          user_links,
-          mainContent,
-          accordionOpen,
-
-          // methods
-          toggleDrawer,
-          trText,
-          stDaWD,
-          gtUsWD,
-          ftRdAl,
-          chMode,
-          ex1,
-          chQACh,
-          chMaBa,
-          mkSlid,
-          chPaRw,
-          frSlid,
-          prSlid,
-          nxSlid,
-          auSlid,
-          stAuSl,
-          rdShre,
-          shQr,
-          googleSignIn,
-          googleSignOut,
-          truncate_text,
-          setMainContent,
-          set_data,
-          toggleAccordion
-        };
+        }
       }
     });
-
+  
     window.myApp = app.mount("body");
   </script>
+  
 </body>
 </html>
 

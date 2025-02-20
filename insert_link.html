@@ -20,70 +20,71 @@
     <div class="top-button">
         <button @click="replace_url_to_localhost">Replace URL to Localhost</button>
     </div>
-    <!-- toggle_sidebar -->
-    <button @click="toggleSidebar" class="menu-button">
-        ☰ Menu
-    </button>
-
 </header>
 
-<div class="sidebar" :class="{ open: isSidebarOpen }">
-    <button @click="toggleSidebar" class="close-button">×</button>
+<div class="sidebar" :class="{ open: is_sidebar_open }" @click="toggle_sidebar">
+    <button @click.stop="toggle_sidebar" class="close-button">×</button>
     <h2>Menu</h2>
-    <div class="menu-buttons">
-        <button class="tablinks" @click="openCity('all_data')">All Data</button>
-        <button class="tablinks" @click="openCity('your_data')">Your Data</button>
-        <button class="tablinks" @click="openCity('login')">Login</button>
-        <button class="tablinks" @click="openCity('insert')">Insert</button>
+    <div class="menu-buttons" @click.stop>
+        <button class="tablinks" @click="open_city('all_data')">All Data</button>
+        <button class="tablinks" @click="open_city('your_data')">Your Data</button>
+        <button class="tablinks" @click="open_city('login')">Login</button>
+        <button class="tablinks" @click="open_city('insert')">Insert</button>
     </div>
 </div>
 
-<div class="each_data content">
-    <div v-show="currentTab === 'all_data'" class="all_data">
+<div class="each_data content" @click="handle_outside_click">
+    <div v-show="current_tab === 'all_data'" class="all_data">
         <h3>All Links</h3>
         <ul>
-            <li v-for="link in allLinks" :key="link.id">
-                {{ truncateText(JSON.parse(link.data_json_str).data1) }}<br>
-                {{ truncateText(JSON.parse(link.data_json_str).data2) }}<br>
+            <li v-for="link in all_links" :key="link.id">
+                {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
+                {{ truncate_text(JSON.parse(link.data_json_str).data2) }}<br>
                 <span class="link-id">ID: {{ link.id }}</span>
-                <button v-if="link.username !== username" @click="clone_link(link.id)">Clone</button>
+                <button v-if="logged_in && link.username !== username" @click="clone_link(link.id)">Clone</button>
             </li>
         </ul>
     </div>
 
-    <div v-show="currentTab === 'your_data'" class="your_data">
+    <div v-show="current_tab === 'your_data'" class="your_data">
         <h3>Your Data</h3>
-        <ul>
-            <li v-for="link in userLinks" :key="link.id">
-                {{ truncateText(JSON.parse(link.data_json_str).data1) }}<br>
-                {{ truncateText(JSON.parse(link.data_json_str).data2) }}<br>
+        <div v-if="!logged_in">
+            <input type="button" @click="google_sign_in" value="Google Login">
+        </div>
+        <ul v-else>
+            <li v-for="link in user_links" :key="link.id">
+                {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
+                {{ truncate_text(JSON.parse(link.data_json_str).data2) }}<br>
                 <span class="link-id">ID: {{ link.id }}</span>
                 <button @click="delete_link(link.id)">Delete</button>
             </li>
         </ul>
     </div>
 
-    <div v-show="currentTab === 'login'" class="login">
+    <div v-show="current_tab === 'login'" class="login">
         <h1>{{ username || 'Your Username' }}</h1>
-        <h2>{{ loginResult }}</h2>
-        <input type="button" v-if="!loggedIn" @click="google_sign_in" value="Google Login">
-        <input type="button" v-if="loggedIn" @click="google_sign_out" value="Logout">
+        <h2>{{ login_result }}</h2>
+        <input type="button" v-if="!logged_in" @click="google_sign_in" value="Google Login">
+        <input type="button" v-if="logged_in" @click="google_sign_out" value="Logout">
     </div>
 
-    <div v-show="currentTab === 'insert'" class="insert">
-        <form @submit.prevent="validate_and_submit" v-if="loggedIn">
+    <div v-show="current_tab === 'insert'" class="insert">
+        <div v-if="!logged_in">
+            <input type="button" @click="google_sign_in" value="Google Login">
+        </div>
+        <form @submit.prevent="validate_and_submit" v-else>
             <div class="form-row">
                 <label class="data1">
-                    <textarea v-model="data1" placeholder="Enter data1 (e.g., 縄文時代\n弥生時代)" required maxlength="1000"></textarea>
+                    <textarea v-model="data1" @input="validate_input" placeholder="Enter data1 (e.g., 縄文時代\n弥生時代)" required maxlength="1000"></textarea>
                 </label>
                 <label class="data2">
-                    <textarea v-model="data2" placeholder="Enter data2 (e.g., 日本の先史時代。\n日本の稲作農耕文化が発展した時代。)" required maxlength="1000"></textarea>
+                    <textarea v-model="data2" @input="validate_input" placeholder="Enter data2 (e.g., 日本の先史時代。\n日本の稲作農耕文化が発展した時代。)" required maxlength="1000"></textarea>
                 </label>
             </div>
-            <button type="submit" class="submit">Submit</button>
+            <button type="submit" class="submit" v-if="!has_errors">Submit</button>
             <div class="message">
-                <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
-                <div v-if="successMessage" class="success">{{ successMessage }}</div>
+                <div v-if="error_message" class="error">{{ error_message }}</div>
+                <div v-if="success_message" class="success">{{ success_message }}</div>
             </div>
         </form>
     </div>
@@ -92,7 +93,7 @@
 
 <script>
 // Firebase の設定
-const firebaseConfig = {
+const firebase_config = {
     apiKey: "AIzaSyBcOlIDP2KWbJuKM0WeMHNp-WvjTVfLt9Y",
     authDomain: "p2auth-ea50a.firebaseapp.com",
     projectId: "p2auth-ea50a",
@@ -102,66 +103,80 @@ const firebaseConfig = {
 };
 
 // Firebase 初期化
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebase_config);
 
 const app = Vue.createApp({
     data() {
         return {
-            isSidebarOpen: false,
+            is_sidebar_open: false,
             username: '',
             uid: null,
-            loggedIn: false,
-            loginResult: '',
+            logged_in: false,
+            login_result: '',
             data1: '',
             data2: '',
-            errorMessage: '',
-            successMessage: '',
+            error_message: '',
+            success_message: '',
             user: null,
             password: '',
             enpnt: 'https://cotton-concrete-catsup.glitch.me',
-            userLinks: [],
-            allLinks: [],
-            currentTab: 'all_data' // 現在のタブを管理する変数
+            user_links: [],
+            all_links: [],
+            current_tab: 'all_data', // 現在のタブを管理する変数
+            has_errors: true,
         };
     },
     async mounted() {
-        await this.fetch_existing_user();
+        try {
+            await this.fetch_existing_user();
+        } catch (error) {
+            console.error('Error fetching existing user:', error);
+        } finally {
+            await this.fetch_user_data();
+        }
+
         if (!this.uid) {
             firebase.auth().onAuthStateChanged(async user => {
                 if (user) {
                     this.user = user;
                     this.uid = user.uid;
-                    this.loggedIn = true;
-                    await this.fetch_existing_user();
+                    this.logged_in = true;
+                    try {
+                        await this.fetch_existing_user();
+                    } catch (error) {
+                        console.error('Error fetching existing user:', error);
+                    }
                     await this.fetch_user_data();
                 }
             });
         }
+
+        // メニューバー以外の部分がクリックされた場合にメニューバーを閉じる
+        document.addEventListener('click', this.handle_outside_click);
+    },
+    beforeUnmount() {
+        document.removeEventListener('click', this.handle_outside_click);
     },
     methods: {
         async fetch_existing_user() {
-            try {
-                if (!this.uid) {
-                    throw new Error('ログインしていません');
-                }
-                const response = await fetch(`${this.enpnt}/existing_user`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ uid: this.uid })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch user: ${response.status} ${response.statusText}`);
-                }
-
-                const result = await response.json();
-                this.username = result.message.id;
-                this.password = result.message.password;
-            } catch (error) {
-                console.error('Error fetching existing user:', error);
+            if (!this.uid) {
+                throw new Error('ログインしていません');
             }
+            const response = await fetch(`${this.enpnt}/existing_user`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ uid: this.uid })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch user: ${response.status} ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            this.username = result.message.id;
+            this.password = result.message.password;
         },
         async fetch_user_data() {
             try {
@@ -170,9 +185,9 @@ const app = Vue.createApp({
                     throw new Error(`Failed to fetch user data: ${response.status} ${response.statusText}`);
                 }
                 const result = await response.json();
-                this.allLinks = result.message;
-                if (this.loggedIn && this.username) {
-                    this.userLinks = this.allLinks.filter(link => link.username === this.username);
+                this.all_links = result.message;
+                if (this.logged_in && this.username) {
+                    this.user_links = this.all_links.filter(link => link.username === this.username);
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -210,23 +225,33 @@ const app = Vue.createApp({
                 'f_i_b',
                 'i_t_n',
             ];
-            const is_include_DATA_TYPE = (target_data_type_str) => DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
+            const is_include_data_type = (target_data_type_str) => DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
 
             switch (true) {
                 case data_json_str === undefined: return 'dataが空です';
                 case data_json_str.length > 10000: return 'dataが長すぎます';
-                case !is_include_DATA_TYPE(data_type): return '許可されていないdata_typeです';
+                case !is_include_data_type(data_type): return '許可されていないdata_typeです';
                 default: return 'OK';
             }
         },
+        validate_input() {
+            const errors = validate_data(this.data1, this.data2);
+            this.error_message = errors.join(', ');
+            this.has_errors = errors.length > 0;
+        },
         async validate_and_submit() {
-            this.errorMessage = '';
-            this.successMessage = '';
+            this.validate_input();
+            if (this.has_errors) {
+                return;
+            }
 
-            const dataJsonStr = JSON.stringify({ data1: this.data1, data2: this.data2 });
-            const validationError = this.error_check_insert_data('q_a', dataJsonStr);
-            if (validationError !== 'OK') {
-                this.errorMessage = validationError;
+            this.error_message = '';
+            this.success_message = '';
+
+            const data_json_str = JSON.stringify({ data1: this.data1, data2: this.data2 });
+            const validation_error = this.error_check_insert_data('q_a', data_json_str);
+            if (validation_error !== 'OK') {
+                this.error_message = validation_error;
                 return;
             }
 
@@ -238,7 +263,7 @@ const app = Vue.createApp({
                     },
                     body: JSON.stringify({
                         data_type: 'q_a',
-                        data_json_str: dataJsonStr,
+                        data_json_str: data_json_str,
                         link: '',
                         tags: [],
                         likes: [],
@@ -251,16 +276,16 @@ const app = Vue.createApp({
                 const result = await res.json();
 
                 if (res.ok) {
-                    this.successMessage = `Success: ${JSON.stringify(result)}`;
+                    this.success_message = `Success: ${JSON.stringify(result)}`;
                     await this.fetch_user_data();
                     this.data1 = '';
                     this.data2 = '';
                 } else {
-                    this.errorMessage = `Error: ${result.message}`;
+                    this.error_message = `Error: ${result.message}`;
                 }
             } catch (error) {
                 console.error('Error:', error);
-                this.errorMessage = `Error: ${error.message}`;
+                this.error_message = `Error: ${error.message}`;
             }
         },
         async clone_link(id) {
@@ -282,16 +307,16 @@ const app = Vue.createApp({
                 }
 
                 const result = await response.json();
-                this.successMessage = `Clone successful: ${result.message}`;
+                this.success_message = `Clone successful: ${result.message}`;
                 await this.fetch_user_data();
             } catch (error) {
                 console.error('Error cloning link:', error);
-                this.errorMessage = `Error: ${error.message}`;
+                this.error_message = `Error: ${error.message}`;
             }
         },
-        openCity(cityName) {
-            this.currentTab = cityName;
-            const element = document.querySelector(`.${cityName}`);
+        open_city(city_name) {
+            this.current_tab = city_name;
+            const element = document.querySelector(`.${city_name}`);
             if (element) {
                 element.scrollIntoView({ behavior: 'smooth' });
             }
@@ -302,27 +327,97 @@ const app = Vue.createApp({
                 await firebase.auth().signInWithPopup(provider);
             } catch (error) {
                 console.error('Error signing in:', error);
-                this.loginResult = `Error: ${error.message}`;
+                this.login_result = `Error: ${error.message}`;
             }
         },
         async google_sign_out() {
             try {
                 await firebase.auth().signOut();
-                this.loggedIn = false;
-                this.loginResult = 'Logged out';
+                this.logged_in = false;
+                this.login_result = 'Logged out';
             } catch (error) {
                 console.error('Error signing out:', error);
-                this.loginResult = `Error: ${error.message}`;
+                this.login_result = `Error: ${error.message}`;
             }
         },
-        toggleSidebar() {
-            this.isSidebarOpen = !this.isSidebarOpen;
+        toggle_sidebar() {
+            this.is_sidebar_open = !this.is_sidebar_open;
         },
-        truncateText(text) {
+        handle_outside_click(event) {
+            const sidebar = document.querySelector('.sidebar');
+            if (this.is_sidebar_open && !sidebar.contains(event.target)) {
+                this.is_sidebar_open = false;
+            }
+        },
+        truncate_text(text) {
             return text.length > 30 ? text.substring(0, 30) + '...' : text;
         },
     },
+    created() {
+        document.addEventListener('click', this.handle_outside_click);
+    },
+    beforeUnmount() {
+        document.removeEventListener('click', this.handle_outside_click);
+    }
 }).mount('#app');
+
+function validate_data(data1, data2) {
+    // エラーリスト
+    const errors = [];
+
+    // 引数の存在チェック
+    if (typeof data1 !== 'string' || typeof data2 !== 'string') {
+        errors.push('data1とdata2の両方が必要です。');
+        return errors;
+    }
+
+    // 未入力チェック
+    if (data1.trim() === '') {
+        errors.push('data1を入力してください。');
+    }
+    if (data2.trim() === '') {
+        errors.push('data2を入力してください。');
+    }
+
+    // 総文字数チェック (改行を含めて2000文字以内)
+    const total_length = data1.length + data2.length;
+    if (total_length > 2000) {
+        errors.push('data1とdata2の合計文字数が2000文字を超えています。');
+    }
+
+    // 改行で分割して行単位のチェック
+    const lines1 = data1.split('\n');
+    const lines2 = data2.split('\n');
+
+    // 行数のチェック
+    if (lines1.length !== lines2.length) {
+        errors.push('data1とdata2の行数が一致していません。');
+    }
+
+    // 各行の検証
+    for (let i = 0; i < lines1.length; i++) {
+        if (lines1[i].trim() === '') {
+            errors.push(`data1の行 ${i + 1} が空白行です。`);
+        }
+        if (lines2[i].trim() === '') {
+            errors.push(`data2の行 ${i + 1} が空白行です。`);
+        }
+        if (lines1[i] !== lines1[i].trim()) {
+            errors.push(`data1の行 ${i + 1} の先頭または末尾に空白が含まれています。`);
+        }
+        if (lines2[i] !== lines2[i].trim()) {
+            errors.push(`data2の行 ${i + 1} の先頭または末尾に空白が含まれています。`);
+        }
+        if (lines1[i].length < 1 || lines1[i].length > 100) {
+            errors.push(`data1の行 ${i + 1} は1文字以上100文字以内である必要があります。`);
+        }
+        if (lines2[i].length < 1 || lines2[i].length > 100) {
+            errors.push(`data2の行 ${i + 1} は1文字以上100文字以内である必要があります。`);
+        }
+    }
+
+    return errors;
+}
 </script>
 </body>
 </html>

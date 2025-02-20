@@ -19,6 +19,7 @@
 <header class="header">
     <div class="top-button">
         <button @click="replace_url_to_localhost">Replace URL to Localhost</button>
+        <a href="./b_p.html" class="home-button">Home</a>
     </div>
 </header>
 
@@ -36,8 +37,21 @@
 <div class="each_data content" @click="handle_outside_click">
     <div v-show="current_tab === 'all_data'" class="all_data">
         <h3>All Links</h3>
+        <div class="filters">
+            <label>Sort by:
+                <select v-model="sort_key" @change="toggle_sort_order">
+                    <option value="id">ID</option>
+                    <option value="created_at">Created At</option>
+                    <option value="data_length">Data Length</option>
+                </select>
+            </label>
+            <label>Search:
+                <input type="text" v-model="search_query" @input="filter_data">
+            </label>
+            <button @click="clear_filters">Clear Filters</button>
+        </div>
         <ul>
-            <li v-for="link in all_links" :key="link.id">
+            <li v-for="link in filtered_links" :key="link.id">
                 {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
                 {{ truncate_text(JSON.parse(link.data_json_str).data2) }}<br>
                 <span class="link-id">ID: {{ link.id }}</span>
@@ -51,14 +65,29 @@
         <div v-if="!logged_in">
             <input type="button" @click="google_sign_in" value="Google Login">
         </div>
-        <ul v-else>
-            <li v-for="link in user_links" :key="link.id">
-                {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
-                {{ truncate_text(JSON.parse(link.data_json_str).data2) }}<br>
-                <span class="link-id">ID: {{ link.id }}</span>
-                <button @click="delete_link(link.id)">Delete</button>
-            </li>
-        </ul>
+        <div v-else>
+            <div class="filters">
+                <label>Sort by:
+                    <select v-model="sort_key" @change="toggle_sort_order">
+                        <option value="id">ID</option>
+                        <option value="created_at">Created At</option>
+                        <option value="data_length">Data Length</option>
+                    </select>
+                </label>
+                <label>Search:
+                    <input type="text" v-model="search_query" @input="filter_data">
+                </label>
+                <button @click="clear_filters">Clear Filters</button>
+            </div>
+            <ul>
+                <li v-for="link in filtered_links" :key="link.id">
+                    {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
+                    {{ truncate_text(JSON.parse(link.data_json_str).data2) }}<br>
+                    <span class="link-id">ID: {{ link.id }}</span>
+                    <button @click="delete_link(link.id)">Delete</button>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div v-show="current_tab === 'login'" class="login">
@@ -124,7 +153,38 @@ const app = Vue.createApp({
             all_links: [],
             current_tab: 'all_data', // 現在のタブを管理する変数
             has_errors: true,
+            sort_key: 'id', // ソートキー
+            sort_order: 'desc', // ソート順を降順に設定
+            search_query: '', // 検索クエリ
         };
+    },
+    computed: {
+        filtered_links() {
+            let links = this.current_tab === 'all_data' ? this.all_links : this.user_links;
+
+            // 検索
+            if (this.search_query) {
+                links = links.filter(link => {
+                    const data = JSON.parse(link.data_json_str);
+                    return data.data1.includes(this.search_query) || data.data2.includes(this.search_query);
+                });
+            }
+
+            // ソート
+            links = links.sort((a, b) => {
+                let result = 0;
+                if (this.sort_key === 'id') {
+                    result = a.id - b.id;
+                } else if (this.sort_key === 'created_at') {
+                    result = new Date(a.created_at) - new Date(b.created_at);
+                } else if (this.sort_key === 'data_length') {
+                    result = JSON.parse(a.data_json_str).data1.length - JSON.parse(b.data_json_str).data1.length;
+                }
+                return this.sort_order === 'asc' ? result : -result;
+            });
+
+            return links;
+        }
     },
     async mounted() {
         try {
@@ -352,6 +412,22 @@ const app = Vue.createApp({
         truncate_text(text) {
             return text.length > 30 ? text.substring(0, 30) + '...' : text;
         },
+        sort_data() {
+            this.filtered_links; // トリガーとしてcomputedプロパティを呼び出す
+        },
+        toggle_sort_order() {
+            this.sort_order = this.sort_order === 'asc' ? 'desc' : 'desc';
+            this.sort_data();
+        },
+        filter_data() {
+            this.filtered_links; // トリガーとしてcomputedプロパティを呼び出す
+        },
+        clear_filters() {
+            this.search_query = '';
+            this.sort_key = 'id';
+            this.sort_order = 'desc'; // デフォルトを降順に設定
+            this.filter_data();
+        }
     },
     created() {
         document.addEventListener('click', this.handle_outside_click);

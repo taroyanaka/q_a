@@ -25,6 +25,10 @@
 <script src="./lib/vue@3.2.36.global.prod.js"></script>
 
 <script>
+      function to_ary(i) {
+          return JSON.parse(JSON.stringify(i));
+    };
+
     const shuffle = arr => arr.sort(() => Math.random() - 0.5);
 
 // Firebase の設定
@@ -78,10 +82,24 @@ firebase.initializeApp(firebase_config);
     <!-- Googleログアウト -->
     <button @click="googleSignOut" class="signout-button">ログアウト</button>
 
+    <div class="filters">
+      <label>Sort by:
+          <select v-model="sort_key" @change="toggle_sort_order">
+              <option value="id">ID</option>
+              <option value="created_at">Created At</option>
+              <option value="data_length">Data Length</option>
+          </select>
+      </label>
+      <label>Search:
+          <input type="text" v-model="search_query" @input="filter_data">
+      </label>
+      <button @click="clear_filters">Clear Filters</button>
+  </div>
+
     <!-- User Links -->
     <h3 @click="toggleAccordion('userLinks')">User Links</h3>
     <ul v-show="accordionOpen.userLinks">
-      <li v-for="link in user_links" :key="link.id">
+      <li v-for="link in filtered_links_for_user('user')" :key="link.id">
         {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
         {{ truncate_text(JSON.parse(link.data_json_str).data2) }}
         <button class="set-btn" @click="set_data(link.data_json_str)">Set</button>
@@ -91,7 +109,7 @@ firebase.initializeApp(firebase_config);
       <!-- All Links -->
       <h3 @click="toggleAccordion('allLinks')">All Links</h3>
       <ul v-show="accordionOpen.allLinks">
-        <li v-for="link in all_links" :key="link.id">
+        <li v-for="link in filtered_links_for_user('all')" :key="link.id">
           {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
           {{ truncate_text(JSON.parse(link.data_json_str).data2) }}
           <button class="set-btn" @click="set_data(link.data_json_str)">Set</button>
@@ -274,7 +292,10 @@ firebase.initializeApp(firebase_config);
           accordionOpen: {
             allLinks: true,
             userLinks: true
-          }
+          },
+          sort_key: 'id', // ソートキー
+            sort_order: 'desc', // ソート順を降順に設定
+            search_query: '', // 検索クエリ
         };
       },
       watch: {
@@ -291,6 +312,34 @@ firebase.initializeApp(firebase_config);
     this.ftRdAl();
   }
 },
+computed: {
+        filtered_links_for(all_or_user) {
+            let links = all_or_user === 'all' ? this.all_links : this.user_links;
+
+            // 検索
+            if (this.search_query) {
+                links = links.filter(link => {
+                    const data = JSON.parse(link.data_json_str);
+                    return data.data1.includes(this.search_query) || data.data2.includes(this.search_query);
+                });
+            }
+
+            // ソート
+            links = links.sort((a, b) => {
+                let result = 0;
+                if (this.sort_key === 'id') {
+                    result = a.id - b.id;
+                } else if (this.sort_key === 'created_at') {
+                    result = new Date(a.created_at) - new Date(b.created_at);
+                } else if (this.sort_key === 'data_length') {
+                    result = JSON.parse(a.data_json_str).data1.length - JSON.parse(b.data_json_str).data1.length;
+                }
+                return this.sort_order === 'asc' ? result : -result;
+            });
+
+            return links;
+        },
+    },
       mounted() {
         this.initApp();
       },
@@ -320,9 +369,6 @@ firebase.initializeApp(firebase_config);
           this.ftRdAl();
         },
   
-        toAry(i) {
-          return JSON.parse(JSON.stringify(i));
-        },
   
         truncate_text(text, length = 20) {
           return text.length > length ? text.slice(0, length) + "..." : text;
@@ -374,7 +420,9 @@ firebase.initializeApp(firebase_config);
             console.error(error);
           }
         },
-  
+        sort_data() {
+            this.filtered_links; // トリガーとしてcomputedプロパティを呼び出す
+        },
         toggleDrawer() {
           this.sideOpen = !this.sideOpen;
         },
@@ -621,11 +669,25 @@ firebase.initializeApp(firebase_config);
             console.error('Error signing out:', error);
             this.login_result = `Error: ${error.message}`;
           }
-        }
+        },
+
+        toggle_sort_order() {
+            this.sort_order = this.sort_order === 'asc' ? 'desc' : 'desc';
+            this.sort_data();
+        },
+        filter_data() {
+            this.filtered_links; // トリガーとしてcomputedプロパティを呼び出す
+        },
+        clear_filters() {
+            this.search_query = '';
+            this.sort_key = 'id';
+            this.sort_order = 'desc'; // デフォルトを降順に設定
+            this.filter_data();
+        },
       }
     });
-  
     window.myApp = app.mount("body");
+
   </script>
   
 </body>

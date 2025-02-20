@@ -30,7 +30,7 @@
 <div class="sidebar" :class="{ open: isSidebarOpen }">
     <button @click="toggleSidebar" class="close-button">×</button>
     <h2>Menu</h2>
-    <div>
+    <div class="menu-buttons">
         <button class="tablinks" @click="openCity('all_data')">All Data</button>
         <button class="tablinks" @click="openCity('your_data')">Your Data</button>
         <button class="tablinks" @click="openCity('login')">Login</button>
@@ -45,7 +45,7 @@
             <li v-for="link in allLinks" :key="link.id">
                 {{ truncateText(JSON.parse(link.data_json_str).data1) }}<br>
                 {{ truncateText(JSON.parse(link.data_json_str).data2) }}<br>
-                (ID: {{ link.id }})
+                <span class="link-id">ID: {{ link.id }}</span>
                 <button v-if="link.username !== username" @click="clone_link(link.id)">Clone</button>
             </li>
         </ul>
@@ -53,12 +53,11 @@
 
     <div v-show="currentTab === 'your_data'" class="your_data">
         <h3>Your Data</h3>
-        <button @click="fetch_user_data">Fetch User Data</button>
         <ul>
             <li v-for="link in userLinks" :key="link.id">
                 {{ truncateText(JSON.parse(link.data_json_str).data1) }}<br>
                 {{ truncateText(JSON.parse(link.data_json_str).data2) }}<br>
-                (ID: {{ link.id }})
+                <span class="link-id">ID: {{ link.id }}</span>
                 <button @click="delete_link(link.id)">Delete</button>
             </li>
         </ul>
@@ -73,12 +72,14 @@
 
     <div v-show="currentTab === 'insert'" class="insert">
         <form @submit.prevent="validate_and_submit" v-if="loggedIn">
-            <label class="data1">
-                <textarea v-model="data1" placeholder="Enter data1 (e.g., 縄文時代\n弥生時代)" required></textarea>
-            </label>
-            <label class="data2">
-                <textarea v-model="data2" placeholder="Enter data2 (e.g., 日本の先史時代。\n日本の稲作農耕文化が発展した時代。)" required></textarea>
-            </label>
+            <div class="form-row">
+                <label class="data1">
+                    <textarea v-model="data1" placeholder="Enter data1 (e.g., 縄文時代\n弥生時代)" required maxlength="1000"></textarea>
+                </label>
+                <label class="data2">
+                    <textarea v-model="data2" placeholder="Enter data2 (e.g., 日本の先史時代。\n日本の稲作農耕文化が発展した時代。)" required maxlength="1000"></textarea>
+                </label>
+            </div>
             <button type="submit" class="submit">Submit</button>
             <div class="message">
                 <div v-if="errorMessage" class="error">{{ errorMessage }}</div>

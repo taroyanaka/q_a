@@ -99,7 +99,7 @@ firebase.initializeApp(firebase_config);
     <!-- User Links -->
     <h3 @click="toggleAccordion('userLinks')">User Links</h3>
     <ul v-show="accordionOpen.userLinks">
-      <li v-for="link in filtered_links_for_user('user')" :key="link.id">
+      <li v-for="link in filtered_links_for('user')" :key="link.id">
         {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
         {{ truncate_text(JSON.parse(link.data_json_str).data2) }}
         <button class="set-btn" @click="set_data(link.data_json_str)">Set</button>
@@ -109,7 +109,7 @@ firebase.initializeApp(firebase_config);
       <!-- All Links -->
       <h3 @click="toggleAccordion('allLinks')">All Links</h3>
       <ul v-show="accordionOpen.allLinks">
-        <li v-for="link in filtered_links_for_user('all')" :key="link.id">
+        <li v-for="link in filtered_links_for('all')" :key="link.id">
           {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
           {{ truncate_text(JSON.parse(link.data_json_str).data2) }}
           <button class="set-btn" @click="set_data(link.data_json_str)">Set</button>
@@ -313,6 +313,11 @@ firebase.initializeApp(firebase_config);
   }
 },
 computed: {
+    },
+      mounted() {
+        this.initApp();
+      },
+      methods: {
         filtered_links_for(all_or_user) {
             let links = all_or_user === 'all' ? this.all_links : this.user_links;
 
@@ -339,11 +344,6 @@ computed: {
 
             return links;
         },
-    },
-      mounted() {
-        this.initApp();
-      },
-      methods: {
         initApp() {
           this.fetch_existing_user().catch(() => {}).finally(() => {
             this.fetch_user_data();

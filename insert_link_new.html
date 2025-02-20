@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>insert link</title>
+<script src="./lib/firebasejs_8.6.1_firebase-app.js"></script>
+<script src="./lib/firebasejs_8.4.0_firebase-auth.js"></script>
+<script src="./lib/vue@3.2.36.global.prod.js"></script>
+
+<!-- reset.css -->
+<link rel="stylesheet" href="./lib/reset.css">
+<!-- insert_link.css -->
+<link rel="stylesheet" href="./lib/insert_link.css">
+</head>
+<body>
+<div id="app">
+<header class="header">
+    <div class="top-button">
+        <button @click="replace_url_to_localhost">Replace URL to Localhost</button>
+    </div>
+    <!-- toggle_sidebar -->
+    <button @click="toggleSidebar" class="menu-button">
+        ☰ Menu
+    </button>
+
+</header>
+
+<div class="sidebar" :class="{ open: isSidebarOpen }">
+    <button @click="toggleSidebar" class="close-button">×</button>
+    <h2>Menu</h2>
+    <div>
+        <button class="tablinks" @click="openCity('all_data')">All Data</button>
+        <button class="tablinks" @click="openCity('your_data')">Your Data</button>
+        <button class="tablinks" @click="openCity('login')">Login</button>
+        <button class="tablinks" @click="openCity('insert')">Insert</button>
+    </div>
+</div>
+
+<div class="each_data content">
+    <div v-show="currentTab === 'all_data'" class="all_data">
+        <h3>All Links</h3>
+        <ul>
+            <li v-for="link in allLinks" :key="link.id">
+                {{ truncateText(JSON.parse(link.data_json_str).data1) }}<br>
+                {{ truncateText(JSON.parse(link.data_json_str).data2) }}<br>
+                (ID: {{ link.id }})
+                <button v-if="link.username !== username" @click="clone_link(link.id)">Clone</button>
+            </li>
+        </ul>
+    </div>
+
+    <div v-show="currentTab === 'your_data'" class="your_data">
+        <h3>Your Data</h3>
+        <button @click="fetch_user_data">Fetch User Data</button>
+        <ul>
+            <li v-for="link in userLinks" :key="link.id">
+                {{ truncateText(JSON.parse(link.data_json_str).data1) }}<br>
+                {{ truncateText(JSON.parse(link.data_json_str).data2) }}<br>
+                (ID: {{ link.id }})
+                <button @click="delete_link(link.id)">Delete</button>
+            </li>
+        </ul>
+    </div>
+
+    <div v-show="currentTab === 'login'" class="login">
+        <h1>{{ username || 'Your Username' }}</h1>
+        <h2>{{ loginResult }}</h2>
+        <input type="button" v-if="!loggedIn" @click="google_sign_in" value="Google Login">
+        <input type="button" v-if="loggedIn" @click="google_sign_out" value="Logout">
+    </div>
+
+    <div v-show="currentTab === 'insert'" class="insert">
+        <form @submit.prevent="validate_and_submit" v-if="loggedIn">
+            <label class="data1">
+                <textarea v-model="data1" placeholder="Enter data1 (e.g., 縄文時代\n弥生時代)" required></textarea>
+            </label>
+            <label class="data2">
+                <textarea v-model="data2" placeholder="Enter data2 (e.g., 日本の先史時代。\n日本の稲作農耕文化が発展した時代。)" required></textarea>
+            </label>
+            <button type="submit" class="submit">Submit</button>
+            <div class="message">
+                <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+                <div v-if="successMessage" class="success">{{ successMessage }}</div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+<script>
+// Firebase の設定
+const firebaseConfig = {
+    apiKey: "AIzaSyBcOlIDP2KWbJuKM0WeMHNp-WvjTVfLt9Y",
+    authDomain: "p2auth-ea50a.firebaseapp.com",
+    projectId: "p2auth-ea50a",
+    storageBucket: "p2auth-ea50a.appspot.com",
+    messagingSenderId: "796225429484",
+    appId: "1:796225429484:web:ece56ef2fc0be28cd6eac9"
+};
+
+// Firebase 初期化
+firebase.initializeApp(firebaseConfig);
+
+const app = Vue.createApp({
+    data() {
+        return {
+            isSidebarOpen: false,
+            username: '',
+            uid: null,
+            loggedIn: false,
+            loginResult: '',
+            data1: '',
+            data2: '',
+            errorMessage: '',
+            successMessage: '',
+            user: null,
+            password: '',
+            enpnt: 'https://cotton-concrete-catsup.glitch.me',
+            userLinks: [],
+            allLinks: [],
+            currentTab: 'all_data' // 現在のタブを管理する変数
+        };
+    },
+    async mounted() {
+        await this.fetch_existing_user();
+        if (!this.uid) {
+            firebase.auth().onAuthStateChanged(async user => {
+                if (user) {
+                    this.user = user;
+                    this.uid = user.uid;
+                    this.loggedIn = true;
+                    await this.fetch_existing_user();
+                    await this.fetch_user_data();
+                }
+            });
+        }
+    },
+    methods: {
+        async fetch_existing_user() {
+            try {
+                if (!this.uid) {
+                    throw new Error('ログインしていません');
+                }
+                const response = await fetch(`${this.enpnt}/existing_user`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ uid: this.uid })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user: ${response.status} ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                this.username = result.message.id;
+                this.password = result.message.password;
+            } catch (error) {
+                console.error('Error fetching existing user:', error);
+            }
+        },
+        async fetch_user_data() {
+            try {
+                const response = await fetch(`${this.enpnt}/read_all`);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user data: ${response.status} ${response.statusText}`);
+                }
+                const result = await response.json();
+                this.allLinks = result.message;
+                if (this.loggedIn && this.username) {
+                    this.userLinks = this.allLinks.filter(link => link.username === this.username);
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        },
+        async delete_link(id) {
+            try {
+                const response = await fetch(`${this.enpnt}/delete_link`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: id,
+                        name: this.username,
+                        password: this.password
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to delete link: ${response.status} ${response.statusText}`);
+                }
+
+                await this.fetch_user_data();
+            } catch (error) {
+                console.error('Error deleting link:', error);
+            }
+        },
+        replace_url_to_localhost() {
+            window.location.replace('http://localhost:3000/q_a/insert_link.html');
+        },
+        error_check_insert_data(data_type, data_json_str) {
+            const DATA_TYPE_ARRAY = [
+                'q_a',
+                'f_i_b',
+                'i_t_n',
+            ];
+            const is_include_DATA_TYPE = (target_data_type_str) => DATA_TYPE_ARRAY.some((DATA_TYPE) => target_data_type_str === DATA_TYPE);
+
+            switch (true) {
+                case data_json_str === undefined: return 'dataが空です';
+                case data_json_str.length > 10000: return 'dataが長すぎます';
+                case !is_include_DATA_TYPE(data_type): return '許可されていないdata_typeです';
+                default: return 'OK';
+            }
+        },
+        async validate_and_submit() {
+            this.errorMessage = '';
+            this.successMessage = '';
+
+            const dataJsonStr = JSON.stringify({ data1: this.data1, data2: this.data2 });
+            const validationError = this.error_check_insert_data('q_a', dataJsonStr);
+            if (validationError !== 'OK') {
+                this.errorMessage = validationError;
+                return;
+            }
+
+            try {
+                const res = await fetch(`${this.enpnt}/insert_link`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        data_type: 'q_a',
+                        data_json_str: dataJsonStr,
+                        link: '',
+                        tags: [],
+                        likes: [],
+                        comments_and_replies: [],
+                        name: this.username,
+                        password: this.password
+                    })
+                });
+
+                const result = await res.json();
+
+                if (res.ok) {
+                    this.successMessage = `Success: ${JSON.stringify(result)}`;
+                    await this.fetch_user_data();
+                    this.data1 = '';
+                    this.data2 = '';
+                } else {
+                    this.errorMessage = `Error: ${result.message}`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                this.errorMessage = `Error: ${error.message}`;
+            }
+        },
+        async clone_link(id) {
+            try {
+                const response = await fetch(`${this.enpnt}/clone_link`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: id,
+                        name: this.username,
+                        password: this.password
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to clone link: ${response.status} ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                this.successMessage = `Clone successful: ${result.message}`;
+                await this.fetch_user_data();
+            } catch (error) {
+                console.error('Error cloning link:', error);
+                this.errorMessage = `Error: ${error.message}`;
+            }
+        },
+        openCity(cityName) {
+            this.currentTab = cityName;
+            const element = document.querySelector(`.${cityName}`);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
+        async google_sign_in() {
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                await firebase.auth().signInWithPopup(provider);
+            } catch (error) {
+                console.error('Error signing in:', error);
+                this.loginResult = `Error: ${error.message}`;
+            }
+        },
+        async google_sign_out() {
+            try {
+                await firebase.auth().signOut();
+                this.loggedIn = false;
+                this.loginResult = 'Logged out';
+            } catch (error) {
+                console.error('Error signing out:', error);
+                this.loginResult = `Error: ${error.message}`;
+            }
+        },
+        toggleSidebar() {
+            this.isSidebarOpen = !this.isSidebarOpen;
+        },
+        truncateText(text) {
+            return text.length > 30 ? text.substring(0, 30) + '...' : text;
+        },
+    },
+}).mount('#app');
+</script>
+</body>
+</html>

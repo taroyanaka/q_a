@@ -126,6 +126,7 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px; /* Increase font size for better readability */
+    max-length: 1000; /* Set max length to 1000 characters */
 }
 
 .insert .form-row {
@@ -166,7 +167,7 @@ body {
 
 .link-id {
     font-size: 0.8em;
-    color: #888;
+    color: #ccc; /* Change color to a shade close to white */
 }
 
 .menu-button {

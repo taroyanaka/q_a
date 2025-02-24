@@ -186,9 +186,15 @@ firebase.initializeApp(firebase_config);
           {{ sldes[curIdx].a }}
         </h2>
       </div>
-      <button @click="frSlid">最初へ</button>
-      <button @click="prSlid">前へ</button>
-      <button @click="nxSlid">次へ</button>
+      <button @click="frSlid">
+        <span class="material-symbols-outlined">first_page</span> 最初へ
+      </button>
+      <button @click="prSlid">
+        <span class="material-symbols-outlined">skip_previous</span> 前へ
+      </button>
+      <button @click="nxSlid">
+        <span class="material-symbols-outlined">skip_next</span> 次へ
+      </button>
       <div v-if="!auSlMd">
         <button @click="auSlid">auto slide</button>
         <input type="number" v-model="tmIntv" min="0.1" step="0.1" />秒

@@ -7,9 +7,10 @@ body {
 }
 
 .header {
-    background-color: #333;
+    /* background-color: #333; */
+    background-color: white;
     color: white;
-    padding: 20px 0; /* パディングを増やしてスペースを確保 */
+    padding: 0 0; /* パディングを増やしてスペースを確保 */
     text-align: center;
 }
 
@@ -17,7 +18,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    margin: 20px; /* マージンを増やしてスペースを確保 */
+    margin: 0px; /* マージンを増やしてスペースを確保 */
 }
 
 .top-button button {
@@ -36,7 +37,8 @@ body {
 .side_bar {
     width: 250px; /* 幅を広げてスペースを確保 */
     float: left;
-    background-color: #333;
+    /* background-color: #333; */
+    background-color: white;
     color: white;
     height: 100vh;
     padding: 20px; /* パディングを増やしてスペースを確保 */
@@ -44,7 +46,8 @@ body {
 
 .side_bar .tablinks {
     display: block;
-    background-color: #333;
+    /* background-color: #333; */
+    background-color: white;
     color: white;
     padding: 15px; /* パディングを増やしてスペースを確保 */
     text-align: left;
@@ -55,7 +58,8 @@ body {
 }
 
 .side_bar .tablinks:hover {
-    background-color: #575757;
+    /* background-color: #575757; */
+    background-color: white;
 }
 
 .each_data {
@@ -192,7 +196,11 @@ body {
     left: -250px;
     width: 250px;
     height: 100%;
-    background: #222;
+    /* 薄い灰色 */
+    background: #333;
+    /* グレイに近い白 */
+    /* background: cornsilk; */
+    background: #f7f6f5;
     color: white;
     padding: 20px;
     transition: left 0.3s ease-in-out;
@@ -205,7 +213,8 @@ body {
 .sidebar .close-button {
     background: none;
     border: none;
-    color: white;
+    color: gray;
+    /* color: white; */
     font-size: 24px;
     cursor: pointer;
     position: absolute;
@@ -233,7 +242,8 @@ body {
 }
 
 .sidebar ul li a:hover {
-    background: #444;
+    /* background: #444; */
+    background: white;
 }
 
 /* メインコンテンツ */
@@ -255,7 +265,8 @@ body {
 
 .content button {
     font-size: 0.5em; /* サイズを半分に */
-    color: gray; /* 灰色に */
+    /* color: gray; */
+    color: white;
     text-decoration: underline; /* 下線を追加 */
     background: none; /* 背景を透明に */
     border: none; /* ボーダーをなしに */
@@ -269,9 +280,13 @@ body {
 .home-button {
     background: none;
     border: none;
-    color: #f4f4f4;
+    color: #1565c0;
     font-size: 3rem;
     cursor: pointer;
     margin-bottom: 20px;
 }
 
+.clear_filters_div {
+    /* 背景黒色 */
+    background: #333;
+}

@@ -60,9 +60,11 @@
             <label>Search:
                 <input type="text" v-model="search_query" @input="filter_data">
             </label>
-            <button @click="clear_filters">
+            <div class="clear_filters_div">
+            <button @click="clear_filters" class="clear_filters_button">
                 <span class="material-icons">clear</span> Clear Filters
             </button>
+            </div>
         </div>
         <ul>
             <li v-for="link in filtered_links" :key="link.id">

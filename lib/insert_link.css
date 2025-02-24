@@ -118,8 +118,8 @@ body {
 
 .insert form {
     background-color: white;
-    padding: 30px; /* パディングを増やしてスペースを確保 */
-    border: 1px solid #ddd;
+    /* padding: 30px; */
+    /* border: 1px solid #ddd; */
     border-radius: 5px;
     margin-bottom: 20px; /* フォームと他の要素の間にスペースを確保 */
 }
@@ -132,7 +132,7 @@ body {
 .insert textarea {
     width: 100%;
     height: 300px; /* Increase height to accommodate more text */
-    padding: 15px; /* パディングを増やしてスペースを確保 */
+    /* padding: 15px; */
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 12px; /* 文字サイズを12pxに設定 */
@@ -147,7 +147,7 @@ body {
 
 .insert .form-row label {
     flex: 1;
-    margin-right: 10px;
+    /* margin-right: 10px; */
 }
 
 .insert .form-row label:last-child {
@@ -289,4 +289,7 @@ body {
 .clear_filters_div {
     /* 背景黒色 */
     background: #333;
+    /* margin top 0.5rem */
+    margin-top: 0.5rem;
+
 }

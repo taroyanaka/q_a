@@ -265,3 +265,13 @@ body {
 .content button:hover {
     color: darkgray; /* ホバー時の色を変更 */
 }
+
+.home-button {
+    background: none;
+    border: none;
+    color: #f4f4f4;
+    font-size: 3rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+

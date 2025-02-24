@@ -56,7 +56,7 @@ firebase.initializeApp(firebase_config);
     <button class="menu-btn" @click="toggleDrawer">
       <span class="material-symbols-outlined">menu</span>
     </button>
-    <div class="title">Black Paint QA</div>
+    <!-- <div class="title">Black Paint QA</div> -->
     <a href="./insert_link.html" target="_blank" class="upload-btn">アップロードモード</a> <!-- 追加 -->
   </div>
 
@@ -121,7 +121,7 @@ firebase.initializeApp(firebase_config);
     <!-- メインコンテンツ -->
   <div class="main-content">
     <!-- chooseモード -->
-    <div v-if="md==='choose'">
+    <div v-if="md==='choose'" class="chse">
       <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
         <div>
           <h2>{{ dv[0] }} {{ dv[5] }}</h2>
@@ -139,7 +139,7 @@ firebase.initializeApp(firebase_config);
     </div>
 
     <!-- maru_batuモード -->
-    <div v-if="md==='maru_batu'">
+    <div v-if="md==='maru_batu'" class="mrBt">
       <progress :value="ooQAMC" :max="ex1Dat.length" class="progress-bar"></progress>
       <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
         <div v-if="dv[3] === false">
@@ -169,22 +169,22 @@ firebase.initializeApp(firebase_config);
         class="progress-bar"
       ></progress>
       <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
-        <div>{{ dv[0] }}</div>
-        <div :class="dv[4] ? 'black-paint' : ''" @click="chPaRw">
+        <h2>{{ dv[0] }}</h2>
+        <div :class="dv[4] ? 'black-paint black-paint-answer-black' : 'black-paint-answer-black'" @click="chPaRw">
           {{ dv[1] }}
         </div>
-        <div v-if="paRslt!==''">{{ paRslt }}</div>
+        <div v-if="paRslt!==''" class="black-paint-answer-white">{{ paRslt }}</div>
       </template>
     </div>
 
     <!-- slideモード -->
-    <div v-if="md==='slide'">
+    <div v-if="md==='slide'" class="sld">
       <progress :value="curIdx" :max="sldes.length" class="progress-bar"></progress>
       <div>
-        <div v-if="sldes[curIdx]?.q" @click="nxSlid">{{ sldes[curIdx].q }}</div>
-        <div v-else-if="sldes[curIdx]?.a" @click="nxSlid">
+        <h2 v-if="sldes[curIdx]?.q" @click="nxSlid">{{ sldes[curIdx].q }}</h2>
+        <h2 v-else-if="sldes[curIdx]?.a" @click="nxSlid">
           {{ sldes[curIdx].a }}
-        </div>
+        </h2>
       </div>
       <button @click="frSlid">最初へ</button>
       <button @click="prSlid">前へ</button>

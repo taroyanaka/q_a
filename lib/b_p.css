@@ -107,6 +107,44 @@
     padding: 1rem;
   }
 
+.main-content .chse button,
+.main-content .mrBt button {
+  /* 2つのボタンをそれぞれwidth50%ずつ画面の半分を埋めるようにする */
+  width: 50%;
+}
+
+
+  .main-content .chse button,
+  .main-content .mrBt button,
+  .main-content .blPt button,
+  .main-content .sld button {
+    font-size: 4em; /* サイズを2倍に */
+    border: 2px double gray; /* 四隅のボーダーラインを灰色で2重線に */
+    border-radius: 1rem; /* 四隅の角の半径を1remに */
+    background-color: transparent; /* 背景色を無しに */
+    color: #333; /* 文字色は濃くない黒 */
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 0.5rem;
+  }
+
+  .main-content .chse h2,
+  .main-content .mrBt h2,
+  .main-content .blPt h2,
+  .main-content .sld h2 {
+    font-size: 3em; /* サイズを2倍に */
+    color: #333; /* 文字色は濃くない黒 */
+    margin-bottom: 0.5rem;
+  }
+
+  .black-paint-answer-black,
+  .black-paint-answer-white {
+    font-size: 3em; /* サイズを1.5倍に */
+    color: #333; /* 文字色は濃くない黒 */
+    margin-top: 1rem;
+  }
+
   /* ボトムナビゲーション */
   .bottom-nav {
     position: fixed;

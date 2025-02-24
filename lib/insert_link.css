@@ -3,12 +3,13 @@ body {
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    font-size: 12px; /* 文字サイズを12pxに設定 */
 }
 
 .header {
     background-color: #333;
     color: white;
-    padding: 10px 0;
+    padding: 20px 0; /* パディングを増やしてスペースを確保 */
     text-align: center;
 }
 
@@ -16,15 +17,16 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    margin: 10px;
+    margin: 20px; /* マージンを増やしてスペースを確保 */
 }
 
 .top-button button {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 15px 30px; /* パディングを増やしてスペースを確保 */
     cursor: pointer;
+    margin-bottom: 10px; /* ボタン間のスペースを確保 */
 }
 
 .top-button button:hover {
@@ -32,23 +34,24 @@ body {
 }
 
 .side_bar {
-    width: 200px;
+    width: 250px; /* 幅を広げてスペースを確保 */
     float: left;
     background-color: #333;
     color: white;
     height: 100vh;
-    padding-top: 20px;
+    padding: 20px; /* パディングを増やしてスペースを確保 */
 }
 
 .side_bar .tablinks {
     display: block;
     background-color: #333;
     color: white;
-    padding: 10px;
+    padding: 15px; /* パディングを増やしてスペースを確保 */
     text-align: left;
     border: none;
     width: 100%;
     cursor: pointer;
+    margin-bottom: 10px; /* ボタン間のスペースを確保 */
 }
 
 .side_bar .tablinks:hover {
@@ -56,12 +59,13 @@ body {
 }
 
 .each_data {
-    margin-left: 220px;
+    margin-left: 270px; /* サイドバーの幅に合わせて調整 */
     padding: 20px;
 }
 
 .each_data h3 {
     color: #333;
+    margin-bottom: 20px; /* 見出しとリストの間にスペースを確保 */
 }
 
 .each_data ul {
@@ -71,8 +75,8 @@ body {
 
 .each_data li {
     background-color: white;
-    margin: 10px 0;
-    padding: 10px;
+    margin: 15px 0; /* リストアイテム間のスペースを確保 */
+    padding: 15px; /* パディングを増やしてスペースを確保 */
     border: 1px solid #ddd;
     border-radius: 5px;
 }
@@ -81,7 +85,7 @@ body {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 10px 20px; /* パディングを増やしてスペースを確保 */
     cursor: pointer;
     margin-left: 10px;
 }
@@ -92,13 +96,14 @@ body {
 
 .login h1, .login h2 {
     color: #333;
+    margin-bottom: 20px; /* 見出しとボタンの間にスペースを確保 */
 }
 
 .login input[type="button"] {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 15px 30px; /* パディングを増やしてスペースを確保 */
     cursor: pointer;
     margin-top: 10px;
 }
@@ -109,29 +114,31 @@ body {
 
 .insert form {
     background-color: white;
-    padding: 20px;
+    padding: 30px; /* パディングを増やしてスペースを確保 */
     border: 1px solid #ddd;
     border-radius: 5px;
+    margin-bottom: 20px; /* フォームと他の要素の間にスペースを確保 */
 }
 
 .insert label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 15px; /* ラベルとテキストエリアの間にスペースを確保 */
 }
 
 .insert textarea {
     width: 100%;
     height: 300px; /* Increase height to accommodate more text */
-    padding: 10px;
+    padding: 15px; /* パディングを増やしてスペースを確保 */
     border: 1px solid #ddd;
     border-radius: 5px;
-    font-size: 16px; /* Increase font size for better readability */
+    font-size: 12px; /* 文字サイズを12pxに設定 */
     max-length: 1000; /* Set max length to 1000 characters */
 }
 
 .insert .form-row {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px; /* フォーム行間のスペースを確保 */
 }
 
 .insert .form-row label {
@@ -147,7 +154,7 @@ body {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 15px 30px; /* パディングを増やしてスペースを確保 */
     cursor: pointer;
 }
 
@@ -157,12 +164,12 @@ body {
 
 .message .error {
     color: red;
-    margin-top: 10px;
+    margin-top: 20px; /* エラーメッセージと他の要素の間にスペースを確保 */
 }
 
 .message .success {
     color: green;
-    margin-top: 10px;
+    margin-top: 20px; /* 成功メッセージと他の要素の間にスペースを確保 */
 }
 
 .link-id {
@@ -222,7 +229,7 @@ body {
     color: white;
     text-decoration: none;
     display: block;
-    padding: 10px;
+    padding: 15px; /* パディングを増やしてスペースを確保 */
 }
 
 .sidebar ul li a:hover {
@@ -244,4 +251,17 @@ body {
 
 .menu-buttons .tablinks {
     margin-bottom: 10px;
+}
+
+.content button {
+    font-size: 0.5em; /* サイズを半分に */
+    color: gray; /* 灰色に */
+    text-decoration: underline; /* 下線を追加 */
+    background: none; /* 背景を透明に */
+    border: none; /* ボーダーをなしに */
+    cursor: pointer; /* クリッカブルに */
+}
+
+.content button:hover {
+    color: darkgray; /* ホバー時の色を変更 */
 }

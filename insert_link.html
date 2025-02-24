@@ -13,24 +13,37 @@
 <link rel="stylesheet" href="./lib/reset.css">
 <!-- insert_link.css -->
 <link rel="stylesheet" href="./lib/insert_link.css">
+<!-- Google Fonts Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 <div id="app">
 <header class="header">
     <div class="top-button">
-        <button @click="replace_url_to_localhost">Replace URL to Localhost</button>
-        <a href="./b_p.html" class="home-button">Home</a>
+        <a href="./b_p.html" class="home-button">
+            <span class="material-icons">home</span>
+        </a>
     </div>
 </header>
 
 <div class="sidebar" :class="{ open: is_sidebar_open }" @click="toggle_sidebar">
-    <button @click.stop="toggle_sidebar" class="close-button">×</button>
+    <button @click.stop="toggle_sidebar" class="close-button">
+        <span class="material-icons">close</span>
+    </button>
     <h2>Menu</h2>
     <div class="menu-buttons" @click.stop>
-        <button class="tablinks" @click="open_city('all_data')">All Data</button>
-        <button class="tablinks" @click="open_city('your_data')">Your Data</button>
-        <button class="tablinks" @click="open_city('login')">Login</button>
-        <button class="tablinks" @click="open_city('insert')">Insert</button>
+        <button class="tablinks" @click="open_city('all_data')">
+            <span class="material-icons">list</span> All Data
+        </button>
+        <button class="tablinks" @click="open_city('your_data')">
+            <span class="material-icons">person</span> Your Data
+        </button>
+        <button class="tablinks" @click="open_city('login')">
+            <span class="material-icons">login</span> Login
+        </button>
+        <button class="tablinks" @click="open_city('insert')">
+            <span class="material-icons">add</span> Insert
+        </button>
     </div>
 </div>
 
@@ -41,21 +54,24 @@
             <label>Sort by:
                 <select v-model="sort_key" @change="toggle_sort_order">
                     <option value="id">ID</option>
-                    <option value="created_at">Created At</option>
                     <option value="data_length">Data Length</option>
                 </select>
             </label>
             <label>Search:
                 <input type="text" v-model="search_query" @input="filter_data">
             </label>
-            <button @click="clear_filters">Clear Filters</button>
+            <button @click="clear_filters">
+                <span class="material-icons">clear</span> Clear Filters
+            </button>
         </div>
         <ul>
             <li v-for="link in filtered_links" :key="link.id">
                 {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
                 {{ truncate_text(JSON.parse(link.data_json_str).data2) }}<br>
                 <span class="link-id">ID: {{ link.id }}</span>
-                <button v-if="logged_in && link.username !== username" @click="clone_link(link.id)">Clone</button>
+                <button v-if="logged_in && link.username !== username" @click="clone_link(link.id)">
+                    <span class="material-icons">content_copy</span> Clone
+                </button>
             </li>
         </ul>
     </div>
@@ -70,21 +86,24 @@
                 <label>Sort by:
                     <select v-model="sort_key" @change="toggle_sort_order">
                         <option value="id">ID</option>
-                        <option value="created_at">Created At</option>
                         <option value="data_length">Data Length</option>
                     </select>
                 </label>
                 <label>Search:
                     <input type="text" v-model="search_query" @input="filter_data">
                 </label>
-                <button @click="clear_filters">Clear Filters</button>
+                <button @click="clear_filters">
+                    <span class="material-icons">clear</span> Clear Filters
+                </button>
             </div>
             <ul>
                 <li v-for="link in filtered_links" :key="link.id">
                     {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
                     {{ truncate_text(JSON.parse(link.data_json_str).data2) }}<br>
                     <span class="link-id">ID: {{ link.id }}</span>
-                    <button @click="delete_link(link.id)">Delete</button>
+                    <button @click="delete_link(link.id)">
+                        <span class="material-icons">delete</span> Delete
+                    </button>
                 </li>
             </ul>
         </div>
@@ -110,7 +129,9 @@
                     <textarea v-model="data2" @input="validate_input" placeholder="Enter data2 (e.g., 日本の先史時代。\n日本の稲作農耕文化が発展した時代。)" required maxlength="1000"></textarea>
                 </label>
             </div>
-            <button type="submit" class="submit" v-if="!has_errors">Submit</button>
+            <button type="submit" class="submit" v-if="!has_errors">
+                <span class="material-icons">send</span> Submit
+            </button>
             <div class="message">
                 <div v-if="error_message" class="error">{{ error_message }}</div>
                 <div v-if="success_message" class="success">{{ success_message }}</div>
@@ -175,8 +196,6 @@ const app = Vue.createApp({
                 let result = 0;
                 if (this.sort_key === 'id') {
                     result = a.id - b.id;
-                } else if (this.sort_key === 'created_at') {
-                    result = new Date(a.created_at) - new Date(b.created_at);
                 } else if (this.sort_key === 'data_length') {
                     result = JSON.parse(a.data_json_str).data1.length - JSON.parse(b.data_json_str).data1.length;
                 }
@@ -276,7 +295,7 @@ const app = Vue.createApp({
                 console.error('Error deleting link:', error);
             }
         },
-        replace_url_to_localhost() {
+        replace_url_localhost() {
             window.location.replace('http://localhost:3000/q_a/insert_link.html');
         },
         error_check_insert_data(data_type, data_json_str) {

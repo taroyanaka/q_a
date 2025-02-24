@@ -125,10 +125,12 @@
         <form @submit.prevent="validate_and_submit" v-else>
             <div class="form-row">
                 <label class="data1">
-                    <textarea v-model="data1" @input="validate_input" placeholder="Enter data1 (e.g., 縄文時代\n弥生時代)" required maxlength="1000"></textarea>
+                    <textarea v-model="data1" @input="validate_input"
+                     placeholder="Data including line breaks A" required maxlength="1000"></textarea>
                 </label>
                 <label class="data2">
-                    <textarea v-model="data2" @input="validate_input" placeholder="Enter data2 (e.g., 日本の先史時代。\n日本の稲作農耕文化が発展した時代。)" required maxlength="1000"></textarea>
+                    <textarea v-model="data2" @input="validate_input"
+                     placeholder="Data including line breaks B" required maxlength="1000"></textarea>
                 </label>
             </div>
             <button type="submit" class="submit" v-if="!has_errors">

@@ -166,6 +166,13 @@ body {
     background-color: #45a049;
 }
 
+/* submitの表示位置はz軸が上の、追従表示で画面上部(編集中のtextareaにz軸上にかぶさって表示 */
+.submit {
+    position: fixed;
+    top: 0;
+    right: 10rem;
+}
+
 .message .error {
     color: red;
     margin-top: 20px; /* エラーメッセージと他の要素の間にスペースを確保 */
@@ -293,3 +300,4 @@ body {
     margin-top: 0.5rem;
 
 }
+

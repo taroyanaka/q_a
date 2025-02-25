@@ -177,7 +177,7 @@ firebase.initializeApp(firebase_config);
       <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
         <div class="dynamic-font-size" data-length="50">{{ trText(dv[0]) }}</div>
         <div
-          :class="dv[4] ? 'black-paint black-paint-answer-black dynamic-font-size' : 'black-paint-answer-white dynamic-font-size'"
+          :class="dv[4] ? 'black-paint black-paint-answer-black dynamic-font-size' : 'black-paint black-paint-answer-white dynamic-font-size'"
           data-length="50"
           @click="chPaRw"
         >

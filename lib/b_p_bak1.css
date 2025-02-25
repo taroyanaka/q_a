@@ -189,30 +189,18 @@
     margin-bottom: 0.5rem;
   }
 
-  /* 例: 黒塗りモードなど */
-  .black-paint {
-    align-items: flex-start;
-    flex-wrap: wrap;
-    font-size: clamp(1rem, 2vw, 2rem); /* ビューポートに合わせてフォントサイズを調整 */
-    white-space: pre-wrap; /* 適宜改行する */
-    word-wrap: break-word; /* 長い単語を適宜改行する */  
-    overflow-wrap: break-word;
-    word-break: break-all;
-    user-select: none;
-    width: 100%;
-    text-align: center;
-    margin: 1rem 0;
-  }
-
-  .black-paint-answer-black {
-    background: #000;
+  .black-paint-answer-black,
+  .black-paint-answer-white {
     color: #000;
     margin-top: 1rem;
   }
 
+  .black-paint-answer-black {
+    background: #000;
+  }
+
   .black-paint-answer-white {
     background: #fff;
-    margin-top: 1rem;
   }
 
   /* ボトムナビゲーション */
@@ -251,6 +239,21 @@
   /* カードや進捗バーなど各モードの簡易表示例 */
   .progress-bar {
     width: 100%;
+    margin: 1rem 0;
+  }
+
+  /* 例: 黒塗りモードなど */
+  .black-paint {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    font-size: clamp(1rem, 2vw, 2rem); /* ビューポートに合わせてフォントサイズを調整 */
+    white-space: pre-wrap; /* 適宜改行する */
+    word-wrap: break-word; /* 長い単語を適宜改行する */  
+    overflow-wrap: break-word;
+    word-break: break-all;
+    user-select: none;
+    width: 100%;
+    text-align: center;
     margin: 1rem 0;
   }
 

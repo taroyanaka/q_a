@@ -148,9 +148,9 @@ firebase.initializeApp(firebase_config);
     <div v-if="md==='maru_batu'" class="mrBt">
       <progress :value="ooQAMC" :max="ex1Dat.length" class="progress-bar"></progress>
       <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
-        <div v-if="dv[3] === false">
-          <h2>{{ dv[0] }} = {{ dv[2][0] }}</h2>
-          <p v-if="mbRslt!==''">{{ mbRslt }}</p>
+        <div v-if="dv[3] === false" class="mrBt_parent">
+          <div class="question dynamic-font-size" data-length="50">{{ dv[0] }} = {{ dv[2][0] }}</div>
+          <p v-if="mbRslt!==''" class="button dynamic-font-size" data-length="50">{{ mbRslt }}</p>
           <button
             @click="chMaBa(dv,dv[2][0],'maru')"
             :class="flInco==='maru'||flInco===null?'flIc':''"
@@ -190,23 +190,31 @@ firebase.initializeApp(firebase_config);
     <!-- slideモード -->
     <div v-if="md==='slide'" class="sld">
       <progress :value="curIdx" :max="sldes.length" class="progress-bar"></progress>
-      <div>
-        <h2 v-if="sldes[curIdx]?.q" @click="nxSlid">{{ sldes[curIdx].q }}</h2>
-        <h2 v-else-if="sldes[curIdx]?.a" @click="nxSlid">
+      <!-- <div class="slide_index">{{ Math.ceil((curIdx + 1) / 2) }} / {{ Math.ceil(sldes.length / 2) }}</div> -->
+      <div class="slide_index">{{ Math.ceil((curIdx + 1) / 2) }}</div>
+      <div class="slide_parent">
+        <div v-if="sldes[curIdx]?.q"
+        class="slide_left dynamic-font-size"
+        data-length="50"
+        @click="nxSlid">{{ sldes[curIdx].q }}</div>
+        <div v-else-if="sldes[curIdx]?.a"
+        class="slide_right dynamic-font-size"
+        data-length="50"
+        @click="nxSlid">
           {{ sldes[curIdx].a }}
-        </h2>
+        </div>
       </div>
-      <button @click="frSlid">
+      <button @click="frSlid" class="frSlid">
         <span class="material-symbols-outlined">first_page</span> 最初へ
       </button>
-      <button @click="prSlid">
+      <button @click="prSlid" class="prSlid">
         <span class="material-symbols-outlined">skip_previous</span> 前へ
       </button>
-      <button @click="nxSlid">
+      <button @click="nxSlid" class="nxSlid">
         <span class="material-symbols-outlined">skip_next</span> 次へ
       </button>
       <div v-if="!auSlMd">
-        <button @click="auSlid">auto slide</button>
+        <button @click="auSlid" class="auSlid">auto slide</button>
         <input type="number" v-model="tmIntv" min="0.1" step="0.1" />秒
       </div>
       <div v-else>
@@ -274,7 +282,8 @@ firebase.initializeApp(firebase_config);
           curIdx: 0,
           auSlMd: false,
           tmIntv: 0.5,
-          md: "choose",
+          // md: "choose",
+          md: "slide",
   
           dtA: `こんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちは
   やあ

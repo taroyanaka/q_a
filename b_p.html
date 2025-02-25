@@ -125,15 +125,20 @@ firebase.initializeApp(firebase_config);
     <div v-if="md==='choose'" class="chse">
       <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
         <div>
-          <h2>{{ dv[0] }} {{ dv[5] }}</h2>
-          <div>
-            <button
+          <!-- <h2 class="chse_h2">{{ dv[0] }} {{ dv[5] }}</h2> -->
+          <!-- <h2 class="chse_h2">{{ trText(dv[0]) }}</h2> -->
+          <div class="dynamic-font-size" data-length="50">{{ trText(dv[0]) }}</div>
+          <!-- <h2 class="chse_h2">{{ dv[5] }}</h2> -->
+          <div class="container">
+            <div
               v-for="(item,ix) in dv[2]"
               :key="ix"
               @click="chQACh(dv[1], item)"
+              class="button dynamic-font-size"
+              data-length="50"
             >
               {{ trText(item) }}
-            </button>
+            </div>
           </div>
         </div>
       </template>
@@ -170,11 +175,15 @@ firebase.initializeApp(firebase_config);
         class="progress-bar"
       ></progress>
       <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
-        <h2>{{ dv[0] }}</h2>
-        <div :class="dv[4] ? 'black-paint black-paint-answer-black' : 'black-paint-answer-black'" @click="chPaRw">
+        <div class="dynamic-font-size" data-length="50">{{ trText(dv[0]) }}</div>
+        <div
+          :class="dv[4] ? 'black-paint black-paint-answer-black dynamic-font-size' : 'black-paint-answer-white dynamic-font-size'"
+          data-length="50"
+          @click="chPaRw"
+        >
           {{ dv[1] }}
         </div>
-        <div v-if="paRslt!==''" class="black-paint-answer-white">{{ paRslt }}</div>
+        <div v-if="paRslt!==''" class="black-paint black-paint-answer-white">{{ paRslt }}</div>
       </template>
     </div>
 
@@ -247,7 +256,7 @@ firebase.initializeApp(firebase_config);
           login_result: '',
           logged_in: false,
   
-          trTeLn: 20,
+          trTeLn: 110,
           usWDat: [],
           usrNam: "user1",
           shUsr: "",
@@ -267,7 +276,7 @@ firebase.initializeApp(firebase_config);
           tmIntv: 0.5,
           md: "choose",
   
-          dtA: `こんにちは
+          dtA: `こんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちはこんにちは
   やあ
   いい
   はい
@@ -275,8 +284,8 @@ firebase.initializeApp(firebase_config);
   猫
   食事
   眠り`,
-          dtB: `hello
-  hi
+          dtB: `hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello
+  hi hi  hi hi  hi hi  hi hi  hi hi  hi hi  hi hi  hi hi  hi hi
   good
   yes
   dog
@@ -435,6 +444,7 @@ computed: {
   
         trText(t) {
           return t.length > this.trTeLn ? t.slice(0, this.trTeLn) + "..." : t;
+          // return t;
         },
   
         stDaWD(i) {

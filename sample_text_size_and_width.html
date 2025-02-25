@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>動的フォントサイズ＆自動改行デモ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+
+        .box {
+            width: 50%;
+            height: 300px; /* 固定の高さ */
+            margin: 20px auto;
+            padding: 0.5rem 20px 20px; /* 上部の余白を 0.5rem に */
+            text-align: left; /* 左寄せ */
+            background-color: lightgray;
+            border-radius: 5px;
+            word-break: break-word; /* 文字幅が狭くなると改行 */
+            overflow: hidden;
+            white-space: pre-wrap; /* 改行を保持 */
+        }
+
+        textarea {
+            width: 80%;
+            height: 100px;
+            margin-top: 10px;
+            font-size: 16px;
+            padding: 5px;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>動的フォントサイズ＆自動改行デモ</h1>
+    <p>フォントサイズは最小10px、最大14pxに制限され、1文字が10px以下になると自動で改行されます。</p>
+
+    <div class="container">
+        <div class="box vw-text" id="vwText">可変フォントサイズのデモ</div>
+    </div>
+
+    <div class="controls">
+        <label for="textInput">サンプル文字列を変更:</label>
+        <textarea id="textInput">可変フォントサイズのデモ</textarea>
+    </div>
+
+    <script>
+        const textInput = document.getElementById("textInput");
+        const vwText = document.getElementById("vwText");
+
+        function adjustFontSize() {
+            let text = textInput.value;
+
+            // 最大100文字を超えた場合、省略記号「...」を追加
+            if (text.length > 100) {
+                text = text.substring(0, 97) + "..."; // 97文字 + 「...」 でちょうど100文字
+            }
+
+            vwText.textContent = text;
+
+            // 文字数に応じてフォントサイズを調整
+            let charWidth = 10; // 1文字あたりの最低幅（px）
+            let containerWidth = vwText.clientWidth; // ボックスの幅を取得
+            let maxCharsPerLine = Math.floor(containerWidth / charWidth); // 1行に収まる最大文字数
+            let lineCount = Math.ceil(text.length / maxCharsPerLine); // 必要な行数
+            let fontSize = Math.min(14, Math.max(10, 300 / lineCount)); // フォントサイズを10px～14pxの範囲に制限
+
+            vwText.style.fontSize = `${fontSize}px`;
+        }
+
+        textInput.addEventListener("input", adjustFontSize);
+
+        // 初回実行
+        adjustFontSize();
+    </script>
+
+</body>
+</html>

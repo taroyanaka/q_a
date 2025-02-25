@@ -118,6 +118,17 @@
   width: 50%;
 }
 
+/* chooseモード内のボタンのスタイルを調整 */
+.main-content .chse button {
+  width: 50%;
+  white-space: pre-line; /* テキストを1行に収める */
+  overflow: visible;
+  display: inline-block; /* ボタンをインラインブロックにする */
+  vertical-align: top; /* ボタンを上揃えにする */
+  box-sizing: border-box; /* パディングとボーダーを含めてサイズを計算する */
+  padding: 10px 20px; /* パディングを追加してボタンのサイズを調整 */
+  font-size: calc(10px + 0.9vw); /* 画面サイズに応じて文字サイズを動的に変更 */
+}
 
   .main-content .chse button,
   .main-content .mrBt button,

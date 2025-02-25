@@ -205,6 +205,11 @@ firebase.initializeApp(firebase_config);
       </div>
     </div>
 
+    <!-- qrモード -->
+    <div v-if="md==='qr'">
+      <button @click="shQr">show_qr</button>
+      <div ref="qrcode"></div>
+    </div>
   </div>
 
   <!-- Bottom Navigation (Tab Bar) -->
@@ -229,10 +234,10 @@ firebase.initializeApp(firebase_config);
       <span>スライド</span>
     </button>
 
-    <!-- <button :class="{ active: md==='qr' }" @click="chMode('qr')">
+    <button :class="{ active: md==='qr' }" @click="chMode('qr')">
       <span class="material-symbols-outlined">qr_code_scanner</span>
       <span>QR</span>
-    </button> -->
+    </button>
   </div>
 
   <script>
@@ -625,6 +630,26 @@ computed: {
           this.auSlMd = false;
           for (let i = 1; i < 99999; i++) {
             clearInterval(i);
+          }
+        },
+  
+        rdShre() {
+          if (confirm("Leave this page?")) {
+            location.href = "./share.html";
+          }
+        },
+  
+        shQr() {
+          const e = document.querySelector('[ref="qrcode"]');
+          if (e) {
+            new QRCode(e, {
+              text: "https://taroyanaka.github.io/q_a/b_p.html",
+              width: 256,
+              height: 256,
+              colorDark: "#000",
+              colorLight: "#fff",
+              correctLevel: QRCode.CorrectLevel.H
+            });
           }
         },
   

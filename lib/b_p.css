@@ -12,6 +12,13 @@
     color: #333;
   }
 
+  .no_search {
+    user-select: none; /* ユーザーによるテキスト選択を防ぐ */
+    -webkit-user-select: none; /* Safari 対応 */
+    -moz-user-select: none; /* Firefox 対応 */
+    -ms-user-select: none; /* Edge 対応 */
+  }  
+
   .app {
     display: flex;
     flex-direction: column;

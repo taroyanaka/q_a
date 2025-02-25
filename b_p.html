@@ -127,14 +127,14 @@ firebase.initializeApp(firebase_config);
         <div>
           <!-- <h2 class="chse_h2">{{ dv[0] }} {{ dv[5] }}</h2> -->
           <!-- <h2 class="chse_h2">{{ trText(dv[0]) }}</h2> -->
-          <div class="dynamic-font-size" data-length="50">{{ trText(dv[0]) }}</div>
+          <div class="dynamic-font-size no_search" data-length="50">{{ trText(dv[0]) }}</div>
           <!-- <h2 class="chse_h2">{{ dv[5] }}</h2> -->
           <div class="container">
             <div
               v-for="(item,ix) in dv[2]"
               :key="ix"
               @click="chQACh(dv[1], item)"
-              class="button dynamic-font-size"
+              class="button dynamic-font-size no_search"
               data-length="50"
             >
               {{ trText(item) }}
@@ -149,8 +149,8 @@ firebase.initializeApp(firebase_config);
       <progress :value="ooQAMC" :max="ex1Dat.length" class="progress-bar"></progress>
       <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
         <div v-if="dv[3] === false" class="mrBt_parent">
-          <div class="question dynamic-font-size" data-length="50">{{ dv[0] }} = {{ dv[2][0] }}</div>
-          <p v-if="mbRslt!==''" class="button dynamic-font-size" data-length="50">{{ mbRslt }}</p>
+          <div class="question dynamic-font-size no_search" data-length="50">{{ dv[0] }} = {{ dv[2][0] }}</div>
+          <p v-if="mbRslt!==''" class="button dynamic-font-size no_search" data-length="50">{{ mbRslt }}</p>
           <button
             @click="chMaBa(dv,dv[2][0],'maru')"
             :class="flInco==='maru'||flInco===null?'flIc':''"
@@ -175,9 +175,9 @@ firebase.initializeApp(firebase_config);
         class="progress-bar"
       ></progress>
       <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
-        <div class="dynamic-font-size" data-length="50">{{ trText(dv[0]) }}</div>
+        <div class="dynamic-font-size no_search" data-length="50">{{ trText(dv[0]) }}</div>
         <div
-          :class="dv[4] ? 'black-paint black-paint-answer-black dynamic-font-size' : 'black-paint black-paint-answer-white dynamic-font-size'"
+          :class="dv[4] ? 'black-paint black-paint-answer-black dynamic-font-size no_search' : 'black-paint black-paint-answer-white dynamic-font-size no_search'"
           data-length="50"
           @click="chPaRw"
         >
@@ -194,11 +194,11 @@ firebase.initializeApp(firebase_config);
       <div class="slide_index">{{ Math.ceil((curIdx + 1) / 2) }}</div>
       <div class="slide_parent">
         <div v-if="sldes[curIdx]?.q"
-        class="slide_left dynamic-font-size"
+        class="slide_left dynamic-font-size no_search"
         data-length="50"
         @click="nxSlid">{{ sldes[curIdx].q }}</div>
         <div v-else-if="sldes[curIdx]?.a"
-        class="slide_right dynamic-font-size"
+        class="slide_right dynamic-font-size no_search"
         data-length="50"
         @click="nxSlid">
           {{ sldes[curIdx].a }}

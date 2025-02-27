@@ -426,3 +426,26 @@ body {
     margin: 10px 0; /* 上下にスペースを確保 */
     display: inline-block; /* インラインブロックに設定 */
 }
+
+/* .signout-buttonをデコレーションして */
+.signout-button {
+    /* 背景色は白 */
+    background-color: white;
+    /* 文字色は薄い赤 */
+    color: #d32f2f;
+    /* ボーダーを設定 */
+    border: 1px solid #d32f2f;
+    /* パディングを設定 */
+    padding: 5px 10px;
+    /* ボーダーを角丸に */
+    border-radius: 5px;
+    /* テキストを中央揃え */
+    text-align: center;
+    /* フォントサイズを設定 */
+    font-size: 12px;
+    /* ホバー時のアニメーションを追加 */
+    transition: background-color 0.3s ease;
+    margin: 3rem 0; /* 上下にスペースを確保 */
+    display: inline-block; /* インラインブロックに設定 */
+
+}

@@ -141,6 +141,10 @@
   font-size: var(--initial-font-size); /* 初期値 */
 }
 
+.dynamic-font-size-large {
+  font-size: calc(var(--initial-font-size) * 1.5); /* 1.5倍 */
+}
+
 .dynamic-font-size[data-length] {
   font-size: calc(var(--initial-font-size) - (calc(var(--initial-font-size) - var(--min-font-size)) * ((attr(data-length) - 10) / 90)));
 }
@@ -219,7 +223,7 @@
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 1.2rem;
+  margin-top: 20rem;
   /* ブロック要素 */
   display: block;
   width: 100%;
@@ -240,14 +244,20 @@
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 0.5rem;
+    margin-top: 1.5rem;
   }
   
   .main-content .sld button {
     font-size: 2rem;
     padding: 0px 5px;
     margin-right: 4px;
-    margin-top: 0rem;
+    margin-top: 0.4rem;
+  }
+  .tmIntv {
+    margin-top: 0.4rem;
+  }
+  .slide_index {
+    margin-top: 0.4rem;
   }
 
 

@@ -51,6 +51,10 @@ firebase.initializeApp(firebase_config);
 
     // Googleプロバイダ
     const googleProvider = new firebase.auth.GoogleAuthProvider();
+    function googleLogin() {
+            firebase.auth().signInWithRedirect(googleProvider);
+            // https://p2auth-ea50a.firebaseapp.com/__/auth/handler
+        }
   </script>
 
 
@@ -68,6 +72,7 @@ firebase.initializeApp(firebase_config);
 
   <!-- ドロワー -->
   <div class="drawer" :class="{open: sideOpen}" @click.stop>
+    <div v-if="!username">
     <button class="gsi-material-button" @click="googleSignIn">
       <div class="gsi-material-button-state"></div>
       <div class="gsi-material-button-content-wrapper">
@@ -84,9 +89,10 @@ firebase.initializeApp(firebase_config);
         <span style="display: none;">Sign in with Google</span>
       </div>
     </button>
+    </div>
 
     <!-- Googleログアウト -->
-    <button @click="googleSignOut" class="signout-button">ログアウト</button>
+    <button v-if="username" @click="googleSignOut" class="signout-button">ログアウト</button>
 
     <div class="filters">
       <label>Sort by:
@@ -102,20 +108,22 @@ firebase.initializeApp(firebase_config);
       <button @click="clear_filters">Clear Filters</button>
   </div>
 
+<div v-if="uid && logged_in && username">
     <!-- User Links -->
     <h3 @click="toggleAccordion('userLinks')">User Links</h3>
     <ul v-show="accordionOpen.userLinks">
-      <li v-for="link in filtered_links_for('user')" :key="link.id">
+      <li v-for="link in user_links" :key="link.id">
         {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
         {{ truncate_text(JSON.parse(link.data_json_str).data2) }}
         <button class="set-btn" @click="set_data(link.data_json_str)">Set</button>
       </li>
     </ul>
+</div>
 
       <!-- All Links -->
       <h3 @click="toggleAccordion('allLinks')">All Links</h3>
       <ul v-show="accordionOpen.allLinks">
-        <li v-for="link in filtered_links_for('all')" :key="link.id">
+        <li v-for="link in all_links" :key="link.id">
           {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
           {{ truncate_text(JSON.parse(link.data_json_str).data2) }}
           <button class="set-btn" @click="set_data(link.data_json_str)">Set</button>
@@ -339,8 +347,57 @@ computed: {
         this.initApp();
       },
       methods: {
+        async initApp() {
+          if (!this.uid) {
+            console.log(1);
+            firebase.auth().onAuthStateChanged(async user => {
+              console.log("firebase.auth().onAuthStateChanged(function (user) {")
+              if (user) {
+                console.log(2)
+                console.log(user);
+                this.user = user;
+                console.log(user);
+                console.log(this.user);
+                try {
+                  console.log(3);
+                  this.uid = firebase.auth().currentUser.uid;
+                } catch (error) {
+                  console.error('Error fetching existing user:', error);
+                }
+              }
+      
+              if (this.uid) {
+                console.log(4);
+                this.user = user;
+                this.logged_in = true;
+                console.log(this.user, this.uid, this.logged_in);
+                try {
+                  await this.fetch_existing_user();
+                } catch (error) {
+                  console.error('Error fetching existing user:', error);
+                }
+                await this.fetch_user_data();
+              }
+            });
+          }
+      
+          this.ex1();
+          this.ftRdAl();
+          this.filtered_links_for('user');
+          this.filtered_links_for('all');
+        },
+  
         filtered_links_for(all_or_user) {
+          console.log("all_or_user");
+          console.log(this.user_links);
             let links = all_or_user === 'all' ? this.all_links : this.user_links;
+
+            if (all_or_user === 'user' && this.logged_in && this.username) {
+              console.log(20);
+              links = this.all_links.filter(link => link.username === this.username);
+            } else {
+              links = [];
+            }
 
             // 検索
             if (this.search_query) {
@@ -363,33 +420,8 @@ computed: {
                 return this.sort_order === 'asc' ? result : -result;
             });
 
-            return links;
+            all_or_user === 'all' ? this.all_links = links : this.user_links = links;
         },
-        initApp() {
-          this.fetch_existing_user().catch(() => {}).finally(() => {
-            this.fetch_user_data();
-          });
-  
-          if (!this.uid) {
-            firebase.auth().onAuthStateChanged(async user => {
-              if (user) {
-                this.user = user;
-                this.uid = user.uid;
-                this.logged_in = true;
-                try {
-                  await this.fetch_existing_user();
-                } catch (error) {
-                  console.error('Error fetching existing user:', error);
-                }
-                await this.fetch_user_data();
-              }
-            });
-          }
-  
-          this.ex1();
-          this.ftRdAl();
-        },
-  
   
         truncate_text(text, length = 20) {
           return text.length > length ? text.slice(0, length) + "..." : text;
@@ -399,6 +431,7 @@ computed: {
           if (!this.uid) {
             throw new Error('ログインしていません');
           }
+          console.log("this.uid is ", this.uid);
           const response = await fetch(`${this.enpnt}/existing_user`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -422,9 +455,13 @@ computed: {
             }
             const result = await response.json();
             this.all_links = result.message;
-            if (this.logged_in && this.username) {
+            if (this.uid && this.logged_in && this.username) {
+              console.log(30);
               this.user_links = this.all_links.filter(link => link.username === this.username);
+            } else {
+              this.user_links = [];
             }
+
           } catch (error) {
             console.error('Error fetching user data:', error);
           }
@@ -484,7 +521,12 @@ computed: {
             const data = await r.json();
             this.wbDat = data;
             this.all_links = data.message;
-            this.user_links = data.message.filter(link => link.username === this.usrNam);
+            if(this.uid && this.logged_in && this.username) {
+              this.user_links = this.all_links.filter(link => link.username === this.username);
+            } else {
+              this.user_links = [];
+            }
+            // this.user_links = data.message.filter(link => link.username === this.usrNam);
             this.gtUsWD();
           } catch (e) {
             this.ooQAMC = 0;
@@ -680,8 +722,7 @@ computed: {
             this.filter_data();
         },
       }
-    });
-    window.myApp = app.mount("body");
+    }).mount('.app');
 
   </script>
   

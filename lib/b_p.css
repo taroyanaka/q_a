@@ -95,10 +95,10 @@ body, html {
 }
 
 .drawer h3 {
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: .5rem;
+  cursor: pointer; /* クリック可能に見せる */
+  color: #1565c0; /* リンクのような色 */
+  text-decoration: underline; /* 下線を追加 */
+  margin-bottom: 1rem; /* 下にスペースを追加 */
 }
 
 .drawer .uNam {
@@ -400,8 +400,6 @@ padding: 5px;
   display: block;
 }
 
-<<<<<<< HEAD
-=======
 .maru_batu {
   width: 45%;
   height: auto;
@@ -411,4 +409,22 @@ padding: 5px;
   font-size: 6rem;
 }
 
->>>>>>> bdf0b72 (use b_p.html,insert_link.html)
+.filters {
+  margin: 1rem 0; /* 上下のマージンを追加 */
+}
+
+.set-btn {
+  font-size: 1.5rem; /* フォントサイズを1.5倍に */
+  padding: 10px 20px; /* パディングを増やしてクリックしやすく */
+  background-color: transparent; /* 背景色を透明に */
+  color: #999; /* 文字色を薄いグレイに */
+  border: 2px double #ccc; /* 薄い二重線のボーダー */
+  border-radius: 5px; /* 角を丸く */
+  cursor: pointer; /* クリック可能に */
+  transition: background-color 0.3s ease; /* ホバー時のアニメーションを追加 */
+}
+
+.set-btn:hover {
+  background-color: #1565c0; /* ホバー時の色を変更 */
+}
+

@@ -21,7 +21,6 @@
 <div id="app">
 <header class="header">
     <div class="top-button">
-        a
         <a href="./b_p.html" class="home-button">
             <span class="material-icons">home</span>
         </a>
@@ -68,15 +67,16 @@
             </div>
         </div>
 
-        <button class="tablinks" @click="open_city('your_data')">
+        <button class="tablinks" @click="open_city('your_data')"  v-if="uid !== null && username !== ''">
             <span class="material-icons">person</span> Your Data
         </button>
-        <button class="tablinks" @click="open_city('insert')">
+        <button class="tablinks" @click="open_city('insert')"  v-if="uid !== null && username !== ''">
             <span class="material-icons">add</span> Insert
         </button>
     </div>
-
-    <button @click="googleSignOut" class="signout-button">ログアウト</button>
+    <div v-if="uid !== null && username !== ''">
+        <button @click="googleSignOut" class="signout-button">ログアウト</button>
+    </div>
 
 </div>
 
@@ -476,7 +476,20 @@ const app = Vue.createApp({
             this.sort_key = 'id';
             this.sort_order = 'desc'; // デフォルトを降順に設定
             this.filter_data();
-        }
+        },
+        async googleSignOut() {
+          try {
+            await firebase.auth().signOut();
+            this.logged_in = false;
+            this.username = '';
+            this.password = '';
+            this.user_links = [];
+            // google loginのボタンを即座に表示する(レンダリングする)
+            this.$forceUpdate();
+            } catch (error) {
+                console.error('Error signing out:', error);
+            }
+        },
     },
     created() {
         document.addEventListener('click', this.handle_outside_click);

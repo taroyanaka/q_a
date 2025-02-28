@@ -295,6 +295,7 @@ body {
     margin-right: 2rem;
 }
 
+
 .clear_filters_div {
     /* 背景黒色 */
     background: #333;
@@ -448,4 +449,31 @@ body {
     margin: 3rem 0; /* 上下にスペースを確保 */
     display: inline-block; /* インラインブロックに設定 */
 
+}
+
+.filters {
+    /* 上下のマージンを追加 */
+    margin: 1rem 0;
+}
+
+.drawer h3 {
+    cursor: pointer; /* クリック可能に見せる */
+    color: #1565c0; /* リンクのような色 */
+    text-decoration: underline; /* 下線を追加 */
+    margin-bottom: 1rem; /* 下にスペースを追加 */
+}
+
+.set-btn {
+    font-size: 1.5rem; /* フォントサイズを1.5倍に */
+    padding: 10px 20px; /* パディングを増やしてクリックしやすく */
+    background-color: #4CAF50; /* 背景色を緑に */
+    color: white; /* 文字色を白に */
+    border: none; /* ボーダーをなしに */
+    border-radius: 5px; /* 角を丸く */
+    cursor: pointer; /* クリック可能に */
+    transition: background-color 0.3s ease; /* ホバー時のアニメーションを追加 */
+}
+
+.set-btn:hover {
+    background-color: #45a049; /* ホバー時の背景色を変更 */
 }

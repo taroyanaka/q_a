@@ -11,7 +11,12 @@
   <title>black paint q_a (Modern Design)</title>
 
   <!-- Material Symbols -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+<!-- <link rel="stylesheet" href="./gfont.woff2"> -->
+<!-- https://fonts.gstatic.com/s/materialicons/v142/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2 -->
+
+
+
 <link rel="stylesheet" href="./lib/reset.css">
 <link rel="stylesheet" href="./lib/b_p.css">
 
@@ -148,7 +153,6 @@ firebase.initializeApp(firebase_config);
       <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
         <div v-if="dv[3] === false" class="mrBt_parent">
           <div class="question dynamic-font-size no_search" data-length="50">{{ dv[0] }} = {{ dv[2][0] }}</div>
-          <p v-if="mbRslt!==''" class="button dynamic-font-size no_search" data-length="50">{{ mbRslt }}</p>
           <button
             @click="chMaBa(dv,dv[2][0],'maru')"
             :class="flInco==='maru'||flInco===null?'flIc':''"
@@ -181,7 +185,6 @@ firebase.initializeApp(firebase_config);
         >
           {{ dv[1] }}
         </div>
-        <div v-if="paRslt!==''" class="black-paint black-paint-answer-white">{{ paRslt }}</div>
       </template>
     </div>
 
@@ -271,8 +274,6 @@ firebase.initializeApp(firebase_config);
           shOrBy: "DESC",
           enpnt: "https://cotton-concrete-catsup.glitch.me",
           wbDat: [],
-          paRslt: "",
-          mbRslt: "",
           flInco: "",
           ooQAMD: true,
           ooQAMC: 0,
@@ -565,9 +566,7 @@ computed: {
           };
   
           const cmpl = async () => {
-            this.mbRslt = "全問完了";
             await new Promise(rs => setTimeout(rs, this.tmIntv * 1000));
-            this.mbRslt = "";
           };
   
           if (v[1] === r) {
@@ -596,9 +595,7 @@ computed: {
           };
   
           const cmpl = async () => {
-            this.paRslt = "全問完了";
             await new Promise(r => setTimeout(r, this.tmIntv * 1000));
-            this.paRslt = "";
             rs();
           };
   
@@ -610,9 +607,6 @@ computed: {
             rs();
           }
   
-          if (this.ex1Dat[this.ooQAMC]?.length - 1 === this.ooQAMC) {
-            cmpl();
-          }
         },
   
         frSlid() {

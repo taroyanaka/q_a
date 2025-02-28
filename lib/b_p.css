@@ -400,3 +400,15 @@ padding: 5px;
   display: block;
 }
 
+<<<<<<< HEAD
+=======
+.maru_batu {
+  width: 45%;
+  height: auto;
+}
+.mrBt_parent button {
+  width: 40%;
+  font-size: 6rem;
+}
+
+>>>>>>> bdf0b72 (use b_p.html,insert_link.html)

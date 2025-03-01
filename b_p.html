@@ -194,14 +194,10 @@ firebase.initializeApp(firebase_config);
 
     <!-- black_paintモード -->
     <div v-if="md==='black_paint'" class="blPt">
-      <progress
-        :value="ooQAMC"
-        :max="ex1Dat[ooQAMC].length"
-        class="progress-bar"
-      ></progress>
+      <progress :value="ooQAMC" :max="ex1Dat.length" class="progress-bar"></progress>
       <template v-for="dv in [ex1Dat[ooQAMC]]" :key="dv">
-        <div class="dynamic-font-size no_search" data-length="50">{{ trText(dv[0]) }}</div>
-        <div
+        <div v-if="dv" class="dynamic-font-size no_search" data-length="50">{{ trText(dv[0]) }}</div>
+        <div v-if="dv"
           :class="dv[4] ? 'black-paint black-paint-answer-black dynamic-font-size no_search' : 'black-paint black-paint-answer-white dynamic-font-size no_search'"
           data-length="50"
           @click="chPaRw"
@@ -647,20 +643,22 @@ computed: {
             this.ex1Dat.forEach(x => (x[4] = true));
             this.ooQAMC = 0;
           };
-  
+      
           const cmpl = async () => {
             await new Promise(r => setTimeout(r, this.tmIntv * 1000));
             rs();
           };
-  
+      
           if (d) {
             d[4] = false;
             await new Promise(r => setTimeout(r, this.tmIntv * 1000));
             this.ooQAMC++;
+            if (this.ooQAMC === this.ex1Dat.length) {
+              cmpl();
+            }
           } else {
             rs();
           }
-  
         },
   
         frSlid() {

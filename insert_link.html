@@ -155,14 +155,24 @@
                      placeholder="Data including line breaks B" required maxlength="1000"></textarea>
                 </label>
             </div>
-            <button type="submit" class="submit" v-if="!has_errors">
-                <span class="material-icons">send</span> Submit
-            </button>
+            <div class="button-row">
+                <button type="submit" class="submit" v-if="!has_errors">
+                    <span class="material-icons">send</span> Submit
+                </button>
+            </div>
             <div class="message">
                 <div v-if="error_message" class="error">{{ error_message }}</div>
                 <div v-if="success_message" class="success">{{ success_message }}</div>
             </div>
         </form>
+        <div v-if="show_preview" class="preview-content">
+            <h3>Preview</h3>
+            <ul>
+                <li v-for="(line, index) in preview_data" :key="index" class="preview-line">
+                    {{ line.data1 }} - {{ line.data2 }}
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 </div>
@@ -190,7 +200,13 @@ const app = Vue.createApp({
             logged_in: false,
             login_result: '',
             data1: '',
+//             data1: `aa
+// bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+// cc`,
             data2: '',
+//             data2: `AA
+// BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+// C`,
             error_message: '',
             success_message: '',
             user: null,
@@ -203,6 +219,8 @@ const app = Vue.createApp({
             sort_key: 'created_at', // ソートキー
             sort_order: 'desc', // ソート順を降順に設定
             search_query: '', // 検索クエリ
+            show_preview: false, // プレビュー表示のフラグ
+            preview_data: [],
         };
     },
     computed: {
@@ -229,16 +247,24 @@ const app = Vue.createApp({
             });
 
             return links;
+        },
+        preview_data() {
+            const lines1 = this.data1.split('\n');
+            const lines2 = this.data2.split('\n');
+            return lines1.map((line, index) => ({
+                data1: line,
+                data2: lines2[index] || ''
+            }));
         }
     },
     async mounted() {
-        try {
-            await this.fetch_existing_user();
-        } catch (error) {
-            console.error('Error fetching existing user:', error);
-        } finally {
-            await this.fetch_user_data();
-        }
+        // try {
+        //     await this.fetch_existing_user();
+        // } catch (error) {
+        //     console.error('Error fetching existing user:', error);
+        // } finally {
+        //     await this.fetch_user_data();
+        // }
 
         if (!this.uid) {
             firebase.auth().onAuthStateChanged(async user => {
@@ -343,6 +369,13 @@ const app = Vue.createApp({
             const errors = validate_data(this.data1, this.data2);
             this.error_message = errors.join(', ');
             this.has_errors = errors.length > 0;
+            this.show_preview = !this.has_errors;
+            if (this.show_preview) {
+                this.preview_data = this.data1.split('\n').map((line, index) => ({
+                    data1: line,
+                    data2: this.data2.split('\n')[index] || ''
+                }));
+            }
         },
         async validate_and_submit() {
             this.validate_input();
@@ -490,6 +523,15 @@ const app = Vue.createApp({
             this.$forceUpdate();
             } catch (error) {
                 console.error('Error signing out:', error);
+            }
+        },
+        toggle_preview() {
+            this.show_preview = !this.show_preview;
+            if (this.show_preview) {
+                this.preview_data = this.data1.split('\n').map((line, index) => ({
+                    data1: line,
+                    data2: this.data2.split('\n')[index] || ''
+                }));
             }
         },
     },

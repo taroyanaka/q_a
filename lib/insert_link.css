@@ -448,5 +448,36 @@ body {
     transition: background-color 0.3s ease;
     margin: 3rem 0; /* 上下にスペースを確保 */
     display: inline-block; /* インラインブロックに設定 */
+}
+
+
+
+
+.insert button.preview {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 30px; /* パディングを増やしてスペースを確保 */
+    cursor: pointer;
+}
+
+.insert button.preview:hover {
+    background-color: #45a049;
+}
+
+/* submitの表示位置はz軸が上の、追従表示で画面上部(編集中のtextareaにz軸上にかぶさって表示 */
+.preview {
+    position: fixed;
+    top: 0;
+    right: 20rem;
+}
+
+.preview-line {
+    /* preview-line同士の上下の隙間は0.5rem */
+    margin: 0.5rem 1rem;
+    /* paddingは0.5rem */
+    padding: 0.5rem;
+    /* 背景色は白 */
+
 
 }

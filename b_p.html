@@ -70,8 +70,7 @@ firebase.initializeApp(firebase_config);
 
   <!-- ドロワー -->
   <div class="drawer" :class="{open: sideOpen}" @click.stop>
-    <div>login
-      <h2>{{ login_result }}</h2>
+    <div>
       <button class="gsi-material-button" v-if="!logged_in" @click="googleSignIn">
           <div class="gsi-material-button-state"></div>
           <div class="gsi-material-button-content-wrapper">

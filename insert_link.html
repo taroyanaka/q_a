@@ -86,7 +86,8 @@
         <div class="filters">
             <label>Sort by:
                 <select v-model="sort_key" @change="toggle_sort_order">
-                    <option value="id">ID</option>
+                    <!-- <option value="id">ID</option> -->
+                    <option value="created_at">Created At</option>
                     <option value="data_length">Data Length</option>
                 </select>
             </label>
@@ -117,7 +118,8 @@
             <div class="filters">
                 <label>Sort by:
                     <select v-model="sort_key" @change="toggle_sort_order">
-                        <option value="id">ID</option>
+                        <!-- <option value="id">ID</option> -->
+                        <option value="created_at">Created At</option>
                         <option value="data_length">Data Length</option>
                     </select>
                 </label>
@@ -198,7 +200,7 @@ const app = Vue.createApp({
             all_links: [],
             current_tab: 'all_data', // 現在のタブを管理する変数
             has_errors: true,
-            sort_key: 'id', // ソートキー
+            sort_key: 'created_at', // ソートキー
             sort_order: 'desc', // ソート順を降順に設定
             search_query: '', // 検索クエリ
         };
@@ -218,8 +220,8 @@ const app = Vue.createApp({
             // ソート
             links = links.sort((a, b) => {
                 let result = 0;
-                if (this.sort_key === 'id') {
-                    result = a.id - b.id;
+                if (this.sort_key === 'created_at') {
+                    result = new Date(a.created_at) - new Date(b.created_at);
                 } else if (this.sort_key === 'data_length') {
                     result = JSON.parse(a.data_json_str).data1.length - JSON.parse(b.data_json_str).data1.length;
                 }
@@ -473,7 +475,7 @@ const app = Vue.createApp({
         },
         clear_filters() {
             this.search_query = '';
-            this.sort_key = 'id';
+            this.sort_key = 'created_at'; // デフォルトをcreated_atに設定
             this.sort_order = 'desc'; // デフォルトを降順に設定
             this.filter_data();
         },

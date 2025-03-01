@@ -91,62 +91,51 @@ firebase.initializeApp(firebase_config);
     </button>
     </div>
 
-  <div class="filters">
-  <label class="sort-label">
-    <span class="material-symbols-outlined sort-icon">sort</span>
-
-    <input type="radio" id="asc" value="asc" v-model="sort_order" @change="sort_data">
-    <label for="asc"><i
-      class="material-symbols-outlined"
-      >arrow_upward</i>
-      <!-- ASC -->
-    </label>
-    <input type="radio" id="desc" value="desc" v-model="sort_order" @change="sort_data">
-    <label for="desc"><i
-      class="material-symbols-outlined"
-      >arrow_downward</i>
-       <!-- DESC -->
+    <div class="filters">
+      <label
+       class="sort-label"
+      >Sort by:
+          <select v-model="sort_key" @change="toggle_sort_order">
+              <option value="id">ID</option>
+              <option value="created_at">Created At</option>
+              <option value="data_length">Data Length</option>
+          </select>
       </label>
-
-    <select v-model="sort_key" @change="toggle_sort_order">
-      <!-- <option value="id">ID</option> -->
-      <option value="created_at" selected>Created At</option>
-      <option value="data_length">Data Length</option>
-    </select>
-  </label>
-  <label class="search-label">
-    <input type="text" v-model="search_query" @input="filter_data">
-    <span class="material-symbols-outlined search-icon">search</span>
-  </label>
-  <button @click="clear_filters" class="clear-filters">Clear Filters</button>
-</div>
+      <label
+        class="search-label"
+      >Search:
+          <input type="text" v-model="search_query" @input="filter_data">
+      </label>
+      <button @click="clear_filters"
+        class="clear-filters"
+      >Clear Filters</button>
+  </div>
 
 <div v-if="uid && logged_in && username">
-    <!-- User Links -->
-    <h3 @click="toggleAccordion('userLinks')">User Links</h3>
-    <ul v-show="accordionOpen.userLinks">
-      <li v-for="link in user_links" :key="link.id">
-      <li v-for="link in filtered_links_for('user')" :key="link.id">
-        {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
-        {{ truncate_text(JSON.parse(link.data_json_str).data2) }}
-        <button class="set-btn" @click="set_data(link.data_json_str)">Set</button>
-      </li>
-    </ul>
+  <!-- User Links -->
+  <h3 @click="toggleAccordion('userLinks')">User Links</h3>
+  <ul v-show="accordionOpen.userLinks">
+    <li v-for="link in filtered_user_links" :key="link.id">
+      {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
+      {{ truncate_text(JSON.parse(link.data_json_str).data2) }}
+      <button class="set-btn" @click="set_data(link.data_json_str)">Set</button>
+    </li>
+  </ul>
 </div>
 
-      <!-- All Links -->
-      <h3 @click="toggleAccordion('allLinks')">All Links</h3>
-      <ul v-show="accordionOpen.allLinks">
-        <!-- <li v-for="link in all_links" :key="link.id"> -->
-        <li v-for="link in filtered_links_for('all')" :key="link.id">
-          {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
-          {{ truncate_text(JSON.parse(link.data_json_str).data2) }}
-          <button class="set-btn" @click="set_data(link.data_json_str)">Set</button>
-        </li>
-      </ul>
-
-      <button v-if="username" @click="googleSignOut" class="signout-button">ログアウト</button>
+<!-- All Links -->
+<h3 @click="toggleAccordion('allLinks')">All Links</h3>
+<ul v-show="accordionOpen.allLinks">
+  <li v-for="link in filtered_all_links" :key="link.id">
+    {{ truncate_text(JSON.parse(link.data_json_str).data1) }}<br>
+    {{ truncate_text(JSON.parse(link.data_json_str).data2) }}
+    <button class="set-btn" @click="set_data(link.data_json_str)">Set</button>
+  </li>
+</ul>
     
+          <!-- Googleログアウト -->
+    <button v-if="username" @click="googleSignOut" class="signout-button">ログアウト</button>
+
   </div>
 
     <!-- メインコンテンツ -->
@@ -334,14 +323,16 @@ firebase.initializeApp(firebase_config);
           user: null,
           all_links: [],
           user_links: [],
+          filtered_all_links: [],
+          filtered_user_links: [],
           mainContent: null,
           accordionOpen: {
             allLinks: true,
             userLinks: true
           },
-          sort_key: 'created_at', // ソートキー
-          sort_order: 'desc', // ソート順を降順に設定
-          search_query: '', // 検索クエリ
+          sort_key: 'id', // ソートキー
+            sort_order: 'desc', // ソート順を降順に設定
+            search_query: '', // 検索クエリ
         };
       },
       watch: {
@@ -356,6 +347,14 @@ firebase.initializeApp(firebase_config);
   },
   shOrBy() {
     this.ftRdAl();
+  },
+  search_query() {
+    this.filtered_links_for('user');
+    this.filtered_links_for('all');
+  },
+  sort_key() {
+    this.filtered_links_for('user');
+    this.filtered_links_for('all');
   }
 },
 computed: {
@@ -405,11 +404,13 @@ computed: {
         filtered_links_for(all_or_user) {
           console.log("all_or_user");
           console.log(this.user_links);
-            let links = all_or_user === 'all' ? this.all_links : this.user_links;
+            let links = all_or_user === 'all' ? [...this.all_links] : [...this.user_links];
 
             if (all_or_user === 'user' && this.logged_in && this.username) {
               console.log(20);
               links = this.all_links.filter(link => link.username === this.username);
+            } else {
+              links = [];
             }
 
             // 検索
@@ -433,8 +434,11 @@ computed: {
                 return this.sort_order === 'asc' ? result : -result;
             });
 
-            // all_or_user === 'all' ? this.all_links = links : this.user_links = links;
-            return links;
+            if (all_or_user === 'all') {
+              this.filtered_all_links = links;
+            } else {
+              this.filtered_user_links = links;
+            }
         },
   
         truncate_text(text, length = 20) {
@@ -469,11 +473,14 @@ computed: {
             }
             const result = await response.json();
             this.all_links = result.message;
+            this.filtered_all_links = [...this.all_links];
             if (this.uid && this.logged_in && this.username) {
               console.log(30);
               this.user_links = this.all_links.filter(link => link.username === this.username);
+              this.filtered_user_links = [...this.user_links];
             } else {
               this.user_links = [];
+              this.filtered_user_links = [];
             }
 
           } catch (error) {

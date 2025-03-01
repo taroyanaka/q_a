@@ -428,3 +428,35 @@ padding: 5px;
   background-color: #1565c0; /* ホバー時の色を変更 */
 }
 
+.sort-label,
+.search-label,
+.clear-filters {
+  margin: 1rem 0; /* 上下に隙間を作る */
+  display: block; /* ブロック要素にする */
+  font-size: 1.2rem; /* フォントサイズを少し大きく */
+  color: #333; /* 文字色を濃いグレイに */
+}
+
+.sort-label select,
+.search-label input {
+  width: 100%; /* 幅を100%に */
+  padding: 0.5rem; /* パディングを追加 */
+  margin-top: 0.5rem; /* 上に隙間を作る */
+  border: 1px solid #ccc; /* 薄いグレイのボーダー */
+  border-radius: 5px; /* 角を丸く */
+  font-size: 1rem; /* フォントサイズを調整 */
+}
+
+.clear-filters {
+  background-color: #1976d2; /* 背景色を青に */
+  color: white; /* 文字色を白に */
+  border: none; /* ボーダーを無しに */
+  padding: 10px 20px; /* パディングを追加 */
+  cursor: pointer; /* クリック可能に */
+  border-radius: 5px; /* 角を丸く */
+  transition: background-color 0.3s ease; /* ホバー時のアニメーションを追加 */
+}
+
+.clear-filters:hover {
+  background-color: #1565c0; /* ホバー時の色を変更 */
+}

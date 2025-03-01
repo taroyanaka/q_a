@@ -74,7 +74,7 @@
             <span class="material-icons">add</span> Insert
         </button>
     </div>
-    <div v-if="uid !== null && username !== ''">
+    <div v-if="uid && username">
         <button @click="googleSignOut" class="signout-button">ログアウト</button>
     </div>
 

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>穴埋めクイズ</title>
+    <script src="lib/vue@3.5.13.global.prod.js"></script>
+    <link rel="stylesheet" href="sample_data_of_blank_quiz.css">
+</head>
+<body>
+    <div id="app">
+        <div class="quiz-container" v-if="currentQuiz">
+            <p v-html="formattedQuestion"></p>
+            <div>
+                <div v-for="(word, index) in userAnswers" :key="index">
+                    <input v-model="userAnswers[index]" placeholder="?">
+                    <button @click="fillAnswer(index)">回答を埋める</button>
+                </div>
+            </div>
+            <button @click="checkAnswer">答え合わせ</button>
+            <p v-if="message">{{ message }}</p>
+            <button @click="nextQuiz">次の問題</button>
+        </div>
+        <p v-else>クイズがありません</p>
+    </div>
+
+    <script src="sample_data_of_blank_quiz.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    quizData: sample_data_of_blank_quiz,
+                    currentQuizIndex: 0,
+                    userAnswers: [],
+                    message: ""
+                };
+            },
+            computed: {
+                currentQuiz() {
+                    return this.quizData[this.currentQuizIndex] || null;
+                },
+                formattedQuestion() {
+                    if (!this.currentQuiz) return "";
+                    let question = this.currentQuiz.data2;
+                    this.currentQuiz.data1.forEach(word => {
+                        question = question.replace(word, '____');
+                    });
+                    this.userAnswers = new Array(this.currentQuiz.data1.length).fill("");
+                    return question;
+                }
+            },
+            methods: {
+                checkAnswer() {
+                    const correctAnswers = this.currentQuiz.data1;
+                    if (JSON.stringify(this.userAnswers) === JSON.stringify(correctAnswers)) {
+                        this.message = "正解！";
+                    } else {
+                        this.message = "不正解... 正しい答え: " + correctAnswers.join(", ");
+                    }
+                },
+                nextQuiz() {
+                    if (this.currentQuizIndex < this.quizData.length - 1) {
+                        this.currentQuizIndex++;
+                        this.message = "";
+                    } else {
+                        this.message = "これで最後の問題です。";
+                    }
+                },
+                fillAnswer(index) {
+                    this.userAnswers[index] = this.currentQuiz.data1[index];
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

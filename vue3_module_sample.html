@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3 Services Example (Option API)</title>
+    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+     <script src="./lib/vue@3.5.13.global.prod.js"></script>
+     <script src="./sample_data_of_blank_quiz.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <h2>特定の投稿</h2>
+            <select v-model="selectedPostId" @change="fetchSpecificPost">
+                <option v-for="post in posts" :value="post.id" :key="post.id">{{ post.title }}</option>
+            </select>
+            <p>{{ specificPost.title }}</p>
+            <p>{{ specificPost.body }}</p>
+        </div>
+
+        <h1>API データ一覧</h1>
+        <ul>
+            <li v-for="post in posts" :key="post.id">{{ post.body }}</li>
+        </ul>
+    </div>
+
+    <script type="module">
+        import { fetchPosts, fetchPostById } from "./api.js";
+
+        const app = Vue.createApp({
+            data() {
+                return {
+                    posts: [],
+                    specificPost: {},
+                    selectedPostId: null
+                };
+            },
+            async created() {
+                this.posts = await fetchPosts();
+                if (this.posts.length > 0) {
+                    this.selectedPostId = this.posts[0].id;
+                    this.fetchSpecificPost();
+                }
+            },
+            methods: {
+                async fetchSpecificPost() {
+                    this.specificPost = await fetchPostById(this.selectedPostId);
+                }
+            }
+        });
+
+        app.mount("#app");
+    </script>
+</body>
+</html>

@@ -258,14 +258,6 @@ const app = Vue.createApp({
         }
     },
     async mounted() {
-        // try {
-        //     await this.fetch_existing_user();
-        // } catch (error) {
-        //     console.error('Error fetching existing user:', error);
-        // } finally {
-        //     await this.fetch_user_data();
-        // }
-
         if (!this.uid) {
             firebase.auth().onAuthStateChanged(async user => {
                 if (user) {
@@ -281,8 +273,6 @@ const app = Vue.createApp({
                 }
             });
         }
-
-        // メニューバー以外の部分がクリックされた場合にメニューバーを閉じる
         document.addEventListener('click', this.handle_outside_click);
     },
     beforeUnmount() {

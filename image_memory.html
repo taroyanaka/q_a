@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Q&Aマーカー付き画像編集ツール</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; background: #f8f8f8; }
+    canvas { border: 1px solid #ccc; margin: 10px auto; cursor: crosshair; display: block; }
+    #controls, #urlInput { margin: 10px; }
+    .qa { margin: 10px auto; width: 80%; max-width: 600px; text-align: left; }
+    .qa input { width: 40%; margin: 2px; }
+    .qa span { display: inline-block; width: 20px; height: 20px; vertical-align: middle; margin-right: 5px; }
+    #lineWidthValue { display: inline-block; width: 40px; text-align: left; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h2>Q&Aマーカー付き画像編集ツール</h2>
+
+    <div id="urlInput">
+      <input type="text" v-model="imageUrl" placeholder="画像URLを入力" size="40">
+      <button @click="loadImage">URLから読み込む</button>
+    </div>
+
+    <canvas id="canvas" width="600" height="400" ref="canvas"
+      @mousedown="startDrawing"
+      @mousemove="drawLine"
+      @mouseup="stopDrawing"
+      @mouseleave="stopDrawing"></canvas>
+
+    <div id="controls">
+      <label>太さ:
+        <input type="range" v-model="lineWidth" min="1" max="50">
+        <span>{{ lineWidth }}px</span>
+      </label>
+      <br>
+      <button @click="saveImage">PNG保存</button>
+      <button @click="uploadImage">アップロード</button>
+      <button @click="clearCanvas">クリア</button>
+    </div>
+
+    <div id="qaList" class="qa">
+      <div v-for="(stroke, index) in strokes" :key="index">
+        <span :style="{ background: stroke.color }"></span>
+        <input type="text" v-model="stroke.question" placeholder="Question">
+        <input type="text" v-model="stroke.answer" placeholder="Answer">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+  
+      const app = createApp({
+      data() {
+        return {
+            result: null,
+          imageUrl: '',
+          lineWidth: 5,
+          strokes: [],
+          img: null,
+          drawing: false,
+          currentPath: [],
+          colorTable: ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF']
+        };
+      },
+      mounted() {
+        this.ctx = this.$refs.canvas.getContext('2d');
+      },
+      methods: {
+        getStrokeColor() {
+          return this.colorTable[this.strokes.length % this.colorTable.length];
+        },
+        loadImage() {
+          if (!this.imageUrl) {
+            alert("画像URLを入力してください。");
+            return;
+          }
+          this.img = new Image();
+          this.img.crossOrigin = 'anonymous';
+          this.img.onload = () => {
+            this.$refs.canvas.width = this.img.width;
+            this.$refs.canvas.height = this.img.height;
+            this.ctx.drawImage(this.img, 0, 0);
+          };
+          this.img.onerror = () => alert("画像の読み込みに失敗しました。");
+          this.img.src = this.imageUrl;
+        },
+        startDrawing(e) {
+          this.drawing = true;
+          this.currentPath = [{ x: e.offsetX, y: e.offsetY }];
+          this.ctx.beginPath();
+          this.ctx.moveTo(e.offsetX, e.offsetY);
+        },
+        drawLine(e) {
+          if (!this.drawing) return;
+          const x = e.offsetX;
+          const y = e.offsetY;
+          this.ctx.strokeStyle = this.getStrokeColor();
+          this.ctx.lineWidth = this.lineWidth;
+          this.ctx.lineCap = 'round';
+          this.ctx.lineTo(x, y);
+          this.ctx.stroke();
+          this.currentPath.push({ x, y });
+        },
+        stopDrawing() {
+          if (this.drawing && this.currentPath.length > 1) {
+            this.strokes.push({
+              color: this.getStrokeColor(),
+              path: this.currentPath,
+              question: '',
+              answer: ''
+            });
+          }
+          this.drawing = false;
+        },
+        saveImage() {
+          const link = document.createElement('a');
+          link.download = 'masked-image.png';
+          link.href = this.$refs.canvas.toDataURL('image/png');
+          link.click();
+        },
+        uploadImage() {
+            this.result = { image_url: this.imageUrl, list: this.strokes };
+          const endpoint = prompt("アップロード先のURLを入力してください：", "https://your-api-endpoint.com/upload");
+          if (!endpoint) return;
+          fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(result)
+          })
+          .then(res => res.ok ? alert("アップロード成功！") : res.text().then(t => { throw new Error(t); }))
+          .catch(err => alert("アップロード失敗: " + err.message));
+        },
+        clearCanvas() {
+          this.ctx.clearRect(0, 0, this.$refs.canvas.width, this.$refs.canvas.height);
+          if (this.img) this.ctx.drawImage(this.img, 0, 0);
+          this.strokes = [];
+        }
+      }
+    }).mount('#app');
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Q&Aマーカー付き画像表示ツール</title>
+  <script src="./lib/vue@3.5.13.global.prod.js"></script>
+  <style>
+
+    #answers {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+        /* answersの文字サイズを大きくする */
+    #answers span {
+        font-size: 20px;
+        margin-left: 10px;
+    }
+    #answers button {
+        margin-bottom: 10px;
+        padding: 5px 10px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+    <canvas ref="canvas" width="800" height="600" style="border:1px solid #000;"></canvas>
+    <div id="answers">
+        <!-- button make_answer_list -->
+        <!-- <button @click="make_answer_list()">答えのリストを作成</button> -->
+        <!-- answer_listのレンダリング -->
+        <div v-for="(item, index) in answer_list" :key="index" class="qa">
+            <!-- revealAnswerボタン -->
+            <button @click="revealAnswer(index)" :style="{ backgroundColor: item.color }">
+                {{ revealedAnswers[index] ? '隠す' : '表示' }}
+            </button>
+            <span :style="{ backgroundColor: item.color }"></span>
+            <!-- 答えの表示 -->
+            <span v-if="revealedAnswers[index]">{{ item.answer }}</span>
+            <!-- 文字数分の*表示 -->
+            <span v-else>{{ '*'.repeat(item.answer.length) }}</span>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+  const { createApp } = Vue;
+
+const app = createApp({
+    data() {
+      return {
+        answer_list: [], // 答えのリスト
+        result: null, // 画像と線のデータが入る
+        revealedAnswers: [] // 答えが表示されているかどうかを管理
+      };
+    },
+    async mounted() {
+      await this.loadData();
+      await this.make_answer_list();
+    },
+
+    methods: {
+      async loadData() {
+        try {
+        //   const response = await fetch('./path_to_your_data_file.json'); // データファイルのパスに変更
+          this.result = {"image_url":"./asset/sample_neuro.png","list":[{"color":"#FF0000","path":[{"x":201,"y":516},{"x":201,"y":516},{"x":205,"y":516},{"x":211,"y":516},{"x":216,"y":516},{"x":223,"y":516},{"x":232,"y":516},{"x":238,"y":516},{"x":244,"y":516},{"x":248,"y":516},{"x":250,"y":516},{"x":253,"y":516},{"x":255,"y":516},{"x":258,"y":516},{"x":262,"y":516},{"x":265,"y":516},{"x":269,"y":516},{"x":274,"y":516},{"x":278,"y":516},{"x":281,"y":516},{"x":284,"y":516},{"x":285,"y":516},{"x":287,"y":516},{"x":289,"y":516},{"x":291,"y":516},{"x":292,"y":516},{"x":294,"y":516},{"x":295,"y":516},{"x":296,"y":516},{"x":296,"y":516},{"x":297,"y":516},{"x":299,"y":516},{"x":300,"y":516},{"x":302,"y":516},{"x":303,"y":516}],"answer":"ギブスン"},{"color":"#00FF00","path":[{"x":164,"y":1073},{"x":164,"y":1073},{"x":165,"y":1073},{"x":168,"y":1073},{"x":170,"y":1073},{"x":173,"y":1073},{"x":180,"y":1073},{"x":185,"y":1073},{"x":191,"y":1073},{"x":197,"y":1073},{"x":203,"y":1073},{"x":208,"y":1073},{"x":213,"y":1073},{"x":219,"y":1073},{"x":224,"y":1073},{"x":228,"y":1074},{"x":231,"y":1074},{"x":233,"y":1075},{"x":235,"y":1075},{"x":236,"y":1076},{"x":237,"y":1076},{"x":237,"y":1077},{"x":238,"y":1077},{"x":239,"y":1077},{"x":240,"y":1077},{"x":242,"y":1077},{"x":246,"y":1077},{"x":250,"y":1077},{"x":254,"y":1078},{"x":257,"y":1078},{"x":260,"y":1079},{"x":262,"y":1079},{"x":263,"y":1079},{"x":263,"y":1080},{"x":263,"y":1080},{"x":264,"y":1080},{"x":265,"y":1080},{"x":265,"y":1080},{"x":266,"y":1080},{"x":267,"y":1080},{"x":268,"y":1080},{"x":269,"y":1080}],"answer":"ネビュラ"},{"color":"#0000FF","path":[{"x":1072,"y":343},{"x":1072,"y":344}],"answer":""}],"lineWidth":38};
+          this.revealedAnswers = this.result.list.map(() => false); // 初期状態では全て非表示
+          this.drawImageAndLines();
+        } catch (error) {
+          console.error("データのロードに失敗しました:", error);
+        }
+      },
+      revealAnswer(index) {
+        this.revealedAnswers[index] = this.revealedAnswers[index] ? false : true;
+      },
+      drawImageAndLines() {
+        const canvas = this.$refs.canvas;
+        const ctx = canvas.getContext('2d');
+
+        const img = new Image();
+        img.onload = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          const imgWidth = img.width;
+          const imgHeight = img.height;
+          const scale = Math.min(canvas.width / imgWidth, canvas.height / imgHeight);
+
+          const xOffset = (canvas.width - imgWidth * scale) / 2;
+          const yOffset = (canvas.height - imgHeight * scale) / 2;
+
+          ctx.drawImage(img, xOffset, yOffset, imgWidth * scale, imgHeight * scale);
+
+          this.result.list.forEach(item => {
+            ctx.beginPath();
+            ctx.strokeStyle = item.color;
+            ctx.lineWidth = this.result.lineWidth;
+            ctx.lineCap = 'round';
+
+            item.path.forEach((point, index) => {
+              const x = xOffset + point.x * scale;
+              const y = yOffset + point.y * scale;
+
+              if (index === 0) {
+                ctx.moveTo(x, y);
+              } else {
+                ctx.lineTo(x, y);
+              }
+            });
+
+            ctx.stroke();
+          });
+        };
+        img.src = this.result.image_url;
+      },
+      async make_answer_list() {
+        this.answer_list = this.result.list.map(item => {
+            return item;
+        });
+      },
+    }
+  }).mount('#app');
+</script>
+</body>
+</html>
